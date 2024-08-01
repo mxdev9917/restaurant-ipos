@@ -1,11 +1,11 @@
-
+import HomePage from './front-end/homepage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      // element:<HomePage/>
+       element:<HomePage/>
      
     },
     {
