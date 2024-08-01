@@ -1,17 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      // element:<HomePage/>
+     
+    },
+    {
+      path: "/detail/:name",
+      // element:<DetailPage/>
+     
+    },
+  ]);
 
   return (
-   <div>
-    <h1 className="text-3xl text-red-600 font-bold underline">
-      Hello world!
-    </h1>
-   </div>
+    <div className="overflow-y-hidden bg-[url('/src/assets/images/list_bg.jpg')] max-h-[100vh] max-h-[100vh] ">
+       <RouterProvider router={router} />
+    </div>
   )
 }
 
