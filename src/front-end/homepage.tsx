@@ -1,11 +1,17 @@
-
+import Header from "./componets/header";
 function homePage() {
-    
     return (
         <div>
-            HomePage
+            <Header />
+
+            
+
+
+
+
+
+
         </div>
     )
 }
-
 export default homePage;
