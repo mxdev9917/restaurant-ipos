@@ -2,3 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+// styles.scss
+
+$noto-sans-lao-weight: 400; // Define the default weight; adjust as needed
+
+// Mixin for Noto Sans Lao font
+@mixin noto-sans-lao($uniquifier, $weight: $noto-sans-lao-weight) {
+  .noto-sans-lao-#{$uniquifier} {
+    font-family: "Noto Sans Lao", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: $weight;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+  }
+}
+
+// Example usage
+@include noto-sans-lao(custom, 700); // Use the mixin with a specific weight
+
+
