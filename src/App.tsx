@@ -1,5 +1,9 @@
-import HomePage from './front-end/homepage';
+import HomePage from './webbox/homepage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import 'flowbite'
+import Authen from './restaurant/authen';
+import Payment from './webbox/payment';
+import HomeScreen from './restaurant/homescreen';
 
 function App() {
   const router = createBrowserRouter([
@@ -9,14 +13,34 @@ function App() {
      
     },
     {
-      path: "/detail/:name",
-      // element:<DetailPage/>
+      path: "/authentication",
+       element:<Authen/>
      
     },
+    {
+      path: "/payment",
+       element:<Payment/>
+     
+    },
+    {
+      path: "/home",
+       element:<HomeScreen/>
+     
+    },
+
+   
+
+
+
+    // {
+    //   path: "/detail/:name",
+    //   // element:<DetailPage/>
+     
+    // },
   ]);
 
   return (
-    <div className="overflow-y-hidden bg-[url('/src/assets/images/list_bg.jpg')] max-h-[100vh] max-h-[100vh] ">
+    <div >
        <RouterProvider router={router} />
     </div>
   )

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 // styles.scss
 
 $noto-sans-lao-weight: 400; // Define the default weight; adjust as needed
@@ -19,5 +21,21 @@ $noto-sans-lao-weight: 400; // Define the default weight; adjust as needed
 
 // Example usage
 @include noto-sans-lao(custom, 700); // Use the mixin with a specific weight
+
+
+
+@keyframes bounce {
+  0%, 100% {
+      transform: translateY(-15%);
+      animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+  50% {
+      transform: none;
+      animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+.animate-bounce {
+  animation: bounce 3s infinite;
+}
 
 
