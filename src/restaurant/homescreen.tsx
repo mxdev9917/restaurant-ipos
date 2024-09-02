@@ -5,13 +5,12 @@ function HomeScreen() {
     return (
         <div className="w-screen h-screen">
             <NavBar />
-            <div className="flex justify-between"></div>
-            <Sidebar />
             <div className="flex w-full">
-                khogldihr
+                <Sidebar />
+                <div className="flex w-full bg-slate-200">
+                    khogldihr
+                </div>
             </div>
-
-
         </div>
     )
 }

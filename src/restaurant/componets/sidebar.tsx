@@ -1,15 +1,15 @@
 import { useState } from "react"
-import { Link } from "react-router-dom";
+
 
 function Sidebar() {
     const [isCheckW, setIscheckW] = useState(true);
-    const [isCheckSpan, setIscheckSpan] = useState(false);
+   
 
 
     function toggleIsCheckW() {
         setIscheckW(!isCheckW)
     }
-    return <div className={`${isCheckW ? 'w-64' : 'w-14'} h-screen  px-3 py-4 overflow-y-auto bg-gray-50`}>
+    return <div className={`${isCheckW ? 'w-64' : 'w-14'} h-screen  px-3 py-4 overflow-y-auto bg-gray-50 border-r-2`}>
         <ul className="space-y-2  font-medium">
             <li className="flex justify-between">
                 <button onClick={toggleIsCheckW} className="flex  items-center p-2  text-gray-900 rounded-lg  hover:bg-gray-100  group">
@@ -45,25 +45,25 @@ function Sidebar() {
                         <path d="M11 6.025a1 1 0 0 0-1.065-.998 8.5 8.5 0 1 0 9.038 9.039A1 1 0 0 0 17.975 13H11V6.025Z" />
                     </svg>
                     <div className="flex justify-between w-full items-center mr-2">
-                        <span className=" ms-2 pl-1 text-base">ເມນູ</span>
-                        <svg class="w-3 h-3 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <span className=" ms-2 pl-1 text-base">ຈັດການຮ້ານ</span>
+                        <svg className="w-3 h-3 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                         </svg>
                     </div>
                 </button>
-                <div id="dropdown" class={`${isCheckW ? '' : 'bg-white shadow w-44'}  hidden   divide-y divide-gray-100 rounded-lg`}>
+                <div id="dropdown" className={`${isCheckW ? '' : 'bg-white shadow w-44'}  hidden   divide-y divide-gray-100 rounded-lg`}>
                     <ul className="py-2 w-full  text-sm text-gray-700 " aria-labelledby="dropdownDefaultButton">
                         <li>
-                            <a href="#" class="flex rounded-lg px-7 py-1 mb-3  hover:bg-gray-100 text-base w-52 ">ຈັດການອາຫານ</a>
+                            <a href="/managefood" className="flex rounded-lg px-7 py-1 mb-3  hover:bg-gray-100 text-base w-52 ">ຈັດການເມນູອາຫານ</a>
                         </li>
                         <li>
-                            <a href="#" class="flexrounded-lg  px-7 py-1 my-3  hover:bg-gray-100 text-base w-52 ">Settings</a>
+                            <a href="/managecategory" className="flexrounded-lg  px-7 py-1 my-3  hover:bg-gray-100 text-base w-52 ">ຈັດການປະເພດອາຫານ</a>
                         </li>
                         <li>
-                            <a href="#" class="flex rounded-lg  px-7 py-1 my-3  hover:bg-gray-100 text-base w-52 ">Earnings</a>
+                            <a href="/managezone" className="flex rounded-lg  px-7 py-1 my-3  hover:bg-gray-100 text-base w-52 ">ຈັດການໂຊນຮ້ານ</a>
                         </li>
                         <li>
-                            <a href="#" class="flex  px-7 py-1 my-3  hover:bg-gray-100 text-base w-52 ">Sign out</a>
+                            <a href="/managetable" className="flex  px-7 py-1 my-3  hover:bg-gray-100 text-base w-52 ">ຈັດການໂຕະ</a>
                         </li>
                     </ul>
                 </div>

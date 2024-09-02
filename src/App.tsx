@@ -4,6 +4,10 @@ import 'flowbite'
 import Authen from './restaurant/authen';
 import Payment from './webbox/payment';
 import HomeScreen from './restaurant/homescreen';
+import ManageFood from './restaurant/managefood/managefood';
+import ManageCategory from './restaurant/managefood/managecategory';
+import ManageZone from './restaurant/managefood/managezone';
+import ManageTables from './restaurant/managefood/managetables';
 
 function App() {
   const router = createBrowserRouter([
@@ -27,6 +31,27 @@ function App() {
        element:<HomeScreen/>
      
     },
+    {
+      path: "/managefood",
+      element:<ManageFood/>
+     
+    },
+    {
+      path: "/managecategory",
+      element:<ManageCategory/>
+     
+    },
+    {
+      path: "/managezone",
+      element:<ManageZone/>
+     
+    },
+    {
+      path: "/managetable",
+      element:<ManageTables/>
+     
+    },
+
 
    
 
