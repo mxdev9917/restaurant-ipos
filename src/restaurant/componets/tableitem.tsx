@@ -1,15 +1,17 @@
-
-
 import React from 'react';
 
+// Define the props type for the tableItem component
+interface TableItemProps {
+  onEdit: (str: string) => void; // Type for the onEdit function
+}
 
-
-function tableItem ({ onEdit }) {
-  // Add type annotation to the `str` parameter
-  const handleClick = (str) => {
-    // Call the onEdit function with a string parameter
-    onEdit(str);
+// Define the TableItem component
+const tableItem: React.FC<TableItemProps> = ({ onEdit }) => {
+  // Define handleClick function with proper typing
+  const handleClick = (str: string) => {
+    onEdit(str); // Call the onEdit function with a string parameter
   };
+
 
   return (
         <div className="flex flex-col  w-full h-full bg-cover bg-white shadow-xl rounded-lg">
@@ -27,7 +29,7 @@ function tableItem ({ onEdit }) {
                 </button>
                 
             </div>
-           <div className=' w-full h-full flex justify-center items-center text-5xl text-orange-500 font-bold pb-7' >ໂຕະ1</div>
+           <div className=' w-full h-full flex justify-center items-center text-3xl text-orange-500 font-bold pb-7' >ໂຕະ1</div>
 
         </div>
     )

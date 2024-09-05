@@ -8,6 +8,8 @@ import ManageFood from './restaurant/managefood/managefood';
 import ManageCategory from './restaurant/managefood/managecategory';
 import ManageZone from './restaurant/managefood/managezone';
 import ManageTables from './restaurant/managefood/managetables';
+import Dashboard from './restaurant/managefood/dashboard';
+import Test from './restaurant/test';
 
 function App() {
   const router = createBrowserRouter([
@@ -49,6 +51,17 @@ function App() {
     {
       path: "/managetable",
       element:<ManageTables/>
+     
+    },
+    {
+      path: "/dashboard",
+      element:<Dashboard/>
+     
+    },
+
+    {
+      path: "/test",
+      element:<Test/>
      
     },
 

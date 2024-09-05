@@ -1,14 +1,15 @@
-
-
 import React from 'react';
 
+// Define the props type for the tableItem component
+interface TableItemProps {
+  onEdit: (str: string) => void; // Type for the onEdit function
+}
 
-
-function FoodItem ({ onEdit }) {
-  // Add type annotation to the `str` parameter
-  const handleClick = (str) => {
-    // Call the onEdit function with a string parameter
-    onEdit(str);
+// Define the TableItem component
+const FoodItem: React.FC<TableItemProps> = ({ onEdit }) => {
+  // Define handleClick function with proper typing
+  const handleClick = (str: string) => {
+    onEdit(str); // Call the onEdit function with a string parameter
   };
 
   return (
@@ -26,7 +27,7 @@ function FoodItem ({ onEdit }) {
 
                 </button>
             </div>
-            <div className="w-full bg-slate-100 h-10 opacity-75 flex justify-center items-center text-black text-lg font-semibold">ຜັດເຜັດທະເລ</div>
+            <div className="w-full bg-slate-100 h-10 opacity-75 flex justify-center items-center text-black text-sທ md:text-base font-semibold">ຜັດເຜັດທະເລ</div>
         </div>
     )
 }

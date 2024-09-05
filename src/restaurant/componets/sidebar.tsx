@@ -2,14 +2,14 @@ import { useState } from "react"
 
 
 function Sidebar() {
-    const [isCheckW, setIscheckW] = useState(true);
+    const [isCheckW, setIscheckW] = useState(false);
    
 
-
+// absolute 
     function toggleIsCheckW() {
         setIscheckW(!isCheckW)
     }
-    return <div className={`${isCheckW ? 'w-64' : 'w-14'} h-screen  px-3 py-4 overflow-y-auto bg-gray-50 border-r-2`}>
+    return <div className={`${isCheckW ? 'w-64 absolute' : 'w-14   '} h-screen   px-3 py-4 overflow-y-auto bg-gray-50 border-r-2 `}>
         <ul className="space-y-2  font-medium">
             <li className="flex justify-between">
                 <button onClick={toggleIsCheckW} className="flex  items-center p-2  text-gray-900 rounded-lg  hover:bg-gray-100  group">
