@@ -1,31 +1,10 @@
-
+import ChartSales from "../componets/charts/chartsales";
 import Sidebar_Nav from "../componets/sidebar-nav"
 import ChartComponent from "../componets/charts/chartsales";
 import ChartTopProToDay from "../componets/charts/charttopprotoday";
 import ChartchartKichen from "../componets/charts/chartkichen";
-import { addDays } from 'date-fns';
-import { SetStateAction, useState } from 'react';
-import 'react-date-range/dist/styles.css'; // main css file
-import 'react-date-range/dist/theme/default.css'; // theme css file
 
-
-
-
-
-function Dashboardv() {
-
-    const [state, setState] = useState({
-        selection: {
-            startDate: new Date(),
-            endDate: null,
-            key: 'selection'
-        },
-        compare: {
-            startDate: new Date(),
-            endDate: addDays(new Date(), 3),
-            key: 'compare'
-        }
-    });
+function Dashboardv2() {
 
     return (
         <div className="flex flex-col">
@@ -33,18 +12,7 @@ function Dashboardv() {
             <div className="p-1 sm:ml-64 flex-col">
                 <div className=" flex  flex-col 2xl:flex-row   mt-14">
                     <div className=" w-full h-fit  flex p-2 flex-col justify-between mr-2.5">
-                        <div className="flex w-full h-16 justify-between items-center">
-                            <p className="pt-3">Dashboard</p>
-                            {/* <input type="date" /> */}
 
-
-<div id="datepicker-inline" inline-datepicker data-date="02/25/2024"></div>
-
-
-
-
-
-                        </div>
                         <div className="flex flex-col lg:flex-row w-full gap-x-1">
                             <div className="flex flex-row lg:flex-col xl:flex-row w-full">
                                 <div className=" w-full h-fit m-1 bg-white shadow-md  p-3">
@@ -211,8 +179,8 @@ function Dashboardv() {
             </div>
 
 
-        </div >
+        </div>
     );
 }
 
-export default Dashboardv;
+export default Dashboardv2;

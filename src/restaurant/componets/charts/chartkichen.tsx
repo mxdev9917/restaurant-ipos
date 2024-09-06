@@ -1,31 +1,28 @@
-// ChartComponent.tsx
+// Import React and the chart component
 import React from 'react';
 import ApexCharts from 'react-apexcharts';
-import { ApexOptions } from 'apexcharts';
+import PropTypes from 'prop-types';
 
-const ChartComponent: React.FC = () => {
-  const options: ApexOptions = {
+// Define the ChartchartKichen component
+const ChartchartKichen = () => {
+  const options = {
     series: [
       {
         name: 'series1',
-        data: [321, 400, 258, 501, 482, 409, 100]
-      },
-      {
-        name: 'series2',
-        data: [411, 321, 445, 302, 304, 522, 421]
+        data: [321, 400, 258, 501, 482, 409, 100] // Keep only this series
       }
     ],
     chart: {
-      height: 350,
+      height: 300,
       type: 'area'
     },
-    colors: ['#FF5733', 'green'], // Define colors for each series
+    colors: ['#FF5733'], // Define color for the remaining series
     dataLabels: {
       enabled: false
     },
     stroke: {
       curve: 'smooth',
-      width:1.5,
+      width: 1.5,
     },
     fill: {
       type: 'gradient',
@@ -33,7 +30,7 @@ const ChartComponent: React.FC = () => {
         shade: 'light',
         type: 'vertical', // You can also use 'horizontal' or 'diagonal'
         shadeIntensity: 0.5,
-        gradientToColors: ['#FFC300', '#4CAF50'], // Colors for the gradient
+        gradientToColors: ['#FFC300'], // Color for the gradient
         inverseColors: false,
         opacityFrom: 0.7,
         opacityTo: 0.1,
@@ -64,12 +61,22 @@ const ChartComponent: React.FC = () => {
       <h1>Area Chart Example</h1>
       <ApexCharts
         options={options}
-        series={options.series} // Correctly use the series from options
+        series={options.series} // Use the updated series from options
         type="area"
-        height={350}
+        height={300}
       />
     </div>
   );
 };
 
-export default ChartComponent;
+// Define prop types
+ChartchartKichen.propTypes = {
+  // Removed series prop validation since we no longer use it
+};
+
+// Default props
+ChartchartKichen.defaultProps = {
+  // Removed series default props since we no longer use it
+};
+
+export default ChartchartKichen;

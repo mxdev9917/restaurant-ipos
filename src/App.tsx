@@ -9,6 +9,7 @@ import ManageCategory from './restaurant/managefood/managecategory';
 import ManageZone from './restaurant/managefood/managezone';
 import ManageTables from './restaurant/managefood/managetables';
 import Dashboard from './restaurant/managefood/dashboard';
+import Dashboardv2 from './restaurant/managefood/dashboardv2';
 import Test from './restaurant/test';
 
 function App() {
@@ -56,6 +57,11 @@ function App() {
     {
       path: "/dashboard",
       element:<Dashboard/>
+     
+    },
+    {
+      path: "/dashboardv2",
+      element:<Dashboardv2/>
      
     },
 
