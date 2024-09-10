@@ -3,29 +3,19 @@ import Sidebar_Nav from "../componets/sidebar-nav"
 import ChartComponent from "../componets/charts/chartsales";
 import ChartTopProToDay from "../componets/charts/charttopprotoday";
 import ChartchartKichen from "../componets/charts/chartkichen";
-import { addDays } from 'date-fns';
-import { SetStateAction, useState } from 'react';
-import 'react-date-range/dist/styles.css'; // main css file
-import 'react-date-range/dist/theme/default.css'; // theme css file
-
-
-
-
+import Datepicker from "react-tailwindcss-datepicker";
+import React, { useState } from 'react';
 
 function Dashboardv() {
 
-    const [state, setState] = useState({
-        selection: {
+    const NEXT_MONTH = new Date();
+    NEXT_MONTH.setMonth(NEXT_MONTH.getMonth() + 1);
+
+    
+        const [value, setValue] = useState({
             startDate: new Date(),
-            endDate: null,
-            key: 'selection'
-        },
-        compare: {
-            startDate: new Date(),
-            endDate: addDays(new Date(), 3),
-            key: 'compare'
-        }
-    });
+            endDate: NEXT_MONTH
+        });
 
     return (
         <div className="flex flex-col">
@@ -36,14 +26,15 @@ function Dashboardv() {
                         <div className="flex w-full h-16 justify-between items-center">
                             <p className="pt-3">Dashboard</p>
                             {/* <input type="date" /> */}
+                            <div className="w-60 md:w-72  bg-white z-40 text-orange-500">
+                                <Datepicker
+                                    primaryColor={"orange"} 
+                                    value={value}
+                                    onChange={newValue => setValue(newValue)}
+                                    showShortcuts={true}
+                                />
 
-
-<div id="datepicker-inline" inline-datepicker data-date="02/25/2024"></div>
-
-
-
-
-
+                            </div>
                         </div>
                         <div className="flex flex-col lg:flex-row w-full gap-x-1">
                             <div className="flex flex-row lg:flex-col xl:flex-row w-full">
@@ -52,7 +43,7 @@ function Dashboardv() {
                                         <svg className="w-8 h-8 text-green-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.6 16.733c.234.269.548.456.895.534a1.4 1.4 0 0 0 1.75-.762c.172-.615-.446-1.287-1.242-1.481-.796-.194-1.41-.861-1.241-1.481a1.4 1.4 0 0 1 1.75-.762c.343.077.654.26.888.524m-1.358 4.017v.617m0-5.939v.725M4 15v4m3-6v6M6 8.5 10.5 5 14 7.5 18 4m0 0h-3.5M18 4v3m2 8a5 5 0 1 1-10 0 5 5 0 0 1 10 0Z" />
                                         </svg>
-                                        <p className="text-sm md:text-base">Total Sales</p>
+                                        <p className="text-sm  md:text-base">Total Sales</p>
                                     </div>
                                     <span className="text-[23px] text-gray-600 font-bold">50.000.000</span>
 
