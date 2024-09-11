@@ -12,6 +12,8 @@ import Dashboard from './restaurant/managefood/dashboard';
 import Dashboardv2 from './restaurant/managefood/dashboardv2';
 import Test from './restaurant/test';
 import ManageUser from './restaurant/manageuser';
+import SelectTatles from './restaurant/sale/selecttatle';
+import Carts from './restaurant/sale/carts';
 
 function App() {
   const router = createBrowserRouter([
@@ -66,17 +68,29 @@ function App() {
      
     },
     {
+      path: "/manageuser",
+      element:<ManageUser/>
+     
+    },
+    {
+      path: "/sale",
+      element:<SelectTatles/>
+     
+    },
+    {
+      path: "/cart",
+      element:<Carts/>
+     
+    },
+
+
+    {
       path: "/test",
       element:<Test/>
      
     },
 
-    {
-      path: "/manageuser",
-      element:<ManageUser/>
-     
-    },
-
+   
 
    
 

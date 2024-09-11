@@ -23,9 +23,9 @@ function manageUser() {
     function togglePasswordType() {
         setPasswordType(!passwordType);
     }
-    function handleModel(evens) {
+    function handleModel(evens:string) {
 
-        console.log(evens);
+     
 
         if (evens == 'add') {
             console.log('if add');
