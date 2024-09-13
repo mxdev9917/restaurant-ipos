@@ -1,23 +1,44 @@
-import Nav from "./componets/nav"
+import Nav from "../componets/nav"
 import TableItemSale from "./componets/tableitemsale";
 import FoodItemSale from "./componets/fooditem";
 import ZoneItem from "./componets/zoneitem"
+import CategoryItem from "./componets/categoryitem";
 import { useState } from "react";
 
 function Carts() {
     const items = Array.from({ length: 100 }, (_, index) => index);
     const [handleModle, setHandleModle] = useState(true);
+    const [foodId, setFoodId] = useState<number>();
+    const [foodName, setFoodName] = useState<string>();
+    const [qty, setQty] = useState();
+    const [description, setDescription] = useState();
 
-    function handleClick(id) {
+    function handleClick(id:number, name:string) {
         setHandleModle(!handleModle);
         console.log(id);
-
-
+        console.log(name);
+        setFoodId(id)
+        setFoodName(name)
     }
     function handleClickCloseModle() {
         setHandleModle(!handleModle);
 
     }
+    const handleSubmit = async (e:any) => {
+        e.preventDefault();
+        console.log('ok');
+        
+    }
+    const handleChangeQty = (e:any) => {
+        setQty(e.target.value);
+        console.log(e.target.value);
+    }
+    const handleChangeDescription = (e:any) => {
+        setDescription(e.target.value);
+        console.log(e.target.value);
+    }
+  
+
 
 
     return (
@@ -28,7 +49,7 @@ function Carts() {
                     <div className="h-fit w-full flex gap-3 px-5 overflow-x-auto snap-x">
                         {items.map((_, index) => (
                             <div key={index} className="py-5">
-                                <ZoneItem />
+                                <CategoryItem />
                             </div>
                         ))}
                     </div>
@@ -44,95 +65,97 @@ function Carts() {
                         <div className="flex flex-col w-80 h-fit bg-white rounded-lg shadow-lg p-3">
 
                             <div className="flex justify-between items-center border-b-2">
-                                <p className="text-xl pb-2 text-gray-700 font-semibold">ຜັດເຜັດທະເລ</p>
+                                <p className="text-xl pb-2 text-gray-700 font-semibold">{foodName}</p>
                                 <button onClick={handleClickCloseModle} className=" text-red-500">ຍົກເລິກ</button>
                             </div>
-                            <label htmlFor="number-input" className="block my-2 text-sm font-medium text-gray-900 ">ຈຳນວນ:</label>
-                            <input type="number" min={1} id="number-input" aria-describedby="helper-text-explanation"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-none focus:right-0 block w-full p-2.5  " placeholder="1" required />
-                            <label htmlFor="message" className="block my-2 text-sm font-medium text-gray-900 ">ຈຳນວນ:</label>
-                            <textarea id="message" rows="5" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-none focus:right-0 block w-full p-2.5  " placeholder="..."></textarea>
-                            <button type="submit" class="text-white my-2 bg-orange-500 hover:bg-orange-600 focus:ring-2 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  ">ສົ່ງຄົວ</button>
+                            <form onSubmit={handleSubmit} >
+                                <label htmlFor="number-input" className="block my-2 text-sm font-medium text-gray-900 ">ຈຳນວນ:</label>
+                                <input onChange={handleChangeQty} value={qty} type="number" min={1} id="number-input" aria-describedby="helper-text-explanation"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-none focus:right-0 block w-full p-2.5  " placeholder="1" required />
+                                <label htmlFor="message" className="block my-2 text-sm font-medium text-gray-900 ">ຈຳນວນ:</label>
+                                <textarea onChange={handleChangeDescription} value={description} id="message" rows={5} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-none focus:right-0 block w-full p-2.5  " placeholder="..."></textarea>
+                                <button type="submit" className="text-white my-2 bg-orange-500 hover:bg-orange-600 focus:ring-2 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  ">ສົ່ງຄົວ</button>
+                            </form>
                         </div>
                     </div>
                 </div>
                 <div className="min-w-[400px] hidden xl:flex h-[100vh] shadow-lg   flex-col justify-between p-3">
-                    <p className="text-3xl pb-3 text-orange-500 font-semibold flex justify-center"> ໂຕະ1</p>
-                    <div class="relative h-full">
-                        <table class="w-full  text-sm text-left rtl:text-right text-gray-500 ">
-                            <thead class="text-sm text-gray-700 uppercase bg-gray-50 ">
+                    <p className="text-3xl pb-3 text-orange-500 font-semibold flex justify-center">ລາຍການອາຫານ ໂຕະ1</p>
+                    <div className="relative h-full">
+                        <table className="w-full  text-sm text-left rtl:text-right text-gray-500 ">
+                            <thead className="text-sm text-gray-700 uppercase bg-gray-50 ">
                                 <tr>
-                                    <th scope="col" class="px-3 py-3">
+                                    <th scope="col" className="px-3 py-3">
                                         ຊື່ເມນູອາຫານ
                                     </th>
-                                    <th scope="col" class="px-3 py-3">
+                                    <th scope="col" className="px-3 py-3">
                                         ຈຳນວນ
                                     </th>
-                                    <th scope="col" class="px-3 py-3">
+                                    <th scope="col" className="px-3 py-3">
                                         ລາຄາ
                                     </th>
-                                    <th scope="col" class="px-3 py-3">
+                                    <th scope="col" className="px-3 py-3">
                                         ເມນູ
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <tr className="bg-white border-b dark:border-gray-700">
+                                    <th scope="row" className="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         Apple MacBook Pro 17"
                                     </th>
-                                    <td class="px-3 py-4">
+                                    <td className="px-3 py-4">
                                         3
                                     </td>
 
-                                    <td class="px-3 py-4">
+                                    <td className="px-3 py-4">
                                         $2999
                                     </td>
-                                    <td class="px-3 py-4">
-                                       <button className="hover:bg-slate-100 p-1.5 rounded-full">
-                                        <svg className="w-6 h-6 text-red-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
-                                        </svg>
+                                    <td className="px-3 py-4">
+                                        <button className="hover:bg-slate-100 p-1.5 rounded-full">
+                                            <svg className="w-6 h-6 text-red-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
+                                            </svg>
                                         </button>
                                     </td>
                                 </tr>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                <tr className="bg-white border-b dark:border-gray-700">
+                                    <th scope="row" className="px-3 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                         Microsoft Surface Pro
                                     </th>
-                                    <td class="px-3 py-4">
+                                    <td className="px-3 py-4">
                                         5
                                     </td>
 
-                                    <td class="px-3 py-4">
+                                    <td className="px-3 py-4">
                                         $1999
                                     </td>
-                                    <td class="px-3 py-4">
+                                    <td className="px-3 py-4">
                                         <button className="hover:bg-slate-100 p-1.5 rounded-full">
-                                        <svg className="w-6 h-6 text-red-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
-                                        </svg>
+                                            <svg className="w-6 h-6 text-red-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
+                                            </svg>
                                         </button>
                                     </td>
                                 </tr>
-                                <tr class="bg-white dark:bg-gray-800">
-                                    <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <tr className="bg-white">
+                                    <th scope="row" className="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         Magic Mouse 2
                                     </th>
-                                    <td class="px-3 py-4">
+                                    <td className="px-3 py-4">
                                         7
                                     </td>
 
-                                    <td class="px-3 py-4">
-                                        $99
+                                    <td className="px-3 py-4">
+                                        $999.000
                                     </td>
-                                    <td class="px-3 py-4">
+                                    <td className="px-3 py-4">
                                         <button>
-                                        <button className="hover:bg-slate-100 p-1.5 rounded-full">
-                                        <svg className="w-6 h-6 text-red-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
-                                        </svg>
-                                        </button>
+                                            <button className="hover:bg-slate-100 p-1.5 rounded-full">
+                                                <svg className="w-6 h-6 text-red-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
+                                                </svg>
+                                            </button>
                                         </button>
                                     </td>
                                 </tr>
@@ -147,17 +170,17 @@ function Carts() {
                         </div>
                         <div className="flex justify-between my-1 text-sm">
                             <p>Vat 10%</p>
-                            <p>$6,592.00</p>
+                            <p >$6,5</p>
                         </div>
-                        <div className="flex justify-between my-1 text-sm border-t-2 py-2">
-                            <p>ລາຄາລວມ</p>
+                        <div className="flex justify-between my-1 text-sm border-y-2 py-2">
+                            <p className="font-semibold">ລາຄາລວມ</p>
                             <p className="text-orange-500">$6,592.00</p>
                         </div>
 
                         <div className="w-full flex justify-end py-5">
-                            <button type="button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-2 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none ">ໄລ່ເງີນ</button>
-                            <button type="button" class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none ">ລວມໂຕະ</button>
-                            <button type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-2 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none ">ຍົກເລິກ</button>
+                            <button type="button" className="text-white bg-green-700 hover:bg-green-800 focus:ring-2 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none ">ໄລ່ເງີນ</button>
+                            <button type="button" className="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none ">ລວມໂຕະ</button>
+                            <button type="button" className="text-white bg-red-700 hover:bg-red-800 focus:ring-2 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none ">ຍົກເລິກ</button>
                         </div>
 
 

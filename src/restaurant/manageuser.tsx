@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom"
 import { useState } from "react"
 import Sidebar_Nav from "./componets/sidebar-nav"
-import { is } from "date-fns/locale"
+
 function manageUser() {
     const [isCheckModel, setisCheckModel] = useState(false)
     const [titleModel, setTitleModel] = useState('')

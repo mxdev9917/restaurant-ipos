@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import ZoneItem from "./componets/zoneitem"
 import TableItemSale from "./componets/tableitemsale";
-import Nav from "./componets/nav";
+import Nav from "../componets/nav";
 function selectTatles() {
 
     const items = Array.from({ length: 50 }, (_, index) => index);

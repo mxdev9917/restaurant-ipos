@@ -14,6 +14,8 @@ import Test from './restaurant/test';
 import ManageUser from './restaurant/manageuser';
 import SelectTatles from './restaurant/sale/selecttatle';
 import Carts from './restaurant/sale/carts';
+import Help from './restaurant/help';
+import Profile from './restaurant/profile';
 
 function App() {
   const router = createBrowserRouter([
@@ -82,7 +84,16 @@ function App() {
       element:<Carts/>
      
     },
-
+    {
+      path: "/help",
+      element:<Help/>
+     
+    },
+    {
+      path: "/profile",
+      element:<Profile/>
+     
+    },
 
     {
       path: "/test",
