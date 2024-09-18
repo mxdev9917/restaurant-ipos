@@ -8,12 +8,12 @@ import { useState } from "react";
 function Carts() {
     const items = Array.from({ length: 100 }, (_, index) => index);
     const [handleModle, setHandleModle] = useState(true);
-    const [foodId, setFoodId] = useState<number>();
-    const [foodName, setFoodName] = useState<string>();
+    const [foodId, setFoodId] = useState();
+    const [foodName, setFoodName] = useState();
     const [qty, setQty] = useState();
     const [description, setDescription] = useState();
 
-    function handleClick(id:number, name:string) {
+    function handleClick(id, name) {
         setHandleModle(!handleModle);
         console.log(id);
         console.log(name);
@@ -24,16 +24,16 @@ function Carts() {
         setHandleModle(!handleModle);
 
     }
-    const handleSubmit = async (e:any) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('ok');
         
     }
-    const handleChangeQty = (e:any) => {
+    const handleChangeQty = (e) => {
         setQty(e.target.value);
         console.log(e.target.value);
     }
-    const handleChangeDescription = (e:any) => {
+    const handleChangeDescription = (e) => {
         setDescription(e.target.value);
         console.log(e.target.value);
     }

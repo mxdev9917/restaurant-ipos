@@ -16,6 +16,8 @@ import SelectTatles from './restaurant/sale/selecttatle';
 import Carts from './restaurant/sale/carts';
 import Help from './restaurant/help';
 import Profile from './restaurant/profile';
+import SaleReport from './restaurant/report/salereport';
+import SettingBill from './restaurant/settimg/bill';
 
 function App() {
   const router = createBrowserRouter([
@@ -92,6 +94,16 @@ function App() {
     {
       path: "/profile",
       element:<Profile/>
+     
+    },
+    {
+      path: "/salereport",
+      element:<SaleReport/>
+     
+    },
+    {
+      path: "/settingbill",
+      element:<SettingBill/>
      
     },
 
