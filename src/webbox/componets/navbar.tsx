@@ -8,8 +8,8 @@ function NavBar() {
 
             <nav className="bg-[#3a393a] md:w-5/5 lg:w-4/5 border-gray-200  w-screen  md:rounded-full rounded-none flex justify-between items-center mx-auto py-2 px-4">
                 <div className=" flex ">
-                    <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
-                        <img src="src/assets/images/Qpos.png" className="h-11" alt="Flowbite Logo" />
+                    <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+                    <p className="text-4xl font-extrabold text-orange-500  pl-5">IPOS.LA</p>
                     </a>
                 </div>
                 <ul id="navbar-default" className=" bg-[#3a393a] border-t-[0.7px] md:border-none  hidden  text-sm text-white  flex-col   mr-0 md:mr-2  w-full justify-end right-0 top-14 absolute md:relative md:top-0 md:flex md:flex-row " aria-labelledby="dropdownLargeButton">

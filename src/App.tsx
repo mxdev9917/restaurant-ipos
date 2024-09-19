@@ -18,6 +18,7 @@ import Help from './restaurant/help';
 import Profile from './restaurant/profile';
 import SaleReport from './restaurant/report/salereport';
 import SettingBill from './restaurant/settimg/bill';
+import UserManual from './restaurant/manual';
 
 function App() {
   const router = createBrowserRouter([
@@ -104,6 +105,11 @@ function App() {
     {
       path: "/settingbill",
       element:<SettingBill/>
+     
+    },
+    {
+      path: "/manual",
+      element:<UserManual/>
      
     },
 

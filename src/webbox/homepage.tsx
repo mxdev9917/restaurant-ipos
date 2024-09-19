@@ -37,7 +37,7 @@ function homePage() {
                 <Card />
                 <Card />
                 <Card />
-                <Card />
+                {/* <Card /> */}
             </div>
             <div id="download"  className="md:w-5/5 lg:w-4/5 h-screen flex flex-col my-7 items-center">
                 <div className="w-full  bg-white md:flex  justify-between">
