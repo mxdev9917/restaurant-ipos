@@ -7,8 +7,8 @@ function manualItem() {
             </svg>
             <p className="py-3">ການໃຊ້ງານ</p>
             <div className="flex gap-2 justify-end w-full h-full px-1 py-2 ">
-                <Link className="w-fit h-fit bg-orange-500 px-3 py-1 rounded-md text-white ">ວີດີໂອ</Link>
-                <Link className="w-fit h-fit bg-green-500 px-4 py-1 rounded-md text-white ">ອ່ານ</Link>
+                <Link to="/video" className="w-fit h-fit bg-orange-500 px-3 py-1 rounded-md text-white">ວີດີໂອ</Link>
+                <Link to="/read" className="w-fit h-fit bg-green-500 px-4 py-1 rounded-md text-white">ອ່ານ</Link>
             </div>
 
 

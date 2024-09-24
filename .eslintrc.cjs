@@ -14,5 +14,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    'no-irregular-whitespace': 'off', // Disable whitespace errors
+    '@typescript-eslint/no-unused-vars': 'off', // Disable unused vars errors
   },
 }

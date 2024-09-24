@@ -1,13 +1,12 @@
-import React from 'react';
 import ApexCharts from 'react-apexcharts';
 
 function ChartTopProToDay() {
-  const options = {
+  const options: ApexCharts.ApexOptions = {
     series: [{
       data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
     }],
     chart: {
-      type: 'bar',
+      type: 'bar' as const, // Ensure this is a valid type
       height: 350,
       toolbar: {
         show: true  // Show toolbar for interaction

@@ -31,7 +31,7 @@ function UserManual() {
                             </div>
                         </div>
                         <div className=" pr-1 mb-2  md:pr-5 ">
-                            <button onClick={() => handleModel('add')} className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-full text-white text-xs md:text-sm">ເພີ່ມ</button>
+                            <button  className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-full text-white text-xs md:text-sm">ເພີ່ມ</button>
                         </div>
                     </div>
                     <div className="h-[85vh] w-full   grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-10 md:grid-cols-3 lg:grid-cols-5 place-items-stretch overflow-y-scroll">

@@ -10,7 +10,6 @@ import ManageZone from './restaurant/managefood/managezone';
 import ManageTables from './restaurant/managefood/managetables';
 import Dashboard from './restaurant/managefood/dashboard';
 import Dashboardv2 from './restaurant/managefood/dashboardv2';
-import Test from './restaurant/test';
 import ManageUser from './restaurant/manageuser';
 import SelectTatles from './restaurant/sale/selecttatle';
 import Carts from './restaurant/sale/carts';
@@ -112,18 +111,6 @@ function App() {
       element:<UserManual/>
      
     },
-
-    {
-      path: "/test",
-      element:<Test/>
-     
-    },
-
-   
-
-   
-
-
 
     // {
     //   path: "/detail/:name",

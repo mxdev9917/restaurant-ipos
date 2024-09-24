@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import ZoneItem from "./componets/zoneitem"
 import TableItemSale from "./componets/tableitemsale";
 import Nav from "../componets/nav";

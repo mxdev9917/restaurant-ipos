@@ -1,4 +1,3 @@
-import ChartSales from "../componets/charts/chartsales";
 import Sidebar_Nav from "../componets/sidebar-nav"
 import ChartComponent from "../componets/charts/chartsales";
 import ChartTopProToDay from "../componets/charts/charttopprotoday";

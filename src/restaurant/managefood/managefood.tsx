@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import Sidebar_Nav from "../componets/sidebar-nav"
 import { useState } from "react"
 import FoodItem from "../componets/fooditem"
-function manageFood() {
+function ManageFood() {
     const [isCheckModel, setisCheckModel] = useState(false)
     const [titleModel, setTitleModel] = useState('')
     const [isCheckEven, setisEven] = useState(true)
@@ -153,7 +153,7 @@ function manageFood() {
     )
 }
 
-export default manageFood
+export default ManageFood
 
 
 

@@ -1,44 +1,42 @@
 // Import React and the chart component
-import React from 'react';
-import ApexCharts from 'react-apexcharts';
-import PropTypes from 'prop-types';
+import ApexCharts from "react-apexcharts";
 
 // Define the ChartchartKichen component
 const ChartchartKichen = () => {
-  const options = {
+  const options: ApexCharts.ApexOptions = {
     series: [
       {
-        name: 'series1',
-        data: [321, 400, 258, 501, 482, 409, 100] // Keep only this series
-      }
+        name: "series1",
+        data: [321, 400, 258, 501, 482, 409, 100], // Keep only this series
+      },
     ],
     chart: {
       height: 300,
-      type: 'area'
+      type: "area",
     },
-    colors: ['#FF5733'], // Define color for the remaining series
+    colors: ["#FF5733"], // Define color for the remaining series
     dataLabels: {
-      enabled: false
+      enabled: false,
     },
     stroke: {
-      curve: 'smooth',
+      curve: "smooth",
       width: 1.5,
     },
     fill: {
-      type: 'gradient',
+      type: "gradient",
       gradient: {
-        shade: 'light',
-        type: 'vertical', // You can also use 'horizontal' or 'diagonal'
+        shade: "light",
+        type: "vertical", // You can also use 'horizontal' or 'diagonal'
         shadeIntensity: 0.5,
-        gradientToColors: ['#FFC300'], // Color for the gradient
+        gradientToColors: ["#FFC300"], // Color for the gradient
         inverseColors: false,
         opacityFrom: 0.7,
         opacityTo: 0.1,
-        stops: [0, 100]
-      }
+        stops: [0, 100],
+      },
     },
     xaxis: {
-      type: 'datetime',
+      type: "datetime",
       categories: [
         "2018-09-19T00:00:00.000Z",
         "2018-09-19T01:30:00.000Z",
@@ -46,14 +44,14 @@ const ChartchartKichen = () => {
         "2018-09-19T03:30:00.000Z",
         "2018-09-19T04:30:00.000Z",
         "2018-09-19T05:30:00.000Z",
-        "2018-09-19T06:30:00.000Z"
-      ]
+        "2018-09-19T06:30:00.000Z",
+      ],
     },
     tooltip: {
       x: {
-        format: 'dd/MM/yy HH:mm'
-      }
-    }
+        format: "dd/MM/yy HH:mm",
+      },
+    },
   };
 
   return (

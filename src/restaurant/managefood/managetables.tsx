@@ -3,7 +3,7 @@ import { useState } from "react"
 import Sidebar_Nav from "../componets/sidebar-nav"
 import TableItem from "../componets/tableitem"
 
-function manageTables() {
+function ManageTables() {
     const [isCheckModel, setisCheckModel] = useState(false)
     const [titleModel, setTitleModel] = useState('')
     const [isCheckEven, setisEven] = useState(true)
@@ -128,4 +128,4 @@ function manageTables() {
     )
 }
 
-export default manageTables
+export default ManageTables
