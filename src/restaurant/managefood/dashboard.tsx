@@ -4,7 +4,7 @@ import ChartComponent from "../componets/charts/chartsales";
 import ChartTopProToDay from "../componets/charts/charttopprotoday";
 import ChartchartKichen from "../componets/charts/chartkichen";
 import Datepicker from "react-tailwindcss-datepicker";
-import React, { useState } from 'react';
+import  { useState } from 'react';
 
 function Dashboardv() {
 
@@ -25,7 +25,6 @@ function Dashboardv() {
                     <div className=" w-full h-fit  flex p-2 flex-col justify-between mr-2.5">
                         <div className="flex w-full h-16 justify-between items-center">
                             <p className="pt-3">Dashboard</p>
-                            {/* <input type="date" /> */}
                             <div className="w-60 md:w-72  bg-white z-40 text-orange-500">
                                 <Datepicker
                                     primaryColor={"orange"} 
@@ -33,7 +32,7 @@ function Dashboardv() {
                                     onChange={newValue => setValue(newValue)}
                                     showShortcuts={true}
                                 />
-
+ 
                             </div>
                         </div>
                         <div className="flex flex-col lg:flex-row w-full gap-x-1">

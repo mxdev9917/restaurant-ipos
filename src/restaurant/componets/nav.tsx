@@ -1,7 +1,8 @@
-
+import Language from "../../webbox/componets/language"
+import Logo from "./logo"
 function nav() {
     return (
-        <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
+        <nav className="fixed top-0 z-50 w-full bg-[#3a393a] border-b border-gray-200 ">
             <div className="px-3 py-3 lg:px-5 lg:pl-3">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center justify-start rtl:justify-end">
@@ -11,13 +12,11 @@ function nav() {
                                 <path clipRule="evenodd" fillRule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                             </svg>
                         </button>
-                        <a href="https://flowbite.com" className="flex ms-2 md:me-24">
-                            <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 me-3" alt="FlowBite Logo" />
-                            <span className="self-center text-xl font-extrabold text-orange-500 sm:text-2xl whitespace-nowrap ">IPOS.LA</span>
-                        </a>
+                        <Logo/>
                     </div>
                     <div className="flex items-center">
                         <div className="flex items-center ms-3">
+                            <Language/>
                             <div>
                                 <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 " aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                     <span className="sr-only">Open user menu</span>
