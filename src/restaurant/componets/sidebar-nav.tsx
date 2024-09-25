@@ -1,9 +1,10 @@
-
+import Nav from "./nav"
 function Sidebar_Nav() {
 
 
     return (
         <>
+            <Nav />
             <aside id="separator-sidebar" className="fixed  top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
                 <div className="h-full px-3 py-5 overflow-y-auto bg-gray-50 ">
                     <ul className="space-y-3 font-medium">

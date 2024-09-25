@@ -1,8 +1,8 @@
-import HomePage from './website/homepage';
+import HomePage from './webbox/homepage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'flowbite'
 import Authen from './restaurant/authen';
-import Payment from './website/payment';
+import Payment from './webbox/payment';
 import HomeScreen from './restaurant/homescreen';
 import ManageFood from './restaurant/managefood/managefood';
 import ManageCategory from './restaurant/managefood/managecategory';

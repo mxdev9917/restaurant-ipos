@@ -1,6 +1,6 @@
-import Language from "../../website/componets/language"
+import Language from "../../webbox/componets/language"
 import Logo from "./logo"
-function nav() {
+function Nav() {
     return (
         <nav className="fixed top-0 z-50 w-full bg-[#3a393a] border-b border-gray-200 ">
             <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -52,4 +52,4 @@ function nav() {
         </nav>
     )
 }
-export default nav
+export default Nav
