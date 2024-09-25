@@ -153,7 +153,7 @@ function homePage() {
                     <div className="font-normal text-white flex">
                         <Link to={'#'} >ເງື່ອນໄຂການໃຫ້ບໍລິການ</Link>
                         <p>|</p>
-                        <Link className="focus:text-orange-500" to={'#'}>ນະໂຍບາຍສ່ວນຕົວ</Link>
+                        <Link className="focus:text-orange-500" to={'/dashboard'}>ນະໂຍບາຍສ່ວນຕົວ</Link>
                     </div>
                 </div>
 

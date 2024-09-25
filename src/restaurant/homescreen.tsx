@@ -1,6 +1,6 @@
 
 import Sidebar from "../restaurant/componets/sidebar"
-import NavBar from "../webbox/componets/navbar"
+import NavBar from "../website/componets/navbar"
 function HomeScreen() {
 
     return (
