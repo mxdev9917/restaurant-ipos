@@ -1,4 +1,4 @@
-import Language from "../../webbox/componets/language"
+import Language from "../../website/componets/language"
 import Logo from "./logo"
 function nav() {
     return (
