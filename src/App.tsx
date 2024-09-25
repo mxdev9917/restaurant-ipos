@@ -16,7 +16,7 @@ import Carts from './restaurant/sale/carts';
 import Help from './restaurant/help';
 import Profile from './restaurant/profile';
 import SaleReport from './restaurant/report/salereport';
-import SettingBill from './restaurant/settimg/bill';
+import SettingBill from './restaurant/setting/bill';
 import UserManual from './restaurant/manual';
 
 function App() {

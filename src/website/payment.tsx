@@ -18,7 +18,7 @@ function Payment() {
         <div className="w-screen  flex flex-col  items-center relative">
 
             <div className="flex justify-between md:w-3/5 w-4/5 py-7 relative">
-                <img className="w-24" src="/src/assets/images/Qpos.png" alt="" />
+                <img className="w-24" src="images/Qpos.png" alt="" />
                 <button onClick={toggleSignIn} className="flex justify-center items-center py-2 px-5 rounded-md border-2 border-orange-500 bg-transparent focus:ring-1 focus:ring-orange-300 shadow-2xl text-base font-bold text-orange-500">Log in</button>
                 <div className={` w-72 ${isCheckSignIn ? 'block' : 'hidden'} h-48 bg-transparent absolute right-0 top-20 flex flex-col items-end `}>
                     <div className="w-7 h-7 mr-7 rotate-45 bg-white"></div>
@@ -176,7 +176,7 @@ function Payment() {
                         </div>
                     </div>
                     <div className="w-[300px] h-auto bg-white my-5 pb-10 pt-3 rounded-md shadow-2xl flex flex-col items-center ">
-                        <img className="w-[250px] my-3" src="/src/assets/images/qr.jpeg" alt="" />
+                        <img className="w-[250px] my-3" src="images/qr.jpeg" alt="" />
                         <p className="text-2xl font-semibold text-orange-500">EH MIXAI</p>
                         <p className="text-lg font-semibold text-[#3a393a] my-2">010-12-00-01456791-001</p>
                         <div className="py-3 px-5">

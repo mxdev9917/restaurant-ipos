@@ -34,7 +34,7 @@ function nav() {
                                 </div>
                                 <ul className="py-1" role="none">
                                     <li>
-                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100   " role="menuitem">ກັບສູ່ໜ້າຫຼັກ</a>
+                                        <a href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100   " role="menuitem">ກັບສູ່ໜ້າຫຼັກ</a>
                                     </li>
                                     <li>
                                         <a href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100   " role="menuitem">Proflie</a>

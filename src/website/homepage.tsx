@@ -49,7 +49,7 @@ function homePage() {
                         <p className="pb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic</p>
                         <div className=" h-full flex items-end">
                             <button type="button" className="flex items-end text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none ">
-                                <img className="w-6 h-6 mr-2" src="src/assets/images/svg/android.svg" alt="" />
+                                <img className="w-6 h-6 mr-2" src="images/svg/android.svg" alt="" />
                                 Android
                             </button>
                             <button type="button" className="flex items-end text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none ">
@@ -71,7 +71,7 @@ function homePage() {
                     <div className="flex flex-col items-start  md:flex-row   w-full ">
                         <div className=" w-[350px] h-[450px] bg-white rounded-md shadow-xl m-2  flex flex-col items-center hover:bg-orange-500 cursor-pointer">
                             <div className="w-20 h-20 bg-transparent rounded-b-full flex justify-center items-center ">
-                                <img className="w-14 h-14 " src="src/assets/images/svg/android.svg" alt="" /></div>
+                                <img className="w-14 h-14 " src="images/svg/android.svg" alt="" /></div>
                             <div className="w-full  flex justify-center mt-4 mb-2 text-2xl font-semibold" >ສຳລັບ Android</div>
                             <div className="flex flex-col w-[90%] h-full  rounded-md border mb-4 ">
                                 <p className="w-full pl-5 py-2 border-b">1. Android 7.0 ເຖິງ ລຸ້ນປັດຈຸບັນ</p>
@@ -101,12 +101,12 @@ function homePage() {
                     </div>
                     <div className="w-full h-[450px] hidden xl:flex justify-center pl-20 relative ">
                         <div className="w-[600px] h-[400px] absolute  animate-bounce bottom-0">
-                            <img className="w-[320px]  rounded-full rounded-bl-none" src="/src/assets/images/test-i-img.jpg" alt="" />
+                            <img className="w-[320px]  rounded-full rounded-bl-none" src="/images/test-i-img.jpg" alt="" />
 
                         </div>
 
                         <div className=" w-[400px] h-[450px]">
-                            <img className="" src="src/assets/images/test-r-img2.jpg" alt="" />
+                            <img className="" src="images/test-r-img2.jpg" alt="" />
                         </div >
 
                     </div>

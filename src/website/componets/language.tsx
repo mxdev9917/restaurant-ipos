@@ -1,10 +1,10 @@
 import { useState } from "react"
 
 function Language() {
-    const [mainImgPath, setmainImgPath] = useState("/src/assets/images/la-circle.png")
+    const [mainImgPath, setmainImgPath] = useState("images/la-circle.png")
     const [strText,setStrText]=useState("LA")
-    const laPath = "/src/assets/images/la-circle.png"
-    const enPath = "src/assets/images/en-circle.png"
+    const laPath = "images/la-circle.png"
+    const enPath = "images/en-circle.png"
     const [isCheckLang, setisCheckLag] = useState(false)
     function toggleCheckLang() {
         setisCheckLag(!isCheckLang)
