@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import Sidebar_Nav from "../componets/sidebar-nav"
+import Sidebar_Nav from "../components/sidebar-nav"
 import { Link } from "react-router-dom"
 import Datepicker from "react-tailwindcss-datepicker";
 
@@ -15,7 +15,7 @@ function saleReport() {
     });
 
     return (
-        <div className="flex flex-col pt-5">
+        <div className="flex flex-col pt-8">
             <Sidebar_Nav />
             <div className="p-1 sm:ml-64">
                 <div className="flex flex-col mt-14 ">

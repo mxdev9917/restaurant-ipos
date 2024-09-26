@@ -1,4 +1,4 @@
-import Sidebar_Nav from "./componets/sidebar-nav";
+import Sidebar_Nav from "./components/sidebar-nav";
 
 function help() {
   return (

@@ -1,6 +1,6 @@
-import Nav from "../componets/nav";
-import FoodItemSale from "./componets/fooditem";
-import CategoryItem from "./componets/categoryitem";
+import Nav from "../components/nav";
+import FoodItemSale from "./components/fooditem";
+import CategoryItem from "./components/categoryitem";
 import { useState } from "react";
 
 function Carts() {
@@ -13,7 +13,6 @@ function Carts() {
   function handleClick(id: number, name: string) {
     setHandleModle(!handleModle);
     console.log(id);
-    console.log(name);
     setFoodName(name);
   }
   function handleClickCloseModle() {
@@ -33,9 +32,9 @@ function Carts() {
   };
 
   return (
-    <div className="flex flex-col overflow-y-hidden max-w-[100vw] max-h-[100vh]">
+    <div className="flex flex-col overflow-y-hidden max-w-[100vw] max-h-[100vh] ">
       <Nav />
-      <div className="flex gap-2">
+      <div className="flex gap-2 mt-16">
         <div className="w-full xl:w-[78%] h-full flex flex-col relative">
           <div className="h-fit w-full flex gap-3 px-5 overflow-x-auto snap-x">
             {items.map((_, index) => (
@@ -53,10 +52,7 @@ function Carts() {
           </div>
           {/* Modal */}
           <div
-            className={`${
-              !handleModle ? "block" : "hidden"
-            } bg-black/30 w-full h-full absolute flex justify-center items-center`}
-          >
+            className={`${!handleModle ? "block" : "hidden"} bg-black/30 w-full h-full absolute flex justify-center items-center`}>
             <div className="flex flex-col w-80 h-fit bg-white rounded-lg shadow-lg p-3">
               <div className="flex justify-between items-center border-b-2">
                 <p className="text-xl pb-2 text-gray-700 font-semibold">
@@ -91,7 +87,7 @@ function Carts() {
                   htmlFor="message"
                   className="block my-2 text-sm font-medium text-gray-900 "
                 >
-                  ຈຳນວນ:
+                  ລາຍລະອຽດ:
                 </label>
                 <textarea
                   onChange={handleChangeDescription}
@@ -112,9 +108,27 @@ function Carts() {
           </div>
         </div>
         <div className="min-w-[400px] hidden xl:flex h-[100vh] shadow-lg   flex-col justify-between p-3">
-          <p className="text-3xl pb-3 text-orange-500 font-semibold flex justify-center">
-            ລາຍການອາຫານ ໂຕະ1
-          </p>
+          <div className="flex justify-between">
+            <div></div>
+            <p className="text-3xl pb-3 text-orange-500 font-semibold flex justify-center">
+              ລາຍການອາຫານ ໂຕະ1
+            </p>
+            <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
+              <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M16.444 18H19a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.556M17 11V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v6h10ZM7 15h10v4a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-4Z" />
+              </svg>
+            </button>
+            <div id="dropdownDots" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+              <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
+                <li>
+                  <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">ເຄົາເຕີ</a>
+                </li>
+                <li>
+                  <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">ຄົວ</a>
+                </li>
+              </ul>
+            </div>
+          </div>
           <div className="relative h-full">
             <table className="w-full  text-sm text-left rtl:text-right text-gray-500 ">
               <thead className="text-sm text-gray-700 uppercase bg-gray-50 ">

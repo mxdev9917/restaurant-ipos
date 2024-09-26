@@ -1,4 +1,4 @@
-import Language from "../../website/componets/language"
+import Language from "../../website/components/language"
 import Logo from "./logo"
 function Nav() {
     return (

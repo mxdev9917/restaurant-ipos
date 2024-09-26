@@ -7,8 +7,8 @@ import ManageFood from './restaurant/managefood/managefood';
 import ManageCategory from './restaurant/managefood/managecategory';
 import ManageZone from './restaurant/managefood/managezone';
 import ManageTables from './restaurant/managefood/managetables';
-import Dashboard from './restaurant/managefood/dashboard';
-import Dashboardv2 from './restaurant/managefood/dashboardv2';
+import Dashboardv2 from './restaurant/dashboardv2';
+import Dashboard from './restaurant/dashboard';
 import ManageUser from './restaurant/manageuser';
 import SelectTatles from './restaurant/sale/selecttatle';
 import Carts from './restaurant/sale/carts';
@@ -17,6 +17,7 @@ import Profile from './restaurant/profile';
 import SaleReport from './restaurant/report/salereport';
 import SettingBill from './restaurant/setting/bill';
 import UserManual from './restaurant/manual';
+import Printer from './restaurant/setting/printer';
 
 function App() {
   const router = createBrowserRouter([
@@ -98,6 +99,11 @@ function App() {
     {
       path: "/settingbill",
       element:<SettingBill/>
+     
+    },
+    {
+      path: "/printer",
+      element:<Printer/>
      
     },
     {

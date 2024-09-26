@@ -1,7 +1,7 @@
 
 
-import NavBar from "./componets/navbar";
-import Card from "./componets/card";
+import NavBar from "./components/navbar";
+import Card from "./components/card";
 import { Link } from "react-router-dom";
 
 

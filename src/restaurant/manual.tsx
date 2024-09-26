@@ -1,16 +1,14 @@
 
-import Sidebar_Nav from "./componets/sidebar-nav"
+import Sidebar_Nav from "./components/sidebar-nav"
 import { Link } from "react-router-dom"
-import ManualItem from "./componets/manualitem"
+import ManualItem from "./components/manualitem"
 const items = Array.from({ length: 100 }, (_, index) => index);
-
-
 function UserManual() {
     return (
         <div className="flex flex-col">
             <Sidebar_Nav />
             <div className="p-1 sm:ml-64">
-                <div className="mt-14">
+                <div className="mt-20">
                     <div className="flex justify-between w-full h-fit items-end border-b-2">
                         <div className="flex flex-col w-fit h-fit pb-2 pl-2">
                             <div className="flex text-gray-500 ">
@@ -34,26 +32,16 @@ function UserManual() {
                             <button  className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-full text-white text-xs md:text-sm">ເພີ່ມ</button>
                         </div>
                     </div>
-                    <div className="h-[85vh] w-full   grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-10 md:grid-cols-3 lg:grid-cols-5 place-items-stretch overflow-y-scroll">
+                    <div className="h-[85vh] w-full   grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-6 md:grid-cols-2 lg:grid-cols-5 place-items-stretch overflow-y-scroll">
                         {items.map((_, index) => (
-                            <div key={index}className="mb-5" >
+                            <div key={index}className="mb-1 pt-2" >
                                 <ManualItem />
                             </div>
                         ))}
+                         {/* <ManualItem /> */}
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
             </div>
-
-
         </div>
     )
 }

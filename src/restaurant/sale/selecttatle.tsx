@@ -1,6 +1,6 @@
-import ZoneItem from "./componets/zoneitem"
-import TableItemSale from "./componets/tableitemsale";
-import Nav from "../componets/nav";
+import ZoneItem from "./components/zoneitem"
+import TableItemSale from "./components/tableitemsale";
+import Nav from "../components/nav";
 function selectTatles() {
 
     const items = Array.from({ length: 50 }, (_, index) => index);

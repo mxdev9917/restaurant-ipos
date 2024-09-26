@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { useState } from "react"
-import Sidebar_Nav from "../componets/sidebar-nav"
-import TableItem from "../componets/tableitem"
+import Sidebar_Nav from "../components/sidebar-nav"
+import TableItem from "../components/tableitem"
 
 function ManageTables() {
     const [isCheckModel, setisCheckModel] = useState(false)
@@ -24,7 +24,7 @@ function ManageTables() {
     return (
         <div className="flex flex-col">
             <Sidebar_Nav />
-            <div className="py-4 sm:ml-64">
+            <div className="pt-8 sm:ml-64">
 
                 <div className="p-1 mt-14">
                     <div className="flex justify-between w-full h-fit items-end border-b-2">

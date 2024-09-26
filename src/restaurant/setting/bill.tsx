@@ -1,6 +1,6 @@
-import Billtr from "./componets/biitr";
-import Sidebar_Nav from "../componets/sidebar-nav";
-import Rate from "./componets/rateitem";
+import Billtr from "./components/biitr";
+import Sidebar_Nav from "../components/sidebar-nav";
+import Rate from "./components/rateitem";
 import { useState } from "react";
 
 function SettingBill() {

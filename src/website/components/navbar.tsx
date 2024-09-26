@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import Language from "./language"
-import Logo from "../../restaurant/componets/logo"
+import Logo from "../../restaurant/components/logo"
 
 
 function NavBar() {

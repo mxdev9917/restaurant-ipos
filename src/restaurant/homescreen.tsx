@@ -1,6 +1,6 @@
 
-import Sidebar from "../restaurant/componets/sidebar"
-import NavBar from "../website/componets/navbar"
+import Sidebar from "./components/sidebar"
+import NavBar from "../website/components/navbar"
 function HomeScreen() {
 
     return (
