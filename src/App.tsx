@@ -18,6 +18,7 @@ import SaleReport from './restaurant/report/salereport';
 import SettingBill from './restaurant/setting/bill';
 import UserManual from './restaurant/manual';
 import Printer from './restaurant/setting/printer';
+import Rate from './restaurant/setting/rate';
 
 function App() {
   const router = createBrowserRouter([
@@ -104,6 +105,11 @@ function App() {
     {
       path: "/printer",
       element:<Printer/>
+     
+    },
+    {
+      path: "/rate",
+      element:<Rate/>
      
     },
     {

@@ -124,10 +124,10 @@ function Sidebar_Nav() {
                                 <li>
                                     <a href="/printer" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100  ">ປີ້ນເຕີ</a>
                                 </li>
-                                {/* <li>
-                                    <a href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100  ">ໂຊນຮ້ານ</a>
+                               <li>
+                                    <a href="/rate" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100  ">ອັດຕາແລກປ່ຽນ</a>
                                 </li>
-                                <li>
+                                {/*  <li>
                                     <a href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100  ">ໂຕະອາຫານ</a>
                                 </li> */}
                             </ul>

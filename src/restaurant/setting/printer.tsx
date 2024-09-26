@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PrinterItem from "./components/prnteritem";
 import { useState } from "react"
 import { Label } from "flowbite-react";
+
 function Printer() {
     const items = Array.from({ length: 5 }, (_, index) => index);
     const [isCheckModel, setisCheckModel] = useState(true)
@@ -10,11 +11,11 @@ function Printer() {
     function handleModel() {
         setisCheckModel(!isCheckModel)
     }
-    function SelectIP(ip) {
-        setIpTitle(ip)
+    function SelectIP(ip:string) {
+        setIpTitle(ip);
         console.log(ip);
-
     }
+
     return (
         <div className="flex flex-col">
             <Sidebar_Nav />
@@ -25,7 +26,7 @@ function Printer() {
                             <div className="flex flex-col w-fit h-fit pb-2 pl-2">
                                 <div className="flex text-gray-500 ">
                                     <Link className="text-orange-500 text-xs md:text-sm" to={""}>
-                                        ຈັດການປີ້ນເຕີ
+                                        ຕັ້ງຄ່າປີ້ນເຕີ
                                     </Link>
                                 </div>
                                 <div className="flex">
@@ -97,7 +98,7 @@ function Printer() {
                                 </svg>
                             </button>
                         </div>
-                        <p onClick={() => SelectIP("192.168.0.21")} className="font-medium text-sm cursor-pointer hover:text-orange-500">192.168.0.20</p>
+                        <p onClick={() => SelectIP("192.168.0.20")} className="font-medium text-sm cursor-pointer hover:text-orange-500">192.168.0.20</p>
                         <p onClick={() => SelectIP("192.168.0.26")} className="font-medium text-sm cursor-pointer hover:text-orange-500">192.168.0.21</p>
                     </div>
                     <div className="flex justify-end p-3 border-t-2">
