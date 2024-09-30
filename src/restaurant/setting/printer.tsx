@@ -6,7 +6,7 @@ import { Label } from "flowbite-react";
 
 function Printer() {
     const items = Array.from({ length: 5 }, (_, index) => index);
-    const [isCheckModel, setisCheckModel] = useState(true)
+    const [isCheckModel, setisCheckModel] = useState(false)
     const [ipTitle, setIpTitle] = useState("")
     function handleModel() {
         setisCheckModel(!isCheckModel)

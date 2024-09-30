@@ -9,7 +9,9 @@ function ManageUser() {
   const [passwordType, setPasswordType] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
   const [isCheckedTitle, setIsCheckedTitle] = useState("ປີດໃຊ້ງານ");
-
+  function togglePasswordType() {
+    setPasswordType(!passwordType);
+  }
   const handleChange = () => {
     setIsChecked(!isChecked); // Toggle checkbox state
     if (isChecked != true) {
@@ -18,9 +20,7 @@ function ManageUser() {
       setIsCheckedTitle("ເປີດໃຊ້ງານ");
     }
   };
-  function togglePasswordType() {
-    setPasswordType(!passwordType);
-  }
+  
   function handleModel(evens: string) {
     if (evens == "add") {
       console.log("if add");
