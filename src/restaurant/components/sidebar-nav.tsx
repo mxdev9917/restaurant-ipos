@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom"
+
 import Nav from "./nav"
 function Sidebar_Nav() {
+    function isCheckMenu() { }
     return (
         <>
-            <Nav />
+            <Nav handelMenu={isCheckMenu} />
             <aside id="separator-sidebar" className="fixed  top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
                 <div className="h-full px-3 py-5 overflow-y-auto bg-gray-50 ">
                     <ul className="space-y-3 font-medium">
@@ -123,7 +125,7 @@ function Sidebar_Nav() {
                                 <li>
                                     <Link to="/printer" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100  ">ປີ້ນເຕີ</Link>
                                 </li>
-                               <li>
+                                <li>
                                     <Link to="/rate" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100  ">ອັດຕາແລກປ່ຽນ</Link>
                                 </li>
                                 {/*  <li>

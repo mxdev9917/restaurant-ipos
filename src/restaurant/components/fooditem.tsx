@@ -5,11 +5,9 @@ interface TableItemProps {
   onEdit: (str: string) => void; // Type for the onEdit function
 }
 
-// Define the TableItem component
 const FoodItem: React.FC<TableItemProps> = ({ onEdit }) => {
-  // Define handleClick function with proper typing
   const handleClick = (str: string) => {
-    onEdit(str); // Call the onEdit function with a string parameter
+    onEdit(str);
   };
 
   return (

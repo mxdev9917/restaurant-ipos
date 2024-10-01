@@ -11,9 +11,12 @@ function Carts() {
   const [qty, setQty] = useState();
   const [description, setDescription] = useState();
   const [titlePrinterModel, setTitlePrinterModel] = useState("")
+  const[isCheckEvenMenu,setIsCheckEvenMenu]=useState(false)
 
+  function isCheckMenu(){
+    setIsCheckEvenMenu(!isCheckEvenMenu) 
+  }
   function handlePrinterModel(value: number) {
-
     if (value == 1) {
       setTitlePrinterModel("ປີ້ນເຕີເຄົ້າເຕີ")
       setPrinterleModel(true)
@@ -47,16 +50,16 @@ function Carts() {
 
   return (
     <div className="flex flex-col overflow-y-hidden max-w-[100vw] max-h-[100vh] ">
-      <Nav />
+      <Nav handelMenu={isCheckMenu}/>
       <div className="flex gap-2 mt-16">
-        <div className="w-full xl:w-[80%] 2xl:w-[75%]  h-full flex flex-col relative">
+        <div className="w-full   xl:w-[80%] 2xl:w-[80%]  h-full flex flex-col relative">
           <div className="h-fit w-full flex gap-3  items-center">
             <div className="ml-3">
               <button className="w-28 h-fit bg-orange-500 text-white p-1.5 rounded-lg right-1 focus:ring-1 focus:ring-orange-500">
                 ເມເນູທັ້ງໝົດ
               </button>
             </div>
-            <div className="w-full flex gap-3  overflow-x-auto snap-x ">
+            <div className="w-full flex gap-3 overflow-x-auto snap-x ">
               {items.map((_, index) => (
                 <div key={index} className="py-5 ">
 
@@ -66,8 +69,10 @@ function Carts() {
             </div>
           </div>
           <div className="h-[85vh] w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-10 md:grid-cols-6 lg:grid-cols-8 place-items-stretch overflow-y-scroll">
+          {/* <div className="h-[85vh] w-full flex flex-wrap place-items-stretch overflow-y-scroll"> */}
+            
             {items.map((_, index) => (
-              <div key={index} className="m-1 w-[95%] h-40">
+              <div key={index} className="m-1 w-32 h-40">
                 <FoodItemSale onClick={handleClick} />
               </div>
             ))}
@@ -129,7 +134,7 @@ function Carts() {
             </div>
           </div>
         </div>
-        <div className="min-w-[400px] hidden xl:flex h-[100vh] shadow-lg   flex-col justify-between p-3">
+        <div className={`${isCheckEvenMenu ? 'flex right-0 top-[140px] absolute h-[85vh]': 'hidden'} bg-white min-w-[400px] xl:flex h-[100vh] shadow-lg flex-col justify-between p-3`}>
           <div className="flex justify-between">
             <div></div>
             <p className="text-3xl pb-3 text-orange-500 font-semibold flex justify-center">

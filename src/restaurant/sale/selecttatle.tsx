@@ -4,9 +4,12 @@ import Nav from "../components/nav";
 function selectTatles() {
 
     const items = Array.from({ length: 50 }, (_, index) => index);
+    function isCheckMenu (){
+
+    }
     return (
         <div className="w-screen flex flex-col">
-           <Nav/>
+              <Nav handelMenu={isCheckMenu}/>
             <div className="h-fit w-full flex gap-3 px-5 overflow-x-scroll ">
                 {items.map((_item, index) => (
                     <div key={index} className=" py-5 ">
