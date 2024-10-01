@@ -1,5 +1,5 @@
 import Sidebar_Nav from "./components/sidebar-nav";
-
+import { Link } from "react-router-dom"
 function help() {
   return (
     <div className="flex flex-col">
@@ -78,7 +78,7 @@ function help() {
                 </span>
               </p>
               <div className="flex h-fit md:h-[140px]  flex-col lg:flex-row gap-3 items-start mt-3 lg:items-end  ">
-                <a href="#" className="flex items-end">
+                <Link to={"#"} className="flex items-end">
                   <svg
                     className="w-8 h-8 text-white"
                     aria-hidden="true"
@@ -95,8 +95,8 @@ function help() {
                     />
                   </svg>
                   <p>bran it</p>
-                </a>
-                <a href="#" className="flex items-end">
+                </Link>
+                <Link to={"#"} className="flex items-end">
                   <svg
                     className="w-8 h-8 text-white"
                     aria-hidden="true"
@@ -113,8 +113,8 @@ function help() {
                     />
                   </svg>
                   <p className="pl-2">bran it</p>
-                </a>
-                <a href="#" className="flex items-end">
+                </Link>
+                <Link to={"#"} className="flex items-end">
                   <svg
                     className="w-7 h-7 text-white"
                     aria-hidden="true"
@@ -131,7 +131,7 @@ function help() {
                     />
                   </svg>
                   <p className="pl-2">www.branit.la</p>
-                </a>
+                </Link>
               </div>
             </div>
             <div>

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom";
 
 
 function Sidebar() {
@@ -54,16 +55,16 @@ function Sidebar() {
                 <div id="dropdown" className={`${isCheckW ? '' : 'bg-white shadow w-44'}  hidden   divide-y divide-gray-100 rounded-lg`}>
                     <ul className="py-2 w-full  text-sm text-gray-700 " aria-labelledby="dropdownDefaultButton">
                         <li>
-                            <a href="/managefood" className="flex rounded-lg px-7 py-1 mb-3  hover:bg-gray-100 text-base w-52 ">ຈັດການເມນູອາຫານ</a>
+                            <Link to={"/managefood"} className="flex rounded-lg px-7 py-1 mb-3  hover:bg-gray-100 text-base w-52 ">ຈັດການເມນູອາຫານ</Link>
                         </li>
                         <li>
-                            <a href="/managecategory" className="flexrounded-lg  px-7 py-1 my-3  hover:bg-gray-100 text-base w-52 ">ຈັດການປະເພດອາຫານ</a>
+                            <Link to={"/managecategory"} className="flexrounded-lg  px-7 py-1 my-3  hover:bg-gray-100 text-base w-52 ">ຈັດການປະເພດອາຫານ</Link>
                         </li>
                         <li>
-                            <a href="/managezone" className="flex rounded-lg  px-7 py-1 my-3  hover:bg-gray-100 text-base w-52 ">ຈັດການໂຊນຮ້ານ</a>
+                            <Link to={"/managezone"} className="flex rounded-lg  px-7 py-1 my-3  hover:bg-gray-100 text-base w-52 ">ຈັດການໂຊນຮ້ານ</Link>
                         </li>
                         <li>
-                            <a href="/managetable" className="flex  px-7 py-1 my-3  hover:bg-gray-100 text-base w-52 ">ຈັດການໂຕະ</a>
+                            <Link to={"/managetable"} className="flex  px-7 py-1 my-3  hover:bg-gray-100 text-base w-52 ">ຈັດການໂຕະ</Link>
                         </li>
                     </ul>
                 </div>

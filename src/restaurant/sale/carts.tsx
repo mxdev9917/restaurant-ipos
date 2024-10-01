@@ -5,18 +5,32 @@ import { useState } from "react";
 
 function Carts() {
   const items = Array.from({ length: 100 }, (_, index) => index);
-  const [handleModle, setHandleModle] = useState(true);
+  const [PrinterModel, setPrinterleModel] = useState(false);
+  const [handleModel, setHandleModel] = useState(true);
   const [foodName, setFoodName] = useState("");
   const [qty, setQty] = useState();
   const [description, setDescription] = useState();
+  const [titlePrinterModel, setTitlePrinterModel] = useState("")
 
+  function handlePrinterModel(value: number) {
+
+    if (value == 1) {
+      setTitlePrinterModel("ປີ້ນເຕີເຄົ້າເຕີ")
+      setPrinterleModel(true)
+    } else if (value == 2) {
+      setTitlePrinterModel("ປີ້ນເຕີຄົວ")
+      setPrinterleModel(true)
+    } else {
+      setPrinterleModel(!PrinterModel)
+    }
+  }
   function handleClick(id: number, name: string) {
-    setHandleModle(!handleModle);
+    setHandleModel(!handleModel);
     console.log(id);
     setFoodName(name);
   }
   function handleClickCloseModle() {
-    setHandleModle(!handleModle);
+    setHandleModel(!handleModel);
   }
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -35,13 +49,21 @@ function Carts() {
     <div className="flex flex-col overflow-y-hidden max-w-[100vw] max-h-[100vh] ">
       <Nav />
       <div className="flex gap-2 mt-16">
-        <div className="w-full xl:w-[78%] h-full flex flex-col relative">
-          <div className="h-fit w-full flex gap-3 px-5 overflow-x-auto snap-x">
-            {items.map((_, index) => (
-              <div key={index} className="py-5">
-                <CategoryItem />
-              </div>
-            ))}
+        <div className="w-full xl:w-[80%] 2xl:w-[75%]  h-full flex flex-col relative">
+          <div className="h-fit w-full flex gap-3  items-center">
+            <div className="ml-3">
+              <button className="w-28 h-fit bg-orange-500 text-white p-1.5 rounded-lg right-1 focus:ring-1 focus:ring-orange-500">
+                ເມເນູທັ້ງໝົດ
+              </button>
+            </div>
+            <div className="w-full flex gap-3  overflow-x-auto snap-x ">
+              {items.map((_, index) => (
+                <div key={index} className="py-5 ">
+
+                  <CategoryItem />
+                </div>
+              ))}
+            </div>
           </div>
           <div className="h-[85vh] w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-10 md:grid-cols-6 lg:grid-cols-8 place-items-stretch overflow-y-scroll">
             {items.map((_, index) => (
@@ -52,7 +74,7 @@ function Carts() {
           </div>
           {/* Modal */}
           <div
-            className={`${!handleModle ? "block" : "hidden"} bg-black/30 w-full h-full absolute flex justify-center items-center`}>
+            className={`${!handleModel ? "block" : "hidden"} bg-black/30 w-full h-full absolute flex justify-center items-center`}>
             <div className="flex flex-col w-80 h-fit bg-white rounded-lg shadow-lg p-3">
               <div className="flex justify-between items-center border-b-2">
                 <p className="text-xl pb-2 text-gray-700 font-semibold">
@@ -115,16 +137,16 @@ function Carts() {
             </p>
             <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
               <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M16.444 18H19a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.556M17 11V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v6h10ZM7 15h10v4a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-4Z" />
+                <path stroke="currentColor" strokeLinejoin="round" strokeWidth="2" d="M16.444 18H19a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.556M17 11V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v6h10ZM7 15h10v4a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-4Z" />
               </svg>
             </button>
-            <div id="dropdownDots" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+            <div id="dropdownDots" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 ">
               <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
                 <li>
-                  <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">ເຄົາເຕີ</a>
+                  <button onClick={() => handlePrinterModel(1)} className="flex px-4 py-2 hover:bg-gray-100 w-full  ">ເຄົາເຕີ</button>
                 </li>
                 <li>
-                  <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">ຄົວ</a>
+                  <button onClick={() => handlePrinterModel(2)} className="flex px-4 py-2 hover:bg-gray-100 w-full ">ຄົວ</button>
                 </li>
               </ul>
             </div>
@@ -284,6 +306,53 @@ function Carts() {
                 ຍົກເລິກ
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className={`w-screen ${!PrinterModel ? "hidden" : "block"} h-screen bg-black/10  absolute  flex justify-center items-center`}>
+        <div className="bg-white w-96 rounded-lg">
+          <div className="flex justify-between p-3 border-b-2 ">
+            <p className="text-orange-500">{titlePrinterModel}</p>
+            <button
+              onClick={() => handlePrinterModel(0)}
+              type="button"
+              className="text-gray-400 bg-transparent hover:bg-gray-200  rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
+            >
+              <svg
+                className="w-3 h-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+              <span className="sr-only">Close modal </span>
+            </button>
+          </div>
+          <div className="w-full p-3 flex flex-col items-start text-sm">
+            <button className="p-2 my-1 w-full hover:bg-orange-500 flex items-end rounded-lg focus:bg-orange-500">
+              <svg className="w-6 h-6  text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" strokeLinejoin="round" strokeWidth="2" d="M16.444 18H19a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.556M17 11V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v6h10ZM7 15h10v4a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-4Z" />
+              </svg>
+              <p className="pl-2"> ປີ້ນເຕີຄົວ</p>
+            </button>
+            <button className="p-2 my-1 w-full hover:bg-orange-500 flex items-end rounded-lg focus:bg-orange-500">
+              <svg className="w-6 h-6  text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" strokeLinejoin="round" strokeWidth="2" d="M16.444 18H19a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.556M17 11V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v6h10ZM7 15h10v4a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-4Z" />
+              </svg>
+              <p className="pl-2"> ປີ້ນເຕີຄົວ</p>
+            </button>
+          </div>
+          <div className="flex justify-end p-3 border-t-2">
+            <button className="flex justify-center items-center text-white bg-green-500 p-2 rounded-lg ">ບັກທືກ</button>
           </div>
         </div>
       </div>

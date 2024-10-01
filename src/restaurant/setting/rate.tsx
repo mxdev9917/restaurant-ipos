@@ -138,7 +138,7 @@ function Rate() {
                                                     />
                                                 </svg>
                                             </button>
-                                            <a href="#" className="font-medium   hover:underline">
+                                            <Link to={"#"} className="font-medium   hover:underline">
                                                 <svg
                                                     className="w-6 h-6 text-red-500 "
                                                     aria-hidden="true"
@@ -156,7 +156,7 @@ function Rate() {
                                                         d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
                                                     />
                                                 </svg>
-                                            </a>
+                                            </Link>
                                         </td>
                                     </tr>
 

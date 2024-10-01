@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import Language from "../../website/components/language"
 import Logo from "./logo"
 function Nav() {
@@ -34,14 +35,14 @@ function Nav() {
                                 </div>
                                 <ul className="py-1" role="none">
                                     <li>
-                                        <a href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100   " role="menuitem">ກັບສູ່ໜ້າຫຼັກ</a>
+                                        <Link to={"/dashboard"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100   " role="menuitem">ກັບສູ່ໜ້າຫຼັກ</Link>
                                     </li>
                                     <li>
-                                        <a href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100   " role="menuitem">Proflie</a>
+                                        <Link to={"/profile"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100   " role="menuitem">Proflie</Link>
                                     </li>
 
                                     <li>
-                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100   " role="menuitem">Sign out</a>
+                                        <Link to={"#"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100   " role="menuitem">Sign out</Link>
                                     </li>
                                 </ul>
                             </div>
