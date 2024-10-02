@@ -2,6 +2,7 @@ import Nav from "../components/nav";
 import FoodItemSale from "./components/fooditem";
 import CategoryItem from "./components/categoryitem";
 import { useState } from "react";
+import TableItemSale from "./components/tableitemsale";
 
 function Carts() {
   const items = Array.from({ length: 100 }, (_, index) => index);
@@ -11,10 +12,17 @@ function Carts() {
   const [qty, setQty] = useState();
   const [description, setDescription] = useState();
   const [titlePrinterModel, setTitlePrinterModel] = useState("")
-  const[isCheckEvenMenu,setIsCheckEvenMenu]=useState(false)
+  const [isCheckEvenMenu, setIsCheckEvenMenu] = useState(false)
+  const [isCheckModelEvenMenu, setIsCheckModelEvenMenu] = useState(false)
 
-  function isCheckMenu(){
-    setIsCheckEvenMenu(!isCheckEvenMenu) 
+
+  function handleTableInclude() {
+    setIsCheckModelEvenMenu(false)
+    setHandleModel(!handleModel);
+  }
+  function isCheckMenu() {
+    setIsCheckEvenMenu(!isCheckEvenMenu)
+
   }
   function handlePrinterModel(value: number) {
     if (value == 1) {
@@ -31,6 +39,7 @@ function Carts() {
     setHandleModel(!handleModel);
     console.log(id);
     setFoodName(name);
+    setIsCheckModelEvenMenu(true)
   }
   function handleClickCloseModle() {
     setHandleModel(!handleModel);
@@ -50,7 +59,7 @@ function Carts() {
 
   return (
     <div className="flex flex-col overflow-y-hidden max-w-[100vw] max-h-[100vh] ">
-      <Nav handelMenu={isCheckMenu}/>
+      <Nav handelMenu={isCheckMenu} isCheck={true} />
       <div className="flex gap-2 mt-16">
         <div className="w-full   xl:w-[80%] 2xl:w-[80%]  h-full flex flex-col relative">
           <div className="h-fit w-full flex gap-3  items-center">
@@ -69,8 +78,8 @@ function Carts() {
             </div>
           </div>
           <div className="h-[85vh] w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-10 md:grid-cols-6 lg:grid-cols-8 place-items-stretch overflow-y-scroll">
-          {/* <div className="h-[85vh] w-full flex flex-wrap place-items-stretch overflow-y-scroll"> */}
-            
+            {/* <div className="h-[85vh] w-full flex flex-wrap place-items-stretch overflow-y-scroll"> */}
+
             {items.map((_, index) => (
               <div key={index} className="m-1 w-32 h-40">
                 <FoodItemSale onClick={handleClick} />
@@ -78,9 +87,33 @@ function Carts() {
             ))}
           </div>
           {/* Modal */}
-          <div
-            className={`${!handleModel ? "block" : "hidden"} bg-black/30 w-full h-full absolute flex justify-center items-center`}>
-            <div className="flex flex-col w-80 h-fit bg-white rounded-lg shadow-lg p-3">
+          <div className={`${!handleModel ? "block" : "hidden"} bg-black/30 w-full h-full absolute flex justify-center items-center`}>
+
+            <div className={`${isCheckModelEvenMenu == false ? "block" : "hidden"} flex flex-col w-[290px] sm:w-[380px]    h-fit bg-white rounded-lg shadow-lg p-3`}>
+              <div className="flex justify-between items-center border-b-2">
+                <p className="text-xl pb-2 text-gray-700 font-semibold">
+                  ເລືອກໂຕະ
+                </p>
+                <button
+                  onClick={handleClickCloseModle}
+                  className=" text-red-500"
+                >
+                  ຍົກເລິກ
+                </button>
+              </div>
+
+              <div className="h-[355px]  flex flex-wrap  place-items-stretch    overflow-y-scroll">
+                {items.map((_, index) => (
+                  <div key={index} className="m-1 w-20  h-20" >
+                    <TableItemSale />
+                  </div>
+                ))}
+              </div>
+              <div className="flex justify-end pt-2 border-t-2">
+                <button className="flex justify-center items-center text-white bg-green-500 p-2 rounded-lg ">ບັກທືກ</button>
+              </div>
+            </div>
+            <div className={`${isCheckModelEvenMenu == true ? "block" : "hidden"} flex flex-col w-80 h-fit bg-white rounded-lg shadow-lg p-3`}>
               <div className="flex justify-between items-center border-b-2">
                 <p className="text-xl pb-2 text-gray-700 font-semibold">
                   {foodName}
@@ -134,7 +167,7 @@ function Carts() {
             </div>
           </div>
         </div>
-        <div className={`${isCheckEvenMenu ? 'flex right-0 top-[140px] absolute h-[85vh]': 'hidden'} bg-white min-w-[400px] xl:flex h-[100vh] shadow-lg flex-col justify-between p-3`}>
+        <div className={`${isCheckEvenMenu ? 'flex right-0 top-[140px] absolute h-[85vh]' : 'hidden'} bg-white min-w-[400px] xl:flex h-[100vh] shadow-lg flex-col justify-between p-3`}>
           <div className="flex justify-between">
             <div></div>
             <p className="text-3xl pb-3 text-orange-500 font-semibold flex justify-center">
@@ -299,6 +332,7 @@ function Carts() {
                 ໄລ່ເງີນ
               </button>
               <button
+                onClick={handleTableInclude}
                 type="button"
                 className="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none "
               >

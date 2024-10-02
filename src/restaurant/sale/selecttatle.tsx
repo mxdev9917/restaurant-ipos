@@ -4,12 +4,13 @@ import Nav from "../components/nav";
 function selectTatles() {
 
     const items = Array.from({ length: 50 }, (_, index) => index);
-    function isCheckMenu (){
+    function isCheckMenu() {
 
     }
     return (
         <div className="w-screen flex flex-col">
-              <Nav handelMenu={isCheckMenu}/>
+            <Nav handelMenu={isCheckMenu} isCheck={false} />
+
             <div className="h-fit w-full flex gap-3 px-5 overflow-x-scroll ">
                 {items.map((_item, index) => (
                     <div key={index} className=" py-5 ">
@@ -19,12 +20,12 @@ function selectTatles() {
             </div>
 
             <div className="h-[86vh] w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-10 2xl:grid-cols-12 md:grid-cols-6  lg:grid-cols-8 place-items-stretch    overflow-y-scroll">
-                        {items.map((_, index) => (
-                            <div key={index} className="m-1 w-[95%] h-44" >
-                                <TableItemSale />
-                            </div>
-                        ))}
+                {items.map((_, index) => (
+                    <div key={index} className="m-1 w-[95%] h-44" >
+                        <TableItemSale />
                     </div>
+                ))}
+            </div>
 
         </div>
     )

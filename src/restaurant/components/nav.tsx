@@ -5,10 +5,17 @@ import Logo from "./logo";
 interface NavProps {
     handelMenu: () => void; // Type for the onEdit function
 }
+interface NavProps {
+    handelMenu: () => void;
+    isCheck: boolean; // Add the isCheck prop
+}
 
-const Nav: React.FC<NavProps> = ({ handelMenu }) => {
+
+const Nav: React.FC<NavProps> = ({ handelMenu,isCheck }) => {
     const handleClick = () => {
         handelMenu ();
+        console.log(isCheck);
+        
       };
     return (
         <nav className="fixed top-0 z-50 w-full bg-[#3a393a] border-b border-gray-200 ">
@@ -20,7 +27,7 @@ const Nav: React.FC<NavProps> = ({ handelMenu }) => {
                             data-drawer-toggle="separator-sidebar"
                             aria-controls="separator-sidebar"
                             type="button"
-                            className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg xl:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                            className={` ${isCheck ? 'block' : 'hidden'} inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg xl:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200`}
                             onClick={handleClick} // Call the handelMenu function on button click
                         >
                             <span className="sr-only">Open sidebar</span>
