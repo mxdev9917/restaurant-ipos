@@ -1,7 +1,7 @@
 import Sidebar_Nav from "./components/sidebar-nav"
 import ChartComponent from "./components/charts/chartsales";
 import ChartTopProToDay from "./components/charts/charttopprotoday";
-import ChartchartKichen from "./components/charts/chartkichen";
+import ChartKichen from "./components/charts/chartkichen";
 
 function Dashboardv2() {
 
@@ -78,10 +78,10 @@ function Dashboardv2() {
                 </div>
                 <div className=" flex  flex-col 2xl:flex-row gap-3  m-3">
                     <div className=" w-full h-fit flex flex-col justify-between  bg-white shadow-md">
-                        <ChartchartKichen />
+                        <ChartKichen />
                     </div>
                     <div className="bg-white shadow-md w-full h-fit">
-                        <ChartchartKichen />
+                        <ChartKichen />
                     </div>
                     <div className=" w-full h-[300px]">
                         <div className="relative overflow-x-auto shadow-md ">

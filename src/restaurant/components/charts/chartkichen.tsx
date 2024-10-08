@@ -2,7 +2,7 @@
 import ApexCharts from "react-apexcharts";
 
 // Define the ChartchartKichen component
-const ChartchartKichen = () => {
+const ChartKichen = () => {
   const options: ApexCharts.ApexOptions = {
     series: [
       {
@@ -67,14 +67,6 @@ const ChartchartKichen = () => {
   );
 };
 
-// Define prop types
-ChartchartKichen.propTypes = {
-  // Removed series prop validation since we no longer use it
-};
 
-// Default props
-ChartchartKichen.defaultProps = {
-  // Removed series default props since we no longer use it
-};
 
-export default ChartchartKichen;
+export default ChartKichen;

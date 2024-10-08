@@ -25,7 +25,6 @@ function ManageTables() {
         <div className="flex flex-col">
             <Sidebar_Nav />
             <div className="pt-8 sm:ml-64">
-
                 <div className="p-1 mt-14">
                     <div className="flex justify-between w-full h-fit items-end border-b-2">
                         <div className="flex flex-col w-fit h-fit pb-2 pl-2">
@@ -33,14 +32,12 @@ function ManageTables() {
                                 <Link className="hover:text-orange-500 text-xs md:text-sm" to={""}>ຈັດການຮ້ານ</Link>
                                 <Link className="text-xs md:text-sm" to={""}>|</Link>
                                 <Link className="text-orange-500 text-xs md:text-sm" to={""}>ຈັດການໂຊນຮ້ານ</Link>
-
                             </div>
                             <div className="flex flex-col md:flex-row ">
-                            <form className="flex items-center max-w-lg mx-auto mt-2 pr-0 md:pr-2">
+                                <form className="flex items-center max-w-lg mx-auto mt-2 pr-0 md:pr-2">
                                     <select className="w-48 md:w-64 h-9 text-xs md:text-sm rounded-full border-gray-300 focus:outline-transparent focus:ring-0">
                                         <option className="" value="">--ເລືອກໂຊນ--</option>
-                                        </select> 
-                                   
+                                    </select>
                                 </form>
                                 <form className="flex items-center max-w-lg mx-auto mt-2 relative">
                                     <input className="w-48 md:w-64 h-9 text-xs md:text-sm rounded-full border-gray-300 focus:outline-transparent focus:ring-0"
@@ -55,7 +52,7 @@ function ManageTables() {
 
                                     </button>
                                 </form>
-                               
+
                             </div>
                         </div>
 
@@ -71,8 +68,6 @@ function ManageTables() {
                         ))}
                     </div>
                 </div>
-
-
             </div>
             <div className={`w-screen ${!isCheckModel ? 'hidden' : 'block'}  h-screen bg-black/10  absolute  flex justify-center items-center`}>
                 <div className="flex flex-col w-96 h-fit bg-white rounded-lg shadow-xl">
@@ -93,9 +88,6 @@ function ManageTables() {
                                     <label htmlFor="name" className="block mb-2 text-xs md:text-sm font-medium text-gray-900 ">Table Name <span className="text-red-600"> *</span></label>
                                     <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="name..." />
                                 </div>
-
-
-
                             </div>
                             {
                                 isCheckEven ?
@@ -115,13 +107,9 @@ function ManageTables() {
                                         </svg>
                                         ແກ້ໄຂ
                                     </button>
-                            }
+                                }
                         </form>
-
-
-
                     </div>
-
                 </div>
             </div>
         </div>

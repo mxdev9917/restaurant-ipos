@@ -77,11 +77,11 @@ function Carts() {
               ))}
             </div>
           </div>
-          <div className="h-[85vh] w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-10 md:grid-cols-6 lg:grid-cols-8 place-items-stretch overflow-y-scroll">
-            {/* <div className="h-[85vh] w-full flex flex-wrap place-items-stretch overflow-y-scroll"> */}
+          {/* <div className="h-[85vh] w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-10 md:grid-cols-6 lg:grid-cols-8 place-items-stretch overflow-y-scroll"> */}
+            <div className="h-[85vh] w-full flex flex-wrap place-items-stretch overflow-y-scroll">
 
             {items.map((_, index) => (
-              <div key={index} className="m-1 w-32 h-40">
+              <div key={index} className=" ml-2.5 p-1 w-28 sm:w-32 h-40">
                 <FoodItemSale onClick={handleClick} />
               </div>
             ))}
@@ -89,7 +89,7 @@ function Carts() {
           {/* Modal */}
           <div className={`${!handleModel ? "block" : "hidden"} bg-black/30 w-full h-full absolute flex justify-center items-center`}>
 
-            <div className={`${isCheckModelEvenMenu == false ? "block" : "hidden"} flex flex-col w-[290px] sm:w-[380px]    h-fit bg-white rounded-lg shadow-lg p-3`}>
+            <div className={`${isCheckModelEvenMenu == false ? "block" : "hidden"} flex flex-col w-[290px] sm:w-[380px] h-fit bg-white rounded-lg shadow-lg p-3`}>
               <div className="flex justify-between items-center border-b-2">
                 <p className="text-xl pb-2 text-gray-700 font-semibold">
                   ເລືອກໂຕະ
@@ -102,7 +102,7 @@ function Carts() {
                 </button>
               </div>
 
-              <div className="h-[355px]  flex flex-wrap  place-items-stretch    overflow-y-scroll">
+              <div className="h-96  flex flex-wrap  place-items-stretch overflow-y-scroll">
                 {items.map((_, index) => (
                   <div key={index} className="m-1 w-20  h-20" >
                     <TableItemSale />
