@@ -274,8 +274,8 @@ function ManageUser() {
                   </label>
                   <input
                     type={passwordType ? "text" : "password"}
-                    id="user"
-                    name="user"
+                    id="password"
+                    name="password"
                     placeholder="..."
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  "
                   />

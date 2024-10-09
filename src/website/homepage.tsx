@@ -10,21 +10,19 @@ function homePage() {
     return (
         <div id="home" className=" w-full h-[100vh] flex flex-col items-center overflow-auto md:overflow-scroll scroll-smooth ">
             <div className="w-full h-[100vh] relative">
-            <NavBar />
+                <NavBar />
             </div>
             <div className="md:w-5/5 lg:w-4/5 h-screen flex flex-col mt-5 md:mt-14 items-center">
                 <div className="w-full  bg-white md:flex  justify-between">
 
-                    <div className="  justify-center items-center w-full flex flex-col px-4">
-                        <p className=" font-bold text-3xl md:text-4xl flex flex-col py-2 ">Complete Solution
-                            <span className="text-orange-500 py-2 md:text-5xl"><span className="text-black text-3xl md:text-4xl"> or your</span > Restaurant </span>
-                            <span className="text-orange-500 md:text-5xl"> Billing</span>
-                            <p className="text-sm md:text-xl mt-3 font-normal" >restaurant Management Solution!</p>
-                        </p>
-
-
+                    <div className="font-bold text-3xl md:text-4xl flex flex-col py-2">
+                        Complete Solution
+                        <span className="text-orange-500 py-2 md:text-5xl">
+                            <span className="text-black text-3xl md:text-4xl"> or your</span> Restaurant
+                        </span>
+                        <span className="text-orange-500 md:text-5xl"> Billing</span>
+                        <p className="text-sm md:text-xl mt-3 font-normal">restaurant Management Solution!</p>
                     </div>
-
                     <div className="w-full flex md:justify-center md:items-center">
                         <img className="md:w-[800px] w-[400px] px-4" src="https://theqpos.com/wp-content/uploads/2023/10/Facebook-QPOS-Tutorial-1.png" alt="" />
                     </div>
@@ -39,7 +37,7 @@ function homePage() {
                 <Card />
                 {/* <Card /> */}
             </div>
-            <div id="download"  className="md:w-5/5 lg:w-4/5 h-screen flex flex-col my-7 items-center">
+            <div id="download" className="md:w-5/5 lg:w-4/5 h-screen flex flex-col my-7 items-center">
                 <div className="w-full  bg-white md:flex  justify-between">
                     <div className="w-full flex md:justify-center md:items-center">
                         <img className=" w-[500px] px-4" src="https://cdn.prod.website-files.com/60870ff4852ead369670e13e/645a600315854a17da58f591_pos%20system.png" alt="" />

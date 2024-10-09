@@ -78,7 +78,7 @@ function Carts() {
             </div>
           </div>
           {/* <div className="h-[85vh] w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-10 md:grid-cols-6 lg:grid-cols-8 place-items-stretch overflow-y-scroll"> */}
-            <div className="h-[85vh] w-full flex flex-wrap place-items-stretch overflow-y-scroll">
+          <div className="h-[85vh] w-full flex flex-wrap place-items-stretch overflow-y-scroll">
 
             {items.map((_, index) => (
               <div key={index} className=" ml-2.5 p-1 w-28 sm:w-32 h-40">
@@ -219,9 +219,10 @@ function Carts() {
 
                   <td className="px-3 py-4">$2999</td>
                   <td className="px-3 py-4">
+
                     <button className="hover:bg-slate-100 p-1.5 rounded-full">
                       <svg
-                        className="w-6 h-6 text-red-600 "
+                        className="w-6 h-6 text-red-600"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -238,7 +239,9 @@ function Carts() {
                         />
                       </svg>
                     </button>
+
                   </td>
+
                 </tr>
                 <tr className="bg-white border-b dark:border-gray-700">
                   <th
@@ -251,9 +254,10 @@ function Carts() {
 
                   <td className="px-3 py-4">$1999</td>
                   <td className="px-3 py-4">
+
                     <button className="hover:bg-slate-100 p-1.5 rounded-full">
                       <svg
-                        className="w-6 h-6 text-red-600 "
+                        className="w-6 h-6 text-red-600"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -270,7 +274,10 @@ function Carts() {
                         />
                       </svg>
                     </button>
+
                   </td>
+
+
                 </tr>
                 <tr className="bg-white">
                   <th
@@ -283,28 +290,29 @@ function Carts() {
 
                   <td className="px-3 py-4">$999.000</td>
                   <td className="px-3 py-4">
-                    <button>
-                      <button className="hover:bg-slate-100 p-1.5 rounded-full">
-                        <svg
-                          className="w-6 h-6 text-red-600 "
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                          />
-                        </svg>
-                      </button>
+
+                    <button className="hover:bg-slate-100 p-1.5 rounded-full">
+                      <svg
+                        className="w-6 h-6 text-red-600"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                        />
+                      </svg>
                     </button>
+
                   </td>
+
                 </tr>
               </tbody>
             </table>
@@ -351,9 +359,10 @@ function Carts() {
       <div
         className={`w-screen ${!PrinterModel ? "hidden" : "block"} h-screen bg-black/10  absolute  flex justify-center items-center`}>
         <div className="bg-white w-96 rounded-lg">
-          <div className="flex justify-between p-3 border-b-2 ">
+          <div id="separator-sidebar" className="flex justify-between p-3 border-b-2 drawer">
             <p className="text-orange-500">{titlePrinterModel}</p>
             <button
+              data-drawer-close="separator-sidebar"
               onClick={() => handlePrinterModel(0)}
               type="button"
               className="text-gray-400 bg-transparent hover:bg-gray-200  rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
