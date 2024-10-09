@@ -361,10 +361,7 @@ function Carts() {
         <div className="bg-white w-96 rounded-lg">
           <div id="separator-sidebar" className="flex justify-between p-3 border-b-2 drawer">
             <p className="text-orange-500">{titlePrinterModel}</p>
-            <button
-              data-drawer-close="separator-sidebar"
-              onClick={() => handlePrinterModel(0)}
-              type="button"
+           <button data-drawer-close="separator-sidebar" onClick={() => handlePrinterModel(0)} type="button"
               className="text-gray-400 bg-transparent hover:bg-gray-200  rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
             >
               <svg

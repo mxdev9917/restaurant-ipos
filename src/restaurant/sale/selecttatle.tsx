@@ -17,7 +17,9 @@ function selectTatles() {
             <div className="h-32  w-full flex gap-3 pt-20 items-center ">
 
                 <div className="ml-3">
-                    <button className="w-28 h-fit bg-orange-500 text-white p-1.5 rounded-lg right-1 focus:ring-1 focus:ring-orange-500">
+                    <button 
+                    
+                    className="w-28 h-fit bg-orange-500 text-white p-1.5 rounded-lg right-1 focus:ring-1 focus:ring-orange-500">
                         ໂຊນຮ້ານທັ້ງໝົດ
                     </button>
                 </div>
