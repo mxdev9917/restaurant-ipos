@@ -78,14 +78,14 @@ function Carts() {
             </div>
           </div>
           {/* <div className="h-[85vh] w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-10 md:grid-cols-6 lg:grid-cols-8 place-items-stretch overflow-y-scroll"> */}
-          <div className="h-[85vh] w-full flex flex-wrap place-items-stretch overflow-y-scroll">
-
+          <div className="h-[85vh] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3 overflow-y-scroll">
             {items.map((_, index) => (
-              <div key={index} className=" ml-2.5 p-1 w-28 sm:w-32 h-40">
+              <div key={index} className="p-1">
                 <FoodItemSale onClick={handleClick} />
               </div>
             ))}
           </div>
+
           {/* Modal */}
           <div className={`${!handleModel ? "block" : "hidden"} bg-black/30 w-full h-full absolute flex justify-center items-center`}>
 
@@ -361,7 +361,7 @@ function Carts() {
         <div className="bg-white w-96 rounded-lg">
           <div id="separator-sidebar" className="flex justify-between p-3 border-b-2 drawer">
             <p className="text-orange-500">{titlePrinterModel}</p>
-           <button data-drawer-close="separator-sidebar" onClick={() => handlePrinterModel(0)} type="button"
+            <button data-drawer-close="separator-sidebar" onClick={() => handlePrinterModel(0)} type="button"
               className="text-gray-400 bg-transparent hover:bg-gray-200  rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
             >
               <svg
