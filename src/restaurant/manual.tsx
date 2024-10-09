@@ -2,7 +2,7 @@ import Sidebar_Nav from "./components/sidebar-nav";
 import { Link } from "react-router-dom";
 import ManualItem from "./components/manualitem";
 
-const items = Array.from({ length: 100 }, (_, index) => index);
+const items = Array.from({ length: 15 }, (_, index) => index);
 
 function UserManual() {
     return (
@@ -51,9 +51,9 @@ function UserManual() {
                             </button>
                         </div>
                     </div>
-                    <div className="h-[85vh] w-full grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-6 md:grid-cols-2 lg:grid-cols-5 place-items-stretch overflow-y-scroll">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3 mt-3">
                         {items.map((_, index) => (
-                            <div key={index} className="mb-1 pt-2">
+                            <div key={index} className=" w-auto h-fit">
                                 <ManualItem />
                             </div>
                         ))}
