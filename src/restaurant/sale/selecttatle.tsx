@@ -17,9 +17,9 @@ function selectTatles() {
             <div className="h-32  w-full flex gap-3 pt-20 items-center ">
 
                 <div className="ml-3">
-                    <button 
-                    
-                    className="w-28 h-fit bg-orange-500 text-white p-1.5 rounded-lg right-1 focus:ring-1 focus:ring-orange-500">
+                    <button
+
+                        className="w-28 h-fit bg-orange-500 text-white p-1.5 rounded-lg right-1 focus:ring-1 focus:ring-orange-500">
                         ໂຊນຮ້ານທັ້ງໝົດ
                     </button>
                 </div>
@@ -32,18 +32,19 @@ function selectTatles() {
                 </div>
             </div>
 
-            <div className="h-[86vh] w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-10 2xl:grid-cols-12 md:grid-cols-6  lg:grid-cols-8 place-items-stretch    overflow-y-scroll">
+            <div className="h-[85vh] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3 overflow-y-scroll px-3 mt-2">
                 {items.map((_, index) => (
-                    <div key={index} className="m-1 w-[95%] h-44" >
+                    <div key={index} className="h-32">
                         <TableItemSale onClick={handleClick} />
                     </div>
                 ))}
             </div>
+
             <div className={`${isCheckModel ? "block" : "hidden"} bg-black/30 w-full h-full absolute flex justify-center items-center`}>
                 <div className="h-fit w-96 bg-white rounded-lg flex flex-col p-3 mx-5 sm:mx-0">
                     <div className="flex justify-between items-center border-b-2">
                         <p className="text-xl pb-2 text-gray-700 font-semibold">
-                           ເລືອກເມນູ
+                            ເລືອກເມນູ
                         </p>
                         <button
                             onClick={handleClick}

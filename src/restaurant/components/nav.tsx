@@ -3,23 +3,29 @@ import Language from "../../website/components/language";
 import Logo from "./logo";
 
 interface NavProps {
-    handelMenu: () => void; // Type for the function to handle menu toggle
-    isCheck: boolean; // Prop to indicate if the menu is open
+    handelMenu: () => void; // Type for the onEdit function
+}
+interface NavProps {
+    handelMenu: () => void;
+    isCheck: boolean; // Add the isCheck prop
 }
 
-const Nav: React.FC<NavProps> = ({ handelMenu, isCheck }) => {
-    const handleClick = () => {
-        handelMenu();
-        console.log(isCheck); // You may want to remove this in production
-    };
 
+const Nav: React.FC<NavProps> = ({ handelMenu,isCheck }) => {
+    const handleClick = () => {
+        handelMenu ();
+        console.log(isCheck);
+        
+      };
     return (
-        <nav className="fixed top-0 z-50 w-full bg-[#3a393a] border-b border-gray-200">
+        <nav className="fixed top-0 z-50 w-full bg-[#3a393a] border-b border-gray-200 ">
             <div className="px-3 py-3 lg:px-5 lg:pl-3">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center justify-start rtl:justify-end">
                         <button
-                            
+                            data-drawer-target="separator-sidebar"
+                            data-drawer-toggle="separator-sidebar"
+                            aria-controls="separator-sidebar"
                             type="button"
                             className={` ${isCheck ? 'block' : 'hidden'} inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg xl:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200`}
                             onClick={handleClick} // Call the handelMenu function on button click
@@ -55,7 +61,7 @@ const Nav: React.FC<NavProps> = ({ handelMenu, isCheck }) => {
                                     <img
                                         className="w-8 h-8 rounded-full"
                                         src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                                        alt="Profile of user" // More descriptive alt text
+                                        alt="user photo"
                                     />
                                 </button>
                             </div>
