@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+
 function manualItem() {
     return (
         <div className=" justify-start  flex-col bg-white rounded-lg shadow-xl ">
