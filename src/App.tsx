@@ -1,6 +1,6 @@
 import HomePage from './website/homepage';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import 'flowbite'
+import { createHashRouter, RouterProvider } from 'react-router-dom';
+import 'flowbite';
 import Authen from './restaurant/authen';
 import Payment from './website/payment';
 import ManageFood from './restaurant/managefood/managefood';
@@ -16,121 +16,95 @@ import Help from './restaurant/help';
 import Profile from './restaurant/profile';
 import SaleReport from './restaurant/report/salereport';
 import SettingBill from './restaurant/setting/bill';
-
 import UserManual from './restaurant/manual';
 import Printer from './restaurant/setting/printer';
 import Rate from './restaurant/setting/rate';
 
 function App() {
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
       path: "/",
-       element:<HomePage/>
-     
+      element: <HomePage />
     },
     {
       path: "/authentication",
-       element:<Authen/>
-     
+      element: <Authen />
     },
     {
       path: "/payment",
-       element:<Payment/>
-     
+      element: <Payment />
     },
     {
       path: "/managefood",
-      element:<ManageFood/>
-     
+      element: <ManageFood />
     },
     {
       path: "/managecategory",
-      element:<ManageCategory/>
-     
+      element: <ManageCategory />
     },
     {
       path: "/managezone",
-      element:<ManageZone/>
-     
+      element: <ManageZone />
     },
     {
       path: "/managetable",
-      element:<ManageTables/>
-     
+      element: <ManageTables />
     },
     {
       path: "/dashboard",
-      element:<Dashboard/>
-     
+      element: <Dashboard />
     },
     {
       path: "/dashboardv2",
-      element:<Dashboardv2/>
-     
+      element: <Dashboardv2 />
     },
     {
       path: "/manageuser",
-      element:<ManageUser/>
-     
+      element: <ManageUser />
     },
     {
       path: "/sale",
-      element:<SelectTatles/>
-     
+      element: <SelectTatles />
     },
     {
       path: "/cart/:id",
-      element:<Carts/>
-     
+      element: <Carts />
     },
     {
       path: "/help",
-      element:<Help/>
-     
+      element: <Help />
     },
     {
       path: "/profile",
-      element:<Profile/>
-     
+      element: <Profile />
     },
     {
       path: "/salereport",
-      element:<SaleReport/>
-     
+      element: <SaleReport />
     },
     {
       path: "/settingbill",
-      element:<SettingBill/>
-     
+      element: <SettingBill />
     },
     {
       path: "/printer",
-      element:<Printer/>
-     
+      element: <Printer />
     },
     {
       path: "/rate",
-      element:<Rate/>
-     
+      element: <Rate />
     },
     {
       path: "/manual",
-      element:<UserManual/>
-     
+      element: <UserManual />
     },
-
-    // {
-    //   path: "/detail/:name",
-    //   // element:<DetailPage/>
-     
-    // },
   ]);
 
   return (
-    <div >
-       <RouterProvider router={router} />
+    <div>
+      <RouterProvider router={router} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
