@@ -27,7 +27,7 @@ const Nav: React.FC<NavProps> = ({ handelMenu,isCheck }) => {
                             data-drawer-toggle="separator-sidebar"
                             aria-controls="separator-sidebar"
                             type="button"
-                            className={` ${!isCheck ? 'block' : 'hidden'} inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200`}
+                            className={` ${isCheck ? 'block' : 'hidden'} inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg xl:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200`}
                             onClick={handleClick} // Call the handelMenu function on button click
                         >
                             <span className="sr-only">Open sidebar</span>

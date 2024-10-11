@@ -77,11 +77,12 @@ function Carts() {
               ))}
             </div>
           </div>
-          {/* <div className="h-[85vh] w-full grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-10 md:grid-cols-6 lg:grid-cols-8 place-items-stretch overflow-y-scroll"> */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3 ">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 ">
             {items.map((_, index) => (
-              <div key={index} className="ml-2.5 p-1 w-24 sm:w-32 md:w-36 lg:w-40 h-40 sm:h-48 md:h-52 lg:h-56">
-                <FoodItemSale onClick={handleClick} />
+              <div key={index} className="p-1 w-full">
+                <div className="w-full h-40 sm:h-48 md:h-52 lg:h-56">
+                  <FoodItemSale onClick={handleClick} />
+                </div>
               </div>
             ))}
           </div>
