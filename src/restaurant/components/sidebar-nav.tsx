@@ -5,10 +5,9 @@ import {
     HiOutlineMinusSm,
     HiOutlinePlusSm,
     
-    HiUsers,
+   
     HiOutlineOfficeBuilding,
     HiCog,
-    HiOutlineFire,
     HiOutlineBookOpen,
     HiCubeTransparent ,
     HiClipboardList 
@@ -86,7 +85,6 @@ function Sidebar_Nav() {
                             <Sidebar.Item href="#settingbill">ຕັ້ງຄ່າບີນ</Sidebar.Item>
                             <Sidebar.Item href="#settingprinter">ຕັ້ງຄ່າປີ້ນເຕີ</Sidebar.Item>
                             <Sidebar.Item href="#settingrate">ຕັ້ງຄ່າອັດຕາແລກປ່ຽນ</Sidebar.Item>
-                            <Sidebar.Item href="#managezone">ໂຊນຮ້ານ</Sidebar.Item>
                         </Sidebar.Collapse>
                         
 
