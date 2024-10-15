@@ -13,11 +13,11 @@ import { FaUsersGear } from "react-icons/fa6";
 import { Sidebar } from "flowbite-react";
 import { twMerge } from "tailwind-merge";
 import Nav from "./nav"
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 
 function Sidebar_Nav() {
     const[translate,setTranslate]=useState(true)
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     function isCheckMenu() { 
         setTranslate(!translate);
     }
