@@ -43,7 +43,7 @@ function Sidebar_Nav() {
         <>
 
         {/* -translate-x-full */}
-            <Nav handelMenu={isCheckMenu} isCheck={false} />
+            <Nav handelMenu={isCheckMenu}/>
             <Sidebar  className={`fixed  mt-2 z-40 w-64 h-screen transition-transform  ${translate ? '-translate-x-full':''} sm:translate-x-0`} aria-label="Sidebar">
                 <Sidebar.Items className="h-full px-3 py-5 overflow-y-auto bg-gray-50 ">
                     <Sidebar.ItemGroup className="space-y-3 font-medium">

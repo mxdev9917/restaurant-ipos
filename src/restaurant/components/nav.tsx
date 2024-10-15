@@ -6,13 +6,12 @@ import Logo from "./logo";
 
 interface NavProps {
     handelMenu: () => void;
-    isCheck: boolean; // Add the isCheck prop
+    
 }
 
-const Nav: React.FC<NavProps> = ({ handelMenu, isCheck }) => {
+const Nav: React.FC<NavProps> = ({ handelMenu}) => {
     const handleClick = () => {
         handelMenu();
-        console.log(isCheck);
     };
 
     return (
@@ -33,8 +32,8 @@ const Nav: React.FC<NavProps> = ({ handelMenu, isCheck }) => {
                         <span className="block text-sm">Bonnie Green</span>
                         <span className="block truncate text-sm font-medium">name@flowbite.com</span>
                     </Dropdown.Header>
-                    <Dropdown.Item>Dashboard</Dropdown.Item>
-                    <Dropdown.Item>Settings</Dropdown.Item>
+                    <Dropdown.Item href="#dashboard">Dashboard</Dropdown.Item>
+                    <Dropdown.Item href="#profile">profile</Dropdown.Item>
                     <Dropdown.Item>Earnings</Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>Sign out</Dropdown.Item>

@@ -7,7 +7,7 @@ function profile() {
         <div className="flex flex-col">
             <Sidebar_Nav />
             <div className="p-4 sm:ml-64">
-                <div className="flex flex-col">
+                <div className="flex flex-col ">
                     <div className="flex text-gray-500 ">
                         <Link className="hover:text-orange-500 text-xs md:text-sm" to={""}>ຈັດການໂປຣຟາຍ</Link>
                         <Link className="text-xs md:text-sm" to={""}>|</Link>
@@ -18,7 +18,7 @@ function profile() {
 
                         <div className="flex items-center gap-4 pt-5">
                             <div className="relative">
-                                <img className="w-24 h-24 rounded-full" src="/src/assets/images/test-i-img.jpg" alt="" />
+                                <img className="w-24 h-24 rounded-full" src="/images/images.jpeg" alt="" />
                                 <label htmlFor="profile-img" className="absolute left-16 top-16 cursor-pointer">
                                     <svg className="w-8 h-8 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" strokeLinejoin="round" strokeWidth="2" d="M4 18V8a1 1 0 0 1 1-1h1.5l1.707-1.707A1 1 0 0 1 8.914 5h6.172a1 1 0 0 1 .707.293L17.5 7H19a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Z" />
