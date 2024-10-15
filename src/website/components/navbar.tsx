@@ -8,7 +8,7 @@ function Navbars() {
     return (
         <div className="w-full flex justify-center">
             <Navbar fluid rounded className="bg-[#3a393a] w-full xl:w-2/3 lx:w-3/3 xl:rounded-full rounded-none px-0 xl:px-8 ">
-                <Navbar.Brand href="/">
+                <Navbar.Brand >
                     <Logo />
                 </Navbar.Brand>
 
@@ -20,14 +20,14 @@ function Navbars() {
                 </div>
 
                 <Navbar.Collapse className="hover:bg-transparent">
-                    <Navbar.Link href="#" active className="">
+                    <Navbar.Link href="/home" active className="">
                        <p className="pl-1 hover:text-orange-500"> Home</p>
                     </Navbar.Link>
                     <Navbar.Link href="#" className="border-none text-white hover:bg-transparent">
                        
                         <p className="pl-1 hover:text-orange-500 ">Pricing</p>
                     </Navbar.Link>
-                    <Navbar.Link href="#" className="border-none text-white hover:bg-transparent ">
+                    <Navbar.Link href="#download" className="border-none text-white hover:bg-transparent ">
                         
                         <p className="pl-1 hover:text-orange-500">Download App</p>
                     </Navbar.Link>

@@ -22,7 +22,7 @@ function Dashboardv() {
           <div className=" w-full h-fit  flex p-2 flex-col justify-between mr-2.5">
             <div className="flex w-full h-16 justify-between items-center">
               <p className="pt-3">Dashboard</p>
-              <div className="w-60 md:w-72  bg-white z-40 text-orange-500">
+              <div className="w-60 md:w-72  bg-white z-30 text-orange-500">
                 <Datepicker
                   primaryColor={"orange"}
                   value={value}

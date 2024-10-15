@@ -165,14 +165,6 @@ function homePage() {
                     </svg>
                 </Link>
             </div>
-
-
-
-
-
-
-
-
         </div>
     )
 }

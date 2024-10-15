@@ -1,11 +1,6 @@
-
 import {
-  
-    
     HiOutlineMinusSm,
     HiOutlinePlusSm,
-    
-   
     HiOutlineOfficeBuilding,
     HiCog,
     HiOutlineBookOpen,
@@ -18,12 +13,38 @@ import { FaUsersGear } from "react-icons/fa6";
 import { Sidebar } from "flowbite-react";
 import { twMerge } from "tailwind-merge";
 import Nav from "./nav"
+import { useEffect, useState } from "react";
+import { tr } from "date-fns/locale";
 function Sidebar_Nav() {
-    function isCheckMenu() { }
+    const[translate,setTranslate]=useState(true)
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    function isCheckMenu() { 
+        setTranslate(!translate);
+    }
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+            if(windowWidth>=768){
+                setTranslate(true)
+            }else{
+                setTranslate(false)
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup function to remove the event listener
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+    
     return (
         <>
+
+        {/* -translate-x-full */}
             <Nav handelMenu={isCheckMenu} isCheck={false} />
-            <Sidebar id="separator-sidebar" className="fixed  mt-4 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+            <Sidebar  className={`fixed  mt-2 z-40 w-64 h-screen transition-transform  ${translate ? '-translate-x-full':''} sm:translate-x-0`} aria-label="Sidebar">
                 <Sidebar.Items className="h-full px-3 py-5 overflow-y-auto bg-gray-50 ">
                     <Sidebar.ItemGroup className="space-y-3 font-medium">
                     <Sidebar.Item href="#dashboard" icon={FaChartBar}>
@@ -116,3 +137,4 @@ function Sidebar_Nav() {
 }
 
 export default Sidebar_Nav
+
