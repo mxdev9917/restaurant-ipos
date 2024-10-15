@@ -14,7 +14,7 @@ import { Sidebar } from "flowbite-react";
 import { twMerge } from "tailwind-merge";
 import Nav from "./nav"
 import { useEffect, useState } from "react";
-import { tr } from "date-fns/locale";
+
 function Sidebar_Nav() {
     const[translate,setTranslate]=useState(true)
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
