@@ -20,7 +20,7 @@ function Printer() {
         <div className="flex flex-col">
             <Sidebar_Nav />
             <div className="pt-8 sm:ml-64">
-                <div className="mt-14">
+                <div className="">
                     <div className="flex flex-col">
                         <div className="flex justify-between w-full h-fit items-end border-b-2">
                             <div className="flex flex-col w-fit h-fit pb-2 pl-2">

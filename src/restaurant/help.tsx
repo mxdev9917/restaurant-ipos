@@ -5,7 +5,7 @@ function help() {
     <div className="flex flex-col">
       <Sidebar_Nav />
       <div className="p-1 sm:ml-64">
-        <div className="mt-14 w-full h-screen flex items-start  lg:items-center  justify-center">
+        <div className=" w-full h-screen flex items-start  lg:items-center  justify-center">
           <div className="flex flex-col lg:flex-row gap-3 bg-[#0e3c50] px-7 py-10 rounded-2xl shadow-lg">
             <div className=" w-auto lg:w-96 h-[450px] pt-5  text-white font-semibold ">
               <div className="text-3xl  md:border-b-2 pb-3">

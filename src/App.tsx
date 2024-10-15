@@ -83,15 +83,15 @@ function App() {
       element: <SaleReport />
     },
     {
-      path: "/settingbill",
+      path: "/setting/bill",
       element: <SettingBill />
     },
     {
-      path: "/printer",
+      path: "/setting/printer",
       element: <Printer />
     },
     {
-      path: "/rate",
+      path: "/setting/rate",
       element: <Rate />
     },
     {

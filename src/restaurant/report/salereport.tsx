@@ -15,10 +15,10 @@ function saleReport() {
     });
 
     return (
-        <div className="flex flex-col pt-8">
+        <div className="flex flex-col">
             <Sidebar_Nav />
             <div className="p-1 sm:ml-64">
-                <div className="flex flex-col mt-14 ">
+                <div className="flex flex-col">
                     <div className="flex justify-between w-full h-fit items-end">
                         <div className="flex flex-col w-fit h-fit pb-2 pl-2">
                             <div className="flex text-gray-500 pb-2 ">

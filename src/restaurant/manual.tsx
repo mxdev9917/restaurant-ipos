@@ -9,7 +9,7 @@ function UserManual() {
         <div className="flex flex-col">
             <Sidebar_Nav />
             <div className="p-1 sm:ml-64">
-                <div className="mt-20">
+                <div className="">
                     <div className="flex justify-between w-full h-fit items-end border-b-2">
                         <div className="flex flex-col w-fit h-fit pb-2 pl-2">
                             <div className="flex text-gray-500">

@@ -7,7 +7,7 @@ function profile() {
         <div className="flex flex-col">
             <Sidebar_Nav />
             <div className="p-4 sm:ml-64">
-                <div className="flex flex-col   mt-14">
+                <div className="flex flex-col">
                     <div className="flex text-gray-500 ">
                         <Link className="hover:text-orange-500 text-xs md:text-sm" to={""}>ຈັດການໂປຣຟາຍ</Link>
                         <Link className="text-xs md:text-sm" to={""}>|</Link>

@@ -16,7 +16,7 @@ const Nav: React.FC<NavProps> = ({ handelMenu, isCheck }) => {
     };
 
     return (
-        <Navbar fluid rounded className="z-50 bg-[#3a393a] ">
+        <Navbar fluid  className="z-50 bg-[#3a393a] ">
             <Navbar.Brand >
                 <Navbar.Toggle onClick={handleClick} />
                 <Logo />

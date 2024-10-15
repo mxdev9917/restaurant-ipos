@@ -18,7 +18,7 @@ function Dashboardv() {
     <div className="flex flex-col">
       <Sidebar_Nav />
       <div className="p-1 sm:ml-64 flex-col">
-        <div className=" flex  flex-col 2xl:flex-row   mt-14">
+        <div className=" flex  flex-col 2xl:flex-row">
           <div className=" w-full h-fit  flex p-2 flex-col justify-between mr-2.5">
             <div className="flex w-full h-16 justify-between items-center">
               <p className="pt-3">Dashboard</p>

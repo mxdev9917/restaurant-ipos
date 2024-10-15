@@ -28,7 +28,7 @@ function ManageZone() {
             <Sidebar_Nav />
             <div className="p-8 sm:ml-64">
 
-                <div className="p-1 mt-14">
+                <div className="p-1">
                     <div className="flex justify-between w-full h-fit items-end">
                         <div className="flex flex-col w-fit h-fit pb-2 pl-2">
                             <div className="flex text-gray-500 ">

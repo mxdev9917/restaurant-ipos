@@ -21,23 +21,23 @@ function Sidebar_Nav() {
     function isCheckMenu() { 
         setTranslate(!translate);
     }
-    useEffect(() => {
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-            if(windowWidth>=768){
-                setTranslate(true)
-            }else{
-                setTranslate(false)
-            }
-        };
+    // useEffect(() => {
+    //     const handleResize = () => {
+    //         setWindowWidth(window.innerWidth);
+    //         if(windowWidth>=768){
+    //             setTranslate(true)
+    //         }else{
+    //             setTranslate(false)
+    //         }
+    //     };
 
-        window.addEventListener('resize', handleResize);
+    //     window.addEventListener('resize', handleResize);
 
-        // Cleanup function to remove the event listener
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+    //     // Cleanup function to remove the event listener
+    //     return () => {
+    //         window.removeEventListener('resize', handleResize);
+    //     };
+    // }, []);
     
     return (
         <>
@@ -103,9 +103,9 @@ function Sidebar_Nav() {
                                 );
                             }}
                         >
-                            <Sidebar.Item href="#settingbill">ຕັ້ງຄ່າບີນ</Sidebar.Item>
-                            <Sidebar.Item href="#settingprinter">ຕັ້ງຄ່າປີ້ນເຕີ</Sidebar.Item>
-                            <Sidebar.Item href="#settingrate">ຕັ້ງຄ່າອັດຕາແລກປ່ຽນ</Sidebar.Item>
+                            <Sidebar.Item href="#setting/bill">ຕັ້ງຄ່າບີນ</Sidebar.Item>
+                            <Sidebar.Item href="#setting/printer">ຕັ້ງຄ່າປີ້ນເຕີ</Sidebar.Item>
+                            <Sidebar.Item href="#/setting/rate">ຕັ້ງຄ່າອັດຕາແລກປ່ຽນ</Sidebar.Item>
                         </Sidebar.Collapse>
                         
 
