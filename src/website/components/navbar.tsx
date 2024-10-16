@@ -18,7 +18,7 @@ function Navbars() {
                 </div>
 
                 <Navbar.Collapse className="hover:bg-transparent">
-                    <HashLink to="/#home" active className="">
+                    <HashLink to="/#home"  className="">
                         <p className="pl-1 hover:text-orange-500 text-white"> Home</p>
                     </HashLink>
                     <HashLink to="/#pricing" className="border-none text-white hover:bg-transparent">
