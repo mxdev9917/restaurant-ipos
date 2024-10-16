@@ -121,7 +121,7 @@ function homePage() {
                 </div>
 
             </div>
-            <div id="test" className=" w-full bg-[#3a393a] flex flex-col pt-10 pb-3 mt-10 items-center " >
+            <div id="contact" className=" w-full bg-[#3a393a] flex flex-col pt-10 pb-3 mt-10 items-center " >
                 <p className="font-bold text-xl md:text-3xl mb-5 text-white">Contact our SALES TEAM today!</p>
                 <button type="button" className="text-white bg-orange-500 hover:bg-orange-600 focus:ring-3 focus:ring-orange-300 font-semibold rounded-2xl dm:text-xl px-4 md:px-8  py-2 md:py-4 mb-6 text-base">Contact uS</button>
                 <div className="flex mb-5">

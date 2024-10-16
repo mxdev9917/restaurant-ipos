@@ -7,7 +7,7 @@ function Navbars() {
     return (
         <div className="w-full flex justify-center">
             <Navbar fluid rounded className="bg-[#3a393a] w-full xl:w-2/3 lx:w-3/3 xl:rounded-full rounded-none px-0 xl:px-8 ">
-                <Navbar.Brand>
+                <Navbar.Brand to="/">
                     <Logo />
                 </Navbar.Brand>
 
@@ -18,22 +18,24 @@ function Navbars() {
                 </div>
 
                 <Navbar.Collapse className="hover:bg-transparent">
-                    <Navbar.Link to="/home" active className="">
-                        <p className="pl-1 hover:text-orange-500"> Home</p>
-                    </Navbar.Link>
-                    <Navbar.Link href="#" className="border-none text-white hover:bg-transparent">
+                    <HashLink to="/#home" active className="">
+                        <p className="pl-1 hover:text-orange-500 text-white"> Home</p>
+                    </HashLink>
+                    <HashLink to="/#pricing" className="border-none text-white hover:bg-transparent">
                         <p className="pl-1 hover:text-orange-500">Pricing</p>
-                    </Navbar.Link>
+                    </HashLink>
                     <HashLink to="/#download" className="border-none text-white hover:bg-transparent ">
                         <p className="pl-1 hover:text-orange-500">Download App</p>
                     </HashLink>
-                    <Navbar.Link href="#" className="border-none text-white hover:bg-transparent">
+                    <HashLink to="/#contact" className="border-none text-white hover:bg-transparent">
                         <p className="pl-1 hover:text-orange-500">Contact us</p>
-                    </Navbar.Link>
+                    </HashLink>
                 </Navbar.Collapse>
             </Navbar>
         </div>
     );
 }
+
+
 
 export default Navbars;
