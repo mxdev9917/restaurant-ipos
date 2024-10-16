@@ -19,6 +19,7 @@ import SettingBill from './restaurant/setting/bill';
 import UserManual from './restaurant/manual';
 import Printer from './restaurant/setting/printer';
 import Rate from './restaurant/setting/rate';
+import Profiles from './website/profile';
 
 function App() {
   const router = createHashRouter([
@@ -77,6 +78,10 @@ function App() {
     {
       path: "/profile",
       element: <Profile />
+    },
+    {
+      path: "/profiles",
+      element: <Profiles />
     },
     {
       path: "/salereport",
