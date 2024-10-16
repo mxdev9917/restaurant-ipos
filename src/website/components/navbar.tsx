@@ -3,6 +3,7 @@
 import Language from "./language"
 import Logo from "../../restaurant/components/logo"
 import { Button, Navbar } from "flowbite-react";
+import { HashLink } from 'react-router-hash-link';
 
 function Navbars() {
     return (
@@ -20,22 +21,24 @@ function Navbars() {
                 </div>
 
                 <Navbar.Collapse className="hover:bg-transparent">
-                    <Navbar.Link href="/home" active className="">
+                    <Navbar.Link to="/home" active className="">
                        <p className="pl-1 hover:text-orange-500"> Home</p>
                     </Navbar.Link>
                     <Navbar.Link href="#" className="border-none text-white hover:bg-transparent">
                        
                         <p className="pl-1 hover:text-orange-500 ">Pricing</p>
                     </Navbar.Link>
-                    <Navbar.Link href="#download" className="border-none text-white hover:bg-transparent ">
+                    <HashLink to="/#download" className="border-none text-white hover:bg-transparent ">
                         
                         <p className="pl-1 hover:text-orange-500">Download App</p>
-                    </Navbar.Link>
+                    </HashLink>
                     <Navbar.Link href="#" className="border-none text-white hover:bg-transparent">
                      
                          <p className="pl-1 hover:text-orange-500">Contact us</p>
                     </Navbar.Link> 
                 </Navbar.Collapse>
+                {/* <HashLink to="/#download">Link to Hash Fragment</HashLink> */}
+              
 
 
             </Navbar>
