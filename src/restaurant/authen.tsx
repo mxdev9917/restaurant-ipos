@@ -9,7 +9,7 @@ function Authen() {
     }
     return (
         // <div className="w-screen h-screen flex  justify-between bg-[url('/src/assets/images/svg/blob-scene-haikei.svg')] bg-cover">
-        <div className="w-screen h-screen flex text-white justify-center relative bg-[url('/src/assets/images/svg/blob-scene-haikei.svg')] bg-cover">
+        <div className="w-screen h-screen flex text-white justify-center relative bg-[url('/images/svg/blob-scene-haikei.svg')] bg-cover">
             {/* <div className="w-[60%] h-screen flex flex-col justify-center items-center">
                 
 

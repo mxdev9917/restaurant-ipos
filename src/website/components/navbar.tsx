@@ -1,7 +1,8 @@
 import Language from "./language";
 import Logo from "../../restaurant/components/logo";
-import { Button, Navbar } from "flowbite-react";
+import { Navbar } from "flowbite-react";
 import { HashLink } from "react-router-hash-link";  // Correct import
+import { Link } from "react-router-dom";
 
 function Navbars() {
     return (
@@ -13,7 +14,7 @@ function Navbars() {
 
                 <div className="flex items-center gap-2 md:order-2">
                     <Language />
-                    <Button className="focus:outline-none focus:ring-0 hover:text-orange-500 hover:border-orange-500">Sign in</Button>
+                    <Link to={'/authentication'} className=" ring-1 text-white ring-white px-2 py-1 rounded-lg hover:text-orange-500 hover:ring-orange-500">SING IN</Link >
                     <Navbar.Toggle className="flex bg-transparent hover:bg-transparent border-none text-sm focus:ring-0" />
                 </div>
 
