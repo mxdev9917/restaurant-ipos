@@ -149,7 +149,7 @@ function homePage() {
                 <div className="flex flex-col items-center md:justify-between w-full px-2 md:px-10 text-sm md:flex-row ">
                     <p className="font-normal text-white pb-2 md:pb-0">ສະຫງວນລິຂະສິດ ໂດຍ @ IPOS | Bran IT</p>
                     <div className="font-normal text-white flex">
-                        <Link to={'#'} >ເງື່ອນໄຂການໃຫ້ບໍລິການ</Link>
+                        <Link to={'/profiles'} >ເງື່ອນໄຂການໃຫ້ບໍລິການ</Link>
                         <p>|</p>
                         <Link className="focus:text-orange-500" to={'/dashboard'}>ນະໂຍບາຍສ່ວນຕົວ</Link>
                     </div>
