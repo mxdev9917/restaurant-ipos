@@ -1,51 +1,74 @@
-import NavBar from "./components/navbar";
-import { FaEdit } from "react-icons/fa";
+import Logo from "../restaurant/components/logo";
+import RestaurantItem from "./components/restaurantitem";
 import { MdOutlineDateRange } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { Label, TextInput } from "flowbite-react";
-import { HiMail } from "react-icons/hi";
-
+import { Avatar, Dropdown, Navbar } from "flowbite-react";
 function Profiles() {
     return (
-        <div className="w-screen h-screen flex flex-col ">
-            <div className=" pt-2">
-                <NavBar />
+        <div className="w-screen h-screen flex flex-col gap-2">
+            <div className="w-full h-fit shadow-md bg-slate-900">
+                <Navbar fluid >
+                <Navbar.Brand to="/">
+                    <Logo />
+                </Navbar.Brand>
+                    <div className="flex md:order-2">
+                        <Dropdown
+                            arrowIcon={false}
+                            inline
+                            label={
+                                <Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded />
+                            }
+                        >
+                            <Dropdown.Header>
+                                <span className="block text-sm">Bonnie Green</span>
+                                <span className="block truncate text-sm font-medium">name@flowbite.com</span>
+                            </Dropdown.Header>
+                            <Dropdown.Item>Dashboard</Dropdown.Item>
+                            <Dropdown.Item>Settings</Dropdown.Item>
+                            <Dropdown.Item>Earnings</Dropdown.Item>
+                            <Dropdown.Divider />
+                            <Dropdown.Item>Sign out</Dropdown.Item>
+                        </Dropdown>
+                    </div>
+                </Navbar>
             </div>
-            <div className="w-full h-screen flex flex-col items-center" >
-                <div className="w-[65%] h-full bg-white">
-                    <div className="flex gap-2 mt-4">
-                        <div className="flex bg-slate-50 justify-center items-center relative rounded-lg shadow-sm p-3">
-                            <img className="w-[135px] h-[135px] rounded-lg " src="/images/test-i-img.jpg" alt="" />
-                            <label htmlFor="profile-img" className="absolute left-[110px] top-[113px] cursor-pointer">
-                                <svg className="w-8 h-8 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" strokeLinejoin="round" strokeWidth="2" d="M4 18V8a1 1 0 0 1 1-1h1.5l1.707-1.707A1 1 0 0 1 8.914 5h6.172a1 1 0 0 1 .707.293L17.5 7H19a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Z" />
-                                    <path stroke="currentColor" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>
-                            </label>
-                            <input type="file" id="profile-img" name="profile-img" className="w-0 hidden" />
+            <div className="w-full h-full flex justify-center">
+                <div className="w-full sm:w-[90%] md:w-full xl:w-[80%] h-fit  rounded-lg">
+                    {/* Profile Info Section */}
+                    <div className="w-full flex flex-col md:flex-row items-center md:items-center border-b-[1px] pb-2 shadow-lg bg-slate-100">
+                        <div className="h-fit w-fit flex justify-center mb-4 md:mb-0 pl-2 pt-2">
+                            <img
+                                src="/images/images.jpeg"
+                                className="object-contain w-20 sm:w-24 md:w-28 rounded-full shadow-lg ring-2 ring-orange-700"
+                                alt="Profile"
+                            />
                         </div>
-                        <div className="w-full h-40 bg-slate-50 rounded-lg shadow-sm p-3 text-sm flex">
-                            <div className="flex w-full flex-col">
-                                <div className="text-lg text-orange-500 pb-2">ຂໍ້ມູນເຈົ້າຮ້ານ</div>
-                                <div className="flex relative pb-1"><p className="pr-1 text-orange-500">ຊື່:</p> <p>ຈີນ່າ ທຳມະວົງ </p> <button className="ml-2 pb-2  right-5 hover:text-orange-500"><FaEdit /></button> </div>
-                                <div className="flex relative "><p className="pr-1 text-orange-500">ເບີໂທ:</p> <p>020 56085825</p> <button className="ml-2 pb-2  right-5  hover:text-orange-500"><FaEdit /></button> </div>
-                                <div className="flex relative "><p className="pr-1 text-orange-500">ອີເມລ:</p> <p>eh.dev9917@gmail.com</p> <button className=" ml-2 pb-2  right-5 hover:text-orange-500"><FaEdit /></button> </div>
-                                <div className="flex items-end pt-2"><MdOutlineDateRange className="text-xl text-orange-500" /> <p className="font-semibold text-sm" >16/10/2024</p> </div>
-                            </div>
-                            <div className="w-full flex flex-col bg-slate-600">
-                              
-                                        <Label htmlFor="email4" value="Your email" />
-                                        <div className="w-full h-8 rounded-sm bg-white"></div>
-                                   
-                            </div>
-                            <div className="w-full flex justify-end p-2 ">
-                                <Link className="bg-orange-500 text-white h-fit py-1 px-2 rounded-sm">ໄປທີ່ຮ້ານ</Link>
+                        <div className="w-full md:pl-4 flex flex-col justify-center items-center md:items-start text-center md:text-left">
+                            <p className="text-xl sm:text-2xl font-semibold text-orange-500">
+                                ຈີນ່າ ທຳມະວົງ
+                            </p>
+                            <p className="text-sm font-semibold mt-1">
+                                eh.dev9917@gmail.com
+                            </p>
+                            <div className="flex items-center pt-2">
+                                <MdOutlineDateRange className="text-xl text-orange-500" />
+                                <p className="font-semibold text-sm ml-1">
+                                    16/10/2024
+                                </p>
                             </div>
                         </div>
-
+                        <div className=" h-[45px] sm:h-28 w-52 flex justify-center gap-2 items-end pr-2 ">
+                            <button className="bg-orange-500  w-fit px-4 py-2 text-sm rounded-md text-white">
+                                ແກ້ໄຂ
+                            </button>
+                            <button className="bg-orange-500 w-20  px-4 py-2 text-sm rounded-md text-white">
+                                ເພີ່ມຮ້ານ
+                            </button>
+                        </div>
                     </div>
 
-
+                    <RestaurantItem />
+                    <RestaurantItem />
+                    <RestaurantItem />
 
 
                 </div>
@@ -54,4 +77,5 @@ function Profiles() {
         </div>
     );
 }
-export default Profiles
+
+export default Profiles;
