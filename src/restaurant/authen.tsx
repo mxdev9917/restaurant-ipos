@@ -21,11 +21,11 @@ function Authen() {
                     <p className="text-4xl text-orange-500 font-semibold mt-5">Sign in</p>
                     <div className=" h-fit flex flex-col justify-end mt-7">
                         <label htmlFor="">ອີເມລ </label>
-                        <input type="email" className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-2   " placeholder="john.doe@company.com" required />
+                        <input type="email" className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 mb-2   " placeholder="john.doe@company.com" required />
                     </div>
                     <div className="w-full text-orange-500 relative">
                         <label htmlFor="">ລະຫັດຜ່ານ</label>
-                        <input type={passwordType ? "text" : "password"} className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 my-2 " placeholder="•••••••••" required />
+                        <input type={passwordType ? "text" : "password"} className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 my-2 " placeholder="•••••••••" required />
                         <button onClick={togglePasswordType} className="absolute bottom-5 right-3">
                             {
                                 passwordType ?

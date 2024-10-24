@@ -20,7 +20,8 @@ import UserManual from './restaurant/manual';
 import Printer from './restaurant/setting/printer';
 import Rate from './restaurant/setting/rate';
 import Profiles from './website/profile';
-
+import SignUp from './website/signup';
+import OTPVerification from './website/otp_verification';
 function App() {
   const router = createHashRouter([
     {
@@ -82,6 +83,14 @@ function App() {
     {
       path: "/profiles",
       element: <Profiles />
+    },
+    {
+      path: "/sign-up",
+      element: <SignUp />
+    },
+    {
+      path: "/verification",
+      element: <OTPVerification />
     },
     {
       path: "/salereport",

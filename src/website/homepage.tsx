@@ -77,7 +77,6 @@ function homePage() {
                                 <p className="w-full pl-5 py-2 border-b">3. ຄວາມລະອຽດຂັ້ນຕໍ່າ 480 px</p>
                                 <p className="w-full pl-5 py-2 border-b">4. ຂະຫນາດຈໍສະແດງ 3.5 ນິ້ວ</p>
                                 <p className="w-full pl-5 py-2 border-b">4. ​ຈໍາ​ເປັນ​ຕ້ອງ​ມີ​ການ​ເຊື່ອມ​ຕໍ່​ອິນ​ເຕີ​ເນັດ​ມື​ຖື</p>
-
                             </div>
                         </div>
                         <div className=" w-[350px] h-[450px] bg-white rounded-md shadow-xl mx-2 flex flex-col items-center  hover:bg-orange-500 cursor-pointer hover:transition hover:duration-700 hover:ease-in-out">
