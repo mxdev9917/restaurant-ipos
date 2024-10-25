@@ -22,8 +22,31 @@ import Rate from './restaurant/setting/rate';
 import Profiles from './website/profile';
 import SignUp from './website/signup';
 import OTPVerification from './website/otp_verification';
+import Authentication from './admins/authentication';
+import UserAdmin from './admins/manage-user-admin';
+import Customers from './admins/customers/customer';
+import CustomerDetail from './admins/customers/customer-detail';
 function App() {
   const router = createHashRouter([
+    // admin 
+    {
+      path: "admin/authentication",
+      element: <Authentication />
+    },
+    {
+      path: "/admin/users",
+      element: <UserAdmin />
+    },
+    {
+      path: "/admin/customers",
+      element: <Customers />
+    },
+    {
+      path: "/admin/customer/detail",
+      element: <CustomerDetail />
+    },
+
+    // end addmin
     {
       path: "/",
       element: <HomePage />
@@ -32,6 +55,7 @@ function App() {
       path: "/authentication",
       element: <Authen />
     },
+   
     {
       path: "/payment",
       element: <Payment />

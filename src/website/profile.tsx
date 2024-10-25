@@ -57,7 +57,7 @@ function Profiles() {
                 {isCheckAddRestaurant && <AddRestaurant handelButtonClose={()=>handleAddRestaurant('ເພີ່ມຮ້ານ')} title={titleRestaurant} />}
 
 
-                <div className="w-full sm:w-[90%] md:w-full xl:w-[80%] h-fit  rounded-lg">
+                <div className="w-full sm:w-[90%] md:w-full xl:w-[80%] h-fit   rounded-lg">
                     {/* Profile Info Section */}
                     <div className="w-full flex flex-col md:flex-row items-center md:items-center border-b-[1px] pb-2 shadow-lg bg-slate-100">
                         <div className="h-fit w-fit flex justify-center mb-4 md:mb-0 pl-2 pt-2">

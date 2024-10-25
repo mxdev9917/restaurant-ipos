@@ -20,7 +20,7 @@ const AddRestaurant: React.FC<AddRestaurantProps> = ({ handelButtonClose,title }
         setPasswordType(!passwordType);
     }
     return (
-        <div className="w-full h-full flex justify-center items-center absolute top-5 bg-black/5 overflow-visible">
+        <div className="w-full h-full flex justify-center items-center absolute top-5 z-50 bg-black/5 overflow-visible">
             <div className="w-[500px] h-[85vh]   mb-10 bg-slate-50 rounded-lg shadow-inner px-8 pb-8 pt-2 overflow-y-scroll ">
             
                 <div className="w-full h-fit py-2 flex justify-between items-center border-b-[1px]">

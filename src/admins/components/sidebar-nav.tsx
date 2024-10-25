@@ -8,12 +8,13 @@ import {
     HiClipboardList 
 } from "react-icons/hi";
 import { TbReportAnalytics } from "react-icons/tb";
-import { FaFire,FaChartBar } from "react-icons/fa";
+import { FaFire,FaChartBar,FaHospitalUser } from "react-icons/fa";
 import { FaUsersGear } from "react-icons/fa6";
 import { Sidebar } from "flowbite-react";
 import { twMerge } from "tailwind-merge";
 import Nav from "./nav"
 import {  useState } from "react";
+
 
 function Sidebar_Nav() {
     const[translate,setTranslate]=useState(true)
@@ -30,14 +31,14 @@ function Sidebar_Nav() {
             <Sidebar  className={`fixed  mt-2 z-40 w-64 h-screen transition-transform  ${translate ? '-translate-x-full':''} sm:translate-x-0`} aria-label="Sidebar">
                 <Sidebar.Items className="h-full px-3 py-5 overflow-y-auto bg-gray-50 ">
                     <Sidebar.ItemGroup className="space-y-3 font-medium">
-                    <Sidebar.Item href="#dashboard" icon={FaChartBar}>
+                    <Sidebar.Item href="#" icon={FaChartBar}>
                             Dashboard
                         </Sidebar.Item>
-                        <Sidebar.Item href="#manageuser" icon={FaUsersGear}>
+                        <Sidebar.Item href="#/admin/users" icon={FaUsersGear}>
                             User
                         </Sidebar.Item>
-                        <Sidebar.Item href="#sale" icon={HiClipboardList}>
-                            ຂາຍ
+                        <Sidebar.Item href="#/admin/customers" icon={FaHospitalUser}>
+                            ລູກຄ້າ
                         </Sidebar.Item>
                          <Sidebar.Collapse
                             icon={HiOutlineOfficeBuilding}
@@ -52,10 +53,10 @@ function Sidebar_Nav() {
                                 );
                             }}
                         >
-                            <Sidebar.Item href="#managefood">ເມນູອາຫານ</Sidebar.Item>
-                            <Sidebar.Item href="#managecategory">ປະເພດເມນູ</Sidebar.Item>
-                            <Sidebar.Item href="#managetable">ໂຕະ</Sidebar.Item>
-                            <Sidebar.Item href="#managezone">ໂຊນຮ້ານ</Sidebar.Item>
+                            <Sidebar.Item href="#">ເມນູອາຫານ</Sidebar.Item>
+                            <Sidebar.Item href="#">ປະເພດເມນູ</Sidebar.Item>
+                            <Sidebar.Item href="#">ໂຕະ</Sidebar.Item>
+                            <Sidebar.Item href="#">ໂຊນຮ້ານ</Sidebar.Item>
                         </Sidebar.Collapse>
                         <Sidebar.Collapse
                             icon={TbReportAnalytics}
@@ -70,7 +71,7 @@ function Sidebar_Nav() {
                                 );
                             }}
                         >
-                            <Sidebar.Item href="#salereport">ຍອດຂາຍ</Sidebar.Item>
+                            <Sidebar.Item href="#">ຍອດຂາຍ</Sidebar.Item>
                            
                         </Sidebar.Collapse>
                         <Sidebar.Collapse
@@ -86,9 +87,9 @@ function Sidebar_Nav() {
                                 );
                             }}
                         >
-                            <Sidebar.Item href="#setting/bill">ຕັ້ງຄ່າບີນ</Sidebar.Item>
-                            <Sidebar.Item href="#setting/printer">ຕັ້ງຄ່າປີ້ນເຕີ</Sidebar.Item>
-                            <Sidebar.Item href="#/setting/rate">ຕັ້ງຄ່າອັດຕາແລກປ່ຽນ</Sidebar.Item>
+                            <Sidebar.Item href="#">ຕັ້ງຄ່າບີນ</Sidebar.Item>
+                            <Sidebar.Item href="#">ຕັ້ງຄ່າປີ້ນເຕີ</Sidebar.Item>
+                            <Sidebar.Item href="">ຕັ້ງຄ່າອັດຕາແລກປ່ຽນ</Sidebar.Item>
                         </Sidebar.Collapse>
                         
 

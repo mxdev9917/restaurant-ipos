@@ -116,15 +116,6 @@ function profile() {
                     <div className=" p-3 mb-2  md:pr-5 ">
                         <button className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-full text-white text-xs md:text-sm">ແກ້ໄຂ</button>
                     </div>
-
-
-
-
-
-
-
-
-
                 </div>
             </div>
 
