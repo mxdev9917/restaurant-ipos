@@ -29,18 +29,18 @@ function CustomerDetail() {
             <div className=" sm:ml-64">
                 <div className="p-1">
                     <div className="flex justify-between w-full h-full items-end border-b-[1px]">
-                        <div className="flex flex-col items-start w-full h-fit pb-2 pl-2 ">
+                        <div className=" flex-col items-start w-full h-fit pb-2 pl-2 hidden lg:flex ">
                             <Breadcrumb aria-label="Default breadcrumb example">
                                 <Breadcrumb.Item href="#" icon={HiHome}>
                                     Home
                                 </Breadcrumb.Item>
-                                <Breadcrumb.Item href="#">Projects</Breadcrumb.Item>
-                                <Breadcrumb.Item>Flowbite React</Breadcrumb.Item>
+                                <Breadcrumb.Item href="#">Customer</Breadcrumb.Item>
+                                <Breadcrumb.Item>Detail</Breadcrumb.Item>
                             </Breadcrumb>
 
                         </div>
 
-                        <div className="flex gap-1 pr-1 my-2  md:pr-5 ">
+                        <div className="w-full flex justify-end gap-1 pr-1 my-2  md:pr-5 ">
                             <button
                                 // onClick={() => handleUserForm('ເພີ່ມຜູ້ດູແລລະບົບ')}
                                 className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-md text-white text-xs md:text-sm"
@@ -49,9 +49,9 @@ function CustomerDetail() {
                             </button>
                             <button
                                 // onClick={() => handleUserForm('ເພີ່ມຜູ້ດູແລລະບົບ')}
-                                className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-md text-white text-xs md:text-sm w-full"
+                                className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-md text-white text-xs md:text-sm w-fit"
                             >
-                                Reset
+                                Reset Password
                             </button>
                             <button
                                 // onClick={() => handleUserForm('ເພີ່ມຜູ້ດູແລລະບົບ')}
@@ -119,14 +119,15 @@ function CustomerDetail() {
                         <ImMenu2 className="text-3xl text-gray-500" />
                         <p className="text-orange-500">ຂໍ້ມູນຮ້ານ</p>
                     </div>
-                    <div className="overflow-x-auto px-5 mt-2">
+                    <div className="overflow-x-auto px-5  mt-2">
                         <Table hoverable>
                             <Table.Head>
                                 <Table.HeadCell>Restaurant name</Table.HeadCell>
-                                <Table.HeadCell>token</Table.HeadCell>
+                                <Table.HeadCell>User</Table.HeadCell>
+                                <Table.HeadCell className=" hidden lg:block">token</Table.HeadCell>
                                 <Table.HeadCell>Customer Name</Table.HeadCell>
                                 <Table.HeadCell>Status</Table.HeadCell>
-                                <Table.HeadCell>Expiration date</Table.HeadCell>
+                                <Table.HeadCell>Expiration</Table.HeadCell>
                                 <Table.HeadCell className="flex justify-end"> Action</Table.HeadCell>
                                 <Table.HeadCell>
                                     <span className="sr-only">Edit</span>
@@ -137,18 +138,24 @@ function CustomerDetail() {
                                     <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                                         {'Apple MacBook Pro 17"'}
                                     </Table.Cell>
-                                    <Table.Cell>
+                                    <Table.Cell>addmin123</Table.Cell>
+                                    <Table.Cell className=" hidden lg:block">
                                         <div className="flex  gap-3 relative  items-center">
                                             <p id="pass-code" className="p-2 text-[14px] rounded-md ">YiZ7952M0sktCD188coEiTzZEtGbKK
-                                                <Clipboard.WithIcon className=" right-28 bottom-1" valueToCopy="YiZ7952M0sktCD188coEiTzZEtGbKK" label="Copy" />
+                                                <Clipboard.WithIcon className=" right-16 bottom-1" valueToCopy="YiZ7952M0sktCD188coEiTzZEtGbKK" label="Copy" />
                                             </p>
                                         </div>
                                     </Table.Cell>
                                     <Table.Cell>Sliver</Table.Cell>
-                                    <Table.Cell>Laptop</Table.Cell>
+                                    <Table.Cell>
+                                        <div className="flex items-center  ">
+                                            <div className="h-2.5 w-2.5  rounded-full bg-green-500 me-2"></div>{" "}
+                                            Online
+                                        </div>
+                                    </Table.Cell>
                                     <Table.Cell>$2999</Table.Cell>
                                     <Table.Cell className="flex justify-end">
-                                    <Link className="flex w-fit  sm:bottom-2  bg-orange-500 p-1 rounded-md text-white"><HiCog className="text-lg" />Config</Link>
+                                        <Link className="flex w-fit  sm:bottom-2  bg-orange-500 p-1 rounded-md text-white"><HiCog className="text-lg" />Config</Link>
                                     </Table.Cell>
                                 </Table.Row>
 
