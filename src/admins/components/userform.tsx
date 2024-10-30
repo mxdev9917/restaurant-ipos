@@ -1,6 +1,5 @@
-import { Button, Checkbox, Label } from "flowbite-react";
-import { Link } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
+import { Button, Label } from "flowbite-react";
+
 import { IoMdLock, IoMdUnlock } from "react-icons/io";
 import { FaCloudUploadAlt } from "react-icons/fa";
 
@@ -90,6 +89,16 @@ const UserForm: React.FC<AddRestaurantProps> = ({ handelButtonClose,title }) => 
                             <Label htmlFor="email2" value="Email" />
                         </div>
                         <input type="text" className="bg-gray-50 h-11 border border-gray-300 text-gray-900  rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 " placeholder="john.doe@company.com" required />
+                    </div>
+                    <div>
+                        <div className=" block">
+                            <Label htmlFor="role" value="Role" />
+                        </div>
+                        <select name="role" id="role" className="bg-gray-50 h-11 border border-gray-300 text-gray-900  rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 ">
+                            <option value="super administrator">super administrator</option>
+                            <option value="super administrator">administrator</option>
+                            <option value="super administrator">user</option>
+                        </select>
                     </div>
                     <Button type="submit" className=" text-white focus:ring-2 focus:ring-orange-500 bg-orange-500" >ບັນທືກ</Button>
                 </form>

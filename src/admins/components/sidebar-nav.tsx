@@ -5,7 +5,6 @@ import {
     HiCog,
     HiOutlineBookOpen,
     HiCubeTransparent ,
-    HiClipboardList 
 } from "react-icons/hi";
 import { TbReportAnalytics } from "react-icons/tb";
 import { FaFire,FaChartBar,FaHospitalUser } from "react-icons/fa";

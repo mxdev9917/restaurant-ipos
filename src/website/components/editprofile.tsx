@@ -1,6 +1,5 @@
-import { Button, Checkbox, Label } from "flowbite-react";
-import { Link } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
+import { Button, Label } from "flowbite-react";
+
 import { IoMdLock, IoMdUnlock } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { useState } from "react"
@@ -36,6 +35,12 @@ const EditProfile: React.FC<EditProfileProps> = ({  handelButtonClose}) => {
                             <Label htmlFor="email2" value="Email" />
                         </div>
                         <input type="email" className="bg-gray-50 h-11 border border-gray-300 text-gray-900  rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 " placeholder="john.doe@company.com" required />
+                    </div>
+                    <div>
+                        <div className=" block">
+                            <Label htmlFor="phone" value="phone" />
+                        </div>
+                        <input type="text" className="bg-gray-50 h-11 border border-gray-300 text-gray-900  rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 " placeholder="020 xx xxx xxx" required />
                     </div>
                     <div className="w-full  relative">
                         <label htmlFor="">ລະຫັດຜ່ານ</label>

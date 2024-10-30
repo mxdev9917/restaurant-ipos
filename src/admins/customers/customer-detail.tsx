@@ -1,14 +1,10 @@
 import Sidebar_Nav from "../components/sidebar-nav";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import UserForm from "../components/userform";
-import { TiEdit } from "react-icons/ti";
-import { MdLockReset, MdEdit } from "react-icons/md";
-import { FaRegTrashAlt } from "react-icons/fa";
-import { Button, Label, Popover } from "flowbite-react";
+
 import { HiCog } from "react-icons/hi";
-import { IoSearchOutline } from "react-icons/io5";
-import { Table } from "flowbite-react";
+
+import { Label, Table } from "flowbite-react";
 import { ImMenu2 } from "react-icons/im";
 import { IoMdLock, IoMdUnlock } from "react-icons/io";
 import { Clipboard } from "flowbite-react"
@@ -79,7 +75,15 @@ function CustomerDetail() {
                                 <div className=" block">
                                     <Label htmlFor="email2" value="Status" />
                                 </div>
-                                <input type="email" className="bg-gray-50 h-11 border border-gray-300 text-gray-900  rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 " placeholder="john.doe@company.com" required />
+                                <div className="flex gap-2">
+                                    <input type="email" className="bg-gray-50 h-11 border border-gray-300 text-gray-900  rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 " placeholder="john.doe@company.com" required />
+                                    <button
+                                        // onClick={() => handleUserForm('ເພີ່ມຜູ້ດູແລລະບົບ')}
+                                        className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-md text-white text-xs md:text-sm w-fit"
+                                    >
+                                      UnLock
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div className=" w-full flex flex-col gap-3">
@@ -142,7 +146,7 @@ function CustomerDetail() {
                                     <Table.Cell className=" hidden lg:block">
                                         <div className="flex  gap-3 relative  items-center">
                                             <p id="pass-code" className="p-2 text-[14px] rounded-md ">YiZ7952M0sktCD188coEiTzZEtGbKK
-                                                <Clipboard.WithIcon className=" right-16 bottom-1" valueToCopy="YiZ7952M0sktCD188coEiTzZEtGbKK" label="Copy" />
+                                                <Clipboard.WithIcon className=" right-16 bottom-1" valueToCopy="YiZ7952M0sktCD188coEiTzZEtGbKK"  />
                                             </p>
                                         </div>
                                     </Table.Cell>
@@ -155,7 +159,7 @@ function CustomerDetail() {
                                     </Table.Cell>
                                     <Table.Cell>$2999</Table.Cell>
                                     <Table.Cell className="flex justify-end">
-                                        <Link className="flex w-fit  sm:bottom-2  bg-orange-500 p-1 rounded-md text-white"><HiCog className="text-lg" />Config</Link>
+                                        <Link to={''} className="flex w-fit  sm:bottom-2  bg-orange-500 p-1 rounded-md text-white"><HiCog className="text-lg" />Config</Link>
                                     </Table.Cell>
                                 </Table.Row>
 

@@ -1,5 +1,7 @@
-
-
+import Sidebar_Nav from "./components/sidebar-nav";
+import { Breadcrumb } from "flowbite-react";
+import { IoSearchOutline } from "react-icons/io5";
+import { HiHome } from "react-icons/hi";
 function Register() {
     return (
         <div className="flex flex-col">

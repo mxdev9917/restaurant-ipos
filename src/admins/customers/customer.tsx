@@ -2,10 +2,7 @@ import Sidebar_Nav from "../components/sidebar-nav";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import UserForm from "../components/userform";
-import { TiEdit } from "react-icons/ti";
-import { MdLockReset, MdEdit } from "react-icons/md";
-import { FaRegTrashAlt } from "react-icons/fa";
-import { Button, Label, Popover } from "flowbite-react";
+
 import { HiCog } from "react-icons/hi";
 
 
@@ -16,29 +13,14 @@ import { HiHome } from "react-icons/hi";
 
 
 function Customers() {
-    const [isCheckModel, setIsCheckModel] = useState(false);
-    const [titleModel, setTitleModel] = useState("");
-    const [isCheckEven, setIsEven] = useState(true);
-    const [passwordType, setPasswordType] = useState(false);
-    const [isChecked, setIsChecked] = useState(true);
-    const [isCheckedTitle, setIsCheckedTitle] = useState("ປີດໃຊ້ງານ");
+  
 
     const [titleUserForm, settitleUserForm] = useState('ເພີ່ມຜູ້ດູແລລະບົບ')
     const [isCheckUserForm, setsCheckUserForm] = useState(false)
 
 
 
-    function togglePasswordType() {
-        setPasswordType(!passwordType);
-    }
-    const handleChange = () => {
-        setIsChecked(!isChecked); // Toggle checkbox state
-        if (isChecked != true) {
-            setIsCheckedTitle("ປິດໃຊ້ງານ");
-        } else {
-            setIsCheckedTitle("ເປີດໃຊ້ງານ");
-        }
-    };
+  
 
 
     function handleUserForm(title: string) {
@@ -150,7 +132,7 @@ function Customers() {
                                         </td>
                                         <td className="px-6 py-4">25/10/24</td>
                                         <td className="px-6 relative flex items-start justify-end ">
-                                            <Link className="flex w-fit absolute bottom-[-15px] sm:bottom-2  bg-orange-500 p-1 rounded-md text-white"><HiCog className="text-lg" />Config</Link>
+                                            <Link to={''} className="flex w-fit absolute bottom-[-15px] sm:bottom-2  bg-orange-500 p-1 rounded-md text-white"><HiCog className="text-lg" />Config</Link>
                                         </td>
                                     </tr>
                                 </tbody>

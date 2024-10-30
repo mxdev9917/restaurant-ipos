@@ -1,6 +1,5 @@
-import { Button, Checkbox, Label } from "flowbite-react";
-import { Link } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
+import { Button, Label } from "flowbite-react";
+
 import { IoMdLock, IoMdUnlock } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { useState } from "react"

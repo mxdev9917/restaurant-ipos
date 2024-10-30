@@ -8,29 +8,14 @@ import { FaRegTrashAlt } from "react-icons/fa";
 
 
 function UserAdmin() {
-    const [isCheckModel, setIsCheckModel] = useState(false);
-    const [titleModel, setTitleModel] = useState("");
-    const [isCheckEven, setIsEven] = useState(true);
-    const [passwordType, setPasswordType] = useState(false);
-    const [isChecked, setIsChecked] = useState(true);
-    const [isCheckedTitle, setIsCheckedTitle] = useState("ປີດໃຊ້ງານ");
+   
 
     const [titleUserForm, settitleUserForm] = useState('ເພີ່ມຜູ້ດູແລລະບົບ')
     const [isCheckUserForm, setsCheckUserForm] = useState(false)
 
 
 
-    function togglePasswordType() {
-        setPasswordType(!passwordType);
-    }
-    const handleChange = () => {
-        setIsChecked(!isChecked); // Toggle checkbox state
-        if (isChecked != true) {
-            setIsCheckedTitle("ປິດໃຊ້ງານ");
-        } else {
-            setIsCheckedTitle("ເປີດໃຊ້ງານ");
-        }
-    };
+   
 
 
     function handleUserForm(title: string) {

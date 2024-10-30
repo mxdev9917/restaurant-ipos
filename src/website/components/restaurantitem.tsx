@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaRegEdit } from "react-icons/fa";
-import { MdContentCopy } from "react-icons/md";
+
 import { Clipboard } from "flowbite-react"
 
 interface RestaurantItemProps {
@@ -42,7 +42,7 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({ handelButtonClose }) =>
             <div className="flex flex-col justify-center items-center w-full">
                 <div className="flex  gap-3 relative  items-center">
                     <p id="pass-code" className="p-2 text-[14px] rounded-md bg-gray-100">YiZ7952M0sktCD188coEiTzZEtGbKK
-                    <Clipboard.WithIcon className=" right-[-22px] bottom-1" valueToCopy="YiZ7952M0sktCD188coEiTzZEtGbKK" label="Copy" />
+                    <Clipboard.WithIcon className=" right-[-22px] bottom-1" valueToCopy="YiZ7952M0sktCD188coEiTzZEtGbKK" />
                     </p>
                 </div>
             </div>
