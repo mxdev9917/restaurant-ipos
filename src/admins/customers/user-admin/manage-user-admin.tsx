@@ -1,7 +1,7 @@
-import Sidebar_Nav from "./components/sidebar-nav";
+import Sidebar_Nav from "../../components/sidebar-nav";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import UserForm from "./components/userform";
+import UserForm from "../../components/userform";
 import { TiEdit } from "react-icons/ti";
 import { MdLockReset } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -18,7 +18,7 @@ function UserAdmin() {
    
 
 
-    function handleUserForm(title: string) {
+    function handleUserForm(title:string) {
         setsCheckUserForm(!isCheckUserForm)
         settitleUserForm(title)
     }
@@ -64,9 +64,9 @@ function UserAdmin() {
                         </div>
 
                         <div className=" pr-1 mb-2  md:pr-5 ">
-                            <button
+                        <button
                                 onClick={() => handleUserForm('ເພີ່ມຜູ້ດູແລລະບົບ')}
-                                className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-full text-white text-xs md:text-sm"
+                                className="bg-green-500 hover:bg-green-600 py-[5px] px-4 rounded-md text-white text-xs md:text-sm"
                             >
                                 ເພີ່ມ
                             </button>

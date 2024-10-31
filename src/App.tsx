@@ -23,15 +23,20 @@ import Profiles from './website/profile';
 import SignUp from './website/signup';
 import OTPVerification from './website/otp_verification';
 import Authentication from './admins/authentication';
-import UserAdmin from './admins/manage-user-admin';
+import UserAdmin from './admins/customers/user-admin/manage-user-admin';
 import Customers from './admins/customers/customer';
 import CustomerDetail from './admins/customers/customer-detail';
 import Tamplace from './admins/tamplace';
 import CustomerDashboard from './admins/ dashboards/customer-dashboard';
 import RestaurantApproval from './admins/approval/restaurant-approval';
+import ConfigSystem from './admins/customers/user-admin/config-system';
 function App() {
   const router = createHashRouter([
     // admin 
+    {
+      path: "config/system",
+      element: <ConfigSystem />
+    },
     {
       path: "admin",
       element: <CustomerDashboard />
