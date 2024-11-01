@@ -29,13 +29,14 @@ import CustomerDetail from './admins/customers/customer-detail';
 import Tamplace from './admins/tamplace';
 import CustomerDashboard from './admins/ dashboards/customer-dashboard';
 import RestaurantApproval from './admins/approval/restaurant-approval';
-import ConfigSystem from './admins/customers/user-admin/config-system';
+import RestaurantDetail from './admins/components/restaurant-detail';
+// import ConfigSystem from './admins/customers/user-admin/config-system';
 function App() {
   const router = createHashRouter([
     // admin 
     {
-      path: "config/system",
-      element: <ConfigSystem />
+      path: "admin/Approval/restaurant/detail",
+      element: <RestaurantDetail />
     },
     {
       path: "admin",

@@ -12,8 +12,8 @@ function RestaurantApproval() {
                     <div className="flex justify-end sm:justify-between w-full h-fit items-center mb-2">
 
                         <Breadcrumb aria-label="Default breadcrumb example ">
-                            <Breadcrumb.Item  href="#" icon={HiHome}> Home</Breadcrumb.Item>
-                            <Breadcrumb.Item  href="#">Approval</Breadcrumb.Item>
+                            <Breadcrumb.Item href="#" icon={HiHome}> Home</Breadcrumb.Item>
+                            <Breadcrumb.Item href="#">Approval</Breadcrumb.Item>
                             <Breadcrumb.Item>restaurant</Breadcrumb.Item>
                         </Breadcrumb>
                         <div className=" flex gap-2 ">
@@ -23,12 +23,13 @@ function RestaurantApproval() {
                             >
                                 refresh
                             </button>
-                            <button
-                                // onClick={() => handleUserForm('ເພີ່ມຜູ້ດູແລລະບົບ')}
+                            <Link
+                                to={'admin/Approval/restaurant/detail'}
+                                // onClick={() => handleRestaurant('ເພີ່ມຜູ້ດູແລລະບົບ')}
                                 className="bg-green-500 hover:bg-green-600 py-[5px] px-4 rounded-md text-white text-xs md:text-sm"
                             >
                                 ເພີ່ມ
-                            </button>
+                            </Link>
                         </div>
 
 
@@ -62,7 +63,7 @@ function RestaurantApproval() {
                                     </Table.Cell>
 
                                     <Table.Cell>
-                                        <Link to={""} className="font-medium text-cyan-600 hover:underline">
+                                        <Link to={"/admin/Approval/restaurant/detail"} className="font-medium text-cyan-600 hover:underline">
                                             ຂໍ້ມູນເພີ່ມເຕີມ
                                         </Link>
 
@@ -85,8 +86,8 @@ function RestaurantApproval() {
                                     </Table.Cell>
 
                                     <Table.Cell>
-                                        <Link to={""} className="font-medium text-cyan-600 hover:underline">
-                                        ຂໍ້ມູນເພີ່ມເຕີມ
+                                        <Link to={"/admin/Approval/restaurant/detail"} className="font-medium text-cyan-600 hover:underline">
+                                            ຂໍ້ມູນເພີ່ມເຕີມ
                                         </Link>
 
                                     </Table.Cell>
@@ -97,7 +98,7 @@ function RestaurantApproval() {
                     </div>
                 </div>
             </div>
-
+            {/* {isCheckAddRestaurant && <RestaurantDetail handelButtonClose={()=>handleRestaurant('ເພີ່ມຮ້ານ')} title={titleRestaurant} />} */}
         </div>
     );
 }

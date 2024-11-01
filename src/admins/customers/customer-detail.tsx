@@ -1,19 +1,10 @@
 import Sidebar_Nav from "../components/sidebar-nav";
-import { Link } from "react-router-dom";
 import { useState } from "react";
-
-import { HiCog } from "react-icons/hi";
-
 import { Label, Table } from "flowbite-react";
 import { ImMenu2 } from "react-icons/im";
 import { IoMdLock, IoMdUnlock } from "react-icons/io";
-import { Clipboard } from "flowbite-react"
 import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
-
-
-
-
 function CustomerDetail() {
     const [passwordType, setPasswordType] = useState(false)
     function togglePasswordType() {
@@ -81,7 +72,7 @@ function CustomerDetail() {
                                         // onClick={() => handleUserForm('ເພີ່ມຜູ້ດູແລລະບົບ')}
                                         className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-md text-white text-xs md:text-sm w-fit"
                                     >
-                                      UnLock
+                                        UnLock
                                     </button>
                                 </div>
                             </div>
@@ -128,11 +119,11 @@ function CustomerDetail() {
                             <Table.Head>
                                 <Table.HeadCell>Restaurant name</Table.HeadCell>
                                 <Table.HeadCell>User</Table.HeadCell>
-                                <Table.HeadCell className=" hidden lg:block">token</Table.HeadCell>
+                                {/* <Table.HeadCell className=" hidden lg:block">token</Table.HeadCell> */}
                                 <Table.HeadCell>Customer Name</Table.HeadCell>
                                 <Table.HeadCell>Status</Table.HeadCell>
                                 <Table.HeadCell>Expiration</Table.HeadCell>
-                                <Table.HeadCell className="flex justify-end"> Action</Table.HeadCell>
+                                {/* <Table.HeadCell > Action</Table.HeadCell> */}
                                 <Table.HeadCell>
                                     <span className="sr-only">Edit</span>
                                 </Table.HeadCell>
@@ -143,13 +134,13 @@ function CustomerDetail() {
                                         {'Apple MacBook Pro 17"'}
                                     </Table.Cell>
                                     <Table.Cell>addmin123</Table.Cell>
-                                    <Table.Cell className=" hidden lg:block">
+                                    {/* <Table.Cell className=" hidden lg:block">
                                         <div className="flex  gap-3 relative  items-center">
                                             <p id="pass-code" className="p-2 text-[14px] rounded-md ">YiZ7952M0sktCD188coEiTzZEtGbKK
                                                 <Clipboard.WithIcon className=" right-16 bottom-1" valueToCopy="YiZ7952M0sktCD188coEiTzZEtGbKK"  />
                                             </p>
                                         </div>
-                                    </Table.Cell>
+                                    </Table.Cell> */}
                                     <Table.Cell>Sliver</Table.Cell>
                                     <Table.Cell>
                                         <div className="flex items-center  ">
@@ -158,9 +149,11 @@ function CustomerDetail() {
                                         </div>
                                     </Table.Cell>
                                     <Table.Cell>$2999</Table.Cell>
-                                    <Table.Cell className="flex justify-end">
-                                        <Link to={''} className="flex w-fit  sm:bottom-2  bg-orange-500 p-1 rounded-md text-white"><HiCog className="text-lg" />Config</Link>
-                                    </Table.Cell>
+                                    {/* <Table.Cell>
+                                        <Link to={'/admin/customer/detail'} className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
+                                            ຂໍ້ມູນເພີ່ມເຕີມ
+                                        </Link>
+                                    </Table.Cell> */}
                                 </Table.Row>
 
 
