@@ -29,7 +29,7 @@ import CustomerDetail from './admins/customers/customer-detail';
 import Tamplace from './admins/tamplace';
 import CustomerDashboard from './admins/ dashboards/customer-dashboard';
 import RestaurantApproval from './admins/approval/restaurant-approval';
-import RestaurantDetail from './admins/components/restaurant-detail';
+import RestaurantDetail from './admins/approval/restaurant-detail';
 // import ConfigSystem from './admins/customers/user-admin/config-system';
 function App() {
   const router = createHashRouter([
