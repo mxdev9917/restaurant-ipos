@@ -1,7 +1,7 @@
-import Sidebar_Nav from "../../components/sidebar-nav";
+import Sidebar_Nav from "../components/sidebar-nav";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import UserForm from "../../components/userform";
+import UserForm from "../components/userform";
 import { TiEdit } from "react-icons/ti";
 import { MdLockReset } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -10,7 +10,7 @@ function UserAdmin() {
     const [titleUserForm, settitleUserForm] = useState('ເພີ່ມຜູ້ດູແລລະບົບ');
     const [isCheckUserForm, setsCheckUserForm] = useState(false);
 
-    function handleUserForm(title: string) {
+    function handleUserForm(title:string) {
         setsCheckUserForm(!isCheckUserForm);
         settitleUserForm(title);
     }

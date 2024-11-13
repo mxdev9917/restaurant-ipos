@@ -14,11 +14,11 @@ function RestaurantDetail() {
     { title: 'Profile', content: <RestaurantInfo /> },
     { title: 'Payment', content: <Restaurantpayment /> },
   ];
-  const headers = ["InvoiceID", "Date", "Payment Method", "Price", "Status"];
+  const headers = ["InvoiceID", "Date","Date paid" , "Payment Method", "Price", "Status"];
   const data = [
-    { id: "1256", date: "01/11/2024", method: "Bank Transfer", price: "150,000", status: "Paid" },
-    { id: "1563", date: "01/11/2034", method: "BCEL", price: "150,000", status: "Paid" },
-    { id: "1356", date: "01/11/2022", method: "Bank Transfer", price: "150,000", status: "Paid" },
+    { id: "1256", date: "01/11/2024",date_Paid:"01/11/2024" , method: "Bank Transfer", price: "150,000", status: "Paid" },
+    { id: "1563", date: "01/11/2034",date_Paid:"01/11/2024" , method: "BCEL", price: "150,000", status: "Paid" },
+    { id: "1356", date: "01/11/2022",date_Paid:"01/11/2024" , method: "Bank Transfer", price: "150,000", status: "Paid" },
   ];
   return (
     <div className="flex flex-col min-h-screen">
@@ -68,6 +68,7 @@ function RestaurantDetail() {
                   <tr key={index} className="hover:bg-gray-100">
                     <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{row.id}</td>
                     <td className="px-6 py-4">{row.date}</td>
+                    <td className="px-6 py-4">{row.date_Paid}</td>
                     <td className="px-6 py-4">{row.method}</td>
                     <td className="px-6 py-4">{row.price}</td>
                     <td className="px-6 py-4">{row.status}</td>

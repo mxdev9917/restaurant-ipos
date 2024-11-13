@@ -98,7 +98,6 @@ function Profiles() {
 
                 </div>
             </div>
-         {isCheckAddRestaurant && <AddRestaurant handelButtonClose={()=>handleAddRestaurant('ເພີ່ມຮ້ານ')} title={titleRestaurant} />}
         </div>
     );
 }

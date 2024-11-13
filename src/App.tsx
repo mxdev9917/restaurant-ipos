@@ -23,7 +23,7 @@ import Profiles from './website/profile';
 import SignUp from './website/signup';
 import OTPVerification from './website/otp_verification';
 import Authentication from './admins/authentication';
-import UserAdmin from './admins/customers/user-admin/manage-user-admin';
+import UserAdmin from './admins/user-admin/manage-user-admin';
 import Customers from './admins/customers/customer';
 import CustomerDetail from './admins/customers/customer-detail';
 import Tamplace from './admins/tamplace';
@@ -38,10 +38,10 @@ function App() {
       path: "admin/Approval/restaurant/detail",
       element: <RestaurantDetail />
     },
-    {
-      path: "admin",
-      element: <CustomerDashboard />
-    },
+    // {
+    //   path: "admin",
+    //   element: <CustomerDashboard />
+    // },
     {
       path: "admin/Approval/restaurant",
       element: <RestaurantApproval />
@@ -51,7 +51,7 @@ function App() {
       element: <Tamplace />
     },
     {
-      path: "admin/authentication",
+      path: "admin",
       element: <Authentication />
     },
     {

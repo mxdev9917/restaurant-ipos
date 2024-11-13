@@ -24,7 +24,7 @@ function RestaurantApproval() {
                                 refresh
                             </button>
                             <Link
-                                to={'admin/Approval/restaurant/detail'}
+                                to={''}
                                 // onClick={() => handleRestaurant('ເພີ່ມຜູ້ດູແລລະບົບ')}
                                 className="bg-green-500 hover:bg-green-600 py-[5px] px-4 rounded-md text-white text-xs md:text-sm"
                             >

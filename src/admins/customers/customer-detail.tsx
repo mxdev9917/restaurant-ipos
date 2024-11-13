@@ -114,19 +114,17 @@ function CustomerDetail() {
                         <ImMenu2 className="text-3xl text-gray-500" />
                         <p className="text-orange-500">ຂໍ້ມູນຮ້ານ</p>
                     </div>
-                    <div className="overflow-x-auto px-5  mt-2">
+                    <div className="overflow-x-auto px-5 mt-2">
                         <Table hoverable>
                             <Table.Head>
-                                <Table.HeadCell>Restaurant name</Table.HeadCell>
+                                <Table.HeadCell>Restaurant Name</Table.HeadCell>
                                 <Table.HeadCell>User</Table.HeadCell>
-                                {/* <Table.HeadCell className=" hidden lg:block">token</Table.HeadCell> */}
-                                <Table.HeadCell>Customer Name</Table.HeadCell>
+                                <Table.HeadCell className="hidden md:table-cell">Customer Name</Table.HeadCell>
                                 <Table.HeadCell>Status</Table.HeadCell>
-                                <Table.HeadCell>Expiration</Table.HeadCell>
-                                {/* <Table.HeadCell > Action</Table.HeadCell> */}
-                                <Table.HeadCell>
-                                    <span className="sr-only">Edit</span>
-                                </Table.HeadCell>
+                                <Table.HeadCell className="hidden lg:table-cell">Expiration</Table.HeadCell>
+                                {/* <Table.HeadCell>
+                                    <span className="">Edit</span>
+                                </Table.HeadCell> */}
                             </Table.Head>
                             <Table.Body className="divide-y">
                                 <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -134,32 +132,18 @@ function CustomerDetail() {
                                         {'Apple MacBook Pro 17"'}
                                     </Table.Cell>
                                     <Table.Cell>addmin123</Table.Cell>
-                                    {/* <Table.Cell className=" hidden lg:block">
-                                        <div className="flex  gap-3 relative  items-center">
-                                            <p id="pass-code" className="p-2 text-[14px] rounded-md ">YiZ7952M0sktCD188coEiTzZEtGbKK
-                                                <Clipboard.WithIcon className=" right-16 bottom-1" valueToCopy="YiZ7952M0sktCD188coEiTzZEtGbKK"  />
-                                            </p>
-                                        </div>
-                                    </Table.Cell> */}
-                                    <Table.Cell>Sliver</Table.Cell>
+                                    <Table.Cell className="hidden md:table-cell">Sliver</Table.Cell>
                                     <Table.Cell>
-                                        <div className="flex items-center  ">
-                                            <div className="h-2.5 w-2.5  rounded-full bg-green-500 me-2"></div>{" "}
-                                            Online
+                                        <div className="flex items-center">
+                                            <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Online
                                         </div>
                                     </Table.Cell>
-                                    <Table.Cell>$2999</Table.Cell>
-                                    {/* <Table.Cell>
-                                        <Link to={'/admin/customer/detail'} className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                                            ຂໍ້ມູນເພີ່ມເຕີມ
-                                        </Link>
-                                    </Table.Cell> */}
+                                    <Table.Cell className="hidden lg:table-cell">$2999</Table.Cell>
                                 </Table.Row>
-
-
                             </Table.Body>
                         </Table>
                     </div>
+
 
 
                 </div>
