@@ -2,31 +2,26 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { authenticationService } from "./services/authen_service";
 import { alertSuccess } from "../utils/alert";
-
+import { authenErrors } from "../utils/error";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "./context/authen_context";
 import { HiOutlineLockClosed, HiOutlineLockOpen } from "react-icons/hi";
-
 function Authentication() {
     const [passwordType, setPasswordType] = useState(false);
     const [email, setEmail] = useState("eh.dev9917@gmail.com");
-    const [pass, setPass] = useState("2WSX@WSX");
+    const [pass, setPass] = useState("2wsx@WSX");
     const { setAuthData } = useAuth();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-
     function togglePasswordType() {
         setPasswordType(!passwordType);
     }
-
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setEmail(e.target.value);
     }
-
     const handlePassChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setPass(e.target.value);
     }
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setLoading(true);
@@ -38,7 +33,7 @@ function Authentication() {
             alertSuccess(navigate, 'signed in successfully', 'success');
         } catch (error: any) {
             setLoading(false);
-            console.log(error.message);
+            authenErrors(error)  
         }
     };
 
