@@ -42,86 +42,79 @@ $noto-sans-lao-weight: 400; // Define the default weight; adjust as needed
   animation: bounce 3s infinite;
 }
 
-
-/* index.css or App.css */
-.my-custom-confirm-btn,
-.my-custom-deny-btn,
-.my-custom-close-btn {
-  background-color: #FF5733 !important;  /* Example background color */
-  color: white !important;               /* Text color */
-  border-radius: 10px !important;          /* Rounded corners */
-  width: 90px !important;                /* Width of the button */
-  height: 30px !important;               /* Height of the button */
-             /* Use flexbox to center content */
-  justify-content: center !important;    /* Horizontally center */
-  align-items: center !important;        /* Vertically center */
-  font-size: 12px !important;            /* Font size of the text/icon */
+/* css weetalert2 custom */
+.custom-cancelButton,.custom-yesButton{
+  border-radius: 10px !important; 
+  width: 90px !important;                
+  height: 30px !important; 
+  justify-content: center !important;  
+  align-items: center !important;      
+  font-size: 12px !important;            
   padding: 0 !important;  
-  margin: 0 !important;               /* Remove default padding */
+  margin-left: 2 !important;              
   text-align: center !important;
-  border: none !important;         /* Ensure text is centered */
+  border: none !important; 
 }
-/* Remove border when the button is focused or clicked */
-.my-custom-confirm-btn:focus,
-.my-custom-deny-btn:focus,
-.my-custom-close-btn:focus {
-  outline: none;  /* Removes the default outline */
-  box-shadow: none;  /* Removes any shadow that might appear */
-  border: none; /* Removes border */
+.custom-confirm-btn,
+.custom-deny-btn,
+.custom-close-btn {
+   background-color: #057a55 !important; 
+  color: white !important;         
+  border-radius: 10px !important;         
+  width: 90px !important;                
+  height: 30px !important;               
+  justify-content: center !important;   
+  align-items: center !important;       
+  font-size: 12px !important;           
+  padding: 0 !important;  
+  margin: 0 !important;             
+  text-align: center !important;
+  border: none !important;         
 }
-
-/* Optional: Custom styles for the buttons */
-.my-custom-confirm-btn,
-.my-custom-deny-btn,
-.my-custom-close-btn {
-  border: none; /* Removes initial border */
+.custom-confirm-btn:focus,
+.custom-deny-btn:focus,
+.custom-close-btn:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
-
-
-
-/* Custom title color */
-.my-custom-title {
+.custom-confirm-btn,
+.custom-deny-btn,
+.custom-close-btn {
+  border: none;
+}
+.custom-title {
   font-size: 14px !important;
-/* Red color for the title */
 }
-
-.my-popup-width {
+.popup-width {
   padding-bottom: 8px !important;  
   width: 280px !important;
   height: fit-content !important;
-  
 }
-.my-popup-width2 {
+.popup-width2 {
   padding-bottom: 8px !important;  
   width: 280px !important;
   height: 280px !important;
   
 }
-
-
-/* Adjust the size of the icon */
 .swal2-icon2 {
-  font-size: 12px;
-  font-weight: 700; /* Adjust the size as needed */
-  height: 60px; /* Ensures the icon is proportional */
-  width: 60px;
+  font-size: 10px;
+  font-weight: 700;
+  height: 50px; 
+  width: 50px;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
-
-
-/* Adjust the size of the icon */
 .swal-icon {
   font-size: 8px;
-  font-weight: 700; /* Adjust the size as needed */
-  height: 40px; /* Ensures the icon is proportional */
+  font-weight: 700; 
+  height: 40px; 
   width: 40px;
 }
-
-
-.my-popup-width2 {
+.popup-width2 {
   padding-bottom: 8px !important;  
   width: 280px !important;
-  height: 150px !important;
-  
+  height: 150px !important; 
 }
 
 

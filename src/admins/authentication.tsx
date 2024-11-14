@@ -1,27 +1,32 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { authenticationService } from "./services/authen_service";
-import { alertSuccess,alertSuccessV2,alertError,alertDelete } from "../utils/alert";
+import { alertSuccess } from "../utils/alert";
 
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "./context/authen_context";
 import { HiOutlineLockClosed, HiOutlineLockOpen } from "react-icons/hi";
+
 function Authentication() {
-    const [passwordType, setPasswordType] = useState(false)
+    const [passwordType, setPasswordType] = useState(false);
     const [email, setEmail] = useState("eh.dev9917@gmail.com");
     const [pass, setPass] = useState("2WSX@WSX");
     const { setAuthData } = useAuth();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+
     function togglePasswordType() {
         setPasswordType(!passwordType);
     }
+
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setEmail(e.target.value);
     }
+
     const handlePassChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setPass(e.target.value);
     }
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setLoading(true);
@@ -30,48 +35,62 @@ function Authentication() {
             const token = res.data.token;
             const user = res.data.data[0];
             setAuthData(token, user);
-            alertSuccess(navigate, 'igned in successfully');
+            alertSuccess(navigate, 'signed in successfully', 'success');
         } catch (error: any) {
-            setLoading(false)
+            setLoading(false);
             console.log(error.message);
         }
     };
 
     return (
-        <div className="w-screen h-screen flex text-white justify-center relative bg-[url('/images/svg/blob-scene-haikei.svg')] bg-cover">
-            <p className=" font-normal text-sm absolute text-white right-3 bottom-3 pb-2 md:pb-0">ສະຫງວນລິຂະສິດ ໂດຍ @ IPOS | Bran IT</p>
-            <div className=" h-screen flex flex-col  items-center md:justify-center ">
-                <div className="py-5 flex flex-col items-center">
-                    <p className="text-5xl font-bold md:text-orange-500 ">IPOS.LA</p>
-                    <p className="pt-1">Use for manage ipos.la system</p>
+        <div className="w-full h-screen flex text-white justify-center bg-[url('/images/svg/blob-scene-haikei.svg')] bg-cover">
+            <p className="text-xs md:text-sm font-normal absolute right-3 bottom-3 pb-2 md:pb-0">ສະຫງວນລິຂະສິດ ໂດຍ @ IPOS | Bran IT</p>
+            <div className="w-full max-w-md md:max-w-2xl mx-auto flex flex-col items-center justify-center px-4 md:px-12 py-10 md:py-20 h-screen">
+                <div className="py-5 text-center">
+                    <p className="text-4xl md:text-6xl font-bold text-orange-500">IPOS.LA</p>
+                    <p className="pt-1 text-sm md:text-lg text-white">Use for managing ipos.la system</p>
                 </div>
-                <form onSubmit={handleSubmit} className="flex flex-col w-[350px] md:w-[360px] h-[380px]  bg-white  rounded-md shadow-2xl p-4">
-                    <p className="text-4xl text-orange-500 font-semibold ">Sign in</p>
-                    <div className=" h-fit flex flex-col justify-end mt-7">
-                        <label htmlFor="" className="text-orange-500">ອີເມລ </label>
-                        <input type="email" onChange={handleEmailChange} className="bg-gray-50 border border-gray-300 text-gray-600 text-sm  rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-[7px] mb-2   " placeholder="...." value={email} required />
+                <form onSubmit={handleSubmit} className="flex flex-col w-full bg-white rounded-md shadow-lg p-6 md:p-12 space-y-4">
+                    <p className="text-3xl md:text-5xl text-orange-500 font-semibold">Sign in</p>
+                    <div className="flex flex-col space-y-1">
+                        <label htmlFor="email" className="text-orange-500 text-xl">ອີເມລ</label>
+                        <input
+                            type="email"
+                            id="email"
+                            onChange={handleEmailChange}
+                            className="bg-gray-50 border border-gray-300 text-gray-600 text-lg rounded-lg focus:ring-orange-500 focus:border-orange-500 w-full p-3"
+                            placeholder="...."
+                            value={email}
+                            required
+                        />
                     </div>
-                    <div className="w-full text-orange-500 relative">
-                        <label htmlFor="">ລະຫັດຜ່ານ</label>
-                        <input type={passwordType ? "text" : "password"} onChange={handlePassChange} className="bg-gray-50 border border-gray-300 text-gray-600 text-sm  rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-[7px] my-1 " placeholder="•••••••••" value={pass} required />
-                        <div onClick={togglePasswordType} className="absolute bottom-3 right-3">
-                            {passwordType ? <HiOutlineLockClosed className="text-xl" /> : <HiOutlineLockOpen className="text-xl" />}
+                    <div className="flex flex-col space-y-1 relative">
+                        <label htmlFor="password" className="text-orange-500 text-xl">ລະຫັດຜ່ານ</label>
+                        <input
+                            type={passwordType ? "text" : "password"}
+                            id="password"
+                            onChange={handlePassChange}
+                            className="bg-gray-50 border border-gray-300 text-gray-600 text-lg rounded-lg focus:ring-orange-500 focus:border-orange-500 w-full p-3"
+                            placeholder="•••••••••"
+                            value={pass}
+                            required
+                        />
+                        <div onClick={togglePasswordType} className="absolute right-4 bottom-4 cursor-pointer text-xl text-orange-500">
+                            {passwordType ? <HiOutlineLockClosed /> : <HiOutlineLockOpen />}
                         </div>
                     </div>
                     <div className="flex justify-end">
-
-                        <Link className="px-2 py-2 hover:text-orange-500 text-gray-400" to={'#'}>Forget Password ?</Link>
+                        <Link className="text-sm text-gray-400 hover:text-orange-500" to="#">Forgot Password?</Link>
                     </div>
                     <button
-
-                        className="bg-orange-500 text-white py-[7px] rounded-md   flex items-center justify-center"
-
+                        type="submit"
+                        className="bg-orange-500 text-white py-3 rounded-md flex items-center justify-center disabled:opacity-50"
                         disabled={loading}
                     >
                         {loading ? (
                             <>
                                 <svg
-                                    className="animate-spin h-6 w-6 mr-1 text-white"
+                                    className="animate-spin h-6 w-6 mr-2 text-white"
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
                                     fill="none"
@@ -91,17 +110,13 @@ function Authentication() {
                             "Sign in"
                         )}
                     </button>
-                    
-                    <div className=" flex justify-between items-end h-full w-full ">
-                    <div onClick={alertDelete} className="text-black">delete</div>
-                        <div onClick={alertError} className="text-black">lkkjlk</div>
-                        <div onClick={alertSuccessV2} className="text-black">v2</div>
-                        <p className="text-orange-500 text-xs">verson 0.0.1</p>
+                    <div className="flex justify-end">
+                        <p className="text-xs text-orange-500">Version 0.0.1</p>
                     </div>
                 </form>
             </div>
         </div>
-    )
+    );
 }
 
-export default Authentication
+export default Authentication;
