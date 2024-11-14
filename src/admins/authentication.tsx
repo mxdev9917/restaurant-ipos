@@ -30,10 +30,13 @@ function Authentication() {
             const token = res.data.token;
             const user = res.data.data[0];
             setAuthData(token, user);
+
+            
             alertSuccess(navigate, 'signed in successfully', 'success');
-        } catch (error: any) {
-            setLoading(false);
+        } catch (error: any) { 
             authenErrors(error)  
+        } finally {
+            setLoading(false);
         }
     };
 

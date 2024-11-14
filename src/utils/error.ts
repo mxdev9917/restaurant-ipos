@@ -24,3 +24,15 @@ export const authenErrors=(errors:any)=>{
     }
 
 };
+
+export const customerErrors=(errors:any)=>{
+    if(axios.isAxiosError(errors)){
+        const status=errors.response?.status;
+        if(status===500){
+            alertError("ຂໍອະໄພ ລະບົບຫຼັງບ້ານມີບັນຫາ","error");
+        }
+    }else{
+        alertError("ການເຮັດວຽກຂອງລະບົບຜິດພາດ","error");
+    }
+
+};
