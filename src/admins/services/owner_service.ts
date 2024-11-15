@@ -1,21 +1,14 @@
 import axios from "axios";
+import { IOwnerResponse } from "../interfaces/customer_interface";
 import { IPOS_BASE_URL } from "../../utils/connection";
-import { IOwner } from "../interfaces/customer_interface";
 
-
-
-interface IGetAllOwner {
-  status: number | undefined;
-  data: IOwner;
+export class OwnerService {
+    static async getOwner(token: string): Promise<IOwnerResponse> {
+        const res = await axios.get(`${IPOS_BASE_URL}/owner`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return res.data; // This assumes that res.data is of type IOwnerResponse
+    }
 }
-
-export const OwnerService = {
-  getOwner: async (token: string): Promise<IGetAllOwner> => {
-      const response = await axios.get(`${IPOS_BASE_URL}/owner`, {
-          headers: {
-              'Authorization': `Bearer ${token}`
-          }
-      });
-      return response;
-  }
-};

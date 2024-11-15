@@ -10,6 +10,9 @@ export default {
   ],
   theme: {
     extend: {},
+    // animation: {
+    //   'spin-fast': 'spin 0.4s linear infinite', // Faster spin
+    // },
   },
   plugins: [
     require('flowbite/plugin')({

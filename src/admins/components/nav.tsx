@@ -10,22 +10,43 @@ interface NavProps {
 
 const Nav: React.FC<NavProps> = ({ handelMenu }) => {
   const navigate = useNavigate(); 
-  const { user, token, logout } = useAuth(); // ใช้ useAuth()
-  
+  const { user, token, logout } = useAuth(); 
+
   const handleClick = () => {
     handelMenu();
   };
 
-  // ตรวจสอบว่า token มีค่าไหมก่อนทำการ redirect
-  useEffect(() => {
-    if (!token) {
-      navigate('/admin'); // ถ้าไม่มีโทเค็น ให้ไปที่หน้า login
-    }
-  }, [token, navigate]);
+  const isTokenExpired = (token: string) => {
+    try {
+      const parts = token.split('.');
+      if (parts.length !== 3) throw new Error('Invalid token');
 
-  // ตรวจสอบว่า user มีค่าหรือไม่ก่อนการเข้าถึงข้อมูล
+      const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+
+      const currentTime = Math.floor(Date.now() / 1000);
+   
+      if (payload.exp < currentTime) {
+        // const expirationDate = new Date(payload.exp * 1000).toLocaleString();
+        // console.log(`Token expired on: ${expirationDate}`);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      
+      return true; 
+    }
+  };
+
+  useEffect(() => {
+    if (!token || isTokenExpired(token)) {
+      logout(); // Log the user out
+      navigate('/admin'); // Redirect to the login page
+    }
+  }, [token, navigate, logout]);
+
   const userName = user && user.user_admin_name ? user.user_admin_name : 'Guest';
-  const userEmail = user && user.user_admin_email ? user.user_admin_email : 'email@domain.com';
+  const userEmail = user && user.user_admin_email ? user.user_admin_email : 'email@ipos.com';
 
   return (
     <Navbar fluid className="z-50 bg-[#3a393a]">
@@ -46,7 +67,6 @@ const Nav: React.FC<NavProps> = ({ handelMenu }) => {
           }
         >
           <Dropdown.Header>
-            {/* ตรวจสอบว่า user มีค่าและมีชื่อ */}
             <span className="block text-sm">{userName}</span>
             <span className="block truncate text-sm font-medium">{userEmail}</span>
           </Dropdown.Header>

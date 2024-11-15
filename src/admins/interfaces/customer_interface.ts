@@ -1,4 +1,4 @@
-// แสดงข้อมูลของเจ้าของคนเดียว
+// Define the structure for a single owner's data
 export interface IOwner {
   owner_ID: number;
   owner_name: string;
@@ -6,14 +6,15 @@ export interface IOwner {
   owner_phone: string;
   owner_status: string;
   owner_password: string;
+  restaurant_count: number;
   owner_img: string;
   created_at: string;
   update_at: string;
 }
 
-// แสดงโครงสร้างของการตอบกลับจาก API
+// Define the API response structure for retrieving owners
 export interface IOwnerResponse {
   status: string;
   message: string;
-  data: IOwner[]; // ต้องเป็นอาเรย์ของ IOwner
+  data: IOwner[]; // This should be an array of IOwner
 }
