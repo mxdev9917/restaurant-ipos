@@ -7,7 +7,7 @@ import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
 import { OwnerService } from "../services/owner_service";
 import { useAuth } from "../context/authen_context";
-import { IOwnerResponse, IOwner } from "../interfaces/customer_interface";
+import { IOwner } from "../interfaces/customer_interface";
 
 
 function Customers() {
@@ -16,7 +16,7 @@ function Customers() {
     const { token } = useAuth();
 
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState < IOwner[any] > ([]);
+    const [data, setData] = useState < IOwner[] > ([]);
 
     function handleUserForm(title: string) {
         setsCheckUserForm(!isCheckUserForm);
@@ -28,7 +28,7 @@ function Customers() {
         setLoading(true);
         try {
             const res = await OwnerService.getOwner(token);
-            if (res.status === 200) {
+            if (res.status === "200") {
                 const results: IOwner[] = res.data.data; // ตรวจสอบว่า res.data.data เป็นอาเรย์ของ IOwner
                 setData(results); // อัพเดท state ด้วยข้อมูลของเจ้าของ
             }

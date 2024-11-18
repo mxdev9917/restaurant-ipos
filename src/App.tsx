@@ -235,7 +235,7 @@ function App() {
       element: <Customers />
     },
     {
-      path: "/admin/customer/detail",
+      path: "/admin/customer/detail/:id",
       element: <CustomerDetail />
     },
     // end admin

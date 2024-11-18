@@ -36,3 +36,20 @@ export const customerErrors=(errors:any)=>{
     }
 
 };
+export const customerByIDErrors=(errors:any)=>{
+    if(axios.isAxiosError(errors)){
+        const status=errors.response?.status;
+        if(status===400){
+            alertError("ປະເພດຂໍ້ມູນບໍ່ຖືກຕ້ອງ","error");
+        }
+        if(status===404){
+            alertError("ບໍ່ພົບຂໍ້ມູນ","error");
+        }
+        if(status===500){
+            alertError("ຂໍອະໄພ ລະບົບຫຼັງບ້ານມີບັນຫາ","error");
+        }
+    }else{
+        alertError("ການເຮັດວຽກຂອງລະບົບຜິດພາດ","error");
+    }
+
+};

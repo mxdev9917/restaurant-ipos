@@ -71,7 +71,7 @@ function Customers() {
                         </div>
                     </div>
                     <div className="overflow-x-auto">
-                        <Table hoverable>
+                        <Table hoverable className="border-y-[1px]">
                             <Table.Head>
                                 <Table.HeadCell>Name</Table.HeadCell>
                                 <Table.HeadCell>Phone</Table.HeadCell>
@@ -131,7 +131,8 @@ function Customers() {
                                             </Table.Cell>
                                         </Table.Row>
                                     ))
-                                )}
+                                )
+                                }
                             </Table.Body>
                         </Table>
                     </div>

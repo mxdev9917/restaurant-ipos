@@ -6,7 +6,7 @@ interface LoadingProps {
 
 const Loading: React.FC<LoadingProps> = ({ text }) => {
     return (
-        <div className="h-full flex justify-center items-end space-x-0">
+        <div className=" flex justify-center items-end space-x-0">
             <span className="font-medium mr-1">{text}</span>
             <span className="font-medium animate-pulse animation-delay-700">.</span>
             <span className="font-medium animate-pulse animation-delay-800">.</span>
