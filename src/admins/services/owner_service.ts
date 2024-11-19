@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IOwnerResponse,IOwnerResponseByid } from "../interfaces/customer_interface";
+import { IOwnerResponse, IOwnerResponseByid, IOwnerUpdateStatusResponse } from "../interfaces/customer_interface";
 import { IPOS_BASE_URL } from "../../utils/connection";
 
 export class OwnerService {
@@ -14,8 +14,8 @@ export class OwnerService {
 }
 
 export class getOwnerByIdService {
-    static async getOwnerById(id:String,token: string): Promise<IOwnerResponseByid> {
-        const res = await axios.get(`${IPOS_BASE_URL}/owner/${id}`,{
+    static async getOwnerById(id: String, token: string): Promise<IOwnerResponseByid> {
+        const res = await axios.get(`${IPOS_BASE_URL}/owner/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -24,4 +24,19 @@ export class getOwnerByIdService {
 
     }
 
+}
+export class patchOwnerUpStatus {
+    static async patchOwnerStatus(id: string, status: string, token: string): Promise<IOwnerUpdateStatusResponse> {
+        const res = await axios.patch(`${IPOS_BASE_URL}/owner/lock/${id}`
+            , {
+                owner_status: status
+            }
+            ,{
+                headers:{
+                    Authorization: `Bearer ${token}`,
+                }
+            }
+        );
+        return res.data;
+    }
 }

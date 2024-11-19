@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Avatar, Dropdown, Navbar } from 'flowbite-react';
 import Logo from '../../restaurant/components/logo';
-import { useAuth } from '../context/authen_context';
+import { useAuth } from '../../context/authen_context';
 import { useNavigate } from 'react-router-dom'; 
 
 interface NavProps {
@@ -47,6 +47,8 @@ const Nav: React.FC<NavProps> = ({ handelMenu }) => {
 
   const userName = user && user.user_admin_name ? user.user_admin_name : 'Guest';
   const userEmail = user && user.user_admin_email ? user.user_admin_email : 'email@ipos.com';
+
+  
 
   return (
     <Navbar fluid className="z-50 bg-[#3a393a]">

@@ -1,7 +1,12 @@
 import Swal from 'sweetalert2'
 import  { SweetAlertIcon } from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-export const alertSuccess = (navigate: ReturnType<typeof useNavigate>, title: string, icon: SweetAlertIcon) => {
+export const alertSuccess = (
+    navigate: ReturnType<typeof useNavigate>,
+    path: string,
+    title: string,
+    icon: SweetAlertIcon
+) => {
     Swal.fire({
         position: 'center',
         icon: icon,
@@ -14,10 +19,10 @@ export const alertSuccess = (navigate: ReturnType<typeof useNavigate>, title: st
             closeButton: 'custom-close-btn',
             title: 'custom-title',
             popup: 'popup-width',
-            icon: 'swal2-icon2'  // Custom class for icon
+            icon: 'swal2-icon2' // Custom class for icon
         }
     }).then(() => {
-        navigate('/admin/tamplace');
+        navigate(path,{ replace: true });
     });
 };
 
@@ -37,6 +42,28 @@ export const alertSuccessV2 = (title: string, icon: SweetAlertIcon) => {
             popup: 'popup-width2',
             icon: 'swal2-icon2'
         }
+
+    });
+};
+export const alertSuccessV3 = (func: () => void,title: string, icon: SweetAlertIcon) => {
+    Swal.fire({
+        position: "center",
+        icon: icon,
+        title: title,
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+            confirmButton: 'custom-confirm-btn',
+            denyButton: 'custom-deny-btn',
+            closeButton: 'custom-close-btn',
+            title: 'custom-title',
+            popup: 'popup-width2',
+            icon: 'swal2-icon2'
+        }
+    }).then(() => {
+        if (func) func();  
+         window.location.reload()
+       
     });
 };
 
@@ -85,7 +112,7 @@ export const alertErrorV2 = (title: string, icon: SweetAlertIcon) => {
     });
 };
 
-export const alertDelete = (func: () => void, title: string, icon: SweetAlertIcon) => {
+export const alertconfirm = (func: () => void, title: string, icon: SweetAlertIcon) => {
     Swal.fire({
         title: title,
         icon: icon,

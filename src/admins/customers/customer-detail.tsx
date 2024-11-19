@@ -1,16 +1,19 @@
 import Sidebar_Nav from "../components/sidebar-nav";
-import { useCallback, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { Label, Table } from "flowbite-react";
 import { ImMenu2 } from "react-icons/im";
 import { IoMdLock } from "react-icons/io";
 import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
-import { getOwnerByIdService } from "../services/owner_service";
+import { getOwnerByIdService, patchOwnerUpStatus } from "../services/owner_service";
 import { OwnerById, IRestaurant } from "../interfaces/customer_interface";
 import Loading from "../../utils/Loading";
-import { useAuth } from "../context/authen_context";
+import { useAuth } from "../../context/authen_context";
 import { customerByIDErrors } from "../../utils/error";
+import { alertconfirm, alertSuccessV3 } from "../../utils/alert";
+
+
 
 function CustomerDetail() {
     const [owner, setOwner] = useState < OwnerById > ();
@@ -18,25 +21,60 @@ function CustomerDetail() {
     const [loading, setLoading] = useState(false)
     const { id } = useParams();
     const { token } = useAuth();
-    const callDtata = useCallback(async () => {
+    const [btnText, setBtnText] = useState("")
+    const [status, setStatus] = useState("")
+    const handleUpdateOwnerStatus = async () => {
         try {
-            setLoading(true)
             if (!token) return;
-            const res = await getOwnerByIdService.getOwnerById(id, token)
+            const res = await patchOwnerUpStatus.patchOwnerStatus(id, status, token)
+            const response = res.status;
+            if (response == '200') {
+                alertSuccessV3(fetchData, 'ອັບເດດສະຖານະສຳເລັດ', "success");
+                if (owner?.owner_status === "active") {
+                    setStatus("lock")
+                    setBtnText("lock");
+                    console.log('a');
+                }
+                if (owner?.owner_status === "lock") {
+                    setStatus("active")
+                    setBtnText("active");
+                    console.log('l');
+                }
+            }
+
+        } catch (error: any) {
+            console.log(error.message);
+        }
+
+    }
+    const fetchData = async () => {
+        try {
+            setLoading(true);
+
+            if (!token) return;
+
+            const res = await getOwnerByIdService.getOwnerById(id, token);
             setOwner(res.data.owner);
-            setRestaurants(res.data.restaurants)
-            console.log(restaurants);
+            setRestaurants(res.data.restaurants);
+
+            // Handle status after fetching data
+            if (res.data.owner?.owner_status === "active") {
+                setStatus("lock");
+                setBtnText("Lock");
+            } else if (res.data.owner?.owner_status === "lock") {
+                setStatus("active");
+                setBtnText("Unlock");
+            }
         } catch (error: any) {
             console.log(error.message);
             customerByIDErrors(error);
-
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }, [token]);
+    };
     useEffect(() => {
-        callDtata();
-    }, [callDtata]);
+        fetchData();
+    }, [id, token]);
 
     return (
         owner === undefined ? (
@@ -101,10 +139,10 @@ function CustomerDetail() {
                                         <div className="flex gap-2">
                                             <input type="text" className="bg-gray-50 h-11 border border-gray-300 text-gray-900  rounded-lg cursor-not-allowed block w-full p-2.5 " value={owner?.owner_status} readOnly disabled />
                                             <button
-                                                // onClick={() => handleUserForm('ເພີ່ມຜູ້ດູແລລະບົບ')}
+                                                onClick={() => alertconfirm(handleUpdateOwnerStatus, `ທ່ານຕ້ອງການ ${btnText}?`, "question")}
                                                 className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-md text-white text-xs md:text-sm w-fit"
                                             >
-                                                UnLock
+                                                {btnText}
                                             </button>
                                         </div>
                                     </div>
@@ -165,7 +203,7 @@ function CustomerDetail() {
                                                                         <div className="flex items-center justify-start">
                                                                             <div className={`h-2.5 w-2.5 rounded-full me-2 
                                                                             ${item.restaurant_status === 'active'
-                                                                                    ? 'bg-green-500' :'bg-red-500' 
+                                                                                    ? 'bg-green-500' : 'bg-red-500'
                                                                                 }`
                                                                             } />
                                                                             {item.restaurant_status}

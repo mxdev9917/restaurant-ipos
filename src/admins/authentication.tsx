@@ -4,7 +4,7 @@ import { authenticationService } from "./services/authen_service";
 import { alertSuccess } from "../utils/alert";
 import { authenErrors } from "../utils/error";
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from "./context/authen_context";
+import { useAuth } from "../context/authen_context";
 import { HiOutlineLockClosed, HiOutlineLockOpen } from "react-icons/hi";
 function Authentication() {
     const [passwordType, setPasswordType] = useState(false);
@@ -32,7 +32,7 @@ function Authentication() {
             setAuthData(token, user);
 
             
-            alertSuccess(navigate, 'signed in successfully', 'success');
+            alertSuccess(navigate,'/admin/tamplace', 'signed in successfully', 'success');
         } catch (error: any) { 
             authenErrors(error)  
         } finally {

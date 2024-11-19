@@ -6,7 +6,7 @@ import { Table } from "flowbite-react";
 import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
 import { OwnerService } from "../services/owner_service";
-import { useAuth } from "../context/authen_context";
+import { useAuth } from "../../context/authen_context";
 import { IOwner } from "../interfaces/customer_interface";
 
 

@@ -1,8 +1,7 @@
-import Logo from "../restaurant/components/logo";
+import Nav from "./components/nav";
 import RestaurantItem from "./components/restaurantitem";
 import { MdOutlineDateRange } from "react-icons/md";
-import { Avatar, Dropdown, Navbar } from "flowbite-react";
-import Language from "./components/language";
+
 import EditProfile from "./components/editprofile";
 import AddRestaurant from "./components/addrestaurant";
 import { useState } from "react"
@@ -20,38 +19,8 @@ function Profiles() {
     }
     return (
         <div className="w-screen h-screen flex flex-col gap-2">
-            <div className="w-full h-fit shadow-md bg-slate-900 ">
-                <Navbar fluid className="bg-[#3a393a]" >
-                    <Navbar.Brand to="/">
-                        <Logo />
-                    </Navbar.Brand>
-                    <div className="flex md:order-2">
-                        <Language />
-                        <Dropdown
-                            arrowIcon={false}
-                            inline
-                            label={
-                                <Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded />
-                            }
-                        >
-                            <Dropdown.Header>
-                                <span className="block text-sm">Bonnie Green</span>
-                                <span className="block truncate text-sm font-medium">name@flowbite.com</span>
-                            </Dropdown.Header>
-                            <Dropdown.Item>Dashboard</Dropdown.Item>
-                            <Dropdown.Item>Settings</Dropdown.Item>
-                            <Dropdown.Item>Earnings</Dropdown.Item>
-                            <Dropdown.Divider />
-                            <Dropdown.Item>Sign out</Dropdown.Item>
-                        </Dropdown>
-                    </div>
-                </Navbar>
-
-            </div>
+            <Nav/>
             <div className="w-full h-full flex justify-center relative">
-
-
-
                 {/* Conditional Rendering for EditProfile */}
                 {isCheckEditProfile && <EditProfile handelButtonClose={handleEditProfile} />}
                 {isCheckAddRestaurant && <AddRestaurant handelButtonClose={()=>handleAddRestaurant('ເພີ່ມຮ້ານ')} title={titleRestaurant} />}

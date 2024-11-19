@@ -46,3 +46,8 @@ export interface IRestaurant {
   restaurant_expiry_date: string
   restaurant_created_at:string
 }
+
+export interface IOwnerUpdateStatusResponse {
+  status: string
+  message: string
+}
