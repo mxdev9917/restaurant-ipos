@@ -22,7 +22,7 @@ export interface IOwnerResponse {
 export interface IOwnerResponseByid {
   status: string
   message: string
-  data: Data
+  data: Data[]
 }
 
 export interface Data {

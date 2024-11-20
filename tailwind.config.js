@@ -12,6 +12,7 @@ export default {
     extend: {},
     animation: {
       'slow-spin': 'spin 1s linear infinite',
+      'slow2-spin': 'spin 3s linear infinite',
     },
   },
   plugins: [

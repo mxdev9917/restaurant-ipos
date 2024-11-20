@@ -22,7 +22,6 @@ import SettingBill from './restaurant/setting/bill';
 import UserManual from './restaurant/manual';
 import Printer from './restaurant/setting/printer';
 import Rate from './restaurant/setting/rate';
-import Profiles from './website/profile';
 import SignUp from './website/signup';
 import OTPVerification from './website/otp_verification';
 import Authentication from './admins/authentication';
@@ -32,6 +31,7 @@ import CustomerDetail from './admins/customers/customer-detail';
 import Tamplace from './admins/tamplace';
 import RestaurantApproval from './admins/approval/restaurant-approval';
 import RestaurantDetail from './admins/approval/restaurant-detail';
+import Profiles from './website/profile/profile';
 
 
 function App() {
@@ -122,10 +122,7 @@ function App() {
       path: "/profile",
       element: <Profile />
     },
-    {
-      path: "/profiles",
-      element: <Profiles />
-    },
+   
     {
       path: "/sign-up",
       element: <SignUp />
@@ -154,6 +151,18 @@ function App() {
       path: "/manual",
       element: <UserManual />
     },
+
+    // website 
+    {
+      path: "/profiles",
+      element: <Profiles />
+    },
+
+
+
+
+
+
   ], {
     future: {
       v7_normalizeFormMethod: true,  // Enable early adoption of the v7 form method normalization

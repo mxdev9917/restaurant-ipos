@@ -5,7 +5,7 @@ import { alertSuccess } from "../utils/alert";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../context/authen_context";
 import LoadingSpinner from "../utils/LoadingSpinner";
-import Loading from "../utils/Loading";
+
 import { authenErrors } from "../utils/error";
 import { IoMdLock, IoMdUnlock } from "react-icons/io";
 
@@ -25,7 +25,6 @@ function Authen() {
         try {
             setLoading(true)
             const res = await authenService.postAuthen(email, password);
-            console.log(res.data);
             const token = res.token;
             const user = res.data[0];
             setAuthData(token, user);

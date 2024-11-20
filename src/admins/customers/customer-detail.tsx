@@ -6,12 +6,13 @@ import { ImMenu2 } from "react-icons/im";
 import { IoMdLock } from "react-icons/io";
 import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
-import { getOwnerByIdService, patchOwnerUpStatus } from "../services/owner_service";
+import { patchOwnerUpStatus } from "../services/owner_service";
 import { OwnerById, IRestaurant } from "../interfaces/customer_interface";
 import Loading from "../../utils/Loading";
 import { useAuth } from "../../context/authen_context";
 import { customerByIDErrors } from "../../utils/error";
 import { alertconfirm, alertSuccessV3 } from "../../utils/alert";
+import { GetOwnerByIdService } from "../services/owner_service";
 
 
 
@@ -25,7 +26,12 @@ function CustomerDetail() {
     const [status, setStatus] = useState("")
     const handleUpdateOwnerStatus = async () => {
         try {
-            if (!token) return;
+            if (!token) {
+                throw new Error("Authorization token is required");
+            }
+            if (!id || !status) {
+                throw new Error("ID and status are required");
+            }
             const res = await patchOwnerUpStatus.patchOwnerStatus(id, status, token)
             const response = res.status;
             if (response == '200') {
@@ -51,9 +57,13 @@ function CustomerDetail() {
         try {
             setLoading(true);
 
-            if (!token) return;
-
-            const res = await getOwnerByIdService.getOwnerById(id, token);
+            if (!id) {
+                throw new Error("ID is required");
+            }
+            if (!token) {
+                throw new Error("Authorization token is required");
+            }
+            const res = await GetOwnerByIdService.getOwnerById(id, token);
             setOwner(res.data.owner);
             setRestaurants(res.data.restaurants);
 
