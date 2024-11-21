@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useRef  } from 'react';
 import { Avatar, Dropdown, Navbar } from 'flowbite-react';
 import Logo from '../../restaurant/components/logo';
 import { useAuth } from '../../context/context';
@@ -10,13 +10,14 @@ interface NavProps {
 
 const Nav: React.FC<NavProps> = ({ handelMenu }) => {
   const navigate = useNavigate(); 
-  const { data, token, logout } = useAuth(); 
+  const { data, token, logout } = useAuth();
+  const userTypeRef = useRef<string>(''); 
 
   const handleClick = () => {
     handelMenu();
   };
 
-  const isTokenExpired = (token: string) => {
+  const isTokenExpired = (token: string) => {// ເຊັກ token ໝົດອາຍຸຫຼືບໍ່
     try {
       const parts = token.split('.');
       if (parts.length !== 3) throw new Error('Invalid token');
@@ -25,10 +26,13 @@ const Nav: React.FC<NavProps> = ({ handelMenu }) => {
 
       const currentTime = Math.floor(Date.now() / 1000);
    
-      if (payload.exp < currentTime) {
+      if (payload.exp < currentTime) { // ເຊັກ token ໝົດອາຍຸ
         // const expirationDate = new Date(payload.exp * 1000).toLocaleString();
         // console.log(`Token expired on: ${expirationDate}`);
         return true;
+      }
+      if (!userTypeRef.current) { //ດຶງເອົາປະເພດ user
+        userTypeRef.current = payload.user_type;
       }
       return false;
     } catch (error) {
@@ -42,6 +46,10 @@ const Nav: React.FC<NavProps> = ({ handelMenu }) => {
     if (!token || isTokenExpired(token)) {
       logout(); // Log the data out
       navigate('/admin'); // Redirect to the login page
+    } 
+    if (userTypeRef.current !== 'administrator') { // ເຊັກປະເພດ user
+      logout(); 
+      navigate('/admin');
     }  
   }, [token, navigate, logout]);
 

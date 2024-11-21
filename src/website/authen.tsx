@@ -25,9 +25,6 @@ function Authen() {
         try {
             setLoading(true)
             const res = await authenService.postAuthen(email, password);
-
-            console.log(res);
-            
             const token = res.token;
             const data = res.data;
             setAuthData(token, data);
