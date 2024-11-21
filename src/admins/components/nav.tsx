@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Avatar, Dropdown, Navbar } from 'flowbite-react';
 import Logo from '../../restaurant/components/logo';
-import { useAuth } from '../../context/authen_context';
+import { useAuth } from '../../context/context';
 import { useNavigate } from 'react-router-dom'; 
 
 interface NavProps {
@@ -10,7 +10,7 @@ interface NavProps {
 
 const Nav: React.FC<NavProps> = ({ handelMenu }) => {
   const navigate = useNavigate(); 
-  const { user, token, logout } = useAuth(); 
+  const { data, token, logout } = useAuth(); 
 
   const handleClick = () => {
     handelMenu();
@@ -40,13 +40,15 @@ const Nav: React.FC<NavProps> = ({ handelMenu }) => {
 
   useEffect(() => {
     if (!token || isTokenExpired(token)) {
-      logout(); // Log the user out
+      logout(); // Log the data out
       navigate('/admin'); // Redirect to the login page
     }
+    console.log(data.user_admin_name);
+    
   }, [token, navigate, logout]);
 
-  const userName = user && user.user_admin_name ? user.user_admin_name : 'Guest';
-  const userEmail = user && user.user_admin_email ? user.user_admin_email : 'email@ipos.com';
+  const dataName = data && data.user_admin_name? data.user_admin_name : 'Guest';
+  const dataEmail = data && data.user_admin_email ? data.user_admin_email : 'email@ipos.com';
 
   
 
@@ -62,15 +64,15 @@ const Nav: React.FC<NavProps> = ({ handelMenu }) => {
           inline
           label={
             <Avatar
-              alt="User settings"
+              alt="data settings"
               img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
               rounded
             />
           }
         >
           <Dropdown.Header>
-            <span className="block text-sm">{userName}</span>
-            <span className="block truncate text-sm font-medium">{userEmail}</span>
+            <span className="block text-sm">{dataName}</span>
+            <span className="block truncate text-sm font-medium">{dataEmail}</span>
           </Dropdown.Header>
           <Dropdown.Item href="#dashboard">Dashboard</Dropdown.Item>
           <Dropdown.Item href="#profile">Profile</Dropdown.Item>

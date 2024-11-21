@@ -1,5 +1,5 @@
 import { createHashRouter, RouterProvider } from 'react-router-dom';
-import { AuthProvider } from './context/authen_context'; // นำเข้า AuthProvider
+import { AuthProvider } from './context/context'; // นำเข้า AuthProvider
 import 'flowbite';
 
 // นำเข้าคอมโพเนนต์ทั้งหมดที่คุณต้องการใช้

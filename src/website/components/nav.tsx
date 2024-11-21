@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Avatar, Dropdown, Navbar } from 'flowbite-react';
 import Logo from '../../restaurant/components/logo';
-import { useAuth } from '../../context/authen_context';
+import { useAuth } from '../../context/context';
 import { useNavigate } from 'react-router-dom'; 
 
 interface NavProps {
@@ -10,7 +10,7 @@ interface NavProps {
 
 const Nav: React.FC<NavProps> = ({ handelMenu }) => {
   const navigate = useNavigate(); 
-  const { user, token, logout } = useAuth(); 
+  const { data, token, logout } = useAuth(); 
 
   const handleClick = () => {
     handelMenu();
@@ -43,11 +43,11 @@ const Nav: React.FC<NavProps> = ({ handelMenu }) => {
       logout(); // Log the user out
       navigate('/authentication');
     }
-    console.log(user);
+    console.log(data.owner.owner_email);
   }, [token, navigate, logout]);
 
-  const userName = user && user.owner_name ? user.owner_name : 'Guest';
-  const userEmail = user && user.owner_email ? user.owner_email : 'email@ipos.com';
+  const userName = data && data.owner.owner_name ? data.owner.owner_name : 'Guest';
+  const userEmail = data && data.owner.owner_email ? data.owner.owner_email : 'email@ipos.com';
 
   
 

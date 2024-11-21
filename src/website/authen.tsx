@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { authenService } from "./services/authen";
 import { alertSuccess } from "../utils/alert";
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../context/authen_context";
+import { useAuth } from "../context/context";
 import LoadingSpinner from "../utils/LoadingSpinner";
 
 import { authenErrors } from "../utils/error";
@@ -25,9 +25,12 @@ function Authen() {
         try {
             setLoading(true)
             const res = await authenService.postAuthen(email, password);
+
+            console.log(res);
+            
             const token = res.token;
-            const user = res.data[0];
-            setAuthData(token, user);
+            const data = res.data;
+            setAuthData(token, data);
             alertSuccess(navigate, "/profiles", "ເຂົ້າສູ່ລະບົບສຳເລັດ", "success");
         } catch (error: any) {
             console.log(error.message);

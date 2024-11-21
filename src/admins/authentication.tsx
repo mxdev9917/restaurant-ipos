@@ -4,7 +4,7 @@ import { authenticationService } from "./services/authen_service";
 import { alertSuccess } from "../utils/alert";
 import { authenErrors } from "../utils/error";
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../context/authen_context";
+import { useAuth } from "../context/context";
 import { HiOutlineLockClosed, HiOutlineLockOpen } from "react-icons/hi";
 function Authentication() {
     const [passwordType, setPasswordType] = useState(false);
@@ -28,8 +28,8 @@ function Authentication() {
         try {
             const res = await authenticationService.postAuthentication(email, pass);
             const token = res.data.token;
-            const user = res.data.data[0];
-            setAuthData(token, user);
+            const data = res.data.data[0];
+            setAuthData(token, data);
 
             
             alertSuccess(navigate,'/admin/tamplace', 'signed in successfully', 'success');

@@ -8,8 +8,6 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 interface AddRestaurantProps {
     handelButtonClose: () => void;
     title: String;
-
-
 }
 const AddRestaurant: React.FC<AddRestaurantProps> = ({ handelButtonClose, title }) => {
     const [passwordType, setPasswordType] = useState(false)

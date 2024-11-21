@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface AuthContextType {
-    user: any | null;
+    data: any | null;
     token: string | null;
-    setAuthData: (token: string, user: any) => void;
+    setAuthData: (token: string, data: any) => void;
     logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext < AuthContextType | undefined > (undefined);
 
 export const useAuth = () => {
     const context = useContext(AuthContext);
@@ -18,25 +18,25 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [token, setToken] = useState<string | null>(localStorage.getItem('authToken'));
-    const [user, setUser] = useState<any>(JSON.parse(localStorage.getItem('userData') || 'null'));
+    const [token, setToken] = useState < string | null > (localStorage.getItem('authToken'));
+    const [data, setData] = useState < any > (JSON.parse(localStorage.getItem('Data') || 'null'));
 
-    const setAuthData = (token: string, user: any) => {
+    const setAuthData = (token: string, data: any) => {
         localStorage.setItem('authToken', token);
-        localStorage.setItem('userData', JSON.stringify(user));
+        localStorage.setItem('Data', JSON.stringify(data));
         setToken(token);
-        setUser(user);
+        setData(data);
     };
 
     const logout = () => {
         localStorage.removeItem('authToken');
-        localStorage.removeItem('userData');
+        localStorage.removeItem('Data');
         setToken(null);
-        setUser(null);
+        setData(null);
     };
 
     return (
-        <AuthContext.Provider value={{ user, token, setAuthData, logout }}>
+        <AuthContext.Provider value={{ data, token, setAuthData, logout }}>
             {children}
         </AuthContext.Provider>
     );

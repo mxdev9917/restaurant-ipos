@@ -9,7 +9,7 @@ import { HiHome } from "react-icons/hi";
 import { patchOwnerUpStatus } from "../services/owner_service";
 import { OwnerById, IRestaurant } from "../interfaces/customer_interface";
 import Loading from "../../utils/Loading";
-import { useAuth } from "../../context/authen_context";
+import { useAuth } from "../../context/context";
 import { customerByIDErrors } from "../../utils/error";
 import { alertconfirm, alertSuccessV3 } from "../../utils/alert";
 import { GetOwnerByIdService } from "../services/owner_service";

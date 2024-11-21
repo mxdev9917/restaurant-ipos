@@ -6,7 +6,7 @@ import { useState } from "react"
 import { alertError, alertSuccess } from "../utils/alert";
 import { postSign_upService } from "./services/signup_service";
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../context/authen_context";
+import { useAuth } from "../context/context";
 import LoadingSpinner from "../utils/LoadingSpinner";
 import { customerSignUpError } from "../utils/error";
 

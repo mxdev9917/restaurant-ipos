@@ -2,16 +2,22 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { HiChartBar,HiOutlineDotsHorizontal } from "react-icons/hi";
 import { BiSolidPaperPlane } from "react-icons/bi";
 import { Dropdown } from "flowbite-react";
-function resItem() {
+
+interface res_itemProps{
+
+name:string;
+
+}
+
+const resItem: React.FC<res_itemProps> = ({ name }) => {
     return (
-        
             <div className="flex flex-col w-full h-fit bg-[#f9fafb] rounded-md shadow-sm-light p-2">
                 <div className="flex justify-between">
                     <div className="flex gap-2">
                         <img className="w-16 h-16 rounded-full border-2 shadow-inner" src="https://laostravel.com/images/2020/12/Miengchaokao-Restaurant-vientiane.jpg" alt="" />
                         <div className="flex">
                             <div className="flex flex-col gap-1">
-                                <p className="">ຮ້ານອາຫານຈຳປາ</p>
+                                <p className="">{name}</p>
                                 <div className="flex justify-center sm:justify-start gap-6">
                                     <div className="flex gap-1 items-end relative">
                                         <IoMdNotificationsOutline className="text-2xl text-gray-500 -rotate-12 animate-slow2-spin" />
