@@ -2,6 +2,9 @@ import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider } from './context/context'; // Import your AuthProvider
 import 'flowbite';
 
+
+
+
 // Import components
 import HomePage from './website/homepage';
 import Authen from './website/authen';
@@ -33,6 +36,7 @@ import RestaurantApproval from './admins/approval/restaurant-approval';
 import RestaurantDetail from './admins/approval/restaurant-detail';
 import Profiles from './website/profile/profile';
 
+
 function App() {
   const router = createHashRouter(
     [
@@ -44,7 +48,7 @@ function App() {
       { path: "/admin/users", element: <UserAdmin /> },
       { path: "/admin/customers", element: <Customers /> },
       { path: "/admin/customer/detail/:id", element: <CustomerDetail /> },
-      
+
       // main website routes
       { path: "/", element: <HomePage /> },
       { path: "/authentication", element: <Authen /> },
@@ -67,7 +71,7 @@ function App() {
       { path: "/setting/printer", element: <Printer /> },
       { path: "/setting/rate", element: <Rate /> },
       { path: "/manual", element: <UserManual /> },
-      
+
       // profile route
       { path: "/profiles", element: <Profiles /> },
     ],
@@ -83,11 +87,13 @@ function App() {
   );
 
   return (
+
     <AuthProvider>
       <div>
         <RouterProvider router={router} />
       </div>
     </AuthProvider>
+
   );
 }
 

@@ -6,23 +6,22 @@ import { ImMenu2 } from "react-icons/im";
 import { IoMdLock } from "react-icons/io";
 import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
-import { patchOwnerUpStatus } from "../services/owner_service";
-import { IOwnerById, IRestaurant } from "../interfaces/customer_interface";
 import Loading from "../../utils/Loading";
 import { useAuth } from "../../context/context";
 import { customerByIDErrors } from "../../utils/error";
 import { alertconfirm, alertSuccessV3 } from "../../utils/alert";
-import { GetOwnerByIdService } from "../services/owner_service";
-import { ApiResponse } from "../interfaces/customer_interface";
+import { GetOwnerByIdService, patchOwnerUpStatus } from "../services/owner_service";
+import { Owner, Restaurant } from "../interfaces/cus_detail_interface";
+
 
 function CustomerDetail() {
-    const [owner, setOwner] = useState < IOwnerById | null > (null);
-    const [restaurants, setRestaurants] = useState < IRestaurant[] | [] > ([]);
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
     const { token } = useAuth();
     const [btnText, setBtnText] = useState("");
     const [status, setStatus] = useState("");
+    const [owner, setOwner] = useState < Owner > ();
+    const [restaurants, setRestaurants] = useState < Restaurant[] > ([])
 
     const handleUpdateOwnerStatus = async () => {
         try {
@@ -36,17 +35,17 @@ function CustomerDetail() {
             const response = res.status;
             if (response === '200') {
                 alertSuccessV3(fetchData, 'ອັບເດດສະຖານະສຳເລັດ', "success");
-                if (owner?.owner_status === "active") {
+                if (res.data.owner.owner_status === "active") {
                     setStatus("lock");
                     setBtnText("lock");
                 }
-                if (owner?.owner_status === "lock") {
+                if (res.data.owner.owner_status === "lock") {
                     setStatus("active");
                     setBtnText("active");
                 }
             }
         } catch (error: any) {
-            console.log(error.message);
+            console.log(error?.message || error);
         }
     };
 
@@ -56,27 +55,24 @@ function CustomerDetail() {
             if (!id || !token) {
                 throw new Error("ID and token are required");
             }
-    
             const res = await GetOwnerByIdService.getOwnerById(id, token);
-    
-            // TypeScript now knows res.data is an object with owner and restaurants properties
-            const data = res.data as ApiResponse;
-    
-            if (data && data.owner && Array.isArray(data.restaurants)) {
-                setOwner(data.owner);
-                setRestaurants(data.restaurants);
-            } else {
-                console.error("No data or invalid data structure");
+            setOwner(res.data.owner);
+            setRestaurants(res.data.restaurants);
+            if (res.data.owner.owner_status === "active") {
+                setStatus("lock");
+                setBtnText("lock");
             }
-        } catch (error: any) {
+            if (res.data.owner.owner_status === "lock") {
+                setStatus("active");
+                setBtnText("active");
+            }
+        } catch (error) {
             console.error("Error fetching data:", error);
             customerByIDErrors(error);
         } finally {
             setLoading(false);
         }
     };
-    
-
 
     useEffect(() => {
         if (id && token) {
@@ -84,7 +80,7 @@ function CustomerDetail() {
         }
     }, [id, token]);
 
-    // Loading or error state
+
     if (loading || !owner) {
         return (
             <div className="flex w-screen h-screen items-center justify-center">
@@ -92,7 +88,6 @@ function CustomerDetail() {
             </div>
         );
     }
-
     return (
         <div className="flex flex-col">
             <Sidebar_Nav />
@@ -134,25 +129,21 @@ function CustomerDetail() {
                                 </div>
                                 <input
                                     type="text"
-                                    className="bg-gray-50 h-11 border border-gray-300 text-gray-900 rounded-lg cursor-not-allowed block w-full p-2.5"
-                                    value={owner?.owner_name}
+                                    className="bg-gray-50 h-11 border border-gray-300 text-gray-900 focus:ring-orange-500 focus:ring-1.5 focus:border-0 rounded-lg block w-full p-2.5"
+                                    defaultValue={owner?.owner_name}
                                     required
-                                    readOnly
-                                    disabled
                                 />
                             </div>
+
                             <div>
                                 <div className="block">
                                     <Label htmlFor="phone" value="ເບີໂທລະສັບ" />
                                 </div>
                                 <input
-                                    id="phone"
-                                    name="phone"
-                                    type="phone"
-                                    className="bg-gray-50 h-11 border border-gray-300 text-gray-900 rounded-lg cursor-not-allowed block w-full p-2.5"
-                                    value={owner?.owner_phone}
-                                    readOnly
-                                    disabled
+                                    type="tel"
+                                    className="bg-gray-50 h-11 border border-gray-300 text-gray-900 focus:ring-orange-500 focus:ring-1.5 focus:border-0 rounded-lg block w-full p-2.5"
+                                    defaultValue={owner?.owner_phone}
+                                    required
                                 />
                             </div>
                             <div>
@@ -162,8 +153,8 @@ function CustomerDetail() {
                                 <div className="flex gap-2">
                                     <input
                                         type="text"
-                                        className="bg-gray-50 h-11 border border-gray-300 text-gray-900 rounded-lg cursor-not-allowed block w-full p-2.5"
-                                        value={owner?.owner_status}
+                                        className="bg-gray-50 h-11 border border-gray-300 text-gray-900 rounded-lg cursor-not-allowed  block w-full p-2.5"
+                                        defaultValue={owner?.owner_status}
                                         readOnly
                                         disabled
                                     />
@@ -189,11 +180,11 @@ function CustomerDetail() {
                                 </div>
                                 <input
                                     type="email"
-                                    className="bg-gray-50 h-11 border border-gray-300 text-gray-900 rounded-lg cursor-not-allowed block w-full p-2.5"
+                                    className="bg-gray-50 h-11 border border-gray-300 text-gray-900 focus:ring-orange-500 focus:ring-1.5 focus:border-0  rounded-lg  block w-full p-2.5"
                                     placeholder="...."
-                                    value={owner?.owner_email}
-                                    readOnly
-                                    disabled
+                                    defaultValue={owner?.owner_email}
+                                    required
+
                                 />
                             </div>
                             <div className="w-full relative">
@@ -202,7 +193,7 @@ function CustomerDetail() {
                                     type="text"
                                     className="h-11bg-gray-50 border border-gray-300 text-gray-900 rounded-lg cursor-not-allowed block w-full"
                                     placeholder="...."
-                                    value={owner?.owner_date}
+                                    defaultValue={owner?.owner_date}
                                     readOnly
                                     disabled
                                 />
@@ -211,7 +202,7 @@ function CustomerDetail() {
                                 <label htmlFor="">ລະຫັດຜ່ານ</label>
                                 <input
                                     type="password"
-                                    className="h-11 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg cursor-not-allowed block w-full"
+                                    className="h-11 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg  block w-full"
                                     placeholder="...."
                                     value={"********"}
                                     readOnly
@@ -232,49 +223,50 @@ function CustomerDetail() {
                             <Table.Head>
                                 <Table.HeadCell>ຊື່ຮ້ານ</Table.HeadCell>
                                 <Table.HeadCell>ສະຖານະ</Table.HeadCell>
-                                <Table.HeadCell>ເບີໂທ</Table.HeadCell>
-                                <Table.HeadCell>ອີເມລ</Table.HeadCell>
+                                <Table.HeadCell>ວັນທີໝົດອາຍຸ</Table.HeadCell>
                                 <Table.HeadCell>ວັນລົງທະບຽນ</Table.HeadCell>
                             </Table.Head>
                             <Table.Body className="divide-y border-b-[1px]">
-                                {
-                                    loading ? (
-                                        <Table.Cell colSpan={6} className="text-center h-28">
+                                {loading ? (
+                                    <Table.Row>
+                                        <Table.Cell colSpan={4} className="text-center h-28">
                                             <Loading text="ດາວໂຫຼດຂໍ້ມູນ" />
                                         </Table.Cell>
-                                    ) : (
-                                        restaurants === undefined ? (
-                                            <Table.Cell colSpan={6} className="text-center h-28">
-                                                <p>ຍັງບໍ່ມີຮ້ານ</p>
+                                    </Table.Row>
+                                ) : restaurants === undefined ? (
+                                    <Table.Row>
+                                        <Table.Cell colSpan={4} className="text-center h-28">
+                                            <p>ຍັງບໍ່ມີຮ້ານ</p>
+                                        </Table.Cell>
+                                    </Table.Row>
+                                ) : (
+                                    restaurants.map((item) => (
+                                        <Table.Row key={item.restaurant_ID} className="bg-white ">
+                                            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                                {item.restaurant_name}
                                             </Table.Cell>
-                                        ) : (
-                                            restaurants.map((item) => (
-                                                <Table.Row key={item.restaurant_ID} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                                                    <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                                        {item.restaurant_name}
-                                                    </Table.Cell>
-                                                    <Table.Cell>
-                                                        <div className="flex items-center">
-                                                            <div className="flex items-end justify-start h-full">
-                                                                <div className="flex items-center justify-start">
-                                                                    <div className={`h-2.5 w-2.5 rounded-full me-2 
-                                                                    ${item.restaurant_status === 'active' ? 'bg-green-500' : 'bg-red-500'}`}
-                                                                    />
-                                                                    {item.restaurant_status}
-                                                                </div>
-                                                            </div>
+                                            <Table.Cell>
+                                                <div className="flex items-center">
+                                                    <div className="flex items-end justify-start h-full">
+                                                        <div className="flex items-center justify-start">
+                                                            <div
+                                                                className={`h-2.5 w-2.5 rounded-full me-2 ${item.restaurant_status === 'active' ? 'bg-green-500' : 'bg-red-500'
+                                                                    }`}
+                                                            />
+                                                            {item.restaurant_status}
                                                         </div>
-                                                    </Table.Cell>
-                                                    <Table.Cell className="hidden lg:table-cell">{item.restaurant_expiry_date}</Table.Cell>
-                                                    <Table.Cell className="hidden lg:table-cell">{item.restaurant_created_at}</Table.Cell>
-                                                </Table.Row>
-                                            ))
-                                        )
-                                    )
-                                }
+                                                    </div>
+                                                </div>
+                                            </Table.Cell>
+                                            <Table.Cell className="hidden lg:table-cell">{item.restaurant_expiry_date}</Table.Cell>
+                                            <Table.Cell className="hidden lg:table-cell">{item.restaurant_created_at}</Table.Cell>
+                                        </Table.Row>
+                                    ))
+                                )}
                             </Table.Body>
                         </Table>
                     </div>
+
                 </div>
             </div>
         </div>

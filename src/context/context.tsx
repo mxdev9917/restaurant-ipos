@@ -7,7 +7,7 @@ interface AuthContextType {
     logout: () => void;
 }
 
-const AuthContext = createContext < AuthContextType | undefined > (undefined);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
     const context = useContext(AuthContext);
@@ -18,8 +18,20 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [token, setToken] = useState < string | null > (localStorage.getItem('authToken'));
-    const [data, setData] = useState < any > (JSON.parse(localStorage.getItem('Data') || 'null'));
+    const [token, setToken] = useState<string | null>(localStorage.getItem('authToken'));
+    
+    // Safely parse the 'Data' item from localStorage
+    const getDataFromLocalStorage = () => {
+        const data = localStorage.getItem('Data');
+        try {
+            return data ? JSON.parse(data) : null;
+        } catch (e) {
+            console.error('Error parsing Data from localStorage', e);
+            return null;
+        }
+    };
+
+    const [data, setData] = useState<any | null>(getDataFromLocalStorage());
 
     const setAuthData = (token: string, data: any) => {
         localStorage.setItem('authToken', token);

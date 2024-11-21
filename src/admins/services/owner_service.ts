@@ -1,6 +1,8 @@
 import axios from "axios";
-import { IOwnerResponse, IOwnerResponseByid, IOwnerUpdateStatusResponse } from "../interfaces/customer_interface";
+import { IOwnerResponse } from "../interfaces/customer_interface";
 import { IPOS_BASE_URL } from "../../utils/connection";
+import { IOwnerById } from "../interfaces/cus_detail_interface";
+
 
 export class OwnerService {
     static async getOwner(token: string): Promise<IOwnerResponse> {
@@ -14,7 +16,7 @@ export class OwnerService {
 }
 
 export class GetOwnerByIdService {
-    static async getOwnerById(id: string, token: string): Promise<IOwnerResponseByid> {
+    static async getOwnerById(id: string, token: string): Promise<IOwnerById> {
         if (!token) {
             throw new Error("Authorization token is required");
         }
@@ -34,7 +36,7 @@ export class GetOwnerByIdService {
 }
 
 export class patchOwnerUpStatus {
-    static async patchOwnerStatus(id: string, status: string, token: string): Promise<IOwnerUpdateStatusResponse> {
+    static async patchOwnerStatus(id: string, status: string, token: string): Promise<IOwnerById> {
         const res = await axios.patch(`${IPOS_BASE_URL}/owner/lock/${id}`
             , {
                 owner_status: status
