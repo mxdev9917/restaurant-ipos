@@ -55,11 +55,9 @@ function Sidebar_Nav() {
               </span>
             </div>
           ))
-        ) : (
-          <div className="py-2 text-center text-gray-500">
-            
-          </div>
-        )}
+        )
+         : null
+        }
         <button className="flex justify-center items-center w-full h-9 bg-orange-500 text-white text-sm rounded-md "><HiPlusSm className="text-xl"/>ເພີ່ມຮ້ານ</button>
         <div className="flex flex-col gap-2 border-b-[1px] mt-2">
           <div className="flex items-center gap-2 hover:bg-slate-100 p-1 rounded-lg">

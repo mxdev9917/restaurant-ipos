@@ -11,26 +11,24 @@ export interface IOwner {
   created_at: string;
 }
 
-// Define the API response structure for retrieving owners
+
 export interface IOwnerResponse {
   status: string;
   message: string;
-  data: IOwner[]; // This should be an array of IOwner
+  data: IOwner[];
 }
-
-
 export interface IOwnerResponseByid {
   status: string
   message: string
-  data: Data[]
+  data: ApiResponse
 }
 
-export interface Data {
-  owner: OwnerById
-  restaurants: IRestaurant[]
+export interface ApiResponse {
+  owner: IOwnerById;
+  restaurants: IRestaurant[];
 }
 
-export interface OwnerById {
+export interface IOwnerById {
   owner_name: string
   owner_email: string
   owner_phone: string

@@ -29,7 +29,7 @@ function Customers() {
         try {
             const res = await OwnerService.getOwner(token);
             if (res.status === "200") {
-                const results: IOwner[] = res.data.data; // ตรวจสอบว่า res.data.data เป็นอาเรย์ของ IOwner
+                const results: IOwner[] = res.data ? res.data : [];
                 setData(results); // อัพเดท state ด้วยข้อมูลของเจ้าของ
             }
         } catch (error: any) {

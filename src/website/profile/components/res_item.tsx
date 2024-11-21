@@ -4,12 +4,12 @@ import { BiSolidPaperPlane } from "react-icons/bi";
 import { Dropdown } from "flowbite-react";
 
 interface res_itemProps{
-
+status:string;
 name:string;
 
 }
 
-const resItem: React.FC<res_itemProps> = ({ name }) => {
+const resItem: React.FC<res_itemProps> = ({ name,status}) => {
     return (
             <div className="flex flex-col w-full h-fit bg-[#f9fafb] rounded-md shadow-sm-light p-2">
                 <div className="flex justify-between">
@@ -37,14 +37,14 @@ const resItem: React.FC<res_itemProps> = ({ name }) => {
                             </div>
                         </div>
                     </div>
-                    <span className="text-green-600">Active</span>
+                    <span className={ status=="active"?`text-green-600`:`text-red-500` }>{status}</span>
                 </div>
                 <div className="flex gap-2 mt-2">
                     <button className="flex items-center justify-center gap-1 w-full bg-gray-100 rounded-sm py-2 text-sm">
                         <HiChartBar />
                         <p>ຍອດຂາຍ</p>
                     </button>
-                    <button className="flex items-center justify-center gap-1 w-full bg-orange-500 text-white rounded-sm py-2 text-sm">
+                    <button className={`flex items-center justify-center gap-1 w-full bg-orange-500 text-white rounded-sm py-2 text-sm`} disabled={status != "active"}  >
                         <BiSolidPaperPlane />
                         <p>ໄປຮ້ານ</p>
                     </button>

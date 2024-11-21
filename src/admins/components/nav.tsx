@@ -42,9 +42,7 @@ const Nav: React.FC<NavProps> = ({ handelMenu }) => {
     if (!token || isTokenExpired(token)) {
       logout(); // Log the data out
       navigate('/admin'); // Redirect to the login page
-    }
-    console.log(data.user_admin_name);
-    
+    }  
   }, [token, navigate, logout]);
 
   const dataName = data && data.user_admin_name? data.user_admin_name : 'Guest';

@@ -117,9 +117,9 @@ function Customers() {
                                                     </div>
                                                 </div>
                                             </Table.Cell>
-                                            <Table.Cell className="h-[75px]">
+                                            <Table.Cell className="h-[75px] min-w-32">
                                                 <p className="flex items-end justify-start h-full">
-                                                    {new Date(item.created_at).toLocaleDateString()}
+                                                    {item.created_at}
                                                 </p>
                                             </Table.Cell>
                                             <Table.Cell className="h-[75px]">
