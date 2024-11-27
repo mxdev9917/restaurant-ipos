@@ -35,6 +35,8 @@ import Tamplace from './admins/tamplace';
 import RestaurantApproval from './admins/approval/restaurant-approval';
 import RestaurantDetail from './admins/approval/restaurant-detail';
 import Profiles from './website/profile/profile';
+import ConfigSystem from './admins/user-admin/config-system';
+import AddRestaurant from './website/profile/addrestaurant';
 
 
 function App() {
@@ -50,6 +52,7 @@ function App() {
       { path: "/admin/customer/detail/:id", element: <CustomerDetail /> },
 
       // main website routes
+      { path: "/con", element: <ConfigSystem /> },
       { path: "/", element: <HomePage /> },
       { path: "/authentication", element: <Authen /> },
       { path: "/payment", element: <Payment /> },
@@ -74,6 +77,7 @@ function App() {
 
       // profile route
       { path: "/profiles", element: <Profiles /> },
+      { path: "/addrestaurant", element: <AddRestaurant /> },
     ],
     {
       future: {

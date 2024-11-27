@@ -6,6 +6,7 @@ export interface ISign_up{
   }
   
   export interface data {
+    owner_id: string
     owner_name: string
     owner_email: string
     owner_phone: string

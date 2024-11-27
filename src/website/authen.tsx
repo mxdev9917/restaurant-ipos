@@ -64,10 +64,10 @@ function Authen() {
                         <input type={passwordType ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 my-2 " placeholder="•••••••••" required />
                         <div onClick={togglePasswordType} className="absolute bottom-5 right-3">
                             {
-                                 passwordType ?
-                                 <IoMdLock className="text-2xl text-gray-400" />
-                                 :
-                                 <IoMdUnlock className="text-2xl text-gray-400" />
+                                passwordType ?
+                                    <IoMdLock className="text-2xl text-gray-400" />
+                                    :
+                                    <IoMdUnlock className="text-2xl text-gray-400" />
 
                             }
                         </div>
@@ -77,11 +77,11 @@ function Authen() {
                         <Link className="px-2 py-1 hover:text-orange-500 text-gray-400" to={'#'}>Forget Password ?</Link>
                     </div>
                     <button className="bg-orange-500 text-white py-2.5 rounded-md my-2 font-semibold">
-                        {loading? 
+                        {loading ?
                             <LoadingSpinner text="ເຂົ້າສູ່ລະບົບ" />
                             :
                             "ເຂົ້າສູ່ລະບົບ"
-                       }
+                        }
                     </button>
                     <div className=" flex justify-end items-end h-full w-full ">
                         <p className="text-orange-500 text-xs">verson 0.0.1</p>

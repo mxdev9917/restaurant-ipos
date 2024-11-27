@@ -8,6 +8,7 @@ import Nav from "./nav";
 import { useState } from "react";
 import { useAuth } from "../../context/context";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Sidebar_Nav() {
   const { data, logout } = useAuth();
@@ -58,7 +59,7 @@ function Sidebar_Nav() {
         )
          : null
         }
-        <button className="flex justify-center items-center w-full h-9 bg-orange-500 text-white text-sm rounded-md "><HiPlusSm className="text-xl"/>ເພີ່ມຮ້ານ</button>
+        <Link to={'/addrestaurant'} className="flex justify-center items-center w-full h-9 bg-orange-500 text-white text-sm rounded-md "><HiPlusSm className="text-xl"/>ເພີ່ມຮ້ານ</Link>
         <div className="flex flex-col gap-2 border-b-[1px] mt-2">
           <div className="flex items-center gap-2 hover:bg-slate-100 p-1 rounded-lg">
             <div className="w-8 h-8 flex justify-center items-center bg-slate-200 rounded-full">

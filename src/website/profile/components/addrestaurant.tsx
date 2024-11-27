@@ -4,10 +4,12 @@ import { IoMdLock, IoMdUnlock } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { useState } from "react"
 import { FaCloudUploadAlt } from "react-icons/fa";
+import { FileInput, Label } from "flowbite-react";
 
 interface AddRestaurantProps {
     handelButtonClose: () => void;
     title: String;
+
 }
 const AddRestaurant: React.FC<AddRestaurantProps> = ({ handelButtonClose, title }) => {
     const [passwordType, setPasswordType] = useState(false)
