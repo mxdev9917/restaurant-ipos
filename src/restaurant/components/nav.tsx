@@ -3,6 +3,7 @@
 
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import Logo from "./logo";
+import Language from "./language";
 
 interface NavProps {
     handelMenu: () => void;
@@ -21,6 +22,7 @@ const Nav: React.FC<NavProps> = ({ handelMenu}) => {
                 <Logo />
             </Navbar.Brand>
             <div className="flex md:order-2">
+                <Language/>
                 <Dropdown
                     arrowIcon={false}
                     inline
@@ -32,7 +34,7 @@ const Nav: React.FC<NavProps> = ({ handelMenu}) => {
                         <span className="block text-sm">Bonnie Green</span>
                         <span className="block truncate text-sm font-medium">name@flowbite.com</span>
                     </Dropdown.Header>
-                    <Dropdown.Item href="#dashboard">Dashboard</Dropdown.Item>
+                    <Dropdown.Item href="/">Dashboard</Dropdown.Item>
                     <Dropdown.Item href="#profile">profile</Dropdown.Item>
                     <Dropdown.Item>Earnings</Dropdown.Item>
                     <Dropdown.Divider />

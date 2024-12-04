@@ -30,7 +30,7 @@ function Sidebar_Nav() {
             <Sidebar  className={`fixed  mt-2 z-40 w-64 h-screen transition-transform  ${translate ? '-translate-x-full':''} sm:translate-x-0`} aria-label="Sidebar">
                 <Sidebar.Items className="h-full px-3 py-5 overflow-y-auto bg-gray-50 ">
                     <Sidebar.ItemGroup className="space-y-3 font-medium">
-                    <Sidebar.Item href="#dashboard" icon={FaChartBar}>
+                    <Sidebar.Item href="/" icon={FaChartBar}>
                             Dashboard
                         </Sidebar.Item>
                         <Sidebar.Item href="#manageuser" icon={FaUsersGear}>
@@ -100,7 +100,7 @@ function Sidebar_Nav() {
 
                     </Sidebar.ItemGroup>
                     <Sidebar.ItemGroup  className="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 ">
-                    <Sidebar.Item href="#payment"  icon={() => < FaFire className="text-orange-500 text-2xl " />}>
+                    <Sidebar.Item href="#"  icon={() => < FaFire className="text-orange-500 text-2xl " />}>
                             Upgrade to Pro
                         </Sidebar.Item>
                         <Sidebar.Item href="#manual" icon={HiOutlineBookOpen }>
