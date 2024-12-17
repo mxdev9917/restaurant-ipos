@@ -2,13 +2,6 @@ import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider } from './context/context'; // Import your AuthProvider
 import 'flowbite';
 
-
-
-
-// Import components
-// import HomePage from './website/homepage';
-// import Authen from './website/authen';
-// import Payment from './website/payment';
 import ManageFood from './restaurant/managefood/managefood';
 import ManageCategory from './restaurant/managefood/managecategory';
 import ManageZone from './restaurant/managefood/managezone';
@@ -26,36 +19,9 @@ import UserManual from './restaurant/manual';
 import Printer from './restaurant/setting/printer';
 import Rate from './restaurant/setting/rate';
 
-// import OTPVerification from './website/otp_verification';
-// import Authentication from './admins/authentication';
-// import UserAdmin from './admins/user-admin/manage-user-admin';
-// import Customers from './admins/customers/customer';
-// import CustomerDetail from './admins/customers/customer-detail';
-// import Tamplace from './admins/tamplace';
-// import RestaurantApproval from './admins/approval/restaurant-approval';
-// import RestaurantDetail from './admins/approval/restaurant-detail';
-// import Profiles from './website/profile/profile';
-// import ConfigSystem from './admins/user-admin/config-system';
-// import AddRestaurant from './website/profile/addrestaurant';
-
-
 function App() {
   const router = createHashRouter(
-    [
-      // admin routes
-      // { path: "/admin/approval/restaurant/detail", element: <RestaurantDetail /> },
-      // { path: "/admin/approval/restaurant", element: <RestaurantApproval /> },
-      // { path: "/admin/tamplace", element: <Tamplace /> },
-      // { path: "/admin", element: <Authentication /> },
-      // { path: "/admin/users", element: <UserAdmin /> },
-      // { path: "/admin/customers", element: <Customers /> },
-      // { path: "/admin/customer/detail/:id", element: <CustomerDetail /> },
-
-      // main website routes
-      // { path: "/con", element: <ConfigSystem /> },
-      // { path: "/", element: <HomePage /> },
-      // { path: "/authentication", element: <Authen /> },
-      // { path: "/payment", element: <Payment /> },
+    [  
       { path: "/managefood", element: <ManageFood /> },
       { path: "/managecategory", element: <ManageCategory /> },
       { path: "/managezone", element: <ManageZone /> },
@@ -67,17 +33,12 @@ function App() {
       { path: "/cart/:id", element: <Carts /> },
       { path: "/help", element: <Help /> },
       { path: "/profile", element: <Profile /> },
-      // { path: "/sign-up", element: <SignUp /> },
     
       { path: "/salereport", element: <SaleReport /> },
       { path: "/setting/bill", element: <SettingBill /> },
       { path: "/setting/printer", element: <Printer /> },
       { path: "/setting/rate", element: <Rate /> },
       { path: "/manual", element: <UserManual /> },
-
-      // profile route
-     
-
     ],
     {
       future: {
