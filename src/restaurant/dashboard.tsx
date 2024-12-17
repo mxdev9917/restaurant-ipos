@@ -3,8 +3,8 @@ import ChartComponent from "./components/charts/chartsales";
 import ChartTopProToDay from "./components/charts/charttopprotoday";
 import ChartKichen from "./components/charts/chartkichen";
 import Datepicker from "react-tailwindcss-datepicker";
-import { useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom';
+import { useState } from "react";
+
 
 function Dashboardv() {
   const NEXT_MONTH = new Date();
@@ -13,14 +13,7 @@ function Dashboardv() {
     startDate: new Date(),
     endDate: NEXT_MONTH,
   });
-
-  
-   
-  
-   
-
-
-    const urlParams = new URLSearchParams(window.location.search);
+  const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get('token');
   if (token) {
     console.log("Token received from URL:", token);
@@ -29,13 +22,6 @@ function Dashboardv() {
     console.log("No token found in URL");
     // Handle the case where the token is missing
   }
-
-
-
-
-
-
-
   return (
     <div className="flex flex-col">
       <Sidebar_Nav />
