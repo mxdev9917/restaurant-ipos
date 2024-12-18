@@ -1,12 +1,12 @@
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider } from './context/context'; // Import your AuthProvider
 import 'flowbite';
-
+import Authen from './restaurant/authen';
 import ManageFood from './restaurant/managefood/managefood';
 import ManageCategory from './restaurant/managefood/managecategory';
 import ManageZone from './restaurant/managefood/managezone';
 import ManageTables from './restaurant/managefood/managetables';
-import Dashboardv2 from './restaurant/dashboardv2';
+// import Dashboardv2 from './restaurant/dashboardv2';
 import Dashboard from './restaurant/dashboard';
 import ManageUser from './restaurant/manageuser';
 import SelectTatles from './restaurant/sale/selecttatle';
@@ -26,8 +26,8 @@ function App() {
       { path: "/managecategory", element: <ManageCategory /> },
       { path: "/managezone", element: <ManageZone /> },
       { path: "/managetable", element: <ManageTables /> },
-      { path: "/", element: <Dashboard /> },
-      { path: "/dashboardv2", element: <Dashboardv2 /> },
+      { path: "/", element: <Authen/> },
+      { path: "/dashboard", element: <Dashboard /> },
       { path: "/manageuser", element: <ManageUser /> },
       { path: "/sale", element: <SelectTatles /> },
       { path: "/cart/:id", element: <Carts /> },
