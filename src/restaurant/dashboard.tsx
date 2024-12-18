@@ -4,6 +4,11 @@ import ChartTopProToDay from "./components/charts/charttopprotoday";
 import ChartKichen from "./components/charts/chartkichen";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useState } from "react";
+import { jwtDecode } from "jwt-decode";
+
+
+
+
 
 
 function Dashboardv() {
@@ -15,13 +20,29 @@ function Dashboardv() {
   });
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get('token');
+
   if (token) {
     console.log("Token received from URL:", token);
-    // You can now use the token for further processing
+
+    try {
+      // Decode the token (if it's a JWT)
+      const decodedToken = jwtDecode(token);
+      console.log("Decoded Token:", decodedToken);
+
+      // Store the token in localStorage for subsequent use
+      localStorage.setItem("authToken", token);
+
+      // Perform any additional processing (e.g., validate or use the token)
+    } catch (error:any) {
+      console.error("Invalid token:", error.message);
+      // Redirect to login or show an error message
+    }
   } else {
     console.log("No token found in URL");
-    // Handle the case where the token is missing
+    // Redirect to login page or show an error message
+    // window.location.href = "/login";
   }
+
   return (
     <div className="flex flex-col">
       <Sidebar_Nav />
