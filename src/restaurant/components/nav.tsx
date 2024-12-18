@@ -4,6 +4,9 @@
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import Logo from "./logo";
 import Language from "./language";
+import { useAuth } from '../../context/context';
+import { useNavigate } from 'react-router-dom';
+
 
 interface NavProps {
     handelMenu: () => void;

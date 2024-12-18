@@ -20,7 +20,7 @@ function ManageUser() {
       setIsCheckedTitle("ເປີດໃຊ້ງານ");
     }
   };
-  
+
   function handleModel(evens: string) {
     if (evens == "add") {
       console.log("if add");
@@ -199,9 +199,8 @@ function ManageUser() {
         </div>
       </div>
       <div
-        className={`w-screen ${
-          !isCheckModel ? "hidden" : "block"
-        }  h-screen bg-black/10  absolute  flex justify-center items-center`}
+        className={`w-screen ${!isCheckModel ? "hidden" : "block"
+          }  h-screen bg-black/10  absolute  flex justify-center items-center`}
       >
         <div className="flex flex-col w-96 h-fit bg-white rounded-lg shadow-xl">
           <div className="flex justify-between items-center px-5 w-full h-16 border-b-2">
@@ -232,108 +231,107 @@ function ManageUser() {
             </button>
           </div>
           <div className="px-3 mt-3">
-            <form className="p-4 md:p-5">
-              <div className="grid gap-4 mb-4 grid-cols-2">
-                <div className="col-span-2">
-                  <label
-                    htmlFor="name"
-                    className="block mb-2  font-medium text-gray-900 text-xs md:text-sm"
-                  >
-                    {" "}
-                    Name <span className="text-red-600"> *</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                    placeholder="name..."
-                  />
-                </div>
-                <div className="col-span-2 sm:col-span-1">
-                  <label
-                    htmlFor="user"
-                    className="block mb-2 text-xs md:text-sm font-medium text-gray-900 "
-                  >
-                    ຢູເຊີ້<span className="text-red-600"> *</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="user"
-                    name="user"
-                    placeholder="...."
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  "
-                  />
-                </div>
-                <div className="col-span-2 sm:col-span-1 relative">
-                  <label
-                    htmlFor="category"
-                    className="block mb-2 text-xs md:text-sm font-medium text-gray-900 "
-                  >
-                    ລະຫັດຜ່ານ<span className="text-red-600"> *</span>
-                  </label>
-                  <input
-                    type={passwordType ? "text" : "password"}
-                    id="password"
-                    name="password"
-                    placeholder="..."
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  "
-                  />
-                  <button
-                    onClick={togglePasswordType}
-                    className="absolute bottom-2 right-3"
-                  >
-                    {passwordType ? (
-                      <svg
-                        className="w-6 h-6 text-gray-800 "
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M15 7a2 2 0 1 1 4 0v4a1 1 0 1 0 2 0V7a4 4 0 0 0-8 0v3H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V7Zm-5 6a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        className="w-6 h-6 text-gray-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M8 10V7a4 4 0 1 1 8 0v3h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h1Zm2-3a2 2 0 1 1 4 0v3h-4V7Zm2 6a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    )}
-                  </button>
-                </div>
-                <div className="col-span-2 sm:col-span-1">
-                  <label
-                    htmlFor="phone"
-                    className="block mb-2 text-xs md:text-sm font-medium text-gray-900 "
-                  >
-                    Phone<span className="text-red-600"> *</span>
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    placeholder="020xxxxxxxx"
-                    pattern="[0-9]{3}[0-9]{8}"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  "
-                  />
-                </div>
+            <form className="px-3 md:px-4  flex flex-col gap-3 h-[75vh] overflow-y-auto">
+              <div className="col-span-2">
+                <label
+                  htmlFor="name"
+                  className="block mb-2  font-medium text-gray-900 text-xs md:text-sm"
+                >
+                  {" "}
+                  Name <span className="text-red-600"> *</span>
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  placeholder="name..."
+                />
+              </div>
+              <div className="col-span-2 sm:col-span-1">
+                <label
+                  htmlFor="user"
+                  className="block mb-2 text-xs md:text-sm font-medium text-gray-900 "
+                >
+                  ຢູເຊີ້<span className="text-red-600"> *</span>
+                </label>
+                <input
+                  type="text"
+                  id="user"
+                  name="user"
+                  placeholder="...."
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  "
+                />
+              </div>
+              <div className="col-span-2 sm:col-span-1 relative">
+                <label
+                  htmlFor="category"
+                  className="block mb-2 text-xs md:text-sm font-medium text-gray-900 "
+                >
+                  ລະຫັດຜ່ານ<span className="text-red-600"> *</span>
+                </label>
+                <input
+                  type={passwordType ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  placeholder="..."
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  "
+                />
+                <button
+                  onClick={togglePasswordType}
+                  className="absolute bottom-2 right-3"
+                >
+                  {passwordType ? (
+                    <svg
+                      className="w-6 h-6 text-gray-800 "
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M15 7a2 2 0 1 1 4 0v4a1 1 0 1 0 2 0V7a4 4 0 0 0-8 0v3H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V7Zm-5 6a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="w-6 h-6 text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M8 10V7a4 4 0 1 1 8 0v3h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h1Zm2-3a2 2 0 1 1 4 0v3h-4V7Zm2 6a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  )}
+                </button>
+              </div>
+              <div className="col-span-2 sm:col-span-1">
+                <label
+                  htmlFor="phone"
+                  className="block mb-2 text-xs md:text-sm font-medium text-gray-900 "
+                >
+                  Phone<span className="text-red-600"> *</span>
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="020xxxxxxxx"
+                  pattern="[0-9]{3}[0-9]{8}"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  "
+                />
+
                 <div className="col-span-2 sm:col-span-1">
                   <label
                     htmlFor="category"
@@ -352,7 +350,7 @@ function ManageUser() {
                     <option value="PH">Phones</option>
                   </select>
                 </div>
-                <label className="inline-flex items-center me-5 cursor-pointer">
+                <label className="inline-flex items-center my-3 cursor-pointer">
                   <input
                     type="checkbox"
                     value=""
@@ -365,7 +363,7 @@ function ManageUser() {
                     {isCheckedTitle}
                   </span>
                 </label>
-                <div className="col-span-2">
+                <div className="col-span-2 ">
                   <label
                     htmlFor="dropzone-file"
                     className="flex flex-col items-center justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  hover:bg-gray-100 text-xs md:text-sm"
@@ -401,7 +399,7 @@ function ManageUser() {
               {isCheckEven ? (
                 <button
                   type="submit"
-                  className="text-white inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-1 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5 text-center "
+                  className="text-white inline-flex items-center justify-center bg-green-700 hover:bg-green-800 focus:ring-1 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5 text-center "
                 >
                   <svg
                     className="me-1 -ms-1 w-5 h-5"
@@ -420,7 +418,7 @@ function ManageUser() {
               ) : (
                 <button
                   type="submit"
-                  className="text-white inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-1 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5 text-center "
+                  className="text-white inline-flex items-center justify-center bg-green-700 hover:bg-green-800 focus:ring-1 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5 text-center "
                 >
                   <svg
                     className="me-1 -ms-1 w-5 h-5"
