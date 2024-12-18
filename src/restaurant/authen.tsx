@@ -45,18 +45,13 @@ function Authen() {
     // }
 
     return (
-        // <div className="w-screen h-screen flex  justify-between bg-[url('/src/assets/images/svg/blob-scene-haikei.svg')] bg-cover">
-<div className="w-screen h-screen flex text-white justify-center relative bg-cover" style={{ backgroundImage: `url(${blobSceneHaikei})` }}>
-            {/* <div className="w-[60%] h-screen flex flex-col justify-center items-center">
-                
-
-            </div> */}
+        <div className="w-screen h-screen flex text-white justify-center relative bg-cover" style={{ backgroundImage: `url(${blobSceneHaikei})` }}>
             <p className=" font-normal text-sm absolute text-white right-3 bottom-3 pb-2 md:pb-0">ສະຫງວນລິຂະສິດ ໂດຍ @ IPOS | Bran IT</p>
             <div className=" h-screen flex flex-col  items-center md:justify-center ">
                 <p className="text-5xl font-bold md:text-orange-500 py-8">IPOS.LA</p>
-                <form 
-                // onSubmit={formSubmit} 
-                className="flex flex-col w-[350px] md:w-[450px] h-[450px]  bg-white  rounded-md shadow-2xl p-4">
+                <form
+                    // onSubmit={formSubmit} 
+                    className="flex flex-col w-[350px] md:w-[450px] h-[450px]  bg-white  rounded-md shadow-2xl p-4">
                     <p className="text-4xl text-orange-500 font-semibold mt-5">Sign in</p>
                     <div className=" h-fit flex flex-col justify-end mt-7">
                         <label className="text-orange-500" htmlFor="">ອີເມລ </label>
