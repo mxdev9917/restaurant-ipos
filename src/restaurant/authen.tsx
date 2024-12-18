@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import blobSceneHaikei from '/images/svg/blob-scene-haikei.svg';
 // import { authenService } from "./services/authen";
 // import { alertSuccess } from "../utils/alert";
 // import { useNavigate } from 'react-router-dom';
@@ -45,7 +46,7 @@ function Authen() {
 
     return (
         // <div className="w-screen h-screen flex  justify-between bg-[url('/src/assets/images/svg/blob-scene-haikei.svg')] bg-cover">
-        <div className="w-screen h-screen flex text-white justify-center relative bg-[url('/images/svg/blob-scene-haikei.svg')] bg-cover">
+<div className="w-screen h-screen flex text-white justify-center relative bg-cover" style={{ backgroundImage: `url(${blobSceneHaikei})` }}>
             {/* <div className="w-[60%] h-screen flex flex-col justify-center items-center">
                 
 

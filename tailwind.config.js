@@ -6,7 +6,7 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
     "node_modules/flowbite-react/lib/esm/**/*.js",
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}",
-  
+
   ],
   theme: {
     extend: {},
@@ -18,7 +18,10 @@ export default {
   plugins: [
     require('flowbite/plugin')({
       charts: true,
-  }),
+    }),
+  ],
+  safelist: [
+    /^datatable-.*$/
   ],
 }
 
