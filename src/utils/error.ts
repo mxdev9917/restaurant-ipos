@@ -1,20 +1,11 @@
 import axios from "axios";
 import { alertError } from "./alert";
 
-export const authenErrors=(errors:any)=>{
+export const createUserErrors=(errors:any)=>{
     if(axios.isAxiosError(errors)){
         const status=errors.response?.status;
-        if(status===401){
-            alertError("ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ","error");
-        }
-        if(status===403){
-            alertError("ອີເມລນີ້ ຖືກປິດການໃຊ້","error");
-        }
-        if(status===423){
-            alertError("ອີເມລນີ້ ຖືກລ໋ອກ","error");
-        }
-        if(status===404){
-            alertError("ບໍ່ພົບອີເມລ ໃນລະບົບ","error");
+        if(status===409){
+            alertError("ຢູເຊີ້ນີ້ມີຄົນໃຊ້ງານແລ້ວ","error");
         }
         if(status===500){
             alertError("ຂໍອະໄພ ລະບົບຫຼັງບ້ານມີບັນຫາ","error");
@@ -25,41 +16,7 @@ export const authenErrors=(errors:any)=>{
 
 };
 
-export const customerErrors=(errors:any)=>{
-    if(axios.isAxiosError(errors)){
-        const status=errors.response?.status;
-        if(status===500){
-            alertError("ຂໍອະໄພ ລະບົບຫຼັງບ້ານມີບັນຫາ","error");
-        }
-    }else{
-        alertError("ການເຮັດວຽກຂອງລະບົບຜິດພາດ","error");
-    }
 
-};
-export const customerByIDErrors=(errors:any)=>{
-    if(axios.isAxiosError(errors)){
-        const status=errors.response?.status;
-        if(status===400){
-            alertError("ປະເພດຂໍ້ມູນບໍ່ຖືກຕ້ອງ","error");
-        }
-        if(status===404){
-            alertError("ບໍ່ພົບຂໍ້ມູນ","error");
-        }
-        if(status===500){
-            alertError("ຂໍອະໄພ ລະບົບຫຼັງບ້ານມີບັນຫາ","error");
-        }
-    }else{
-        alertError("ການເຮັດວຽກຂອງລະບົບຜິດພາດ","error");
-    }
-};
 
-export const customerSignUpError=(errors:any)=>{
-    if(axios.isAxiosError(errors)){
-        const status=errors.response?.status;
-        if(status===500){
-            alertError("ຂໍອະໄພ ລະບົບຫຼັງບ້ານມີບັນຫາ","error");
-        }
-    }else{
-        alertError("ການເຮັດວຽກຂອງລະບົບຜິດພາດ","error");
-    }
-};
+
+

@@ -45,7 +45,7 @@ export const alertSuccessV2 = (title: string, icon: SweetAlertIcon) => {
 
     });
 };
-export const alertSuccessV3 = (func: () => void,title: string, icon: SweetAlertIcon) => {
+export const alertSuccessV3 = (title: string, icon: SweetAlertIcon) => {
     Swal.fire({
         position: "center",
         icon: icon,
@@ -61,7 +61,7 @@ export const alertSuccessV3 = (func: () => void,title: string, icon: SweetAlertI
             icon: 'swal2-icon2'
         }
     }).then(() => {
-        if (func) func();  
+         
          window.location.reload()
        
     });

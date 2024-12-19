@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Sidebar_Nav from "./components/sidebar-nav";
+import { PostUserService } from "../services/createuser";
+import { createUserErrors } from "../utils/error";
+import { alertSuccessV3 } from "../utils/alert";
 
 function ManageUser() {
   const [isCheckModel, setIsCheckModel] = useState(false);
@@ -9,6 +12,13 @@ function ManageUser() {
   const [passwordType, setPasswordType] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
   const [isCheckedTitle, setIsCheckedTitle] = useState("ປີດໃຊ້ງານ");
+  const [name, setName] = useState("");
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [role, setRole] = useState("")
+
+
   function togglePasswordType() {
     setPasswordType(!passwordType);
   }
@@ -23,7 +33,6 @@ function ManageUser() {
 
   function handleModel(evens: string) {
     if (evens == "add") {
-      console.log("if add");
       setTitleModel("ເພີ່ມພະນັກງານ");
       setIsCheckModel(!isCheckModel);
       setIsEven(true);
@@ -34,6 +43,38 @@ function ManageUser() {
     } else {
       setIsCheckModel(!isCheckModel);
     }
+  }
+  const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    if (isCheckEven == true) {
+      console.log('add');
+      const res_ID = "3";
+      const path_img = "user.jpg";
+      try {
+        const res = await PostUserService.postUser(
+          res_ID,
+          name,
+          user,
+          phone,
+          password,
+          role,
+          path_img
+        );
+        if(res.status==200){
+          alertSuccessV3("ສ້າງຢູເຊີ້ສຳເລັດ",'success');
+        }
+      } catch (error) {
+        
+        createUserErrors(error);
+      }
+
+
+
+    }
+    if (isCheckEven == false) {
+      console.log('edit');
+    }
+
   }
   return (
     <div className="flex flex-col">
@@ -231,7 +272,7 @@ function ManageUser() {
             </button>
           </div>
           <div className="px-3 mt-3">
-            <form className="px-3 md:px-4  flex flex-col gap-3 h-[75vh] overflow-y-auto">
+            <form onSubmit={formSumit} className="px-3 md:px-4  flex flex-col gap-3 h-[75vh] overflow-y-auto">
               <div className="col-span-2">
                 <label
                   htmlFor="name"
@@ -244,6 +285,7 @@ function ManageUser() {
                   type="text"
                   name="name"
                   id="name"
+                  onChange={(e) => setName(e.target.value)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   placeholder="name..."
                 />
@@ -260,6 +302,7 @@ function ManageUser() {
                   id="user"
                   name="user"
                   placeholder="...."
+                  onChange={(e) => setUser(e.target.value)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  "
                 />
               </div>
@@ -275,6 +318,7 @@ function ManageUser() {
                   id="password"
                   name="password"
                   placeholder="..."
+                  onChange={(e) => setPassword(e.target.value)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  "
                 />
                 <button
@@ -329,6 +373,7 @@ function ManageUser() {
                   name="phone"
                   placeholder="020xxxxxxxx"
                   pattern="[0-9]{3}[0-9]{8}"
+                  onChange={(e) => setPhone(e.target.value)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  "
                 />
 
@@ -341,13 +386,14 @@ function ManageUser() {
                   </label>
                   <select
                     id="category"
+                    onChange={(e) => setRole(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  "
                   >
-                    <option value="">Select Role</option>
-                    <option value="TV">TV/Monitors</option>
-                    <option value="PC">PC</option>
-                    <option value="GA">Gaming/Console</option>
-                    <option value="PH">Phones</option>
+                    <option value="0">--ເລືອກ--</option>
+                    <option value="1">ແອັດມີນ</option>
+                    <option value="2">ເສີບ</option>
+                    {/* <option value="3">Gaming/Console</option>
+                    <option value="4">Phones</option> */}
                   </select>
                 </div>
                 <label className="inline-flex items-center my-3 cursor-pointer">
