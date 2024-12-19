@@ -54,7 +54,7 @@ function Authen() {
                     className="flex flex-col w-[350px] md:w-[450px] h-[450px]  bg-white  rounded-md shadow-2xl p-4">
                     <p className="text-4xl text-orange-500 font-semibold mt-5">Sign in</p>
                     <div className=" h-fit flex flex-col justify-end mt-7">
-                        <label className="text-orange-500" htmlFor="">ອີເມລ </label>
+                        <label className="text-orange-500" htmlFor="">ຢູເຊີ້</label>
                         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 mb-2   " placeholder="john.doe@company.com" required />
                     </div>
                     <div className="w-full text-orange-500 relative">
@@ -66,7 +66,6 @@ function Authen() {
                                     <IoMdLock className="text-2xl text-gray-400" />
                                     :
                                     <IoMdUnlock className="text-2xl text-gray-400" />
-
                             }
                         </div>
                     </div>
