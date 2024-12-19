@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Sidebar_Nav from "./components/sidebar-nav";
-import { PostUserService } from "../services/createuser";
+import { PostUserService } from "../services/users/createuser";
+import { PostCHUserService } from "../services/users/checkuser";
 import { createUserErrors } from "../utils/error";
 import { alertSuccessV3 } from "../utils/alert";
 
@@ -17,6 +18,8 @@ function ManageUser() {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [role, setRole] = useState("")
+  const [pckColor, setPckColor] = useState("ring-orange-500");
+  const [ischeckPCK, setIscheckPCK] = useState(false)
 
 
   function togglePasswordType() {
@@ -60,22 +63,49 @@ function ManageUser() {
           role,
           path_img
         );
-        if(res.status==200){
-          alertSuccessV3("ສ້າງຢູເຊີ້ສຳເລັດ",'success');
+        if (res.status == 200) {
+          alertSuccessV3("ສ້າງຢູເຊີ້ສຳເລັດ", 'success');
         }
       } catch (error) {
-        
+
         createUserErrors(error);
       }
-
-
-
     }
     if (isCheckEven == false) {
       console.log('edit');
     }
 
   }
+  const checkUser = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUser(e.target.value);
+    console.log(e.target.value);
+
+    try {
+      setTimeout(async () => {
+        const res = await PostCHUserService.postCkUser(e.target.value); // Use the updated value directly
+        console.log(res.massege);
+        console.log(res.status);
+        setIscheckPCK(false)
+          setPckColor("ring-orange-500")
+      
+        if (res.status == 200) {
+          setPckColor("ring-green-500")
+          setIscheckPCK(false)
+
+        }else if (res.status == 409) {
+          setPckColor("ring-red-500")
+          setIscheckPCK(true)
+        } else{
+          setIscheckPCK(false)
+          setPckColor("ring-orange-500")
+        }
+       
+      }, 1000);
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div className="flex flex-col">
       <Sidebar_Nav />
@@ -286,7 +316,7 @@ function ManageUser() {
                   name="name"
                   id="name"
                   onChange={(e) => setName(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-orange-500 focus:border-0  block w-full p-2.5 "
                   placeholder="name..."
                 />
               </div>
@@ -301,10 +331,13 @@ function ManageUser() {
                   type="text"
                   id="user"
                   name="user"
-                  placeholder="...."
-                  onChange={(e) => setUser(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  "
+                  placeholder="Enter username"
+                  onChange={checkUser}
+                  className={`bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-1 focus:${pckColor} focus:border-0 block w-full p-2.5`}
                 />
+
+
+                <p className={`text-[11px] text-red-500 pt-2 pl-2 ${ischeckPCK ? "block" : "hidden"}`}>ຢູເຊີ້ນີ້ມີຄົນໃຊ້ແລ້ວ</p>
               </div>
               <div className="col-span-2 sm:col-span-1 relative">
                 <label
@@ -319,7 +352,7 @@ function ManageUser() {
                   name="password"
                   placeholder="..."
                   onChange={(e) => setPassword(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  "
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-orange-500 focus:border-0 block w-full p-2.5  "
                 />
                 <button
                   onClick={togglePasswordType}
@@ -374,7 +407,7 @@ function ManageUser() {
                   placeholder="020xxxxxxxx"
                   pattern="[0-9]{3}[0-9]{8}"
                   onChange={(e) => setPhone(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  "
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-orange-500 focus:border-0 block w-full p-2.5  "
                 />
 
                 <div className="col-span-2 sm:col-span-1">
@@ -387,7 +420,7 @@ function ManageUser() {
                   <select
                     id="category"
                     onChange={(e) => setRole(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5  "
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-orange-500 focus:border-0 block w-full p-2.5  "
                   >
                     <option value="0">--ເລືອກ--</option>
                     <option value="1">ແອັດມີນ</option>

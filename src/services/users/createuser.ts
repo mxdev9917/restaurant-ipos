@@ -1,4 +1,4 @@
-import { IPOS_BASE_URL } from "../utils/connection";
+import { IPOS_BASE_URL } from "../../utils/connection";
 import axios from "axios";
 
 interface IUserResponse {
