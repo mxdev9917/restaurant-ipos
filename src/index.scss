@@ -117,6 +117,13 @@ $noto-sans-lao-weight: 400; // Define the default weight; adjust as needed
   height: 150px !important; 
 }
 
+/* Target the spinner's color */
+.swal2-loader {
+  border-color: #ff5a1f; /* Change this to your desired color */
+  border-left-color: transparent; /* To maintain the spinning effect */
+}
+
+
 
 
 

@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2'
-import  { SweetAlertIcon } from 'sweetalert2';
+import { SweetAlertIcon } from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 export const alertSuccess = (
     navigate: ReturnType<typeof useNavigate>,
@@ -22,7 +22,7 @@ export const alertSuccess = (
             icon: 'swal2-icon2' // Custom class for icon
         }
     }).then(() => {
-        navigate(path,{ replace: true });
+        navigate(path, { replace: true });
     });
 };
 
@@ -61,9 +61,9 @@ export const alertSuccessV3 = (title: string, icon: SweetAlertIcon) => {
             icon: 'swal2-icon2'
         }
     }).then(() => {
-         
-         window.location.reload()
-       
+
+        window.location.reload()
+
     });
 };
 
@@ -78,7 +78,7 @@ export const alertError = (title: string, icon: SweetAlertIcon) => {
             closeButton: 'custom-close-btn',
             title: 'custom-title',
             popup: 'popup-width',
-            icon:'swal-icon'
+            icon: 'swal-icon'
         }
     });
 };
@@ -107,7 +107,7 @@ export const alertErrorV2 = (title: string, icon: SweetAlertIcon) => {
             closeButton: 'custom-close-btn',
             title: 'custom-title',
             popup: 'popup-width',
-            icon:'swal-icon'
+            icon: 'swal-icon'
         }
     });
 };
@@ -136,5 +136,25 @@ export const alertconfirm = (func: () => void, title: string, icon: SweetAlertIc
 };
 
 
+export const loadingMessage = () => {
+    Swal.fire({
+      didOpen: () => {
+        Swal.showLoading(); // This shows the default SweetAlert2 loading spinner
+      },
+    text: "You won't be able to revert this!",
+      customClass: {
+        popup: 'popup-width2', // Customize the popup width
+        confirmButton: 'custom-confirm-btn',
+        title: 'custom-title',
+        // Additional classes...
+      },
+      showConfirmButton: false, // Prevent Confirm, Auto!
+    });
+  };
   
+
+
+
+
+
 

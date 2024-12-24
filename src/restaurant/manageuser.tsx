@@ -1,10 +1,21 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar_Nav from "./components/sidebar-nav";
 import { PostUserService } from "../services/users/createuser";
 import { PostCHUserService } from "../services/users/checkuser";
+import { DeleteUserService } from "../services/users/deleteuser";
 import { createUserErrors } from "../utils/error";
+import { ResetPasswordService } from "../services/users/resetpassword";
 import { alertSuccessV3 } from "../utils/alert";
+import { GetAllUserByIdService } from "../services/users/getalluserbyid";
+import { GetAllUserById } from '../interfaces/getalluserbyid_interface'
+import { IGetAllUserById } from "../interfaces/getalluserbyid_interface";
+import { alertconfirm } from "../utils/alert";
+import Loading from "../utils/Loading";
+import LoadingSpinner from "../utils/LoadingSpinner";
+// import { loadingMessage } from "../utils/alert";
+import LoadingMessage from "../utils/loadingMessage";
+
 
 function ManageUser() {
   const [isCheckModel, setIsCheckModel] = useState(false);
@@ -20,7 +31,59 @@ function ManageUser() {
   const [role, setRole] = useState("")
   const [pckColor, setPckColor] = useState("ring-orange-500");
   const [ischeckPCK, setIscheckPCK] = useState(false)
+  const [getDt, setGetDt] = useState < IGetAllUserById["data"] > ([]);
+  const [loading, setLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState(false);
+  const [loadingMessageTitle, setLoadingMessageTitle] = useState("");
 
+
+  async function handleResetpassword(userId: String) {
+    setLoadingMessageTitle("ກຳລັງປ່ຽນລະຫັດຜ່ານ")
+    setLoadingMessage(true)
+    const res = await ResetPasswordService.patchReset(userId)
+    if (res.status == 200) {
+      alertSuccessV3("ປ່ຽນລະຫັດຜ່ານສຳເລັດ", 'success');
+    }
+
+
+
+  }
+
+  async function handleDeleteUser(userId: String) {
+
+    try {
+      setLoadingMessageTitle("ກຳລັງລົບ")
+      setLoadingMessage(true)
+      const res = await DeleteUserService.DeleteUser(userId)
+      if (res.status == 200) {
+        alertSuccessV3("ລົບຢູເຊີ້ສຳເລັດ", 'success');
+      }
+
+    } catch (error: any) {
+      console.log(massege.error);
+
+    } finally {
+      setLoadingMessage(false)
+    }
+
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        const res = await GetAllUserByIdService.GetAllUserById("3");
+        setGetDt(res.data);
+      } catch (error: any) {
+        console.error("API Error:", error);
+      } finally {
+        setLoading(false)
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+  }, [getDt]);
 
   function togglePasswordType() {
     setPasswordType(!passwordType);
@@ -49,8 +112,8 @@ function ManageUser() {
   }
   const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
+    setLoading(true)
     if (isCheckEven == true) {
-      console.log('add');
       const res_ID = "3";
       const path_img = "user.jpg";
       try {
@@ -69,6 +132,8 @@ function ManageUser() {
       } catch (error) {
 
         createUserErrors(error);
+      } finally {
+        setLoading(false)
       }
     }
     if (isCheckEven == false) {
@@ -76,38 +141,39 @@ function ManageUser() {
     }
 
   }
-  const checkUser = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const checkUser = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser(e.target.value);
     console.log(e.target.value);
 
     try {
-      setTimeout(async () => {
-        const res = await PostCHUserService.postCkUser(e.target.value); // Use the updated value directly
-        console.log(res.massege);
-        console.log(res.status);
+
+      const res = await PostCHUserService.postCkUser(e.target.value); // Use the updated value directly
+      console.log(res.massege);
+      console.log(res.status);
+      setIscheckPCK(false)
+      setPckColor("ring-orange-500")
+
+      if (res.status == 200) {
+        setPckColor("ring-green-500")
         setIscheckPCK(false)
-          setPckColor("ring-orange-500")
-      
-        if (res.status == 200) {
-          setPckColor("ring-green-500")
-          setIscheckPCK(false)
 
-        }else if (res.status == 409) {
-          setPckColor("ring-red-500")
-          setIscheckPCK(true)
-        } else{
-          setIscheckPCK(false)
-          setPckColor("ring-orange-500")
-        }
-       
-      }, 1000);
-
+      } else if (res.status == 409) {
+        setPckColor("ring-red-500")
+        setIscheckPCK(true)
+      } else {
+        setIscheckPCK(false)
+        setPckColor("ring-orange-500")
+      }
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
     <div className="flex flex-col">
+      <div className={` ${!loadingMessage ? "hidden" : "block"}`}>
+        <LoadingMessage text={loadingMessageTitle} />
+      </div>
       <Sidebar_Nav />
       <div className="pt-8 sm:ml-64">
         <div className="p-1">
@@ -156,6 +222,8 @@ function ManageUser() {
               </button>
             </div>
           </div>
+
+
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
               <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
@@ -165,10 +233,16 @@ function ManageUser() {
                       Name
                     </th>
                     <th scope="col" className="px-6 py-3">
+                     User name
+                    </th>
+                    <th scope="col" className="px-6 py-3">
                       Position
                     </th>
                     <th scope="col" className="px-6 py-3">
                       Status
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Date
                     </th>
                     <th scope="col" className="px-6 py-3">
                       Action
@@ -176,93 +250,127 @@ function ManageUser() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="bg-white border-b   hover:bg-gray-50 ">
-                    <th
-                      scope="row"
-                      className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap "
-                    >
-                      <img
-                        className="w-10 h-10 rounded-full"
-                        src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                        alt="Jese image"
-                      />
-                      <div className="ps-3">
-                        <div className="text-base font-semibold">Neil Sims</div>
-                        <div className="font-normal text-gray-500">
-                          02056085825
-                        </div>
-                      </div>
-                    </th>
-                    <td className="px-6 py-4">ເສິບ</td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center">
-                        <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>{" "}
-                        Online
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 flex">
-                      <button className="font-medium   hover:underline">
-                        <svg
-                          className="w-6 h-6 text-gray-500 "
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3"
-                          />
-                        </svg>
-                      </button>
-                      <button
-                        onClick={() => handleModel("edit")}
-                        className="font-medium   hover:underline"
-                      >
-                        <svg
-                          className="w-6 h-6 text-gray-500 "
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
-                          />
-                        </svg>
-                      </button>
-                      <Link to={"#"} className="font-medium   hover:underline">
-                        <svg
-                          className="w-6 h-6 text-red-500 "
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                          />
-                        </svg>
-                      </Link>
-                    </td>
-                  </tr>
+                  {
+                    loading ? (
+                      <tr className="shadow-none">
+                        <td colSpan={5} className="h-40">
+                          <Loading text="ດາວໂຫຼດຂໍ້ມູນ" />
+                        </td>
+                      </tr>
+                    ) : getDt.length > 0 ? (
+                      getDt.map((item) => (
+                        <tr key={item.user_ID} className="bg-white border-b hover:bg-gray-50 ">
+                          <th
+                            scope="row"
+                            className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap "
+                          >
+                            <img
+                              className="w-10 h-10 rounded-full"
+                              src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                              alt="Jese image"
+                            />
+                            <div className="ps-3">
+                              <div className="text-base font-semibold">{item.user_name}</div>
+                              <div className="font-normal text-gray-500">
+                                {item.user_phone}
+                              </div>
+                            </div>
+                          </th>
+                          <td className="px-6  pt-6 ">{item.user}</td>
+                          <td className="px-6  pt-6 ">{item.user_role}</td>
+                          <td className="px-6  pt-6">
+                            <div className="flex items-center">
+                              <div
+                                className={`h-2.5 w-2.5 rounded-full me-2  ${item.user_status === "active"
+                                  ? "bg-green-500"
+                                  : "bg-red-500"
+                                  }`}
+                              />
+                              {item.user_status === "active"
+                                ? "Active"
+                                : "Locked"}
+                            </div>
+                          </td>
+                          <td className="px-6  min-w-32 pt-6">{item.created_at}</td>
+                          <td className="px-6 pt-6 flex">
+                            <button
+                              // onClick={loadingMessage}
+                              onClick={() => alertconfirm(() => handleResetpassword(item.user_ID), `ຕ້ອງການປ່ຽນລະຫັດຜ່ານຢູ່ເຊີ້ ${item.user} ?`, "question")}
+                              className="font-medium   hover:underline">
+                              <svg
+                                className="w-6 h-6 text-gray-500 "
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3"
+                                />
+                              </svg>
+                            </button>
+                            <button
+                              onClick={() => handleModel("edit")}
+                              className="font-medium   hover:underline"
+                            >
+                              <svg
+                                className="w-6 h-6 text-gray-500 "
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+                                />
+                              </svg>
+                            </button>
+                            <button
+                              onClick={() => alertconfirm(() => handleDeleteUser(item.user_ID), `ຕ້ອງການລົບ ${item.user} ?`, "question")}
+                              className="font-medium hover:underline"
+                            >
+                              <svg
+                                className="w-6 h-6 text-red-500"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                                />
+                              </svg>
+                            </button>
+
+                          </td>
+                        </tr>
+                      )
+                      )) : (
+                      <tr className="">
+                        <td colSpan={5} className="h-40 text-center align-middle">
+                          No data available.
+                        </td>
+                      </tr>
+                    )
+                  }
                 </tbody>
               </table>
             </div>
@@ -492,7 +600,11 @@ function ManageUser() {
                       clipRule="evenodd"
                     ></path>
                   </svg>
-                  Add new User
+                  {loading ?
+                    <LoadingSpinner text="ເພີ່ມພະນັກງານ" />
+                    :
+                    "ເພີ່ມພະນັກງານ"
+                  }
                 </button>
               ) : (
                 <button
