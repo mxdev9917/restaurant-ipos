@@ -295,7 +295,7 @@ function ManageUser() {
       </div>
       <div
         className={`w-screen ${!isCheckModel ? "hidden" : "block"
-          } h-screen bg-black/10 absolute flex justify-center items-center`}
+          } h-screen bg-black/10 absolute flex justify-center items-center z-50`}
       >
         {
           isCheckEven ?

@@ -1,7 +1,5 @@
 
 import { useEffect, useState } from "react";
-import { PostCHUserService } from "../../../services/users/checkuser";
-import { PostUserService } from "../../../services/users/createuser";
 import { FaEdit } from "react-icons/fa";
 import { GetUserByIdService, PatchUserbyIdService } from "../../../services/users/getuserbyid";
 import Loading from "../../../utils/Loading";
@@ -11,7 +9,7 @@ import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { alertSuccessV3 } from "../../../utils/alert";
 interface EditUserProps {
     handleModel: (action: string) => void;
-    user_id: String;
+    user_id: string; 
 
 }
 
@@ -20,18 +18,13 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
         handleModel(action); // Call the parent function
     };
 
-    const [passwordType, setPasswordType] = useState(false);
     const [isChecked, setIsChecked] = useState(true);
     const [isCheckedTitle, setIsCheckedTitle] = useState("ປີດໃຊ້ງານ");
     const [name, setName] = useState("");
-    const [user, setUser] = useState("");
-    const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
     const [role, setRole] = useState("")
-    const [pckColor, setPckColor] = useState("ring-orange-500");
-    const [ischeckPCK, setIscheckPCK] = useState(false)
     const [loading, setLoading] = useState(false);
-    const [getDt, setGetDt] = useState < IGetAllUserById["data"] > (null);
+
 
 
     useEffect(() => {
@@ -39,7 +32,10 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
             setLoading(true)
             try {
                 const res = await GetUserByIdService.GetUserById(user_id);
-                setGetDt(res.data[0])
+                const userData = res.data[0];
+                setName(userData.user_name || ""); // Populate the `name` state
+                setPhone(userData.user_phone || ""); // Populate the `phone` state
+                setRole(userData.user_role || ""); // Populate the `role` state
             } catch (error: any) {
                 console.error("API Error:", error);
             } finally {
@@ -49,8 +45,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
         fetchData();
     }, [user_id]);
 
-    useEffect(() => {
-    }, [getDt]);
+  
     const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setLoading(true)
@@ -63,8 +58,8 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                 role,
                 path_img
             );
-            if (res.status == 200) {
-                alertSuccessV3("ແກ້ໄຂຢູເຊີ້ສຳເລັດ", 'success');
+            if (res.status == "200") {
+                alertSuccessV3("ແກ້ໄຂສຳເລັດ", 'success');
             }
         } catch (error) {
 
@@ -72,9 +67,6 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
         } finally {
             setLoading(false)
         }
-
-
-
     }
 
     const handleChange = () => {
@@ -85,7 +77,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
             setIsCheckedTitle("ເປີດໃຊ້ງານ");
         }
     };
-    if (!getDt) {
+    if (loading) {
         return <div className="flex flex-col  w-96 h-[70%] rounded-sm bg-white p-3">
             <button
                 onClick={() => handleClick("close")}
@@ -159,7 +151,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                             name="name"
                             id="name"
                             onChange={(e) => setName(e.target.value)}
-                            value={getDt.user_name}
+                            value={name}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-orange-500 focus:border-0  block w-full p-2.5 "
                             placeholder="name..."
                         />
@@ -178,7 +170,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                             placeholder="020xxxxxxxx"
                             pattern="[0-9]{3}[0-9]{8}"
                             onChange={(e) => setPhone(e.target.value)}
-                            value={getDt.user_phone}
+                            value={phone}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-orange-500 focus:border-0 block w-full p-2.5  "
                         />
 
@@ -192,7 +184,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                             <select
                                 id="category"
                                 onChange={(e) => setRole(e.target.value)}
-                                value={getDt.user_role}
+                                value={role}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-orange-500 focus:border-0 block w-full p-2.5"
                             >
                                 <option value="0">--ເລືອກ--</option>
@@ -249,7 +241,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
 
                     <button
                         type="submit"
-                        className="text-white inline-flex items-end  justify-center gap-2 bg-green-700 hover:bg-green-800 focus:ring-1 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5 text-center "
+                        className="text-white inline-flex items-end  justify-center gap-2 bg-green-700 hover:bg-green-800 focus:ring-1 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5 mb-2 text-center "
                     >
                         <FaEdit className="text-white text-xl" />
                         {loading ?
