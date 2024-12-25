@@ -1,5 +1,5 @@
 
-interface loadingMessageProps {
+interface LoadingSpinnerProps {
     text: string;
 }
 

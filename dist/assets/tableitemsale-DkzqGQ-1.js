@@ -1,1 +1,0 @@
-import{j as t}from"./index-D9cbo8cg.js";const s=({onClick:e})=>{function n(){e&&e()}return t.jsx("button",{onClick:n,className:"flex justify-center items-center w-full h-full bg-green-500 rounded-md shadow-inner",children:t.jsx("p",{className:"text-2xl font-bold text-white",children:"ໂຕະ1"})})};export{s as T};
