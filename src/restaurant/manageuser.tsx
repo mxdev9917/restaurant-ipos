@@ -6,22 +6,24 @@ import { ResetPasswordService } from "../services/users/resetpassword";
 import { alertSuccessV3 } from "../utils/alert";
 import { GetAllUserByIdService } from "../services/users/getalluserbyid";
 import { IGetAllUserById } from '../interfaces/getalluserbyid_interface'
-import { alertconfirm } from "../utils/alert";
-import Loading from "../utils/Loading";
+// import { alertconfirm } from "../utils/alert";
+// import Loading from "../utils/Loading";
 import LoadingMessage from "../utils/loadingMessage";
 import CreateUser from "./components/manageuser/createuser";
 import EditUser from "./components/manageuser/edituser";
+import UserTable from "./components/data_tables/table-user";
 
 
 function ManageUser() {
   const [isCheckModel, setIsCheckModel] = useState(false);
   const [isCheckEven, setIsEven] = useState(true);
-  const [getDt, setGetDt] = useState < IGetAllUserById["data"] > ([]);
-  const [loading, setLoading] = useState(false);
+  const [getDt, setGetDt] = useState<IGetAllUserById["data"]>([]);
+  // const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState(false);
   const [loadingMessageTitle, setLoadingMessageTitle] = useState("");
-  const[user_id,setUser_id]=useState("");
+  const [user_id, setUser_id] = useState("");
   async function handleResetpassword(userId: any) {
+
     setLoadingMessageTitle("ກຳລັງປ່ຽນລະຫັດຜ່ານ")
     setLoadingMessage(true)
     const res = await ResetPasswordService.patchReset(userId)
@@ -49,14 +51,14 @@ function ManageUser() {
   }
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true)
+      // setLoading(true)
       try {
         const res = await GetAllUserByIdService.GetAllUserById("3");
         setGetDt(res.data);
       } catch (error: any) {
         console.error("API Error:", error);
       } finally {
-        setLoading(false)
+        // setLoading(false)
       }
     };
     fetchData();
@@ -67,7 +69,8 @@ function ManageUser() {
 
 
 
-  const handleModel = (action: string) => {
+  const handleModel = (action: string, userId: string) => {
+    setUser_id(userId)
     if (action === "add") {
       // setTitleModel("ເພີ່ມພະນັກງານ");
       setIsCheckModel(!isCheckModel);
@@ -128,7 +131,7 @@ function ManageUser() {
 
             <div className=" pr-1 mb-2  md:pr-5 ">
               <button
-                onClick={() => handleModel("add")}
+                onClick={() => handleModel("add", "0")}
                 className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-full text-white text-xs md:text-sm"
               >
                 ເພີ່ມ
@@ -136,8 +139,13 @@ function ManageUser() {
             </div>
           </div>
 
+          <UserTable
+            handleResetPass={handleResetpassword}
+            handleDelete={handleDeleteUser}
+            handleModel={handleModel}
+          />
 
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+          {/* <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
               <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
@@ -229,10 +237,10 @@ function ManageUser() {
                               </svg>
                             </button>
                             <button
-                              onClick={() => {
-                                handleModel("edit");
-                                setUser_id(item.user_ID);
-                              }}
+                              // onClick={() => {
+                              //   handleModel("edit");
+                              //   setUser_id(item.user_ID);
+                              // }}
                               className="font-medium   hover:underline"
                             >
                               <svg
@@ -290,7 +298,7 @@ function ManageUser() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <div
@@ -300,7 +308,7 @@ function ManageUser() {
         {
           isCheckEven ?
             <CreateUser handleModel={handleModel} /> :
-            <EditUser handleModel={handleModel} user_id={user_id}/>
+            <EditUser handleModel={handleModel} user_id={user_id} />
         }
       </div>
 

@@ -8,14 +8,14 @@ import { createUserErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { alertSuccessV3 } from "../../../utils/alert";
 interface EditUserProps {
-    handleModel: (action: string) => void;
+    handleModel: (action: string,userId:string) => void;
     user_id: string; 
 
 }
 
 const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
     const handleClick = (action: string) => {
-        handleModel(action); // Call the parent function
+        handleModel(action,user_id); // Call the parent function
     };
 
     const [isChecked, setIsChecked] = useState(true);
@@ -24,6 +24,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
     const [phone, setPhone] = useState("");
     const [role, setRole] = useState("")
     const [loading, setLoading] = useState(false);
+  
 
 
 
@@ -33,6 +34,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
             try {
                 const res = await GetUserByIdService.GetUserById(user_id);
                 const userData = res.data[0];
+              
                 setName(userData.user_name || ""); // Populate the `name` state
                 setPhone(userData.user_phone || ""); // Populate the `phone` state
                 setRole(userData.user_role || ""); // Populate the `role` state

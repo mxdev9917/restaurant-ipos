@@ -6,13 +6,13 @@ import { createUserErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { alertSuccessV3 } from "../../../utils/alert";
 interface CreateUserProps {
-    handleModel: (action: string) => void;
+    handleModel: (action: string, userId:string) => void;
   }
   
   const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
     const handleClick = (action: string) => {
       console.log("Button clicked with action:", action); // Debugging log
-      handleModel(action); // Call the parent function
+      handleModel(action,"0"); // Call the parent function
     };
   
     const [passwordType, setPasswordType] = useState(false);
