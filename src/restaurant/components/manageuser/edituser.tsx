@@ -71,14 +71,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
         }
     }
 
-    const handleChange = () => {
-        setIsChecked(!isChecked); // Toggle checkbox state
-        if (isChecked != true) {
-            setIsCheckedTitle("ປິດໃຊ້ງານ");
-        } else {
-            setIsCheckedTitle("ເປີດໃຊ້ງານ");
-        }
-    };
+   
     if (loading) {
         return <div className="flex flex-col  w-96 h-[70%] rounded-sm bg-white p-3">
             <button
@@ -176,7 +169,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-orange-500 focus:border-0 block w-full p-2.5  "
                         />
 
-                        <div className="col-span-2 sm:col-span-1">
+                        <div className="col-span-2 sm:col-span-1 pb-3">
                             <label
                                 htmlFor="category"
                                 className="block mb-2 text-xs md:text-sm font-medium text-gray-900 "
@@ -194,19 +187,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                                 <option value="user">ເສີບ</option>
                             </select>
                         </div>
-                        <label className="inline-flex items-center my-3 cursor-pointer">
-                            <input
-                                type="checkbox"
-                                value=""
-                                className="sr-only peer"
-                                checked={isChecked}
-                                onChange={handleChange} // Handle state changes
-                            />
-                            <div className="relative w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-2 peer-focus:ring-orange-300  peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-orange-500"></div>
-                            <span className="ms-3 text-sm font-medium text-gray-900 ">
-                                {isCheckedTitle}
-                            </span>
-                        </label>
+                       
                         <div className="col-span-2 ">
                             <label
                                 htmlFor="dropzone-file"

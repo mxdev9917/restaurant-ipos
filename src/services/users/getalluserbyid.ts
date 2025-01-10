@@ -8,7 +8,7 @@ export class GetAllUserByIdService {
             const res = await axios.get(`${IPOS_BASE_URL}/user/${id}`, {
                 params: {
                     page: page,
-                    // limit: 1
+                     limit: 10
                 }
             });
             return res.data;

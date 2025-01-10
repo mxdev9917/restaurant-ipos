@@ -18,11 +18,16 @@ const UserTable: React.FC<UserProps> = ({ handleResetPass, handleDelete, handleM
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page); // Update current page
+        console.log(currentPage);
+        getData(page);
+        
     };
 
     const getData = async (page:number) => {
         const res = await GetAllUserByIdService.GetAllUserById("3",page);
         setUsers(res.data);
+        console.log(users);
+        
         setTotalRows(res.totalCount || 0);
     };
 
@@ -107,44 +112,50 @@ const UserTable: React.FC<UserProps> = ({ handleResetPass, handleDelete, handleM
     }, []);
 
     return (
-        <div>
-            <DataTable
-                columns={columns}
-                data={users}
-                pagination
-                highlightOnHover
-                selectableRowsComponent
-                paginationTotalRows={totalRows}
-                paginationComponentOptions={{
-                    noRowsPerPage: true
-                }}
-                customStyles={{
-                    headCells: {
-                        style: {
-                            backgroundColor: '#f9fafb',
-                            color: '#384152',
-                            fontWeight: 'bold',
-                            fontSize: '14px',
-                            padding: '12px 8px',
-                            textAlign: 'center',
+        <div className='flex flex-col w-full'>
+            <div className='max-h-[80vh] overflow-y-auto'>
+                <DataTable
+                    columns={columns}
+                    data={users}
+                    // pagination
+                    highlightOnHover
+                    selectableRowsComponent
+                    noDataComponent=""  // Custom text for "No records found"
+                    paginationTotalRows={totalRows}
+                    onChangePage={handlePageChange}
+                    paginationComponentOptions={{
+                        noRowsPerPage: true,
+                        rangeSeparatorText: `ຂອງ`
+                    }}
+                    customStyles={{
+                        headCells: {
+                            style: {
+                                backgroundColor: '#f9fafb',
+                                color: '#384152',
+                                fontWeight: 'bold',
+                                fontSize: '14px',
+                                padding: '12px 8px',
+                                textAlign: 'center',
+                            },
                         },
-                    },
-                    rows: {
-                        style: {
-                            height: '100%',
-                            border: '0.5px solid #e5e7eb',
+                        rows: {
+                            style: {
+                                height: '100%',
+                                border: '0.5px solid #e5e7eb',
+                            },
                         },
-                    },
-                    cells: {
-                        style: {
-                            padding: '10px 4px',
-                            textAlign: 'left',
+                        cells: {
+                            style: {
+                                padding: '10px 4px',
+                                textAlign: 'left',
+                            },
                         },
-                    },
-                }}
-            />
+                    }}
+                />
+            </div>
         </div>
     );
+    
 };
 
 export default UserTable;
