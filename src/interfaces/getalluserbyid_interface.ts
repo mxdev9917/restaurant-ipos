@@ -1,4 +1,5 @@
 export interface IGetAllUserById {
+    totalCount: number
     status: string
     message: string
     data: Data[]

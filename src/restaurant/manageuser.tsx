@@ -11,13 +11,13 @@ import { IGetAllUserById } from '../interfaces/getalluserbyid_interface'
 import LoadingMessage from "../utils/loadingMessage";
 import CreateUser from "./components/manageuser/createuser";
 import EditUser from "./components/manageuser/edituser";
-import UserTable from "./components/data_tables/table-user";
+import UserTable from "../data_tables/table-user";
 
 
 function ManageUser() {
   const [isCheckModel, setIsCheckModel] = useState(false);
   const [isCheckEven, setIsEven] = useState(true);
-  const [getDt, setGetDt] = useState<IGetAllUserById["data"]>([]);
+  // const [getDt, setGetDt] = useState<IGetAllUserById["data"]>([]);
   // const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState(false);
   const [loadingMessageTitle, setLoadingMessageTitle] = useState("");
@@ -49,23 +49,23 @@ function ManageUser() {
     }
 
   }
-  useEffect(() => {
-    const fetchData = async () => {
-      // setLoading(true)
-      try {
-        const res = await GetAllUserByIdService.GetAllUserById("3");
-        setGetDt(res.data);
-      } catch (error: any) {
-        console.error("API Error:", error);
-      } finally {
-        // setLoading(false)
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     // setLoading(true)
+  //     try {
+  //       const res = await GetAllUserByIdService.GetAllUserById("3");
+  //       setGetDt(res.data);
+  //     } catch (error: any) {
+  //       console.error("API Error:", error);
+  //     } finally {
+  //       // setLoading(false)
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
-  useEffect(() => {
-  }, [getDt]);
+  // useEffect(() => {
+  // }, [getDt]);
 
 
 

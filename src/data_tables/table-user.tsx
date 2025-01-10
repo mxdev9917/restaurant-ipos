@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { Dropdown } from "flowbite-react";
-import { GetAllUserByIdService } from '../../../services/users/getalluserbyid';
-import { IGetAllUserById } from '../../../interfaces/getalluserbyid_interface';
-import { alertconfirm } from '../../../utils/alert';
+import { GetAllUserByIdService } from '../services/users/getalluserbyid';
+import { IGetAllUserById } from '../interfaces/getalluserbyid_interface';
+import { alertconfirm } from '../utils/alert';
 
 interface UserProps {
     handleResetPass: (userId: string) => void;
@@ -13,10 +13,17 @@ interface UserProps {
 
 const UserTable: React.FC<UserProps> = ({ handleResetPass, handleDelete, handleModel }) => {
     const [users, setUsers] = useState<IGetAllUserById["data"]>([]);
+    const [totalRows, setTotalRows] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1); // Default to page 1
 
-    const getData = async () => {
-        const res = await GetAllUserByIdService.GetAllUserById("3");
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page); // Update current page
+    };
+
+    const getData = async (page:number) => {
+        const res = await GetAllUserByIdService.GetAllUserById("3",page);
         setUsers(res.data);
+        setTotalRows(res.totalCount || 0);
     };
 
     const handleResetPassword = (userId: string) => {
@@ -96,7 +103,7 @@ const UserTable: React.FC<UserProps> = ({ handleResetPass, handleDelete, handleM
     ];
 
     useEffect(() => {
-        getData();
+        getData(currentPage);
     }, []);
 
     return (
@@ -107,6 +114,7 @@ const UserTable: React.FC<UserProps> = ({ handleResetPass, handleDelete, handleM
                 pagination
                 highlightOnHover
                 selectableRowsComponent
+                paginationTotalRows={totalRows}
                 paginationComponentOptions={{
                     noRowsPerPage: true
                 }}
