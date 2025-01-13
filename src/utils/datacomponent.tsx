@@ -1,24 +1,22 @@
 import React from "react";
 
-type DataComponentProps = {
-    itemsPerPage: number;
-    setItemsPerPage: React.Dispatch<React.SetStateAction<number>>;
-};
+// Define the type for the prop that will be passed down
+interface DataComponentProps {
+    onSelectChange: (value: number) => void;
+}
 
-const DataComponent: React.FC<DataComponentProps> = ({ itemsPerPage, setItemsPerPage }) => {
+const DataComponent: React.FC<DataComponentProps> = ({ onSelectChange }) => {
     // Function to handle changes in the select dropdown
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const value = parseInt(event.target.value, 10); // Parse the selected value as a number
-        setItemsPerPage(value); // Update the parent state
-        console.log(value); // Log the selected value
+        onSelectChange(value); // Call the function passed as a prop
     };
 
     return (
         <div>
             <select
                 onChange={handleChange} // Pass the event handler directly
-                className="bg-transparent border-none h-fit mt-3 text-sm"
-                value={itemsPerPage} // Set the value to the current state
+                className="bg-transparent border-none h-fit mt-3 text-sm focus:ring-orange-500 focus:rounded-[5px]"
                 name="itemsPerPage"
                 id="itemsPerPage"
             >

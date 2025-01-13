@@ -6,15 +6,15 @@ import { createUserErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { alertSuccessV3 } from "../../../utils/alert";
 interface CreateUserProps {
-    handleModel: (action: string, userId:string) => void;
-  }
-  
-  const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
+    handleModel: (action: string, userId: string) => void;
+}
+
+const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
     const handleClick = (action: string) => {
-      console.log("Button clicked with action:", action); // Debugging log
-      handleModel(action,"0"); // Call the parent function
+        console.log("Button clicked with action:", action); // Debugging log
+        handleModel(action, "0"); // Call the parent function
     };
-  
+
     const [passwordType, setPasswordType] = useState(false);
     const [isChecked, setIsChecked] = useState(true);
     const [isCheckedTitle, setIsCheckedTitle] = useState("ປີດໃຊ້ງານ");
@@ -57,29 +57,36 @@ interface CreateUserProps {
 
 
     }
+ 
     const checkUser = async (e: React.ChangeEvent<HTMLInputElement>) => {
         setUser(e.target.value);
         console.log(e.target.value);
-
         try {
-
-            const res = await PostCHUserService.postCkUser(e.target.value); // Use the updated value directly
-            console.log(res.massege);
-            console.log(res.status);
+          
             setIscheckPCK(false)
-            setPckColor("ring-orange-500")
-
-            if (res.status == 200) {
-                setPckColor("ring-green-500")
-                setIscheckPCK(false)
-
-            } else if (res.status == 409) {
-                setPckColor("ring-red-500")
-                setIscheckPCK(true)
-            } else {
-                setIscheckPCK(false)
-                setPckColor("ring-orange-500")
+            setPckColor("border-orange-500")
+            if (user.trim() === "" ||user.trim() === null ) {
+                console.log("Input is empty");
+                setPckColor("border-gray-300");
+                setIscheckPCK(false);
+                return;
+            }else{
+                const res = await PostCHUserService.postCkUser(e.target.value); // Use the updated value directly
+                console.log(res.massege);
+                console.log(res.status);
+                if (res.status == 200) {
+                    setPckColor("border-green-500")
+                    setIscheckPCK(false)
+    
+                } else if (res.status == 409) {
+                    setPckColor("border-red-500")
+                    setIscheckPCK(true)
+                } else {
+                    setPckColor("border-gray-300")
+                    setIscheckPCK(false)
+                }
             }
+           
         } catch (error) {
             console.error(error);
         }
@@ -156,9 +163,11 @@ interface CreateUserProps {
                             id="user"
                             name="user"
                             placeholder="Enter username"
-                            onChange={checkUser}
-                            className={`bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-1 focus:${pckColor} focus:border-0 block w-full p-2.5`}
+                            onBlur={checkUser}  // Use onBlur to call checkUser after focus is lost
+                            className={`bg-gray-50 border ${pckColor} text-gray-900 text-xs md:text-sm rounded-lg focus:ring-1 block w-full p-2.5`}
                         />
+
+
 
 
                         <p className={`text-[11px] text-red-500 pt-2 pl-2 ${ischeckPCK ? "block" : "hidden"}`}>ຢູເຊີ້ນີ້ມີຄົນໃຊ້ແລ້ວ</p>

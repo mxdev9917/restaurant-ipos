@@ -3,12 +3,12 @@ import axios from "axios";
 import { IGetAllUserById } from "../../interfaces/getalluserbyid_interface";
 
 export class GetAllUserByIdService {
-    static async GetAllUserById(id: string,page:number): Promise<IGetAllUserById> {
+    static async GetAllUserById(id: string,page:number,limit:number): Promise<IGetAllUserById> {
         try {
             const res = await axios.get(`${IPOS_BASE_URL}/user/${id}`, {
                 params: {
                     page: page,
-                     limit: 10
+                     limit: limit
                 }
             });
             return res.data;

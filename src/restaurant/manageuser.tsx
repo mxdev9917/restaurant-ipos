@@ -25,6 +25,13 @@ function ManageUser() {
   const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
   const [currentPage, setCurrentPage] = useState(1);
 
+
+  function handlItemsPerPage(limit:number){
+    setItemsPerPage(limit)
+    console.log(limit);
+    
+  }
+
   // Reset password logic
   const handleResetpassword = async (userId: any) => {
     setLoadingMessageTitle("ກຳລັງປ່ຽນລະຫັດຜ່ານ");
@@ -57,7 +64,7 @@ function ManageUser() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await GetAllUserByIdService.GetAllUserById("3", currentPage);
+        const res = await GetAllUserByIdService.GetAllUserById("3", currentPage,itemsPerPage);
         setGetDt(res.data);
 
         if(res.data.length==itemsPerPage){
@@ -72,7 +79,7 @@ function ManageUser() {
       }
     };
     fetchData();
-  }, [currentPage]);
+  }, [currentPage,itemsPerPage]);
 
   // Toggle model state
   const handleModel = (action: string, userId: string) => {
@@ -137,146 +144,160 @@ function ManageUser() {
           </div>
 
           <div className="relative overflow-hidden">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0 z-10">
-                <tr>
-                  <th className="px-6 py-3">Name</th>
-                  <th className="px-6 py-3">User name</th>
-                  <th className="px-6 py-3">Position</th>
-                  <th className="px-6 py-3">Status</th>
-                  <th className="px-6 py-3">Date</th>
-                  <th className="px-6 py-3">Action</th>
-                </tr>
-              </thead>
-            </table>
+  {/* Table Header */}
+  <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+    <thead className="text-xs text-gray-700 uppercase bg-gray-100 sticky top-0 z-10">
+      <tr>
+        <th className="px-6 py-3 text-left font-semibold text-gray-700">Name</th>
+        <th className="px-6 py-3 text-left font-semibold text-gray-700">User name</th>
+        <th className="px-6 py-3 text-left font-semibold text-gray-700">Position</th>
+        <th className="px-6 py-3 text-left font-semibold text-gray-700">Status</th>
+        <th className="px-6 py-3 text-left font-semibold text-gray-700">Date</th>
+        <th className="px-6 py-3 text-left font-semibold text-gray-700">Action</th>
+      </tr>
+    </thead>
+  </table>
 
-            <div className="overflow-y-auto max-h-[73vh]">
-              <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                <tbody>
-                  {loading ? (
-                    <tr>
-                      <td colSpan={6} className="h-40">
-                        <Loading text="ດາວໂຫຼດຂໍ້ມູນ" />
-                      </td>
-                    </tr>
-                  ) : getDt.length > 0 ? (
-                    getDt.map((item) => (
-                      <tr key={item.user_ID} className="bg-white border-b hover:bg-gray-50">
-                        <td className="flex items-center px-6 py-2.5">
-                          <img
-                            className="w-10 h-10 rounded-full"
-                            src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                            alt="Profile"
-                          />
-                          <div className="pl-3">
-                            <div className="text-base font-semibold">{item.user_name}</div>
-                            <div className="font-normal text-gray-500">{item.user_phone}</div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-2.5">{item.user}</td>
-                        <td className="px-6 py-2.5">{item.user_role}</td>
-                        <td className="px-6 py-2.5">
-                          <div className="flex items-center">
-                            <div className={`h-2.5 w-2.5 rounded-full mr-2 ${item.user_status === "active" ? "bg-green-500" : "bg-red-500"}`} />
-                            {item.user_status === "active" ? "Active" : "Locked"}
-                          </div>
-                        </td>
-                        <td className="px-6 py-2.5">{item.created_at}</td>
-                        <td className="px-6 py-2.5 flex">
-                          <button
-                            onClick={() =>
-                              alertconfirm(
-                                () => handleResetpassword(item.user_ID),
-                                `ຕ້ອງການປ່ຽນລະຫັດຜ່ານຢູເຊີ ${item.user} ?`,
-                                "question"
-                              )
-                            }
-                            className="font-medium hover:underline"
-                          >
-                            <svg
-                              className="w-6 h-6 text-gray-500"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3"
-                              />
-                            </svg>
-                          </button>
-                          <button className="font-medium hover:underline">
-                            <svg
-                              className="w-6 h-6 text-gray-500"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
-                              />
-                            </svg>
-                          </button>
-                          <button
-                            onClick={() =>
-                              alertconfirm(
-                                () => handleDeleteUser(item.user_ID),
-                                `ຕ້ອງການລົບ ${item.user} ?`,
-                                "question"
-                              )
-                            }
-                            className="font-medium hover:underline"
-                          >
-                            <svg
-                              className="w-6 h-6 text-red-500"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                              />
-                            </svg>
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan={6} className="h-40 text-center align-middle">
-                        No data available.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
+  {/* Table Body */}
+  <div className="overflow-y-auto max-h-[73vh]">
+    <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+      <tbody>
+        {loading ? (
+          <tr>
+            <td colSpan={6} className="h-40 text-center text-gray-500">
+              <Loading text="ດາວໂຫຼດຂໍ້ມູນ" />
+            </td>
+          </tr>
+        ) : getDt.length > 0 ? (
+          getDt.map((item) => (
+            <tr key={item.user_ID} className="bg-white border-b hover:bg-gray-50 transition-colors">
+              {/* Name Cell */}
+              <td className="flex items-center px-6 py-2.5">
+                <img
+                  className="w-10 h-10 rounded-full"
+                  src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                  alt="Profile"
+                />
+                <div className="pl-3">
+                  <div className="text-base font-semibold text-gray-800">{item.user_name}</div>
+                  <div className="font-normal text-gray-500">{item.user_phone}</div>
+                </div>
+              </td>
+              {/* User Name Cell */}
+              <td className="px-6 py-2.5 text-gray-800">{item.user}</td>
+              {/* Position Cell */}
+              <td className="px-6 py-2.5 text-gray-800">{item.user_role}</td>
+              {/* Status Cell */}
+              <td className="px-6 py-2.5">
+                <div className="flex items-center">
+                  <div
+                    className={`h-2.5 w-2.5 rounded-full mr-2 ${
+                      item.user_status === "active" ? "bg-green-500" : "bg-red-500"
+                    }`}
+                  />
+                  <span className={`text-gray-800 ${item.user_status === "active" ? "font-semibold" : "font-medium"}`}>
+                    {item.user_status === "active" ? "Active" : "Locked"}
+                  </span>
+                </div>
+              </td>
+              {/* Date Cell */}
+              <td className="px-6 py-2.5 text-gray-800">{item.created_at}</td>
+              {/* Action Cell */}
+              <td className="px-6 py-2.5 flex space-x-2">
+                <button
+                  onClick={() =>
+                    alertconfirm(
+                      () => handleResetpassword(item.user_ID),
+                      `ຕ້ອງການປ່ຽນລະຫັດຜ່ານຢູເຊີ ${item.user} ?`,
+                      "question"
+                    )
+                  }
+                  className="font-medium text-blue-500 hover:text-blue-700 hover:underline"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3"
+                    />
+                  </svg>
+                </button>
+                <button className="font-medium text-yellow-500 hover:text-yellow-700 hover:underline">
+                  <svg
+                    className="w-6 h-6"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+                    />
+                  </svg>
+                </button>
+                <button
+                  onClick={() =>
+                    alertconfirm(
+                      () => handleDeleteUser(item.user_ID),
+                      `ຕ້ອງການລົບ ${item.user} ?`,
+                      "question"
+                    )
+                  }
+                  className="font-medium text-red-500 hover:text-red-700 hover:underline"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                    />
+                  </svg>
+                </button>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan={6} className="h-40 text-center text-gray-500">
+              No data available.
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
 
           <div className="flex gap-5 w-full justify-end pr-5 items-center">
-            <DataComponent
-                   itemsPerPage={itemsPerPage}
-            />
+          <DataComponent onSelectChange={handlItemsPerPage} />
             <PpageRange
               currentPage={currentPage}
               totalItems={totalItems}
