@@ -1,7 +1,7 @@
 
 import { useState } from "react";
-import { PostCHUserService } from "../../../services/users/checkuser";
-import { PostUserService } from "../../../services/users/createuser";
+import { PostCHUserService } from "../../../services/users/check-user";
+import { PostUserService } from "../../../services/users/create-user";
 import { createUserErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { alertSuccessV3 } from "../../../utils/alert";
@@ -57,27 +57,24 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
 
 
     }
- 
+
     const checkUser = async (e: React.ChangeEvent<HTMLInputElement>) => {
         setUser(e.target.value);
         console.log(e.target.value);
         try {
-          
+
             setIscheckPCK(false)
             setPckColor("border-orange-500")
-            if (user.trim() === "" ||user.trim() === null ) {
-                console.log("Input is empty");
+            if (user.trim() === "" || user.trim() === null) {
                 setPckColor("border-gray-300");
                 setIscheckPCK(false);
                 return;
-            }else{
+            } else {
                 const res = await PostCHUserService.postCkUser(e.target.value); // Use the updated value directly
-                console.log(res.massege);
-                console.log(res.status);
                 if (res.status == 200) {
                     setPckColor("border-green-500")
                     setIscheckPCK(false)
-    
+
                 } else if (res.status == 409) {
                     setPckColor("border-red-500")
                     setIscheckPCK(true)
@@ -86,9 +83,10 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
                     setIscheckPCK(false)
                 }
             }
-           
+
         } catch (error) {
             console.error(error);
+            createUserErrors(error);
         }
     };
     function togglePasswordType() {
@@ -255,11 +253,9 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
                                 onChange={(e) => setRole(e.target.value)}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-orange-500 focus:border-0 block w-full p-2.5  "
                             >
-                                <option value="0">--ເລືອກ--</option>
+                                <option className="" value="0" disabled selected>--ເລືອກ--</option>
                                 <option value="admin">ແອັດມີນ</option>
                                 <option value="user">ເສີບ</option>
-                                {/* <option value="3">Gaming/Console</option>
-                  <option value="4">Phones</option> */}
                             </select>
                         </div>
                         <label className="inline-flex items-center my-3 cursor-pointer">
@@ -268,7 +264,7 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
                                 value=""
                                 className="sr-only peer"
                                 checked={isChecked}
-                                onChange={handleChange} // Handle state changes
+                                onChange={handleChange}
                             />
                             <div className="relative w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-2 peer-focus:ring-orange-300  peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-orange-500"></div>
                             <span className="ms-3 text-sm font-medium text-gray-900 ">

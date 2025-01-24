@@ -1,17 +1,21 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Sidebar_Nav from "./components/sidebar-nav";
-import { DeleteUserService } from "../services/users/deleteuser";
-import { ResetPasswordService } from "../services/users/resetpassword";
-import { alertconfirm, alertSuccessV3 } from "../utils/alert";
-import { GetAllUserByIdService } from "../services/users/getalluserbyid";
+import { DeleteUserService } from "../services/users/delete-user";
+import { ResetPasswordService } from "../services/users/reset-password";
+import { alertconfirm, alertError, alertSuccessV3 } from "../utils/alert";
+import { GetAllUserByIdService } from "../services/users/getall-user-by-id";
 import { IGetAllUserById } from '../interfaces/getalluserbyid_interface';
+import { PatchStatusbyIdService } from "../services/users/update-status";
 import LoadingMessage from "../utils/loadingMessage";
 import CreateUser from "./components/manageuser/createuser";
 import EditUser from "./components/manageuser/edituser";
 import Loading from "../utils/Loading";
 import PpageRange from "../utils/pagination";
 import DataComponent from "../utils/datacomponent";
+import { Dropdown } from "flowbite-react";
+import { HiChevronDown } from "react-icons/hi";
+import { generalErrors } from "../utils/error";
 
 function ManageUser() {
   const [isCheckModel, setIsCheckModel] = useState(false);
@@ -32,14 +36,41 @@ function ManageUser() {
 
   }
 
+  const handleUpdateStatus = async (userId: string, status: string) => {
+    let newStatus: string;
+    status = status.toLowerCase();
+    if (status === "locked") {
+      newStatus = "active"
+    } else if (status === "active") {
+      newStatus = "locked"
+    } else {
+      alertError("ເກີດຂໍ້ຜິດພາດ ກະລຸນາລອງໄໝ່ອີກຄັ້ງ", "error");
+      return
+    }
+
+    try {
+      setLoadingMessage(true);
+      const res = await PatchStatusbyIdService.patchStatus(userId, newStatus);
+      if (res.status == 200) {
+        console.log(res.status);
+        alertSuccessV3("ປ່ຽນລະຫັດຜ່ານສຳເລັດ", 'success');
+      }
+    } catch (error:any) {
+      console.error(error);
+      generalErrors(error);
+    } finally {
+      setLoadingMessage(false);
+    }
+
+
+
+
+  }
   // Reset password logic
   const handleResetpassword = async (userId: any) => {
     setLoadingMessageTitle("ກຳລັງປ່ຽນລະຫັດຜ່ານ");
     setLoadingMessage(true);
     const res = await ResetPasswordService.patchReset(userId);
-
-
-
     if (res.status == 200) {
       console.log(res.status);
       alertSuccessV3("ປ່ຽນລະຫັດຜ່ານສຳເລັດ", 'success');
@@ -158,7 +189,7 @@ function ManageUser() {
                 </tr>
               </thead>
             </table>
-              <div className="md:overflow-y-auto md:max-h-[65vh]">
+            <div className="md:overflow-y-auto md:max-h-[65vh]">
               <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                 <tbody>
                   {loading ? (
@@ -204,88 +235,40 @@ function ManageUser() {
 
                         <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
                           {item.created_at}</td>
+                        <td className=" py-3 flex justify-center items-center min-w-[10rem] w-40">
+                          <Dropdown label="" dismissOnClick={false} renderTrigger={() => <span className="flex items-center">ເມນູ <HiChevronDown /></span>}>
+                            <Dropdown.Item
+                              onClick={() =>
+                                alertconfirm(
+                                  () => handleResetpassword(item.user_ID),
+                                  `ຕ້ອງການປ່ຽນລະຫັດຜ່ານຢູເຊີ ${item.user} ?`,
+                                  "question"
+                                )
+                              }
+                            >ປ່ຽນລະຫັດ</Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() =>
+                                alertconfirm(
+                                  () => handleUpdateStatus(item.user_ID, item.user_status),
+                                  `ຕ້ອງການປ່ຽນລະຫັດຜ່ານຢູເຊີ ${item.user} ?`,
+                                  "question"
+                                )
+                              }
+                            >ປິດການໃຊ້ການ</Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() => handleModel("edit", item.user_ID)}
+                            >ແກ້ໄຂຂໍ້ມູນ</Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() =>
+                                alertconfirm(
+                                  () => handleDeleteUser(item.user_ID),
+                                  `ຕ້ອງການລົບ ${item.user} ?`,
+                                  "question"
+                                )
+                              }
+                            >ລົບຜູ້ໃຊ້</Dropdown.Item>
+                          </Dropdown>
 
-                        <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
-                          <button
-                            onClick={() =>
-                              alertconfirm(
-                                () => handleResetpassword(item.user_ID),
-                                `ຕ້ອງການປ່ຽນລະຫັດຜ່ານຢູເຊີ ${item.user} ?`,
-                                "question"
-                              )
-                            }
-                            className="relative font-medium text-blue-500 hover:text-blue-700 hover:underline"
-                          >
-                            <svg
-                              className="w-6 h-6"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3"
-                              />
-                            </svg>
-
-                          </button>
-
-                          <button 
-                          onClick={() => handleModel("edit", item.user_ID)}
-                          className="font-medium text-yellow-500 hover:text-yellow-700 hover:underline">
-                            <svg
-                              className="w-6 h-6"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
-                              />
-                            </svg>
-
-                          </button>
-                          <button
-                            onClick={() =>
-                              alertconfirm(
-                                () => handleDeleteUser(item.user_ID),
-                                `ຕ້ອງການລົບ ${item.user} ?`,
-                                "question"
-                              )
-                            }
-                            className="font-medium text-red-500 hover:text-red-700 hover:underline"
-                          >
-                            <svg
-                              className="w-6 h-6"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                              />
-                            </svg>
-                          </button>
                         </td>
                       </tr>
                     ))

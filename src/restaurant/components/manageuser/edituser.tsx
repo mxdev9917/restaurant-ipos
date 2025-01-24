@@ -1,9 +1,9 @@
 
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
-import { GetUserByIdService, PatchUserbyIdService } from "../../../services/users/getuserbyid";
+import { GetUserByIdService, PatchUserbyIdService } from "../../../services/users/updare-user";
 import Loading from "../../../utils/Loading";
-
+import { generalErrors } from "../../../utils/error";
 import { createUserErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { alertSuccessV3 } from "../../../utils/alert";
@@ -12,21 +12,15 @@ interface EditUserProps {
     user_id: string; 
 
 }
-
 const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
     const handleClick = (action: string) => {
         handleModel(action,user_id); // Call the parent function
     };
 
-    const [isChecked, setIsChecked] = useState(true);
-    const [isCheckedTitle, setIsCheckedTitle] = useState("ປີດໃຊ້ງານ");
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [role, setRole] = useState("")
     const [loading, setLoading] = useState(false);
-  
-
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,6 +34,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                 setRole(userData.user_role || ""); // Populate the `role` state
             } catch (error: any) {
                 console.error("API Error:", error);
+                generalErrors(error);
             } finally {
                 setLoading(false)
             }
@@ -64,8 +59,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                 alertSuccessV3("ແກ້ໄຂສຳເລັດ", 'success');
             }
         } catch (error) {
-
-            createUserErrors(error);
+            generalErrors(error);
         } finally {
             setLoading(false)
         }
@@ -181,8 +175,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                                 onChange={(e) => setRole(e.target.value)}
                                 value={role}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-orange-500 focus:border-0 block w-full p-2.5"
-                            >
-                                <option value="0">--ເລືອກ--</option>
+                            > 
                                 <option value="admin">ແອັດມີນ</option>
                                 <option value="user">ເສີບ</option>
                             </select>
