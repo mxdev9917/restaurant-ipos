@@ -39,7 +39,7 @@ function ManageUser() {
     const res = await ResetPasswordService.patchReset(userId);
 
 
-    
+
     if (res.status == 200) {
       console.log(res.status);
       alertSuccessV3("ປ່ຽນລະຫັດຜ່ານສຳເລັດ", 'success');
@@ -145,24 +145,20 @@ function ManageUser() {
               </button>
             </div>
           </div>
-
-          <div className="relative overflow-hidden">
-            {/* Table Header */}
+          <div className=" relative overflow-auto md:overflow-hidden  md:h-[76vh] ">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500">
               <thead className="text-xs text-gray-700 uppercase bg-gray-100 sticky top-0 z-10">
-                <tr>
-                  <th className="px-6 py-3 text-left font-semibold text-gray-700">Name</th>
-                  <th className="px-6 py-3 text-left font-semibold text-gray-700">User name</th>
-                  <th className="px-6 py-3 text-left font-semibold text-gray-700">Position</th>
-                  <th className="px-6 py-3 text-left font-semibold text-gray-700">Status</th>
-                  <th className="px-6 py-3 text-left font-semibold text-gray-700">Date</th>
-                  <th className="px-6 py-3 text-left font-semibold text-gray-700">Action</th>
+                <tr className="flex items-center justify-between w-full h-14 text-left bg-gray-100 text-gray-800 font-semibold uppercase">
+                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">Name</th>
+                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">User name</th>
+                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">Position</th>
+                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">Status</th>
+                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">Date</th>
+                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">Action</th>
                 </tr>
               </thead>
             </table>
-
-            {/* Table Body */}
-            <div className="overflow-y-auto max-h-[73vh]">
+              <div className="md:overflow-y-auto md:max-h-[65vh]">
               <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                 <tbody>
                   {loading ? (
@@ -173,25 +169,28 @@ function ManageUser() {
                     </tr>
                   ) : getDt.length > 0 ? (
                     getDt.map((item) => (
-                      <tr key={item.user_ID} className="bg-white border-b hover:bg-gray-50 transition-colors">
-                        {/* Name Cell */}
-                        <td className="flex items-center px-6 py-2.5">
+                      <tr key={item.user_ID}
+                        className="flex justify-between text-left border-b hover:bg-gray-50 transition-all ">
+
+                        <td className="px-6 py-3 flex justify-start min-w-[10rem] w-40">
                           <img
                             className="w-10 h-10 rounded-full"
                             src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                             alt="Profile"
                           />
                           <div className="pl-3">
-                            <div className="text-base font-semibold text-gray-800">{item.user_name}</div>
+                            <div className="text-base font-semibold text-gray-800 ">{item.user_name}</div>
                             <div className="font-normal text-gray-500">{item.user_phone}</div>
                           </div>
                         </td>
-                        {/* User Name Cell */}
-                        <td className="px-6 py-2.5 text-gray-800">{item.user}</td>
-                        {/* Position Cell */}
-                        <td className="px-6 py-2.5 text-gray-800">{item.user_role}</td>
-                        {/* Status Cell */}
-                        <td className="px-6 py-2.5">
+
+                        <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
+                          {item.user}</td>
+
+                        <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
+                          {item.user_role}</td>
+
+                        <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
                           <div className="flex items-center">
                             <div
                               className={`h-2.5 w-2.5 rounded-full mr-2 ${item.user_status === "active" ? "bg-green-500" : "bg-red-500"
@@ -202,10 +201,11 @@ function ManageUser() {
                             </span>
                           </div>
                         </td>
-                        {/* Date Cell */}
-                        <td className="px-6 py-2.5 text-gray-800">{item.created_at}</td>
-                        {/* Action Cell */}
-                        <td className="px-6 py-2.5 flex space-x-2">
+
+                        <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
+                          {item.created_at}</td>
+
+                        <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
                           <button
                             onClick={() =>
                               alertconfirm(
@@ -233,12 +233,12 @@ function ManageUser() {
                                 d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3"
                               />
                             </svg>
-                            {/* <div className=" absolute left-0 bottom-[-20px] opacity-0 text-[10px] text-blue-500 hover:opacity-100 transition-opacity duration-300">
-                              ປ່ຽນລະຫັກຜ່ານ
-                            </div> */}
+
                           </button>
 
-                          <button className="font-medium text-yellow-500 hover:text-yellow-700 hover:underline">
+                          <button 
+                          onClick={() => handleModel("edit", item.user_ID)}
+                          className="font-medium text-yellow-500 hover:text-yellow-700 hover:underline">
                             <svg
                               className="w-6 h-6"
                               aria-hidden="true"
@@ -256,7 +256,7 @@ function ManageUser() {
                                 d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
                               />
                             </svg>
-                       
+
                           </button>
                           <button
                             onClick={() =>
@@ -316,18 +316,20 @@ function ManageUser() {
       </div>
 
       {/* Modal */}
-      {isCheckModel && (
-        <div
-          className="w-screen h-screen bg-black/10 absolute flex justify-center items-center z-50"
-        >
-          {isCheckEven ? (
-            <CreateUser handleModel={handleModel} />
-          ) : (
-            <EditUser handleModel={handleModel} user_id={user_id} />
-          )}
-        </div>
-      )}
-    </div>
+      {
+        isCheckModel && (
+          <div
+            className="w-screen h-screen bg-black/10 absolute flex justify-center items-center z-50"
+          >
+            {isCheckEven ? (
+              <CreateUser handleModel={handleModel} />
+            ) : (
+              <EditUser handleModel={handleModel} user_id={user_id} />
+            )}
+          </div>
+        )
+      }
+    </div >
   );
 }
 
