@@ -5,7 +5,7 @@ import { DeleteUserService } from "../services/users/delete-user";
 import { ResetPasswordService } from "../services/users/reset-password";
 import { alertconfirm, alertError, alertSuccessV3 } from "../utils/alert";
 import { GetAllUserByIdService } from "../services/users/getall-user-by-id";
-import { IGetAllUserById } from '../interfaces/getalluserbyid_interface';
+import { IGetAllUserById } from '../interfaces/getalluserbyid-interface';
 import { PatchStatusbyIdService } from "../services/users/update-status";
 import LoadingMessage from "../utils/loadingMessage";
 import CreateUser from "./components/manageuser/createuser";
@@ -55,7 +55,7 @@ function ManageUser() {
         console.log(res.status);
         alertSuccessV3("ປ່ຽນລະຫັດຜ່ານສຳເລັດ", 'success');
       }
-    } catch (error:any) {
+    } catch (error: any) {
       console.error(error);
       generalErrors(error);
     } finally {
@@ -100,12 +100,13 @@ function ManageUser() {
         setLoading(true);
         const res = await GetAllUserByIdService.GetAllUserById("3", currentPage, itemsPerPage);
         setGetDt(res.data);
-
-        if (res.data.length == itemsPerPage) {
-          setTotalItems(res.data.length + 1);
-        } else {
-          setTotalItems(res.data.length);
-        }
+        let itemper = Number(res.total_item)
+        setTotalItems(itemper);
+        // if (itemper == itemsPerPage) {
+        //   setTotalItems(itemper + 1);
+        // } else {
+        //   setTotalItems(itemper);
+        // }
         setLoading(false);
       } catch (error: any) {
         console.error("API Error:", error);

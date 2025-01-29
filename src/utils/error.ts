@@ -28,6 +28,21 @@ export const generalErrors = (errors: any) => {
 
 };
 
+export const createCategoryErrors = (errors: any) => {
+    if (axios.isAxiosError(errors)) {
+        const status = errors.response?.status;
+        if (status === 409) {
+            alertError("ປະເພດເມນູນີ້ມີແລ້ວ", "error");
+        }
+        if (status === 500) {
+            alertError("ຂໍອະໄພ ລະບົບຫຼັງບ້ານມີບັນຫາ", "error");
+        }
+    } else {
+        alertError("ການເຮັດວຽກຂອງລະບົບຜິດພາດ", "error");
+    }
+
+};
+
 
 
 

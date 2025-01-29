@@ -3,7 +3,7 @@ import axios from "axios";
 
 interface IUserResponse {
     status: number;
-    message: string; // Corrected "massage" to "message"
+    message: string;
     data: any;
 }
 

@@ -4,7 +4,6 @@ import { FaEdit } from "react-icons/fa";
 import { GetUserByIdService, PatchUserbyIdService } from "../../../services/users/updare-user";
 import Loading from "../../../utils/Loading";
 import { generalErrors } from "../../../utils/error";
-import { createUserErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { alertSuccessV3 } from "../../../utils/alert";
 interface EditUserProps {

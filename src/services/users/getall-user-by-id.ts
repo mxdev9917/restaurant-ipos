@@ -1,6 +1,6 @@
 import { IPOS_BASE_URL } from "../../utils/connection";
 import axios from "axios";
-import { IGetAllUserById } from "../../interfaces/getalluserbyid_interface";
+import { IGetAllUserById } from "../../interfaces/getalluserbyid-interface";
 
 export class GetAllUserByIdService {
     static async GetAllUserById(id: string,page:number,limit:number): Promise<IGetAllUserById> {

@@ -1,7 +1,7 @@
 
 import { IPOS_BASE_URL } from "../../utils/connection";
 import axios from "axios";
-import { IGetuserById } from "../../interfaces/getuserbyid_interface";
+import { IGetuserById } from "../../interfaces/getuserbyid-interface";
 
 
 

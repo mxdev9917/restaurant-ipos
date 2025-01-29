@@ -33,7 +33,6 @@ const PageRange: React.FC<PageRangeProps> = ({ currentPage, totalItems, itemsPer
   };
 
   useEffect(() => {
-    console.log('Page changed:', currentPage);
   }, [currentPage]);
 
   return (
