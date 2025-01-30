@@ -8,7 +8,7 @@ const Authen = lazy(() => import('./restaurant/authen'));
 const ManageFood = lazy(() => import('./restaurant/managefood/managefood'));
 const ManageCategory = lazy(() => import('./restaurant/managefood/categories/managecategory'));
 const ManageZone = lazy(() => import('./restaurant/managefood/managezone'));
-const ManageTables = lazy(() => import('./restaurant/managefood/managetables'));
+const ManageTables = lazy(() => import('./restaurant/managefood/tables/managetables'));
 const Dashboard = lazy(() => import('./restaurant/dashboard'));
 const ManageUser = lazy(() => import('./restaurant/manageuser'));
 const SelectTatles = lazy(() => import('./restaurant/sale/selecttatle'));
