@@ -6,6 +6,9 @@ import { GetAllTableService } from "../../../services/tables/getall-table";
 import Loading from "../../../utils/Loading";
 import CreateTable from "./createtable";
 import EditTable from "./edittable";
+import { DeleteTableService } from "../../../services/tables/delete-table";
+import { alertSuccessV3 } from "../../../utils/alert";
+import LoadingMessage from "../../../utils/loadingMessage";
 
 function ManageTables() {
     const [items, setItems] = useState<any[]>([]);
@@ -15,6 +18,30 @@ function ManageTables() {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [isCheckModel, setisCheckModel] = useState(false)
     const [isCheckEven, setisEven] = useState(true)
+    const [loadingMessage, setLoadingMessage] = useState(false);
+    const [loadingMessageTitle, setLoadingMessageTitle] = useState("");
+    const [tableId, settableId] = useState("");
+    const [tableName, settableName] = useState("");
+
+  
+
+    const deleteTable = async (id: string) => {
+
+        try {
+            setLoadingMessageTitle("ກຳລັງລົບ");
+            setLoadingMessage(true);
+            const res = await DeleteTableService.DeleteTable(id)
+            if (res.status == 200) {
+                alertSuccessV3("ລົບສຳເລັດ", 'success');
+            }
+
+        } catch (error) {
+
+        } finally {
+            setLoadingMessage(false);
+        }
+
+    }
 
     function handleModel(evens: string) {
         if (evens == 'add') {
@@ -24,8 +51,11 @@ function ManageTables() {
             setisCheckModel(!isCheckModel)
         }
     }
-    function handleEditModel(evens: string) {
+    function handleEditModel(evens: string, table_Id: string, table_name: string) {
         if (evens == 'edit') {
+            settableId(table_Id)
+           settableName(table_name)
+
             setisCheckModel(!isCheckModel)
             setisEven(false)
         } else {
@@ -43,7 +73,6 @@ function ManageTables() {
 
             if (response.status === "200") {
                 setTotalItem(response.total_item);
-
                 // Create an array of items to append without duplicates
                 const newItems = response.data.filter((item: any) => {
                     if (fetchedItemIDs.current.has(item.table_ID)) {
@@ -101,6 +130,7 @@ function ManageTables() {
 
     return (
         <div className="flex flex-col h-screen overflow-hidden">
+            {loadingMessage && <LoadingMessage text={loadingMessageTitle} />}
             <Sidebar_Nav />
             <div className="pt-8 sm:ml-64">
                 <div className="p-4">
@@ -136,7 +166,14 @@ function ManageTables() {
                                 key={item.table_ID}
                                 className="w-full  h-24 sm:h-32 md:h-40 lg:h-40 sm:mb-0 mb-12"
                             >
-                                <TableItem onEdit={() => handleEditModel("edit")} tableName={item.table_name} />
+                                <TableItem
+                                    tableId={item.table_ID} // Pass the actual table ID
+                                    tableName={item.table_name}
+                                    tableStatus={item.table_status}
+                                    onEdit={(id, name) => handleEditModel("edit", id, name)} // Correctly pass the ID and name
+                                    onDelete={() => deleteTable(item.table_ID)} // Ensure correct deletion
+                                />
+
                             </div>
                         ))}
                         {isLoading && <p className="text-center w-full mt-2"><Loading text="ໂຫລດຂໍ້ມູນ" /></p>}
@@ -151,7 +188,8 @@ function ManageTables() {
                         <CreateTable handleModel={handleModel} />
                     ) :
                         (
-                            <EditTable handleModel={handleEditModel} />
+
+                            <EditTable handleModel={()=>(handleEditModel)} tableId={tableId} tableName={tableName} />
                         )
                 }
             </div>

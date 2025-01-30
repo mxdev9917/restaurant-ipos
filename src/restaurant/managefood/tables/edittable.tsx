@@ -1,9 +1,45 @@
+import { useEffect, useState } from "react";
 import { HiPencilAlt, HiOutlineX } from "react-icons/hi";
+import { generalErrors } from "../../../utils/error";
+import { alertSuccessV3 } from "../../../utils/alert";
+import { editTableService } from "../../../services/tables/edit-table";
+import LoadingSpinner from "../../../utils/LoadingSpinner";
 interface EditTableProps {
     handleModel: (event: string) => void;
+    tableName: string;
+    tableId: string;
 }
 
-const EditTable: React.FC<EditTableProps> = ({ handleModel }) => {
+const EditTable: React.FC<EditTableProps> = ({ handleModel, tableName, tableId }) => {
+    const [loading, setLoading] = useState(false);
+    const [table_name, setTable_name] = useState("")
+
+  
+    const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+        e.preventDefault();
+        try {
+            setLoading(true);
+            const today = new Date().toISOString().split("T")[0];
+            console.log(table_name);
+            
+            const res = await editTableService.editTable(tableId, table_name, today);
+            if (res.status == 200) {
+                alertSuccessV3("ແກ້ໄຂປະເພດເມນູສຳເລັດ", 'success');
+            }
+
+        } catch (error: any) {
+            generalErrors(error);
+        } finally {
+            setLoading(false);
+        }
+
+    }
+
+    useEffect(() => {
+        setTable_name(tableName);
+    }, [])
+
+
     return (
         <div className="flex flex-col w-96 h-fit bg-white rounded-lg shadow-xl">
             <div className="flex justify-between items-center px-5 w-full h-16 border-b-2">
@@ -15,16 +51,29 @@ const EditTable: React.FC<EditTableProps> = ({ handleModel }) => {
 
             </div>
             <div className="px-3 mt-3">
-                <form className="p-4 md:p-5">
+                <form onSubmit={formSumit} className="p-4 md:p-5">
                     <div className="grid gap-4 mb-4 grid-cols-2">
                         <div className="col-span-2">
                             <label htmlFor="name" className="block mb-2 text-xs md:text-sm font-medium text-gray-900 ">Table Name <span className="text-red-600"> *</span></label>
-                            <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="name..." />
+                            <input
+                                type="text"
+                                value={table_name}
+                                onChange={(e) => setTable_name(e.target.value)} // ✅ Fix: Handle user input
+                                name="name"
+                                id="name"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                placeholder="Enter table name..."
+                            />
+
                         </div>
                     </div>
                     <button type="submit" className="text-white inline-flex gap-1 items-center bg-green-700 hover:bg-green-800 focus:ring-1 focus:outline-none focus:ring-green-300 font-medium rounded-lg  px-5 py-2.5 text-center text-xs md:text-sm">
                         <HiPencilAlt className="text-xl" />
-                        ແກ້ໄຂ້
+                        {loading ?
+                            <LoadingSpinner text="ແກ້ໄຂ" />
+                            :
+                            "ແກ້ໄຂ"
+                        }
                     </button>
                 </form>
             </div>
