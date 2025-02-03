@@ -5,7 +5,7 @@ import 'flowbite';
 
 // Lazy load components
 const Authen = lazy(() => import('./restaurant/authen'));
-const ManageFood = lazy(() => import('./restaurant/managefood/managefood'));
+const ManageFood = lazy(() => import('./restaurant/managefood/foods/managefood'));
 const ManageCategory = lazy(() => import('./restaurant/managefood/categories/managecategory'));
 const ManageZone = lazy(() => import('./restaurant/managefood/managezone'));
 const ManageTables = lazy(() => import('./restaurant/managefood/tables/managetables'));
