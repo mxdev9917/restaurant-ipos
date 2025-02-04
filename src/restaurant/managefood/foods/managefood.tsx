@@ -8,6 +8,7 @@ import Loading from "../../../utils/Loading";
 import LoadingMessage from "../../../utils/loadingMessage";
 import { DeleteProductService } from "../../../services/products/delete-product";
 import CreateFoods from "./create-food";
+import EditFoods from "./edit-food";
 
 function ManageFood() {
     const [items, setItems] = useState<any[]>([]);
@@ -16,12 +17,12 @@ function ManageFood() {
     const [page, setPage] = useState(1);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [isCheckModel, setisCheckModel] = useState(false)
-    // const [isCheckEven, setisEven] = useState(true)
+    const [isCheckedPage, setIsCheckedPage] = useState(true);
     const [loadingMessage, setLoadingMessage] = useState(false);
     const [loadingMessageTitle, setLoadingMessageTitle] = useState("");
-    // const [productId, setProductId] = useState("");
+    const [productId, setProductId] = useState("");
     // const [productName, setproductName] = useState("");
- 
+
 
 
     const deleteproduct = async (id: string) => {
@@ -36,28 +37,30 @@ function ManageFood() {
 
         } catch (error) {
 
-        } 
+        }
     }
 
     function handleModel(evens: string) {
         if (evens == 'add') {
             setisCheckModel(!isCheckModel)
-        
+            setIsCheckedPage(true)
+
         } else {
             setisCheckModel(!isCheckModel)
         }
     }
-    // function handleEditModel(evens: string, product_Id: string, product_name: string) {
-    //     if (evens == 'edit') {
-    //         setProductId(product_Id)
-    //         setproductName(product_name)
+    function handleEditModel(evens: string, id: string) {
+        if (evens == 'edit') {
+            setisCheckModel(!isCheckModel)
+            setIsCheckedPage(false)
+            setProductId(id)
+            console.log(productId);
 
-    //         setisCheckModel(!isCheckModel)
-    //         setisEven(false)
-    //     } else {
-    //         setisCheckModel(!isCheckModel)
-    //     }
-    // }
+
+        } else {
+            setisCheckModel(!isCheckModel)
+        }
+    }
 
     // Ref to track IDs of already fetched items to avoid duplicates
     const fetchedItemIDs = useRef(new Set<string>());
@@ -65,7 +68,7 @@ function ManageFood() {
     // Fetch products data from the API
     const fetchproductData = async (currentPage: number) => {
         try {
-     
+
             const response = await GetallProductService.GetAllProduct("3", currentPage, 40); // Replace with your actual API URL
 
             if (response.status === "200") {
@@ -174,18 +177,19 @@ function ManageFood() {
 
                     <div
                         ref={containerRef}
-                        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 sm:gap-3 gap-4 overflow-auto p-3 w-full h-[70vh] sm:h-[80vh]"
+                        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 sm:gap-3 gap-4 overflow-auto p-3 w-full h-[70vh] sm:h-[38vh]"
                     >
-                        { items.length > 0 ? (
+                        {items.length > 0 ? (
                             items.map((item) => (
                                 <div key={item.product_ID} className="w-full h-48 sm:h-32 md:h-40 lg:h-40 sm:mb-0 mb-5">
                                     <FoodItem
-                                    
+
                                         productId={item.product_ID}
                                         productName={item.product_name}
+                                        price={item.price}
                                         productImg={item.product_img}
                                         productStatus={item.product_status}
-                                        // onEdit={(id, name) => handleEditModel("edit", id, name)}
+                                        onEdit={(id) => handleEditModel("edit", id)}
                                         onDelete={() => deleteproduct(item.product_ID)}
                                     />
                                 </div>
@@ -199,8 +203,17 @@ function ManageFood() {
 
                 </div>
             </div>
-            <div className={`w-screen ${!isCheckModel ? 'hidden' : 'block'}  h-screen bg-black/10  absolute  flex justify-center items-center`}>
-                <CreateFoods handleModel={() => handleModel('add')} />
+            <div className={`w-screen ${!isCheckModel ? 'hidden' : 'block'}  h-screen bg-black/10  absolute z-50 flex justify-center items-center`}>
+
+
+                {
+                    isCheckedPage ? (
+                        <CreateFoods handleModel={() => handleModel('add')} />
+                    ) :
+                        (
+                            <EditFoods handleModel={() => handleModel("edit")} product_ID={productId} />
+                        )
+                }
             </div>
 
         </div>

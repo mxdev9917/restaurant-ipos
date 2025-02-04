@@ -10,7 +10,7 @@ interface ITableService {
 export class editTableStatusService {
     static async editStatusTable(id:string, table_status: string,update_at:string): Promise<ITableService> {
         try {
-            const res = await axios.patch(`${IPOS_BASE_URL}/table/${id}`, {
+            const res = await axios.patch(`${IPOS_BASE_URL}/table/status/${id}`, {
                 table_status,
                 update_at
             });

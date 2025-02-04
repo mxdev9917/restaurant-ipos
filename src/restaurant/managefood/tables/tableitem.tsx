@@ -1,7 +1,7 @@
 import React from 'react';
 import { alertconfirm, alertSuccessV3 } from '../../../utils/alert';
 import { Dropdown } from "flowbite-react";
-import { HiOutlineExternalLink, HiPencilAlt, HiOutlineTrash, HiOutlineBan } from "react-icons/hi"; //HiCheck 
+import { HiOutlineExternalLink, HiPencilAlt, HiOutlineTrash, HiOutlineBan,HiCheck } from "react-icons/hi"; //HiCheck 
 import { editTableStatusService } from '../../../services/tables/editstatus-table';
 import { generalErrors } from '../../../utils/error';
 
@@ -54,7 +54,11 @@ const TableItem: React.FC<TableItemProps> = ({ onEdit, onDelete, tableName, tabl
                   "question"
                 )
               }
-            ><HiOutlineBan className='text-lg text-gray-400 mr-2' />ປິດໃຊ້ງານ</Dropdown.Item>
+            >
+              {
+                tableStatus === "disable" ? (<span className="flex "> <HiCheck className='text-lg text-gray-400 mr-2' />ເປີດໃຊ້ງານ</span>) : (<span className="flex "> <HiOutlineBan className='text-lg text-gray-400 mr-2' />ປິດໃຊ້ງານ</span>)
+              }
+            </Dropdown.Item>
             <Dropdown.Item
               onClick={handleEdit}
             ><HiPencilAlt className='text-lg text-gray-400 mr-2' />ແກ້ໄຂໂຕະ</Dropdown.Item>
