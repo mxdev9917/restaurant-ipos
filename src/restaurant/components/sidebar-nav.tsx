@@ -30,7 +30,7 @@ function Sidebar_Nav() {
             <Sidebar  className={`fixed  mt-2 z-40 w-64 h-screen transition-transform  ${translate ? '-translate-x-full':''} sm:translate-x-0`} aria-label="Sidebar">
                 <Sidebar.Items className="h-full px-3 py-5 overflow-y-auto bg-gray-50 ">
                     <Sidebar.ItemGroup className="space-y-3 font-medium">
-                    <Sidebar.Item href="/" icon={FaChartBar}>
+                    <Sidebar.Item href="#dashboard" icon={FaChartBar}>
                             Dashboard
                         </Sidebar.Item>
                         <Sidebar.Item href="#manageuser" icon={FaUsersGear}>

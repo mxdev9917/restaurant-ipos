@@ -32,13 +32,6 @@ const FoodItem: React.FC<foodItemProps> = ({ onDelete, onEdit, foodName, price, 
             generalErrors(error);
         }
     };
-
-
-
-
-
-
-
     return (
 
 
