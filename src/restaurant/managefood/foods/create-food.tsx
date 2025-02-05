@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { GetallcategoryByStatusService } from "../../../services/categories/getbystatuse-category";
 import { ICategoriesStatus } from "../../../services/categories/getbystatuse-category";
 import { alertSuccessV3 } from "../../../utils/alert";
-import { createProductService } from "../../../services/products/create-food";
+import { createFoodService } from "../../../services/foods/create-food";
 import { HiPlus } from "react-icons/hi";
 interface CreateProductProps {
     handleModel: (event: string) => void;
@@ -47,7 +47,7 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
         setLoading(true);
 
         try {
-            const response = await createProductService.createProduct(
+            const response = await createFoodService.createFood(
                 foodCategory,
                 "3", // Assuming "3" is the restaurant ID
                 foodName,
@@ -56,7 +56,7 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
             );
 
             if (response.status === "201") {
-                alertSuccessV3("ສ້າງປະເພດເມນູສຳເລັດ", 'success');
+                alertSuccessV3("ເພີ່ມເມນູສຳເລັດ", 'success');
             }
         } catch (error) {
             console.error("Error:", error);

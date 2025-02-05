@@ -3,10 +3,9 @@ import Sidebar_Nav from "../../components/sidebar-nav"
 import FoodItem from "./fooditem"
 import { useState, useEffect, useRef } from "react";
 import { alertSuccessV3 } from "../../../utils/alert";
-import { GetallProductService } from "../../../services/products/getall-product";
-import Loading from "../../../utils/Loading";
+import { GetallFoodsService } from "../../../services/foods/getall-food";
 import LoadingMessage from "../../../utils/loadingMessage";
-import { DeleteProductService } from "../../../services/products/delete-product";
+import { DeleteFoodService } from "../../../services/foods/delete-food";
 import CreateFoods from "./create-food";
 import EditFoods from "./edit-food";
 
@@ -20,17 +19,17 @@ function ManageFood() {
     const [isCheckedPage, setIsCheckedPage] = useState(true);
     const [loadingMessage, setLoadingMessage] = useState(false);
     const [loadingMessageTitle, setLoadingMessageTitle] = useState("");
-    const [productId, setProductId] = useState("");
-    // const [productName, setproductName] = useState("");
+    const [foodId, setfoodId] = useState("");
+    // const [foodName, setfoodName] = useState("");
 
 
 
-    const deleteproduct = async (id: string) => {
+    const deletefood = async (id: string) => {
 
         try {
             setLoadingMessageTitle("ກຳລັງລົບ");
             setLoadingMessage(true);
-            const response = await DeleteProductService.DeleteProduct(id)
+            const response = await DeleteFoodService.DeleteFood(id)
             if (response.status == 200) {
                 alertSuccessV3("ລົບສຳເລັດ", 'success');
             }
@@ -53,8 +52,8 @@ function ManageFood() {
         if (evens == 'edit') {
             setisCheckModel(!isCheckModel)
             setIsCheckedPage(false)
-            setProductId(id)
-            console.log(productId);
+            setfoodId(id)
+            console.log(foodId);
 
 
         } else {
@@ -65,20 +64,20 @@ function ManageFood() {
     // Ref to track IDs of already fetched items to avoid duplicates
     const fetchedItemIDs = useRef(new Set<string>());
 
-    // Fetch products data from the API
-    const fetchproductData = async (currentPage: number) => {
+    // Fetch foods data from the API
+    const fetchfoodData = async (currentPage: number) => {
         try {
 
-            const response = await GetallProductService.GetAllProduct("3", currentPage, 40); // Replace with your actual API URL
+            const response = await GetallFoodsService.GetAllFoods("3", currentPage, 40); // Replace with your actual API URL
 
             if (response.status === "200") {
                 setTotalItem(response.total_item);
                 // Create an array of items to append without duplicates
                 const newItems = response.data.filter((item: any) => {
-                    if (fetchedItemIDs.current.has(item.product_ID)) {
+                    if (fetchedItemIDs.current.has(item.food_ID)) {
                         return false; // Skip this item if it's already been added
                     } else {
-                        fetchedItemIDs.current.add(item.product_ID); // Mark this ID as fetched
+                        fetchedItemIDs.current.add(item.food_ID); // Mark this ID as fetched
                         return true; // Keep this item
                     }
                 });
@@ -103,7 +102,7 @@ function ManageFood() {
         setIsLoading(true);
         setTimeout(() => {
             setPage((prevPage) => prevPage + 1); // Increment page number for the next request
-            fetchproductData(page); // Fetch next page data
+            fetchfoodData(page); // Fetch next page data
             setIsLoading(false);
         }, 1200);
 
@@ -112,7 +111,7 @@ function ManageFood() {
 
     // Initial data fetch when the component mounts
     useEffect(() => {
-        fetchproductData(page); // Fetch data for the first page
+        fetchfoodData(page); // Fetch data for the first page
     }, [page]);
 
     // Handle scrolling and load more items
@@ -181,16 +180,16 @@ function ManageFood() {
                     >
                         {items.length > 0 ? (
                             items.map((item) => (
-                                <div key={item.product_ID} className="w-full h-48 sm:h-32 md:h-40 lg:h-40 sm:mb-0 mb-5">
+                                <div key={item.food_ID} className="w-full h-48 sm:h-32 md:h-40 lg:h-40 sm:mb-0 mb-5">
                                     <FoodItem
 
-                                        productId={item.product_ID}
-                                        productName={item.product_name}
+                                        foodId={item.food_ID}
+                                        foodName={item.food_name}
                                         price={item.price}
-                                        productImg={item.product_img}
-                                        productStatus={item.product_status}
+                                        foodImg={item.food_img}
+                                        foodStatus={item.food_status}
                                         onEdit={(id) => handleEditModel("edit", id)}
-                                        onDelete={() => deleteproduct(item.product_ID)}
+                                        onDelete={() => deletefood(item.food_ID)}
                                     />
                                 </div>
                             ))
@@ -211,7 +210,7 @@ function ManageFood() {
                         <CreateFoods handleModel={() => handleModel('add')} />
                     ) :
                         (
-                            <EditFoods handleModel={() => handleModel("edit")} product_ID={productId} />
+                            <EditFoods handleModel={() => handleModel("edit")} food_ID={foodId} />
                         )
                 }
             </div>

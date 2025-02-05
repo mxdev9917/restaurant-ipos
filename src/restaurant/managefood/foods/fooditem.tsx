@@ -3,27 +3,27 @@ import { Dropdown } from "flowbite-react";
 import { HiPencilAlt, HiOutlineTrash, HiOutlineBan, HiDotsVertical, HiCheck  } from "react-icons/hi"; //HiCheck 
 import { alertconfirm, alertSuccessV3 } from '../../../utils/alert';
 import { generalErrors } from '../../../utils/error';
-import { editStatusProductService } from "../../../services/products/editstatus-product";
+import { editStatusFoodService } from "../../../services/foods/editstatus-food";
 import { IPOS_BASE_URL } from "../../../utils/connection";
 
-interface productItemProps {
+interface foodItemProps {
     onEdit: (id: string) => void;
     onDelete: (id: string) => void;
-    productId: string;
-    productName: string;
-    productStatus: string;
-    productImg: string
+    foodId: string;
+    foodName: string;
+    foodStatus: string;
+    foodImg: string
     price: string
 }
 
-const FoodItem: React.FC<productItemProps> = ({ onDelete, onEdit, productName, price, productImg, productStatus, productId }) => {
+const FoodItem: React.FC<foodItemProps> = ({ onDelete, onEdit, foodName, price, foodImg, foodStatus, foodId }) => {
 
     const handleEditStatus = async () => {
         try {
-            const newStatus = productStatus == "disable" ? "active" : "disable";
+            const newStatus = foodStatus == "disable" ? "active" : "disable";
             const today = new Date().toISOString().split("T")[0];
 
-            const res = await editStatusProductService.editStatusProduct(productId, newStatus, today);
+            const res = await editStatusFoodService.editStatusFood(foodId, newStatus, today);
 
             if (res.status == 200) {
                 alertSuccessV3("ສຳເລັດ", 'success');
@@ -48,15 +48,15 @@ const FoodItem: React.FC<productItemProps> = ({ onDelete, onEdit, productName, p
         >
             <div className="w-full h-fit flex justify-end p-2 relative">
                 {
-                    productImg !== null ?
-                        <img className="h-28 w-full object-cover rounded-md" src={`${IPOS_BASE_URL}${productImg}`} alt="" />
+                    foodImg !== null ?
+                        <img className="h-28 w-full object-cover rounded-md" src={`${IPOS_BASE_URL}${foodImg}`} alt="" />
                         :
                         <img className="h-28 w-full object-contain rounded-md" src="\public\images\ipos.png" alt="" />
 
                 }
 
                 {
-                    productStatus === "disable" && (
+                    foodStatus === "disable" && (
                         <div className="flex justify-center items-center h-28 w-full rounded-md absolute bg-slate-100/50 font-semibold text-xl text-gray-600">
                             ປິດໃຊ້ງານ
                         </div>
@@ -67,7 +67,7 @@ const FoodItem: React.FC<productItemProps> = ({ onDelete, onEdit, productName, p
             <div className="w-full bg-slate-100 flex justify-end items-center text-black text-sm md:text-base font-semibold">
                 <div className="flex w-full flex-col justify-between h-full mt-2 mb-1">
                     <div className="flex justify-between px-2">
-                        <p className=" font-semibold text-sm  w-full h-fit text-ellipsis">{productName}</p>
+                        <p className=" font-semibold text-sm  w-full h-fit text-ellipsis">{foodName}</p>
                     </div>
                     <div className="flex justify-between px-1.5 bg-slate-100 mb-2  ">
                         <p className="font-bold text-orange-500 text-xl ">{price}</p>
@@ -76,23 +76,23 @@ const FoodItem: React.FC<productItemProps> = ({ onDelete, onEdit, productName, p
                                 onClick={() =>
                                     alertconfirm(
                                         () => handleEditStatus(),
-                                        `ຕ້ອງການປິດໃຊ້ງານ ${productName} ?`,
+                                        `ຕ້ອງການປິດໃຊ້ງານ ${foodName} ?`,
                                         "question"
                                     )
                                 }
                             >
                                 {
-                                    productStatus === "disable" ? (<span className="flex "> <HiCheck  className='text-lg text-gray-400 mr-2' />ເປີດໃຊ້ງານ</span>) : (<span className="flex "> <HiOutlineBan className='text-lg text-gray-400 mr-2' />ປິດໃຊ້ງານ</span>)
+                                    foodStatus === "disable" ? (<span className="flex "> <HiCheck  className='text-lg text-gray-400 mr-2' />ເປີດໃຊ້ງານ</span>) : (<span className="flex "> <HiOutlineBan className='text-lg text-gray-400 mr-2' />ປິດໃຊ້ງານ</span>)
                                 }
                             </Dropdown.Item>
                             <Dropdown.Item
-                                onClick={() => onEdit(productId)}
+                                onClick={() => onEdit(foodId)}
                             ><HiPencilAlt className='text-lg text-gray-400 mr-2' />ແກ້ໄຂເມນູ</Dropdown.Item>
                             <Dropdown.Item
                                 onClick={() =>
                                     alertconfirm(
-                                        () => onDelete(productId),
-                                        `ຕ້ອງການລົບ ${productName} ?`,
+                                        () => onDelete(foodId),
+                                        `ຕ້ອງການລົບ ${foodName} ?`,
                                         "question"
                                     )
                                 }

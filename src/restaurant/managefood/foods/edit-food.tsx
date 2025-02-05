@@ -2,35 +2,35 @@ import { useEffect, useState } from "react";
 import { GetallcategoryByStatusService } from "../../../services/categories/getbystatuse-category";
 import { ICategoriesStatus } from "../../../services/categories/getbystatuse-category";
 import { alertSuccessV3 } from "../../../utils/alert";
-import { GetByIdProductService } from "../../../services/products/getbyid-product";
-import { EditProductService } from "../../../services/products/edit-food";
+import { GetByIdFoodService } from "../../../services/foods/getbyid-food";
+import { EditFoodService } from "../../../services/foods/edit-food";
 import { IPOS_BASE_URL } from "../../../utils/connection";
 
 interface EditPorductProps {
     handleModel: (event: string) => void;
-    product_ID: string
+    food_ID: string
 }
 
-const EditFoods: React.FC<EditPorductProps> = ({ handleModel, product_ID }) => {
+const EditFoods: React.FC<EditPorductProps> = ({ handleModel, food_ID }) => {
     let img;
     const [getData, setGetData] = useState<ICategoriesStatus["data"]>([]);
     const [foodName, setFoodName] = useState("");
     const [price, setPrice] = useState("");
     const [foodCategory, setFoodCategory] = useState("");
-    const [product_img, setProductImg] = useState<File | null>(null);
+    const [food_img, setProductImg] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
     const [previewImg, setPreviewImg] = useState<string | null>(null);
 
     const fetchFoodData = async () => {
         try {
-            const res = await GetByIdProductService.GetByIdProduct(product_ID);
+            const res = await GetByIdFoodService.GetByIdFood(food_ID);
 
             if (Array.isArray(res.data) && res.data.length > 0) {
-                img = `${IPOS_BASE_URL}${res.data[0].product_img}`
-                if(res.data[0].product_img){
+                img = `${IPOS_BASE_URL}${res.data[0].food_img}`
+                if(res.data[0].food_img){
                     setPreviewImg(img)
                 }
-                setFoodName(res.data[0].product_name);
+                setFoodName(res.data[0].food_name);
                 setPrice(res.data[0].price);
                 setFoodCategory(res.data[0].category_ID);
             } else {
@@ -48,11 +48,11 @@ const EditFoods: React.FC<EditPorductProps> = ({ handleModel, product_ID }) => {
     };
 
     useEffect(() => {
-        if (product_ID) {
+        if (food_ID) {
             fetchFoodData();
         }
         fetchData();
-    }, [product_ID]);
+    }, [food_ID]);
 
 
 
@@ -72,13 +72,13 @@ const EditFoods: React.FC<EditPorductProps> = ({ handleModel, product_ID }) => {
         setLoading(true);
 
         try {
-            const response = await EditProductService.EditProduct(
-                product_ID,
+            const response = await EditFoodService.Editfood(
+                food_ID,
                 foodCategory,
                 "3", // Assuming "3" is the restaurant ID
                 foodName,
                 price,
-                product_img || undefined
+                food_img || undefined
             );
 
             if (response.status === "200") {
