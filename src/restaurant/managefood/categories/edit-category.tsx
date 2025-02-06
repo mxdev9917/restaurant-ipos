@@ -4,6 +4,7 @@ import { generalErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { GetByeCategoryService } from "../../../services/categories/getby-category";
 import { editCategoryService } from "../../../services/categories/edit-category";
+import Gallery from "../../galley/gallery";
 interface EditCategoryProps {
     id: string;
     handleModel: (event: string) => void;
@@ -12,35 +13,60 @@ interface EditCategoryProps {
 const EditCategory: React.FC<EditCategoryProps> = ({ handleModel, id }) => {
     const [category, setCategory] = useState("");
     const [loading, setLoading] = useState(false);
+    const [previewImg, setPreviewImg] = useState<string | null>(null);
+    const [categoryImg, setCategoryIng] = useState<File | null>(null);
+    const [isGallery, setIsGallery] = useState(false)
+
+    const handleGallery = () => {
+        setIsGallery(!isGallery);
+    }
+
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            setCategoryIng(file);
+
+            // Create a preview URL for the image
+            const imgPreview = URL.createObjectURL(file);
+            setPreviewImg(imgPreview);
+        }
+    };
+
     const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
+        setLoading(true);
         try {
-            setLoading(true);
             const today = new Date().toISOString().split("T")[0];
-            const res = await editCategoryService.editCategory(id, category, today);
-            if (res.status == 200) {
-                alertSuccessV3("ແກ້ໄຂປະເພດເມນູສຳເລັດ", 'success');
-            }
+            const response = await editCategoryService.editCategory(
+                id,
+                category,
+                today,
+                categoryImg || undefined
+            );
 
-        } catch (error: any) {
+            if (response.status == 200) {
+                alertSuccessV3("ແກ້ໄຂເມນູສຳເລັດ", 'success');
+            }
+        } catch (error) {
+            console.error("Error:", error);
             generalErrors(error);
         } finally {
             setLoading(false);
         }
-
-    }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
             const res = await GetByeCategoryService.GetByCategory(id)
-           setCategory(res.data[0].category)
+            setCategory(res.data[0].category)
         }
         fetchData();
     }, [id])
-    return (
+    return <>
         <div className="flex flex-col w-96 h-fit bg-white rounded-lg shadow-xl">
             <div className="flex justify-between items-center px-5 w-full h-16 border-b-2">
-                <p className="text-xl font-semibold text-orange-500">ແກ້ໄຂປະເພດເມນູ ${id}</p>
+                <p className="text-xl font-semibold text-orange-500">ແກ້ໄຂປະເພດເມນູ</p>
                 <button
                     onClick={() => handleModel('close')}
                     type="button"
@@ -68,6 +94,26 @@ const EditCategory: React.FC<EditCategoryProps> = ({ handleModel, id }) => {
                                 placeholder="name..."
                             />
                         </div>
+                        <div className="col-span-2">
+                            <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 text-xs md:text-sm">
+                                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                    {previewImg ? (
+                                        <img src={previewImg} alt="Uploaded Preview" className="w-32 h-32 object-cover rounded-lg" />
+                                    ) : (
+                                        <>
+                                            <p className="text-gray-500 text-xs md:text-sm font-semibold mb-2">ກົດອັບໂຫຼດ</p>
+                                            <p className="text-xs text-orange-500">SVG, JPG (MAX. 204x240px)</p>
+                                        </>
+                                    )}
+                                </div>
+                                <input id="dropzone-file" type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+                            </label>
+
+                            {/* Separate button for selecting from gallery */}
+                            <div className="flex justify-end w-full ">
+                                <div onClick={handleGallery} className="mt-2 text-orange-500 text-xs md:text-sm underline">ເລືອກຈາກຄັງພາບ</div>
+                            </div>
+                        </div>
                     </div>
                     <button
                         type="submit"
@@ -84,7 +130,10 @@ const EditCategory: React.FC<EditCategoryProps> = ({ handleModel, id }) => {
                 </form>
             </div>
         </div>
-    );
+        <div className={`w-full ${isGallery == false ? 'hidden' : 'absolute'} h-full  bg-white z-50`}>
+            <Gallery handleGallery={handleGallery} />
+        </div>
+    </>
 }
 
 export default EditCategory;

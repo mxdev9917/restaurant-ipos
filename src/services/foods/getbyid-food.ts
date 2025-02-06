@@ -16,7 +16,7 @@ export interface Data {
 }
 
 export class GetByIdFoodService {
-  static GetByIdProduct(product_ID: string) {
+  static GetByIdProduct() {
       throw new Error("Method not implemented.");
   }
   static async GetByIdFood(id: string): Promise<IFood> {

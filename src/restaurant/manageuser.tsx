@@ -16,6 +16,7 @@ import DataComponent from "../utils/datacomponent";
 import { Dropdown } from "flowbite-react";
 import { HiChevronDown } from "react-icons/hi";
 import { generalErrors } from "../utils/error";
+import { useAuth } from "../context/context";
 
 function ManageUser() {
   const [isCheckModel, setIsCheckModel] = useState(false);
@@ -28,7 +29,7 @@ function ManageUser() {
   const [totalItems, setTotalItems] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
   const [currentPage, setCurrentPage] = useState(1);
-
+ const { data } = useAuth();
 
   function handlItemsPerPage(limit: number) {
     setItemsPerPage(limit)
@@ -98,7 +99,8 @@ function ManageUser() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await GetAllUserByIdService.GetAllUserById("3", currentPage, itemsPerPage);
+        let resId = String(data.restaurant_ID);
+        const res = await GetAllUserByIdService.GetAllUserById(resId, currentPage, itemsPerPage);
         setGetDt(res.data);
         let itemper = Number(res.total_item)
         setTotalItems(itemper);

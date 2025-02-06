@@ -1,39 +1,45 @@
 
 import { Link } from "react-router-dom"
-import { Dropdown } from "flowbite-react";
-import { HiChevronDown } from "react-icons/hi";
-import { useEffect, useState } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import Sidebar_Nav from "../../components/sidebar-nav"
 import { GetallcategoryService } from "../../../services/categories/getall-category";
 import { DeleteCategoryService } from "../../../services/categories/delete-category";
-import { editStatusCategoryService } from "../../../services/categories/editstatus-category";
-import { ICategories } from "../../../interfaces/getallcategory-interface";
-import { alertconfirm, alertError, alertSuccessV3 } from "../../../utils/alert";
+
+
+import { alertSuccessV3 } from "../../../utils/alert";
 import Loading from "../../../utils/Loading";
-import DataComponent from "../../../utils/datacomponent";
-import PpageRange from "../../../utils/pagination";
 import CreateCategory from "./create-category";
 import EditCategory from "./edit-category";
 import { generalErrors } from "../../../utils/error";
 import LoadingMessage from "../../../utils/loadingMessage";
 
+import { useAuth } from "../../../context/context";
+import CategroyItem from "./item-category";
+
 
 function ManageCategory() {
     const [isCheckModel, setisCheckModel] = useState(false);
-    const [loadingMessageTitle, setLoadingMessageTitle] = useState("");
-    const [getData, setGetData] = useState<ICategories["data"]>([]);
-    const [loading, setLoading] = useState(false);
-    const [totalItems, setTotalItems] = useState(0);
-    const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
-    const [currentPage, setCurrentPage] = useState(1);
+
+
+  
+
+    // const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
+    // const [currentPage, setCurrentPage] = useState(1);
     const [isCheckedPage, setIsCheckedPage] = useState(true);
     const [id, setId] = useState("");
     const [loadingMessage, setLoadingMessage] = useState(false);
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const [items, setItems] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [totalItem, setTotalItem] = useState(0);
+    const [page, setPage] = useState(1);
+    const fetchedItemIDs = useRef(new Set<string>());
+    const { data } = useAuth();
 
-
-    function handlItemsPerPage(limit: number) {
-        setItemsPerPage(limit)
-    }
+    // function handlItemsPerPage(limit: number) {
+    //     setItemsPerPage(limit)
+    // }
 
     function handleModel(evens: string) {
         if (evens == 'add') {
@@ -54,61 +60,11 @@ function ManageCategory() {
         }
 
     }
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true)
-                const res = await GetallcategoryService.GetAllCategory("60", currentPage, itemsPerPage);
-                setGetData(res.data);
-                let itemper = Number(res.total_item)
-                setTotalItems(itemper)
-                // if (itemper == itemsPerPage) {
-                //     setTotalItems(itemper + 1);
-                // } else {
-                //     setTotalItems(itemper);
-                // }
-            } catch (error: any) {
-                generalErrors(error);
-            } finally {
-                setLoading(false)
-            }
-        };
-        fetchData();
-    }, [currentPage, itemsPerPage]);
+   
 
+    
 
-    const handleUpdateStatus = async (category_ID: string, status: string) => {
-        let newStatus: string;
-        status = status.toLowerCase();
-        if (status === "locked") {
-            newStatus = "active"
-        } else if (status === "active") {
-            newStatus = "locked"
-        } else {
-            alertError("ເກີດຂໍ້ຜິດພາດ ກະລຸນາລອງໄໝ່ອີກຄັ້ງ", "error");
-            return
-        }
-
-        try {
-               setLoadingMessage(true);
-               setLoadingMessageTitle("ກຳລັງດຳເນີນການ")
-            const today = new Date().toISOString().split("T")[0];
-            const res = await editStatusCategoryService.editStatusCategory(category_ID, newStatus, today);
-            if (res.status == 200) {
-                console.log(res.status);
-                alertSuccessV3("ສຳເລັດ", 'success');
-            }
-        } catch (error: any) {
-            console.error(error);
-            generalErrors(error);
-        } finally {
-               setLoadingMessage(false);
-        }
-
-
-    }
-
-    const handleDeleteUser = async (category_ID: string) => {
+    const handleDelete = async (category_ID: string) => {
         try {
             const res = await DeleteCategoryService.DeleteCategory(category_ID);
             if (res.status == 200) {
@@ -120,9 +76,70 @@ function ManageCategory() {
         }
     }
 
+    const fetchCateroyData = async (currentPage: number) => {
+        try {
+            setLoadingMessage(true)
+            let resId = String(data.restaurant_ID);
+            const response = await GetallcategoryService.GetAllCategory(resId, currentPage, 40); // Replace with your actual API URL
+            if (response.status === "200") {
+                setTotalItem(response.total_item);
+                // Create an array of items to append without duplicates
+                const newItems = response.data.filter((item: any) => {
+
+                    if (fetchedItemIDs.current.has(item.category_ID)) {
+                        return false; // Skip this item if it's already been added
+                    } else {
+                        fetchedItemIDs.current.add(item.category_ID); // Mark this ID as fetched
+                        return true; // Keep this item
+                    }
+                });
+
+                // Append the new unique items to the state
+                if (newItems.length > 0) {
+                    setItems((prevItems) => [...prevItems, ...newItems]);
+                }
+            } else {
+                console.error("Failed to fetch data:", response.message);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }finally{
+            setLoadingMessage(false)
+        }
+    };
+
+    const loadMoreItems = () => {
+        if (totalItem === items.length) {
+            return; // Stop loading more items if all items are fetched
+        }
+        setIsLoading(true);
+        setTimeout(() => {
+            setPage((prevPage) => prevPage + 1); // Increment page number for the next request
+            fetchCateroyData(page); // Fetch next page data
+            setIsLoading(false);
+        }, 1200);
+
+
+    };
+    useEffect(() => {
+        fetchCateroyData(page); // Fetch data for the first page
+    }, [page]);
+    useEffect(() => {
+        const container = containerRef.current;
+        if (!container || !(container instanceof HTMLElement)) return;
+
+        const handleScroll = () => {
+            if (container.scrollTop + container.clientHeight >= container.scrollHeight - 10 && !isLoading) {
+                loadMoreItems();
+            }
+        };
+
+        container.addEventListener("scroll", handleScroll);
+        return () => container.removeEventListener("scroll", handleScroll);
+    }, [isLoading, totalItem, items.length]);
     return (
         <div className="flex flex-col">
-             {loadingMessage && <LoadingMessage text={loadingMessageTitle} />}
+            {loadingMessage && <LoadingMessage text={"ດາວໂຫຼດຂໍ້ມູນ"} />}
             <Sidebar_Nav />
             <div className="pt-8 sm:ml-64">
 
@@ -156,98 +173,32 @@ function ManageCategory() {
                             <button onClick={() => handleModel('add')} className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-full text-white text-xs md:text-sm">ເພີ່ມ</button>
                         </div>
                     </div>
-                    <div className=" relative overflow-auto md:overflow-hidden  md:h-[76vh] ">
-                        <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                            <thead className="text-xs text-gray-700 uppercase bg-gray-100 sticky top-0 z-10">
-                                <tr className="flex items-center justify-between w-full h-14 text-left bg-gray-100 text-gray-800 font-semibold uppercase">
-                                    <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">Name</th>
-                                    <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">Status</th>
-                                    <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">Date</th>
-                                    <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">Action</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <div className="md:overflow-y-auto md:max-h-[65vh]">
-                            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                                <tbody>
-                                    {loading ? (
-                                        <tr>
-                                            <td colSpan={6} className="h-40 text-center text-gray-500">
-                                                <Loading text="ດາວໂຫຼດຂໍ້ມູນ" />
-                                            </td>
-                                        </tr>
-                                    ) : getData.length > 0 ? (
-                                        getData.map((item) => (
-                                            <tr key={item.category_ID}
-                                                className="flex justify-between text-left border-b hover:bg-gray-50 transition-all ">
-                                                <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
-                                                    {item.category}
-                                                </td>
-                                                <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
-                                                    <div className="flex items-center">
-                                                        <div
-                                                            className={`h-2.5 w-2.5 rounded-full mr-2 ${item.category_status === "active" ? "bg-green-500" : "bg-red-500"
-                                                                }`}
-                                                        />
-                                                        <span className={`text-gray-800 ${item.category_status === "active" ? "font-semibold" : "font-medium"}`}>
-                                                            {item.category_status === "active" ? "Active" : "Locked"}
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                                <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
-                                                    {item.created_at}</td>
-                                                <td className=" py-3 pr-10 flex justify-center items-center min-w-[10rem] w-40">
-                                                    <Dropdown label="" dismissOnClick={false} renderTrigger={() => <span className="flex items-center">ເມນູ <HiChevronDown /></span>}>
-                                                        <Dropdown.Item
-                                                         onClick={() =>
-                                                            alertconfirm(
-                                                                () => handleUpdateStatus(item.category_ID, item.category_status),
-                                                                `ຕ້ອງການ ${item.category_status==="Active"? "ປິດການໃໍຊ້ງານ":"ເປີດການໃໍຊ້ງານ"} ${item.category} ?`,
-                                                                "question"
-                                                            )
-                                                        }
-                                                            // onClick={() => handleUpdateStatus(item.category_ID, item.category_status)}
-                                                        >{item.category_status==="Active"? "ປິດການໃໍຊ້ງານ":"ເປີດການໃໍຊ້ງານ"}</Dropdown.Item>
-                                                        <Dropdown.Item
-                                                            onClick={() => handleEditModel('edit', item.category_ID)}
-                                                        >ແກ້ໄຂປະເພດເມນູ</Dropdown.Item>
-                                                        <Dropdown.Item
-                                                            onClick={() =>
-                                                                alertconfirm(
-                                                                    () => handleDeleteUser(item.category_ID),
-                                                                    `ຕ້ອງການລົບ ${item.category} ?`,
-                                                                    "question"
-                                                                )
-                                                            }
-                                                        >ລົບປະເພດເມນູ</Dropdown.Item>
-                                                    </Dropdown>
+                    <div
+                        ref={containerRef}
+                        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 sm:gap-3 gap-4 overflow-auto p-3 w-full h-[70vh] sm:h-[38vh] z-50"
+                    >
+                        {items.length > 0 ? (
+                            items.map((item) => (
+                                <div key={item.category_ID} className="w-full h-48 sm:h-32 md:h-40 lg:h-40 sm:mb-0 mb-5">
+                                    <CategroyItem
 
-                                                </td>
-                                            </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan={6} className="h-40 text-center text-gray-500">
-                                                No data available.
-                                            </td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
+                                        categoryId={item.category_ID}
+                                        categoryName={item.category}
+                                        categoryImg={item.category_image}
+                                        categoryStatus={item.category_status}
+                                        onEdit={(id) => handleEditModel("edit", id)}
+                                        onDelete={() => handleDelete(item.category_ID)}
+                                    />
+                                </div>
+                            ))
+                        ) : (
+                            <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
+                                No data available.
+                            </div>
+                        )}
+                        {isLoading && <p className="text-center w-full mt-2"><Loading text="ໂຫລດຂໍ້ມູນ" /></p>}
                     </div>
                 </div>
-                <div className="flex gap-5 w-full justify-end pr-5 items-center">
-                    <DataComponent onSelectChange={handlItemsPerPage} />
-                    <PpageRange
-                        currentPage={currentPage}
-                        totalItems={totalItems}
-                        itemsPerPage={itemsPerPage}
-                        setCurrentPage={setCurrentPage}
-                    />
-                </div>
-
-
             </div>
             <div className={`w-screen ${!isCheckModel ? 'hidden' : 'block'}  h-screen bg-black/10  absolute  flex justify-center items-center`}>
 

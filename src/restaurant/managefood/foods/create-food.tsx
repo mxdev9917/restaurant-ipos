@@ -5,6 +5,7 @@ import { alertSuccessV3 } from "../../../utils/alert";
 import { createFoodService } from "../../../services/foods/create-food";
 import { HiPlus } from "react-icons/hi";
 import { useAuth } from "../../../context/context";
+import Gallery from "../../galley/gallery";
 interface CreateProductProps {
     handleModel: (event: string) => void;
 }
@@ -17,10 +18,17 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
     const [product_img, setProductImg] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
     const [previewImg, setPreviewImg] = useState<string | null>(null);
-         const { data } = useAuth();
+    const { data } = useAuth();
+    const [isGallery, setIsGallery] = useState(false)
+
+    const handleGallery = () => {
+        setIsGallery(!isGallery);
+    }
+
 
     const fetchData = async () => {
-        const res = await GetallcategoryByStatusService.GetAllCategory("60");
+        let resId = String(data.restaurant_ID);
+        const res = await GetallcategoryByStatusService.GetAllCategory(resId);
         setGetData(res.data);
     };
 
@@ -39,11 +47,7 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
         }
     };
 
-    const handleGallery = () => {
-        console.log("Gallery");
-
-    }
-
+  
     const formSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setLoading(true);
@@ -68,7 +72,7 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
         }
     };
 
-    return (
+    return <>
         <div className="flex flex-col w-96 h-fit bg-white rounded-lg shadow-xl">
             <div className="flex justify-between items-center px-5 w-full h-16 border-b-2">
                 <p className="text-xl font-semibold text-orange-500">ເພີ່ມເມນູ</p>
@@ -116,7 +120,7 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
                         {/* Category Select */}
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="category" className="block mb-2 text-xs md:text-sm font-medium text-gray-900">
-                               ເມນູປະເພດ <span className="text-red-600"> *</span>
+                                ເມນູປະເພດ <span className="text-red-600"> *</span>
                             </label>
                             <select
                                 id="category"
@@ -135,7 +139,7 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
                         </div>
 
                         {/* File Upload */}
-                        <div className= "col-span-2">
+                        <div className="col-span-2">
                             <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 text-xs md:text-sm">
                                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                     {previewImg ? (
@@ -151,21 +155,23 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
                             </label>
 
                             {/* Separate button for selecting from gallery */}
-                        <div className="flex justify-end w-full ">
-                        <div onClick={handleGallery} className="mt-2 text-orange-500 text-xs md:text-sm underline">ເລືອກຈາກຄັງພາບ</div>
-                        </div>
+                            <div className="flex justify-end w-full ">
+                                <div onClick={handleGallery} className="mt-2 text-orange-500 text-xs md:text-sm underline">ເລືອກຈາກຄັງພາບ</div>
+                            </div>
                         </div>
 
 
                     </div>
-<span></span>
                     <button type="submit" className="text-white inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-1 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5 text-center" disabled={loading}>
                         {loading ? "ເພີ່ມເມນູ..." : <span className="flex items-center gap-1"><HiPlus />ເພີ່ມເມນູ </span>}
                     </button>
                 </form>
             </div>
         </div>
-    );
+         <div className={`w-full ${isGallery == false ? 'hidden' : 'absolute'} h-full  bg-white z-50`}>
+         <Gallery handleGallery={handleGallery} />
+     </div>
+     </>
 };
 
 export default CreateFoods;

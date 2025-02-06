@@ -1,0 +1,31 @@
+import { IPOS_BASE_URL } from "../utils/connection";
+import axios from "axios";
+
+export interface IGallery {
+    status: string;
+    message: string;
+    total_item: number;
+    data: Data[];
+}
+
+export interface Data {
+    pathImg_ID: string;
+    pathImg_name: string;
+}
+
+export class GettAllGalleryService {
+    static async getAllGallery(page: number, limit: number): Promise<IGallery> {
+        try {
+            const res = await axios.get(`${IPOS_BASE_URL}/gallery`, {  // Fixed the 'gallery' endpoint if needed
+                params: {
+                    page: page,
+                    limit: limit
+                }
+            });
+            return res.data;
+        } catch (error: any) {
+            console.error("Error fetching gallery:", error);
+            throw new Error(error.response?.data?.message || "An unknown error occurred.");
+        }
+    }
+}

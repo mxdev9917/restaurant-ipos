@@ -6,6 +6,7 @@ import { GetByIdFoodService } from "../../../services/foods/getbyid-food";
 import { EditFoodService } from "../../../services/foods/edit-food";
 import { IPOS_BASE_URL } from "../../../utils/connection";
 import { useAuth } from "../../../context/context";
+import Gallery from "../../galley/gallery";
 
 interface EditPorductProps {
     handleModel: (event: string) => void;
@@ -21,14 +22,19 @@ const EditFoods: React.FC<EditPorductProps> = ({ handleModel, food_ID }) => {
     const [food_img, setProductImg] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
     const [previewImg, setPreviewImg] = useState<string | null>(null);
-   const { data } = useAuth();
+    const { data } = useAuth();
+    const [isGallery, setIsGallery] = useState(false)
+
+    const handleGallery = () => {
+        setIsGallery(!isGallery);
+    }
     const fetchFoodData = async () => {
         try {
             const res = await GetByIdFoodService.GetByIdFood(food_ID);
 
             if (Array.isArray(res.data) && res.data.length > 0) {
                 img = `${IPOS_BASE_URL}${res.data[0].food_img}`
-                if(res.data[0].food_img){
+                if (res.data[0].food_img) {
                     setPreviewImg(img)
                 }
                 setFoodName(res.data[0].food_name);
@@ -93,7 +99,7 @@ const EditFoods: React.FC<EditPorductProps> = ({ handleModel, food_ID }) => {
         }
     };
 
-    return (
+    return <>
         <div className="flex flex-col w-96 h-fit bg-white rounded-lg shadow-xl">
             <div className="flex justify-between items-center px-5 w-full h-16 border-b-2">
                 <p className="text-xl font-semibold text-orange-500">ແກ້ໄຂເມນູ</p>
@@ -189,7 +195,10 @@ const EditFoods: React.FC<EditPorductProps> = ({ handleModel, food_ID }) => {
                 </form>
             </div>
         </div>
-    );
+        <div className={`w-full ${isGallery == false ? 'hidden' : 'absolute'} h-full  bg-white z-50`}>
+            <Gallery handleGallery={handleGallery} />
+        </div>
+    </>
 };
 
 export default EditFoods;

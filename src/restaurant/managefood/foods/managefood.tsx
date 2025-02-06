@@ -9,6 +9,7 @@ import { DeleteFoodService } from "../../../services/foods/delete-food";
 import CreateFoods from "./create-food";
 import EditFoods from "./edit-food";
 import { useAuth } from "../../../context/context";
+import Loading from "../../../utils/Loading";
 
 function ManageFood() {
     const [items, setItems] = useState<any[]>([]);
@@ -54,9 +55,6 @@ function ManageFood() {
             setisCheckModel(!isCheckModel)
             setIsCheckedPage(false)
             setfoodId(id)
-            console.log(foodId);
-
-
         } else {
             setisCheckModel(!isCheckModel)
         }
@@ -129,6 +127,7 @@ function ManageFood() {
         container.addEventListener("scroll", handleScroll);
         return () => container.removeEventListener("scroll", handleScroll);
     }, [isLoading, totalItem, items.length]);
+
     return (
         <div className="flex flex-col h-screen overflow-hidden">
             {loadingMessage && <LoadingMessage text={loadingMessageTitle} />}
@@ -199,6 +198,7 @@ function ManageFood() {
                                 No data available.
                             </div>
                         )}
+                          {isLoading && <p className="text-center w-full mt-2"><Loading text="ໂຫລດຂໍ້ມູນ" /></p>}
                     </div>
 
                 </div>

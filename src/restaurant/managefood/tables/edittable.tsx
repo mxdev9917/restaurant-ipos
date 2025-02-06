@@ -20,8 +20,6 @@ const EditTable: React.FC<EditTableProps> = ({ handleModel, tableName, tableId }
         try {
             setLoading(true);
             const today = new Date().toISOString().split("T")[0];
-            console.log(table_name);
-            
             const res = await editTableService.editTable(tableId, table_name, today);
             if (res.status == 200) {
                 alertSuccessV3("ແກ້ໄຂປະເພດເມນູສຳເລັດ", 'success');

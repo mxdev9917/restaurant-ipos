@@ -17,6 +17,7 @@ function Authen() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("x2");
     const [password, setPassword] = useState("1234");
+    
     function togglePasswordType() {
         setPasswordType(!passwordType);
     }
@@ -33,7 +34,7 @@ function Authen() {
              alertSuccess(navigate, "/dashboard", "ເຂົ້າສູ່ລະບົບສຳເລັດ", "success");
         } catch (error: any) {
             console.log(error.message);
-            authenErrors(error);
+            
 
         } finally {
             setLoading(false);
@@ -114,6 +115,3 @@ function Authen() {
 
 export default Authen
 
-function authenErrors(error: any) {
-    throw new Error("Function not implemented.");
-}

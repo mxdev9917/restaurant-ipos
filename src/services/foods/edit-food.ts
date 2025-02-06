@@ -8,7 +8,7 @@ interface IFoodService {
 }
 
 export class EditFoodService {
-    static EditProduct(product_ID: string, foodCategory: string, arg2: string, foodName: string, price: string, arg5: File | undefined) {
+    static EditProduct() {
         throw new Error("Method not implemented.");
     }
     static async Editfood(

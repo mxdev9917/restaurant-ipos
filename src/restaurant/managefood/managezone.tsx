@@ -2,12 +2,12 @@
 import { Link } from "react-router-dom"
 import { useState } from "react"
 import Sidebar_Nav from "../components/sidebar-nav"
-import { useAuth } from "../../context/context";
+
 function ManageZone() {
     const [isCheckModel, setisCheckModel] = useState(false)
     const [titleModel, setTitleModel] = useState('')
     const [isCheckEven, setisEven] = useState(true)
-    const { data } = useAuth();
+
     function handleModel(evens: string) {
         if (evens == 'add') {
             console.log('if add');

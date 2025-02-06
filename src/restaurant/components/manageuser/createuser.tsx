@@ -5,6 +5,7 @@ import { PostUserService } from "../../../services/users/create-user";
 import { createUserErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { alertSuccessV3 } from "../../../utils/alert";
+import { useAuth } from "../../../context/context";
 interface CreateUserProps {
     handleModel: (action: string, userId: string) => void;
 }
@@ -26,15 +27,15 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
     const [pckColor, setPckColor] = useState("ring-orange-500");
     const [ischeckPCK, setIscheckPCK] = useState(false)
     const [loading, setLoading] = useState(false);
+     const { data } = useAuth();
     const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setLoading(true)
-
-        const res_ID = "3";
+        let resId = String(data.restaurant_ID);
         const path_img = "user.jpg";
         try {
             const res = await PostUserService.postUser(
-                res_ID,
+                resId,
                 name,
                 user,
                 phone,
