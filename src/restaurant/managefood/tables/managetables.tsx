@@ -9,8 +9,12 @@ import EditTable from "./edittable";
 import { DeleteTableService } from "../../../services/tables/delete-table";
 import { alertSuccessV3 } from "../../../utils/alert";
 import LoadingMessage from "../../../utils/loadingMessage";
+import { useAuth } from "../../../context/context";
+ 
 
 function ManageTables() {
+
+    const { data } = useAuth();
     const [items, setItems] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [totalItem, setTotalItem] = useState(0);
@@ -69,7 +73,8 @@ function ManageTables() {
     // Fetch tables data from the API
     const fetchTableData = async (currentPage: number) => {
         try {
-            const response = await GetAllTableService.GetAllTable("3", currentPage, 40); // Replace with your actual API URL
+            let resId = String(data.restaurant_ID);
+            const response = await GetAllTableService.GetAllTable(resId, currentPage, 40); // Replace with your actual API URL
 
             if (response.status === "200") {
                 setTotalItem(response.total_item);

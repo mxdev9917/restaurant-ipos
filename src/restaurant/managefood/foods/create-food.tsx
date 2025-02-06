@@ -4,6 +4,7 @@ import { ICategoriesStatus } from "../../../services/categories/getbystatuse-cat
 import { alertSuccessV3 } from "../../../utils/alert";
 import { createFoodService } from "../../../services/foods/create-food";
 import { HiPlus } from "react-icons/hi";
+import { useAuth } from "../../../context/context";
 interface CreateProductProps {
     handleModel: (event: string) => void;
 }
@@ -16,9 +17,10 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
     const [product_img, setProductImg] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
     const [previewImg, setPreviewImg] = useState<string | null>(null);
+         const { data } = useAuth();
 
     const fetchData = async () => {
-        const res = await GetallcategoryByStatusService.GetAllCategory("3");
+        const res = await GetallcategoryByStatusService.GetAllCategory("60");
         setGetData(res.data);
     };
 
@@ -47,9 +49,10 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
         setLoading(true);
 
         try {
+            let resId = String(data.restaurant_ID);
             const response = await createFoodService.createFood(
                 foodCategory,
-                "3", // Assuming "3" is the restaurant ID
+                resId, // Assuming "3" is the restaurant ID
                 foodName,
                 price,
                 product_img || undefined

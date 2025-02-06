@@ -5,6 +5,7 @@ import { alertSuccessV3 } from "../../../utils/alert";
 import { GetByIdFoodService } from "../../../services/foods/getbyid-food";
 import { EditFoodService } from "../../../services/foods/edit-food";
 import { IPOS_BASE_URL } from "../../../utils/connection";
+import { useAuth } from "../../../context/context";
 
 interface EditPorductProps {
     handleModel: (event: string) => void;
@@ -20,7 +21,7 @@ const EditFoods: React.FC<EditPorductProps> = ({ handleModel, food_ID }) => {
     const [food_img, setProductImg] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
     const [previewImg, setPreviewImg] = useState<string | null>(null);
-
+   const { data } = useAuth();
     const fetchFoodData = async () => {
         try {
             const res = await GetByIdFoodService.GetByIdFood(food_ID);
@@ -43,7 +44,8 @@ const EditFoods: React.FC<EditPorductProps> = ({ handleModel, food_ID }) => {
 
 
     const fetchData = async () => {
-        const res = await GetallcategoryByStatusService.GetAllCategory("3");
+        let resId = String(data.restaurant_ID);
+        const res = await GetallcategoryByStatusService.GetAllCategory(resId);
         setGetData(res.data);
     };
 

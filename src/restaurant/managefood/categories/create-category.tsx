@@ -15,7 +15,7 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
         e.preventDefault();
         try {
             setLoading(true);
-            const res = await CreateCategoryService.CreateCategory("3",category)
+            const res = await CreateCategoryService.CreateCategory("60",category)
             if (res.status == 200) {
                 alertSuccessV3("ສ້າງປະເພດເມນູສຳເລັດ", 'success');
             }

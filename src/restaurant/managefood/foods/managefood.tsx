@@ -8,6 +8,7 @@ import LoadingMessage from "../../../utils/loadingMessage";
 import { DeleteFoodService } from "../../../services/foods/delete-food";
 import CreateFoods from "./create-food";
 import EditFoods from "./edit-food";
+import { useAuth } from "../../../context/context";
 
 function ManageFood() {
     const [items, setItems] = useState<any[]>([]);
@@ -20,7 +21,7 @@ function ManageFood() {
     const [loadingMessage, setLoadingMessage] = useState(false);
     const [loadingMessageTitle, setLoadingMessageTitle] = useState("");
     const [foodId, setfoodId] = useState("");
-    // const [foodName, setfoodName] = useState("");
+     const { data } = useAuth();
 
 
 
@@ -67,8 +68,8 @@ function ManageFood() {
     // Fetch foods data from the API
     const fetchfoodData = async (currentPage: number) => {
         try {
-
-            const response = await GetallFoodsService.GetAllFoods("3", currentPage, 40); // Replace with your actual API URL
+            let resId = String(data.restaurant_ID);
+            const response = await GetallFoodsService.GetAllFoods(resId, currentPage, 40); // Replace with your actual API URL
 
             if (response.status === "200") {
                 setTotalItem(response.total_item);
@@ -168,7 +169,7 @@ function ManageFood() {
                         </div>
 
                         <div className=" pr-1 mb-2  md:pr-5 ">
-                            <button onClick={() => handleModel('add')} className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-full text-white text-xs md:text-sm">ເພີ່ມໂຕະ</button>
+                            <button onClick={() => handleModel('add')} className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-full text-white text-xs md:text-sm">ເພີ່ມເມນູ</button>
                         </div>
                     </div>
 

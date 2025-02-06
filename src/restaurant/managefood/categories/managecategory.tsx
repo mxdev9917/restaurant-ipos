@@ -58,7 +58,7 @@ function ManageCategory() {
         const fetchData = async () => {
             try {
                 setLoading(true)
-                const res = await GetallcategoryService.GetAllCategory("3", currentPage, itemsPerPage);
+                const res = await GetallcategoryService.GetAllCategory("60", currentPage, itemsPerPage);
                 setGetData(res.data);
                 let itemper = Number(res.total_item)
                 setTotalItems(itemper)
