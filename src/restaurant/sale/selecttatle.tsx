@@ -7,6 +7,7 @@ import Loading from "../../utils/Loading";
 import { useAuth } from "../../context/context";
 import TableMenu from "./components/tablemenu";
 import { generalErrors } from "../../utils/error";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -19,41 +20,47 @@ function selectTatles() {
     const [isLoading, setIsLoading] = useState(false);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const fetchedItemIDs = useRef(new Set<string>());
-    const [tableId, setTableId] = useState("")
+    const [tableId, setTableId] = useState("");
+    const navigate = useNavigate();
     const { data } = useAuth();
     function isCheckMenu() { }
 
 
-    function handleClick(id: string) {
-        setIsCheckModel(!isCheckModel)
-        setTableId(id);
+    function handleClick(id: string, status: string) {
+       
+        if (status != "empty") {
+            navigate(`/cart/${id}`);
+        }else{
+            setIsCheckModel(!isCheckModel)
+            setTableId(id);
+        }
     }
 
 
     const fetctData = async (currentPage: number) => {
         try {
             let resId = String(data.restaurant_ID);
-        const response = await GetAllTableByStatusService.GetAllTable(resId, currentPage, 40)
-        if (response.status === "200") {
-            setTotalItem(response.total_item);
-            const newItems = response.data.filter((item: any) => {
-                if (fetchedItemIDs.current.has(item.table_ID)) {
-                    return false; // Skip this item if it's already been added
-                } else {
-                    fetchedItemIDs.current.add(item.table_ID); // Mark this ID as fetched
-                    return true; // Keep this item
-                }
-            });
+            const response = await GetAllTableByStatusService.GetAllTable(resId, currentPage, 40)
+            if (response.status === "200") {
+                setTotalItem(response.total_item);
+                const newItems = response.data.filter((item: any) => {
+                    if (fetchedItemIDs.current.has(item.table_ID)) {
+                        return false; // Skip this item if it's already been added
+                    } else {
+                        fetchedItemIDs.current.add(item.table_ID); // Mark this ID as fetched
+                        return true; // Keep this item
+                    }
+                });
 
-            // Append the new unique items to the state
-            if (newItems.length > 0) {
-                setItems((prevItems) => [...prevItems, ...newItems]);
+                // Append the new unique items to the state
+                if (newItems.length > 0) {
+                    setItems((prevItems) => [...prevItems, ...newItems]);
+                }
+            } else {
+                console.error("Failed to fetch data:", response.message);
             }
-        } else {
-            console.error("Failed to fetch data:", response.message);
-        }
-        } catch (error:any) {
-            generalErrors(error) ;
+        } catch (error: any) {
+            generalErrors(error);
         }
 
     }
@@ -138,7 +145,7 @@ function selectTatles() {
             </div>
 
             <div className={`${isCheckModel ? "block" : "hidden"} bg-black/30 w-full h-full absolute flex justify-center items-center`}>
-                <TableMenu tableId={tableId} handleClick={handleClick} />
+               <TableMenu tableId={tableId} handleClick={() => handleClick("", "empty")} />
             </div>
         </div>
     )

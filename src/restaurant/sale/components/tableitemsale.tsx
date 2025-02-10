@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface TableItemSaleProps {
-  onClick?: (id:string) => void; // Make the onClick prop optional
+  onClick?: (id:string,status:string) => void; // Make the onClick prop optional
   tableName:string;
   tableId:string;
   tableStatus:string;
@@ -10,7 +10,7 @@ interface TableItemSaleProps {
 const TableItemSale: React.FC<TableItemSaleProps> = ({ onClick ,tableName,tableId,tableStatus}) => {
   function handleOnClick() {
     if (onClick) {
-      onClick(tableId);
+      onClick(tableId,tableStatus);
     }
   }
 

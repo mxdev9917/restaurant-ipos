@@ -6,7 +6,7 @@ import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { generalErrors } from "../../../utils/error";
 
 interface TableMenuProps {
-    handleClick?: (id: string) => void; // Optional function
+    handleClick?: (id: string ) => void; // Optional function
     tableId: string;
 }
 

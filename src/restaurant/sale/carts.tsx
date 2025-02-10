@@ -2,13 +2,17 @@ import Nav from "../components/nav";
 import CartsItem from "./components/carditem";
 import FoodItemSale from "./components/fooditem";
 import CategoryItem from "./components/categoryitem";
-import { useState } from "react";
-import TableItemSale from "./components/tableitemsale";
+import { useEffect, useState } from "react";
+// import TableItemSale from "./components/tableitemsale";
 import { Dropdown } from "flowbite-react";
 import { FiPrinter } from 'react-icons/fi';
+import { GetallcategoryByStatusService } from "../../services/categories/getbystatuse-category";
+import { useAuth } from "../../context/context";
+import { HiArrowsExpand } from "react-icons/hi";
+import { generalErrors } from "../../utils/error";
 
 function Carts() {
-  const items = Array.from({ length: 100 }, (_, index) => index);
+
   const [PrinterModel, setPrinterleModel] = useState(false);
   const [handleModel, setHandleModel] = useState(true);
   const [foodName, setFoodName] = useState("");
@@ -17,7 +21,8 @@ function Carts() {
   const [titlePrinterModel, setTitlePrinterModel] = useState("")
   const [isCheckEvenMenu, setIsCheckEvenMenu] = useState(false)
   const [isCheckModelEvenMenu, setIsCheckModelEvenMenu] = useState(false)
-
+  const [items, setItems] = useState<any[]>([]);
+ const { data } = useAuth();
 
   function handleTableInclude() {
     setIsCheckModelEvenMenu(false)
@@ -60,27 +65,47 @@ function Carts() {
     console.log(e.target.value);
   };
 
+
+  const fetchData=async ()=>{
+    let resId = String(data.restaurant_ID);
+
+    try {
+      const res =await GetallcategoryByStatusService.GetAllCategory(resId)
+      setItems(res.data);
+      
+    } catch (error:any) {
+      generalErrors(error)
+    }
+  }
+
+  useEffect(()=>{
+    fetchData();
+  },[])
+
+
+
   return (
     <div className="flex flex-col overflow-y-hidden max-w-[100vw] max-h-[100vh] ">
       <Nav handelMenu={isCheckMenu} />
       <div className="flex gap-2">
         <div className="flex flex-col w-full xl:max-w-[calc(100%-24rem)] h-screen ">
-          <div className="w-full h-fit  flex gap-3  items-center">
+          <div className="w-full h-fit  flex gap-3  items-center border-b-2 mb-2">
             <div className="ml-3">
-              <button className="w-28 h-fit bg-orange-500 text-white p-1.5 rounded-lg right-1 focus:ring-1 focus:ring-orange-500">
-                ເມເນູທັ້ງໝົດ
+              <button className="flex items-center w-32 h-14 bg-orange-500 text-white p-1.5 rounded-lg right-1 focus:ring-1 focus:ring-orange-500">
+              <HiArrowsExpand className="text-3xl" />
+               <p> ເມເນູທັ້ງໝົດ</p>
               </button>
             </div>
-            <div className="w-full flex gap-3 overflow-x-auto snap-x ">
-              {items.map((_, index) => (
-                <div key={index} className="py-5">
-                  <CategoryItem />
+            <div className="w-full flex gap-3 overflow-x-auto snap-x  ">
+              {items.map((item) => (
+                <div key={item.category_ID} className="py-1 mt-2">
+                  <CategoryItem categoryId={item.category_ID} categoryName={item.category} categoryImg={item.category_image}/>
                 </div>
               ))}
             </div>
 
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 overflow-y-auto ">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 overflow-y-auto pl-2 ">
             {items.map((_, index) => (
               <div key={index} className="p-1 w-full">
                 <div className="w-full h-40 sm:h-48 md:h-52 lg:h-56">
@@ -107,11 +132,11 @@ function Carts() {
             </div>
 
             <div className="h-96  flex flex-wrap  place-items-stretch overflow-y-scroll">
-              {items.map((_, index) => (
+              {/* {items.map((_, index) => (
                 <div key={index} className="m-1 w-20  h-20" >
                   <TableItemSale />
                 </div>
-              ))}
+              ))} */}
             </div>
             <div className="flex justify-end pt-2 border-t-2">
               <button className="flex justify-center items-center text-white bg-green-500 p-2 rounded-lg ">ບັກທືກ</button>

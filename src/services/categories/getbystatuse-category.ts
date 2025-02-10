@@ -11,6 +11,7 @@ export interface ICategoriesStatus {
   export interface Data {
     category_ID:string
     category: string
+    category_image:string
   }
 
 
