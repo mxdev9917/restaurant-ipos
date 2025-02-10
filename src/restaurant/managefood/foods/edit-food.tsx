@@ -23,10 +23,17 @@ const EditFoods: React.FC<EditPorductProps> = ({ handleModel, food_ID }) => {
     const [loading, setLoading] = useState(false);
     const [previewImg, setPreviewImg] = useState<string | null>(null);
     const { data } = useAuth();
-    const [isGallery, setIsGallery] = useState(false)
+    const [isGallery, setIsGallery] = useState(false);
+    const [gallery_path ,setGallery_path]=useState("");
 
     const handleGallery = () => {
         setIsGallery(!isGallery);
+    }
+    const handleSelectPath = (path: string) => {
+        setPreviewImg(`${IPOS_BASE_URL}${path}`)
+        setIsGallery(false);
+        setGallery_path(path);
+
     }
     const fetchFoodData = async () => {
         try {
@@ -86,6 +93,7 @@ const EditFoods: React.FC<EditPorductProps> = ({ handleModel, food_ID }) => {
                 "3", // Assuming "3" is the restaurant ID
                 foodName,
                 price,
+                gallery_path,
                 food_img || undefined
             );
 
@@ -167,23 +175,26 @@ const EditFoods: React.FC<EditPorductProps> = ({ handleModel, food_ID }) => {
 
                         </div>
 
-                        {/* File Upload */}
-                        <div className="col-span-2">
+                       {/* File Upload */}
+                       <div className="col-span-2">
                             <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 text-xs md:text-sm">
                                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                     {previewImg ? (
                                         <img src={previewImg} alt="Uploaded Preview" className="w-32 h-32 object-cover rounded-lg" />
                                     ) : (
                                         <>
-                                            <p className="mb-2 text-gray-500 text-xs md:text-sm">
-                                                <span className="font-semibold">Click to upload</span> or drag and drop
-                                            </p>
-                                            <p className="text-xs text-gray-500">SVG, JPG (MAX. 204x240px)</p>
+                                            <p className="text-gray-500 text-xs md:text-sm font-semibold mb-2">ກົດອັບໂຫຼດ</p>
+                                            <p className="text-xs text-orange-500">SVG, JPG (MAX. 204x240px)</p>
                                         </>
                                     )}
                                 </div>
                                 <input id="dropzone-file" type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
                             </label>
+
+                            {/* Separate button for selecting from gallery */}
+                            <div className="flex justify-end w-full ">
+                                <div onClick={handleGallery} className="mt-2 text-orange-500 text-xs md:text-sm underline">ເລືອກຈາກຄັງພາບ</div>
+                            </div>
                         </div>
 
 
@@ -196,7 +207,7 @@ const EditFoods: React.FC<EditPorductProps> = ({ handleModel, food_ID }) => {
             </div>
         </div>
         <div className={`w-full ${isGallery == false ? 'hidden' : 'absolute'} h-full  bg-white z-50`}>
-            <Gallery handleGallery={handleGallery} />
+        <Gallery handleSelectPath={handleSelectPath} handleGallery={handleGallery} />
         </div>
     </>
 };

@@ -5,6 +5,7 @@ import { createCategoryErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { useAuth } from "../../../context/context";
 import Gallery from "../../galley/gallery";
+import { IPOS_BASE_URL } from "../../../utils/connection";
 
 interface CreateCategoryProps {
     handleModel: (event: string) => void;
@@ -17,14 +18,16 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
     const [previewImg, setPreviewImg] = useState<string | null>(null);
     const { data } = useAuth();
     const [isGallery, setIsGallery] = useState(false)
-
+    const [gallery_path ,setGallery_path]=useState("")
     const handleGallery = () => {
         setIsGallery(!isGallery);
     }
+    const handleSelectPath = (path: string) => {
+        setPreviewImg(`${IPOS_BASE_URL}${path}`)
+        setIsGallery(false);
+        setGallery_path(path)
 
-
-
-   
+    }
 
 
     const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
@@ -32,7 +35,7 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
         try {
             setLoading(true);
             let resId = String(data.restaurant_ID);
-            const res = await CreateCategoryService.CreateCategory(resId, category, categoryImg || undefined)
+            const res = await CreateCategoryService.CreateCategory(resId, category,gallery_path , categoryImg || undefined)
             if (res.status == "200") {
                 alertSuccessV3("ສ້າງປະເພດເມນູສຳເລັດ", 'success');
             }
@@ -40,7 +43,7 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
         } catch (error: any) {
             console.error("Category creation failed", error); // Log the error for debugging
             createCategoryErrors(error);
-       }
+        }
         finally {
             setLoading(false);
         }
@@ -56,7 +59,7 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
             setPreviewImg(imgPreview);
         }
     };
- 
+
 
     return <>
         <div className="flex flex-col w-96 h-fit bg-white rounded-lg shadow-xl">
@@ -126,12 +129,12 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
                 </form>
             </div>
         </div>
-        <div className={`w-full ${isGallery==false? 'hidden' : 'absolute'} h-full  bg-white z-50`}>
-            <Gallery handleGallery={handleGallery}/>
+        <div className={`w-full ${isGallery == false ? 'hidden' : 'absolute'} h-full  bg-white z-50`}>
+            <Gallery handleSelectPath={handleSelectPath} handleGallery={handleGallery} />
         </div>
 
-        
-        </>
+
+    </>
 }
 
 export default CreateCategory;

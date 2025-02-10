@@ -7,23 +7,26 @@ interface ICategoriesService {
     data?: any;
 }
 
-export class editCategoryService {
+export class editCategoryService  {
     static async editCategory(
         category_ID: string,
         category: string,
-        update_at:string,
+        update_at: string,
+        gallery_path: string,
         category_img?: File
-
     ): Promise<ICategoriesService> {
         try {
             const formData = new FormData();
-            formData.append("category_ID", category_ID.toString());
-            formData.append("category", category.toString());
-            formData.append("update_at", update_at.toString());
+            formData.append("category_ID", category_ID);
+            formData.append("category", category);
+            formData.append("update_at", update_at);
+
             if (category_img) {
                 formData.append("category_img", category_img);
             }
-
+            if(gallery_path!=""){
+                formData.append("gallery_path", gallery_path);
+            }
             const res = await axios.patch(`${IPOS_BASE_URL}/category`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -34,9 +37,8 @@ export class editCategoryService {
         } catch (error: any) {
             return {
                 status: error.response?.status || 500,
-                message: error.response?.data?.message || "An error occurred while editting the food",
+                message: error.response?.data?.message || "An error occurred while editing the category",
             };
         }
     }
 }
-

@@ -6,10 +6,11 @@ import { IPOS_BASE_URL } from "../../utils/connection";
 
 interface CreateGalleryProps {
     handleGallery: () => void;
+    handleSelectPath:(path:string)=>void
 }
 
 
-const Gallery: React.FC<CreateGalleryProps> = ({ handleGallery }) => {
+const Gallery: React.FC<CreateGalleryProps> = ({ handleGallery,handleSelectPath }) => {
     const [items, setItems] = useState<any[]>([]);
     const [totalItem, setTotalItem] = useState(0);
     const [page, setPage] = useState(1);
@@ -92,28 +93,42 @@ const Gallery: React.FC<CreateGalleryProps> = ({ handleGallery }) => {
             </div>
 
             <div className="w-full h-full mt-3 p-3 overflow-x-auto">
-                <div
-                    ref={containerRef}
-                    className="w-full h-full  p-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3"
+    <div
+        ref={containerRef}
+        className="w-full h-full p-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3"
+    >
+        {items.length > 0 ? (
+            items.map((item) => (
+                <div 
+                    key={item.pathImg_ID} 
+                    className="relative group w-full h-48 sm:h-32 md:h-40 lg:h-40 sm:mb-0 mb-5"
                 >
-                    {items.length > 0 ? (
-                        items.map((item) => (
-                            <div key={item.pathImg_ID} className="w-full h-48 sm:h-32 md:h-40 lg:h-40 sm:mb-0 mb-5">
-                              <img className="w-full border-2  object-cover" src={`${IPOS_BASE_URL}${item.pathImg_name}`} alt="" />
-                            </div>
-                        ))
-                    ) : (
-                        <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
-                            No data available.
-                        </div>
-                    )}
-                    {isLoading && (
-                        <p className="text-center w-full mt-2">
-                            <Loading text="ໂຫລດຂໍ້ມູນ" />
-                        </p>
-                    )}
+                    {/* Image */}
+                    <img 
+                        className="w-full h-full border-2 object-cover" 
+                        src={`${IPOS_BASE_URL}${item.pathImg_name}`} 
+                        alt="" 
+                    />
+
+                    {/* Hover Effect */}
+                    <div onClick={()=>(handleSelectPath(item.pathImg_name))}  className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
+                        <span className="text-white font-semibold">ເລືອກ</span>
+                    </div>
                 </div>
+            ))
+        ) : (
+            <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
+                No data available.
             </div>
+        )}
+        {isLoading && (
+            <p className="text-center w-full mt-2">
+                <Loading text="ໂຫລດຂໍ້ມູນ" />
+            </p>
+        )}
+    </div>
+</div>
+
         </div>
     );
 }

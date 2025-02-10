@@ -5,6 +5,7 @@ import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { GetByeCategoryService } from "../../../services/categories/getby-category";
 import { editCategoryService } from "../../../services/categories/edit-category";
 import Gallery from "../../galley/gallery";
+import { IPOS_BASE_URL } from "../../../utils/connection";
 interface EditCategoryProps {
     id: string;
     handleModel: (event: string) => void;
@@ -16,9 +17,17 @@ const EditCategory: React.FC<EditCategoryProps> = ({ handleModel, id }) => {
     const [previewImg, setPreviewImg] = useState<string | null>(null);
     const [categoryImg, setCategoryIng] = useState<File | null>(null);
     const [isGallery, setIsGallery] = useState(false)
+    const [gallery_path ,setGallery_path]=useState("")
+
 
     const handleGallery = () => {
         setIsGallery(!isGallery);
+    }
+    const handleSelectPath = (path: string) => {
+        setPreviewImg(`${IPOS_BASE_URL}${path}`)
+        setIsGallery(false);
+        setGallery_path(path);
+
     }
 
 
@@ -42,6 +51,7 @@ const EditCategory: React.FC<EditCategoryProps> = ({ handleModel, id }) => {
                 id,
                 category,
                 today,
+                gallery_path,
                 categoryImg || undefined
             );
 
@@ -131,7 +141,7 @@ const EditCategory: React.FC<EditCategoryProps> = ({ handleModel, id }) => {
             </div>
         </div>
         <div className={`w-full ${isGallery == false ? 'hidden' : 'absolute'} h-full  bg-white z-50`}>
-            <Gallery handleGallery={handleGallery} />
+            <Gallery handleSelectPath={handleSelectPath} handleGallery={handleGallery} />
         </div>
     </>
 }

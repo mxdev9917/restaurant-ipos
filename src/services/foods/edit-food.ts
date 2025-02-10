@@ -17,6 +17,7 @@ export class EditFoodService {
         restaurant_ID: string,
         food_name: string,
         price: string,
+        gallery_path: string,
         food_img?: File
     ): Promise<IFoodService> {
         try {
@@ -26,7 +27,9 @@ export class EditFoodService {
             formData.append("restaurant_ID", restaurant_ID.toString());
             formData.append("food_name", food_name);
             formData.append("price", price.toString());
-
+            if(gallery_path!=""){
+                formData.append("gallery_path", gallery_path);
+            }
             if (food_img) {
                 formData.append("food_img", food_img);
             }

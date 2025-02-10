@@ -13,12 +13,17 @@ export class CreateCategoryService {
     static async CreateCategory(
         restaurant_ID: string,
         category:string,
+        gallery_path: string,
         category_img?: File
     ): Promise<IFoodService> {
         try {
             const formData = new FormData();
             formData.append("restaurant_ID", restaurant_ID);
             formData.append("category",category.toString());
+ 
+            if(gallery_path!=""){
+                formData.append("gallery_path", gallery_path);
+            }
             if (category_img) {
                 formData.append("category_img", category_img);
             }

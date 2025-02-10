@@ -6,6 +6,7 @@ import { createFoodService } from "../../../services/foods/create-food";
 import { HiPlus } from "react-icons/hi";
 import { useAuth } from "../../../context/context";
 import Gallery from "../../galley/gallery";
+import { IPOS_BASE_URL } from "../../../utils/connection";
 interface CreateProductProps {
     handleModel: (event: string) => void;
 }
@@ -20,9 +21,15 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
     const [previewImg, setPreviewImg] = useState<string | null>(null);
     const { data } = useAuth();
     const [isGallery, setIsGallery] = useState(false)
-
+    const [gallery_path ,setGallery_path]=useState("")
     const handleGallery = () => {
         setIsGallery(!isGallery);
+    }
+    const handleSelectPath = (path: string) => {
+        setPreviewImg(`${IPOS_BASE_URL}${path}`)
+        setIsGallery(false);
+        setGallery_path(path);
+
     }
 
 
@@ -59,6 +66,7 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
                 resId, // Assuming "3" is the restaurant ID
                 foodName,
                 price,
+                gallery_path,
                 product_img || undefined
             );
 
@@ -169,7 +177,7 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
             </div>
         </div>
          <div className={`w-full ${isGallery == false ? 'hidden' : 'absolute'} h-full  bg-white z-50`}>
-         <Gallery handleGallery={handleGallery} />
+         <Gallery handleSelectPath={handleSelectPath} handleGallery={handleGallery} />
      </div>
      </>
 };
