@@ -1,17 +1,101 @@
 import ZoneItem from "./components/zoneitem"
 import TableItemSale from "./components/tableitemsale";
 import Nav from "../components/nav";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { GetAllTableByStatusService } from "../../services/tables/gettablebystatus-table";
+import Loading from "../../utils/Loading";
+import { useAuth } from "../../context/context";
+import TableMenu from "./components/tablemenu";
+import { generalErrors } from "../../utils/error";
+
+
+
+
 function selectTatles() {
     const [isCheckModel, setIsCheckModel] = useState(false)
-    const items = Array.from({ length: 50 }, (_, index) => index);
+    const [page, setPage] = useState(1);
+    const [totalItem, setTotalItem] = useState(0);
+    const [items, setItems] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const fetchedItemIDs = useRef(new Set<string>());
+    const [tableId, setTableId] = useState("")
+    const { data } = useAuth();
     function isCheckMenu() { }
-    function handleClick() {
+
+
+    function handleClick(id: string) {
         setIsCheckModel(!isCheckModel)
+        setTableId(id);
     }
+
+
+    const fetctData = async (currentPage: number) => {
+        try {
+            let resId = String(data.restaurant_ID);
+        const response = await GetAllTableByStatusService.GetAllTable(resId, currentPage, 40)
+        if (response.status === "200") {
+            setTotalItem(response.total_item);
+            const newItems = response.data.filter((item: any) => {
+                if (fetchedItemIDs.current.has(item.table_ID)) {
+                    return false; // Skip this item if it's already been added
+                } else {
+                    fetchedItemIDs.current.add(item.table_ID); // Mark this ID as fetched
+                    return true; // Keep this item
+                }
+            });
+
+            // Append the new unique items to the state
+            if (newItems.length > 0) {
+                setItems((prevItems) => [...prevItems, ...newItems]);
+            }
+        } else {
+            console.error("Failed to fetch data:", response.message);
+        }
+        } catch (error:any) {
+            generalErrors(error) ;
+        }
+
+    }
+    // Load more items when reaching the bottom of the container
+    const loadMoreItems = () => {
+        if (totalItem === items.length) {
+            return; // Stop loading more items if all items are fetched
+        }
+        setIsLoading(true);
+        setTimeout(() => {
+            setPage((prevPage) => prevPage + 1); // Increment page number for the next request
+            fetctData(page); // Fetch next page data
+            setIsLoading(false);
+        }, 1200);
+
+
+    };
+
+    // Initial data fetch when the component mounts
+    useEffect(() => {
+        fetctData(page); // Fetch data for the first page
+    }, [page]);
+
+    // Handle scrolling and load more items
+    useEffect(() => {
+        const container = containerRef.current;
+        if (!container || !(container instanceof HTMLElement)) return;
+
+        const handleScroll = () => {
+            if (container.scrollTop + container.clientHeight >= container.scrollHeight - 10 && !isLoading) {
+                loadMoreItems();
+            }
+        };
+
+        container.addEventListener("scroll", handleScroll);
+        return () => container.removeEventListener("scroll", handleScroll);
+    }, [isLoading, totalItem, items.length]);
+
+
+
     return (
-        <div className="w-screen flex flex-col">
+        <div className="w-screen h-screen flex flex-col   ">
             <Nav handelMenu={isCheckMenu} />
 
             <div className=" w-full flex gap-3 items-center pt-2 ">
@@ -32,33 +116,29 @@ function selectTatles() {
                 </div>
             </div>
 
-            <div className="h-[85vh] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3 overflow-y-scroll px-3 mt-2">
-                {items.map((_, index) => (
-                    <div key={index} className="h-32">
-                        <TableItemSale onClick={handleClick} />
+
+
+
+            <div
+                ref={containerRef}
+                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 sm:gap-3 gap-3 overflow-auto p-3 w-full h-fit"
+            >
+                {items.length > 0 ? (
+                    items.map((item) => (
+                        <div key={item.table_ID} className="w-full h-28 sm:h-32 md:h-52 lg:h-40 ">
+                            <TableItemSale onClick={handleClick} tableId={item.table_ID} tableName={item.table_name} tableStatus={item.table_status} />
+                        </div>
+                    ))
+                ) : (
+                    <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
+                        No data available.
                     </div>
-                ))}
+                )}
+                {isLoading && <p className="text-center w-full mt-2"><Loading text="ໂຫລດຂໍ້ມູນ" /></p>}
             </div>
 
             <div className={`${isCheckModel ? "block" : "hidden"} bg-black/30 w-full h-full absolute flex justify-center items-center`}>
-                <div className="h-fit w-96 bg-white rounded-lg flex flex-col p-3 mx-5 sm:mx-0">
-                    <div className="flex justify-between items-center border-b-2">
-                        <p className="text-xl pb-2 text-gray-700 font-semibold">
-                            ເລືອກເມນູ
-                        </p>
-                        <button
-                            onClick={handleClick}
-                            className=" text-red-500"
-                        >
-                            ຍົກເລິກ
-                        </button>
-                    </div>
-                    <div className="w-full flex justify-evenly mt-3 text-white">
-                        <button className="p-3 bg-yellow-400 w-full mr-1 rounded-lg">ຈອງໂຕະ</button>
-                        <Link to={'/cart/1'} className="p-3 bg-green-500 w-full ml-1 flex justify-center rounded-lg">ເປີດໂຕະໄໝ່</Link>
-                    </div>
-
-                </div>
+                <TableMenu tableId={tableId} handleClick={handleClick} />
             </div>
         </div>
     )

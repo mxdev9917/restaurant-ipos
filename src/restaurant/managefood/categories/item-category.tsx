@@ -18,7 +18,7 @@ const CategroyItem: React.FC<categoryItemProps> = ({ onDelete, onEdit, categoryN
     const handleEditStatus = async () => {
         let newStatus: string;
         categoryStatus = categoryStatus.toLowerCase();
-        if (status === "locked") {
+        if (categoryStatus === "locked") {
             newStatus = "active"
         } else if (categoryStatus === "active") {
             newStatus = "locked"

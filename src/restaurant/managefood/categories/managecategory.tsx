@@ -1,12 +1,9 @@
 
 import { Link } from "react-router-dom"
-
 import { useEffect, useRef, useState } from "react";
 import Sidebar_Nav from "../../components/sidebar-nav"
 import { GetallcategoryService } from "../../../services/categories/getall-category";
 import { DeleteCategoryService } from "../../../services/categories/delete-category";
-
-
 import { alertSuccessV3 } from "../../../utils/alert";
 import Loading from "../../../utils/Loading";
 import CreateCategory from "./create-category";
@@ -61,9 +58,6 @@ function ManageCategory() {
 
     }
    
-
-    
-
     const handleDelete = async (category_ID: string) => {
         try {
             const res = await DeleteCategoryService.DeleteCategory(category_ID);
@@ -101,8 +95,9 @@ function ManageCategory() {
             } else {
                 console.error("Failed to fetch data:", response.message);
             }
-        } catch (error) {
+        } catch (error:any) {
             console.error("Error fetching data:", error);
+            generalErrors(error)
         }finally{
             setLoadingMessage(false)
         }
@@ -142,7 +137,6 @@ function ManageCategory() {
             {loadingMessage && <LoadingMessage text={"ດາວໂຫຼດຂໍ້ມູນ"} />}
             <Sidebar_Nav />
             <div className="pt-8 sm:ml-64">
-
                 <div className="p-1">
                     <div className="flex justify-between w-full h-fit items-end">
                         <div className="flex flex-col w-fit h-fit pb-2 pl-2">

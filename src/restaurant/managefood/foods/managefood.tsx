@@ -10,6 +10,7 @@ import CreateFoods from "./create-food";
 import EditFoods from "./edit-food";
 import { useAuth } from "../../../context/context";
 import Loading from "../../../utils/Loading";
+import { generalErrors } from "../../../utils/error";
 
 function ManageFood() {
     const [items, setItems] = useState<any[]>([]);
@@ -36,8 +37,8 @@ function ManageFood() {
                 alertSuccessV3("ລົບສຳເລັດ", 'success');
             }
 
-        } catch (error) {
-
+        } catch (error:any) {
+            generalErrors(error);
         }
     }
 
@@ -88,8 +89,9 @@ function ManageFood() {
             } else {
                 console.error("Failed to fetch data:", response.message);
             }
-        } catch (error) {
+        } catch (error:any) {
             console.error("Error fetching data:", error);
+            generalErrors(error)
         }
     };
 

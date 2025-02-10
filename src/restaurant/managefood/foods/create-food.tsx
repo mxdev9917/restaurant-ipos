@@ -7,6 +7,7 @@ import { HiPlus } from "react-icons/hi";
 import { useAuth } from "../../../context/context";
 import Gallery from "../../galley/gallery";
 import { IPOS_BASE_URL } from "../../../utils/connection";
+import { generalErrors } from "../../../utils/error";
 interface CreateProductProps {
     handleModel: (event: string) => void;
 }
@@ -34,9 +35,13 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
 
 
     const fetchData = async () => {
+       try {
         let resId = String(data.restaurant_ID);
         const res = await GetallcategoryByStatusService.GetAllCategory(resId);
         setGetData(res.data);
+       } catch (error:any) {
+        generalErrors(error)
+       }
     };
 
     useEffect(() => {

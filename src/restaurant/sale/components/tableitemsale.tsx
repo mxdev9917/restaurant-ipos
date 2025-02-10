@@ -1,22 +1,25 @@
 import React from 'react';
 
 interface TableItemSaleProps {
-  onClick?: () => void; // Make the onClick prop optional
+  onClick?: (id:string) => void; // Make the onClick prop optional
+  tableName:string;
+  tableId:string;
+  tableStatus:string;
 }
 
-const TableItemSale: React.FC<TableItemSaleProps> = ({ onClick }) => {
+const TableItemSale: React.FC<TableItemSaleProps> = ({ onClick ,tableName,tableId,tableStatus}) => {
   function handleOnClick() {
     if (onClick) {
-      onClick();
+      onClick(tableId);
     }
   }
 
   return (
     <button 
       onClick={handleOnClick} 
-      className="flex justify-center items-center w-full h-full bg-green-500 rounded-md shadow-inner"
+      className={`flex justify-center items-center w-full h-full ${tableStatus=="reserve" ? 'bg-yellow-300' : 'bg-green-500' }  rounded-md shadow-inner hover:bg-orange-300`}
     >
-      <p className="text-2xl font-bold text-white">ໂຕະ1</p>
+      <p className="text-3xl sm:text-5xl  font-bold text-white">{tableName}</p>
     </button>
   );
 }

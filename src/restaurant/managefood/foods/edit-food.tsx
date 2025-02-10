@@ -7,6 +7,7 @@ import { EditFoodService } from "../../../services/foods/edit-food";
 import { IPOS_BASE_URL } from "../../../utils/connection";
 import { useAuth } from "../../../context/context";
 import Gallery from "../../galley/gallery";
+import { generalErrors } from "../../../utils/error";
 
 interface EditPorductProps {
     handleModel: (event: string) => void;
@@ -50,8 +51,9 @@ const EditFoods: React.FC<EditPorductProps> = ({ handleModel, food_ID }) => {
             } else {
                 console.warn("No product data found!");
             }
-        } catch (error) {
+        } catch (error:any) {
             console.error("Failed to fetch product:", error);
+            generalErrors(error)
         }
     };
 
@@ -100,8 +102,9 @@ const EditFoods: React.FC<EditPorductProps> = ({ handleModel, food_ID }) => {
             if (response.status === "200") {
                 alertSuccessV3("ແກ້ໄຂເມນູສຳເລັດ", 'success');
             }
-        } catch (error) {
+        } catch (error:any) {
             console.error("Error:", error);
+            generalErrors(error)
         } finally {
             setLoading(false);
         }
