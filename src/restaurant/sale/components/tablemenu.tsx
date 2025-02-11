@@ -1,33 +1,38 @@
-import { Link } from "react-router-dom";
-import { reservsService } from "../../../services/tables/Reserve-table";
 import { alertSuccessV3 } from "../../../utils/alert";
 import { useState } from "react";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { generalErrors } from "../../../utils/error";
+import { OpenOrderService } from "../../../services/sale/createorder-service";
+import { useAuth } from "../../../context/context";
+import { useNavigate } from "react-router-dom";
 
 interface TableMenuProps {
-    handleClick?: (id: string ) => void; // Optional function
+    handleClick?: (id: string) => void; // Optional function
     tableId: string;
 }
 
 const TableMenu: React.FC<TableMenuProps> = ({ handleClick, tableId }) => {
-    const [loading, setLoading] = useState(false);
+    const [loadingReserve, setReserveLoading] = useState(false);
+    const [loadingOpen, setOpenLoading] = useState(false);
+    const { data } = useAuth();
+    const navigate = useNavigate();
 
-    const handleUpdate = async () => {
+    const handleUpdate = async (table_status: string, even: boolean) => {
+        let userId = String(data.user_ID);
+        let tableID = String(tableId);
         try {
-            setLoading(true);
-            const response = await reservsService.Reserver(tableId)
-            if (response.status == "200") {
-                alertSuccessV3("ຈອງໂຕະສຳເລັດ", "success");
+            even ? setOpenLoading(true):setReserveLoading(true) ;
+            const response = await OpenOrderService.OpenOrder(tableID, userId, table_status);
+            if (response?.status == "200") {
+                even ? navigate(`/cart/${tableId}`) : alertSuccessV3("ຈອງໂຕະສຳເລັດ", "success");
             }
-
-        } catch (error:any) {
-            generalErrors(error)
+        } catch (error: any) {
+            generalErrors(error);
         } finally {
-            setLoading(false);
+            setReserveLoading(false);
+            setOpenLoading(false);
         }
-
-    }
+    };
 
     return (
         <div className="h-fit w-96 bg-white rounded-lg flex flex-col p-3 mx-5 sm:mx-0">
@@ -42,20 +47,19 @@ const TableMenu: React.FC<TableMenuProps> = ({ handleClick, tableId }) => {
             </div>
             <div className="w-full flex justify-evenly mt-3 text-white">
                 <button
-                    onClick={handleUpdate}
-                    className="p-3 bg-yellow-400 w-full mr-1 rounded-lg">
-                    {loading ?
-                        <LoadingSpinner text="ຈອງໂຕະ" />
-                        :
-                        "ຈອງໂຕະ"
-                    }
-                </button>
-                <Link
-                    to={`/cart/${tableId}`}
-                    className="p-3 bg-green-500 w-full ml-1 flex justify-center rounded-lg"
+                    disabled={loadingReserve}
+                    onClick={() => handleUpdate("reserve", false)}
+                    className={`p-3 w-full mr-1 rounded-lg ${loadingReserve ? "bg-yellow-300" : "bg-yellow-400"}`}
                 >
-                    ເປີດໂຕະໄໝ່
-                </Link>
+                    {loadingReserve ? <LoadingSpinner text="ຈອງໂຕະ" /> : "ຈອງໂຕະ"}
+                </button>
+                <button
+                    disabled={loadingOpen}
+                    onClick={() => handleUpdate("busy", true)}
+                    className={`p-3 w-full ml-1 flex justify-center rounded-lg ${loadingOpen ? "bg-green-300" : "bg-green-500"}`}
+                >
+                    {loadingOpen ? <LoadingSpinner text="ເປີດໂຕະໄໝ່" /> : "ເປີດໂຕະໄໝ່"}
+                </button>
             </div>
         </div>
     );

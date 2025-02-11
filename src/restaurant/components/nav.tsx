@@ -55,8 +55,8 @@ const Nav: React.FC<NavProps> = ({ handelMenu}) => {
         }  
       }, [token, navigate, logout]);
     
-      const dataName = data && data.restaurant_name? data.restaurant_name : 'Guest';
-      const dataStatus = data && data.restaurant_status ? data.restaurant_status : 'email@ipos.com';
+      const dataName = data && data.user_name? data.user_name : 'Guest';
+      const dataRole = data && data.user_role ? data.user_role : 'email@ipos.com';
     return (
         <Navbar fluid  className="z-50 bg-[#3a393a] ">
             <Navbar.Brand >
@@ -73,8 +73,8 @@ const Nav: React.FC<NavProps> = ({ handelMenu}) => {
                     }
                 >
                     <Dropdown.Header>
-                        <span className="block text-sm">{dataName}</span>
-                        <span className="block truncate text-sm font-medium">{dataStatus}</span>
+                        <span className="block text-sm">ຊື່: {dataName}</span>
+                        <span className="block truncate text-sm font-medium">ສິດ: {dataRole}</span>
                     </Dropdown.Header>
                     <Dropdown.Item href="/">Dashboard</Dropdown.Item>
                     <Dropdown.Item href="#profile">profile</Dropdown.Item>

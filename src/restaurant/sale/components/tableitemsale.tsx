@@ -16,11 +16,12 @@ const TableItemSale: React.FC<TableItemSaleProps> = ({ onClick ,tableName,tableI
 
   return (
     <button 
-      onClick={handleOnClick} 
-      className={`flex justify-center items-center w-full h-full ${tableStatus=="reserve" ? 'bg-yellow-300' : 'bg-green-500' }  rounded-md shadow-inner hover:bg-orange-300`}
-    >
-      <p className="text-3xl sm:text-5xl  font-bold text-white">{tableName}</p>
-    </button>
+  onClick={handleOnClick} 
+  className={`flex justify-center items-center w-full h-full ${tableStatus === "reserve" ? 'bg-yellow-300' : (tableStatus === "busy" ? 'bg-red-600' : 'bg-green-600')} rounded-md shadow-inner hover:bg-orange-300`}
+>
+  <p className="text-3xl sm:text-5xl font-bold text-white">{tableName}</p>
+</button>
+
   );
 }
 

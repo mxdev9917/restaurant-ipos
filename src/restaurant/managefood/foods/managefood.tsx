@@ -61,28 +61,21 @@ function ManageFood() {
         }
     }
 
-    // Ref to track IDs of already fetched items to avoid duplicates
     const fetchedItemIDs = useRef(new Set<string>());
-
-    // Fetch foods data from the API
     const fetchfoodData = async (currentPage: number) => {
         try {
             let resId = String(data.restaurant_ID);
-            const response = await GetallFoodsService.GetAllFoods(resId, currentPage, 40); // Replace with your actual API URL
-
+            const response = await GetallFoodsService.GetAllFoods(resId, currentPage, 40);
             if (response.status === "200") {
                 setTotalItem(response.total_item);
-                // Create an array of items to append without duplicates
                 const newItems = response.data.filter((item: any) => {
                     if (fetchedItemIDs.current.has(item.food_ID)) {
-                        return false; // Skip this item if it's already been added
+                        return false; 
                     } else {
-                        fetchedItemIDs.current.add(item.food_ID); // Mark this ID as fetched
-                        return true; // Keep this item
+                        fetchedItemIDs.current.add(item.food_ID);
+                        return true; 
                     }
                 });
-
-                // Append the new unique items to the state
                 if (newItems.length > 0) {
                     setItems((prevItems) => [...prevItems, ...newItems]);
                 }
@@ -95,27 +88,23 @@ function ManageFood() {
         }
     };
 
-    // Load more items when reaching the bottom of the container
+   
     const loadMoreItems = () => {
         if (totalItem === items.length) {
-            return; // Stop loading more items if all items are fetched
+            return; 
         }
         setIsLoading(true);
         setTimeout(() => {
-            setPage((prevPage) => prevPage + 1); // Increment page number for the next request
-            fetchfoodData(page); // Fetch next page data
+            setPage((prevPage) => prevPage + 1);
+            fetchfoodData(page); 
             setIsLoading(false);
         }, 1200);
 
 
     };
-
-    // Initial data fetch when the component mounts
     useEffect(() => {
-        fetchfoodData(page); // Fetch data for the first page
+        fetchfoodData(page); 
     }, [page]);
-
-    // Handle scrolling and load more items
     useEffect(() => {
         const container = containerRef.current;
         if (!container || !(container instanceof HTMLElement)) return;
