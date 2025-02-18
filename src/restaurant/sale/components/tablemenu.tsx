@@ -2,7 +2,7 @@ import { alertSuccessV3 } from "../../../utils/alert";
 import { useState } from "react";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { generalErrors } from "../../../utils/error";
-import { OpenOrderService } from "../../../services/sale/createorder-service";
+import { OpenOrderService } from "../../../services/sale/create-order-service";
 import { useAuth } from "../../../context/context";
 import { useNavigate } from "react-router-dom";
 

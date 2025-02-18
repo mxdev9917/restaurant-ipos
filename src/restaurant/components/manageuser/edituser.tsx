@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
-import { GetUserByIdService, PatchUserbyIdService } from "../../../services/users/updare-user";
+import { GetUserByIdService, PatchUserbyIdService } from "../../../services/users/update-user";
 import Loading from "../../../utils/Loading";
 import { generalErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";

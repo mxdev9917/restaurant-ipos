@@ -2,7 +2,7 @@ import ZoneItem from "./components/zoneitem"
 import TableItemSale from "./components/tableitemsale";
 import Nav from "../components/nav";
 import { useEffect, useRef, useState } from "react";
-import { GetAllTableByStatusService } from "../../services/tables/gettablebystatus-table";
+import { GetAllTableByStatusService } from "../../services/tables/get-table-by-status-table";
 import Loading from "../../utils/Loading";
 import { useAuth } from "../../context/context";
 import TableMenu from "./components/tablemenu";

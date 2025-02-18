@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { GetallcategoryByStatusService } from "../../../services/categories/getbystatuse-category";
-import { ICategoriesStatus } from "../../../services/categories/getbystatuse-category";
+import { GetallcategoryByStatusService } from "../../../services/categories/get-by-statuse-category";
+import { ICategoriesStatus } from "../../../services/categories/get-by-statuse-category";
 import { alertSuccessV3 } from "../../../utils/alert";
 import { createFoodService } from "../../../services/foods/create-food";
 import { HiPlus } from "react-icons/hi";

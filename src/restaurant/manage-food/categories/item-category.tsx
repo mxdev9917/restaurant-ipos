@@ -4,7 +4,7 @@ import { HiPencilAlt, HiOutlineTrash, HiOutlineBan, HiDotsVertical, HiCheck } fr
 import { alertconfirm, alertError, alertSuccessV3 } from '../../../utils/alert';
 import { generalErrors } from '../../../utils/error';
 import { IPOS_BASE_URL } from "../../../utils/connection";
-import { editStatusCategoryService } from "../../../services/categories/editstatus-category";
+import { editStatusCategoryService } from "../../../services/categories/edit-status-category";
 interface categoryItemProps {
     onEdit: (id: string) => void;
     onDelete: (id: string) => void;

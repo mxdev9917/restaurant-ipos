@@ -2,7 +2,7 @@ import React from 'react';
 import { alertconfirm, alertSuccessV3 } from '../../../utils/alert';
 import { Dropdown } from "flowbite-react";
 import { HiOutlineExternalLink, HiPencilAlt, HiOutlineTrash, HiOutlineBan,HiCheck } from "react-icons/hi"; //HiCheck 
-import { editTableStatusService } from '../../../services/tables/editstatus-table';
+import { editTableStatusService } from '../../../services/tables/edit-status-table';
 import { generalErrors } from '../../../utils/error';
 
 interface TableItemProps {

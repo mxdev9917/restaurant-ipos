@@ -1,34 +1,60 @@
+import { useState } from "react";
+import { DeleteMenuItemService } from "../../../services/sale/delete-menu-item";
+import { alertconfirm, alertSuccessV3 } from "../../../utils/alert";
+import { HiOutlineTrash } from "react-icons/hi";
 
-function CartsItem() {
 
+interface CartsItemProps {
+    menu_items_ID: string;
+    food_name: string;
+    price: string;
+    quantity: string;
+
+}
+
+const CartsItem: React.FC<CartsItemProps> = ({ menu_items_ID, food_name, price, quantity }) => {
+    const [loading, setLoading] = useState(false);
+    const handleDelete = async () => {
+        try {
+            setLoading(true);
+            const res = await DeleteMenuItemService.DeleteMenuItem(menu_items_ID)
+            if (res.status === "200") {
+                alertSuccessV3("ລົບລາຍການເມນູສຳເລັດ", "success");
+            }
+        } catch (error) {
+
+        } finally {
+            setLoading(false);
+        }
+    }
     return (
-        <div className="flex justify-between w-full border-b-[0.5px] py-2 pl-2">
-            <p className="w-full">ເຂົ້າຜັດໝູຈານໃຫ່ຍ</p>
-            <p className=" w-12 flex justify-center">2</p>
-            <p className="w-52 flex justify-center">100,000</p>
+        <div className="flex items-center justify-between w-full border-b py-2 ">
+            <p className="flex-1 truncate">{food_name}</p>
+            <p className="w-12 text-center">{quantity}</p>
+            <p className="w-24 text-center">{price}</p>
 
-            <button className="hover:bg-slate-100 p-1.5 rounded-full w-16">
-                <svg
-                    className="w-5.5 h-5.5 text-red-600"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                    />
-                </svg>
+            <button
+                onClick={() => (alertconfirm(
+                    () => handleDelete(),
+                    `ຕ້ອງການຍົກເລີກລາຍການນີ້ບໍ່ ?`,
+                    "question"
+                ))}
+                className="hover:bg-slate-100 py-1.5 rounded-full w-10 flex items-center justify-center">
+                {loading ?
+                    <div className="flex items-center justify-center">
+                        <div className="flex items-center space-x-1 relative">
+                            <div className="w-5 h-5 absolute left-[4px]  border-[3px]  border-solid rounded-full  border-gray-200 ring-0 ring-transparent "></div>
+                            <div className="w-5 h-5  border-[3px]  border-solid rounded-full animate-slow-spin border-gray-200 border-t-orange-500"></div>
+
+                        </div>
+                    </div>
+                    :
+                    <HiOutlineTrash className="text-2xl text-red-600" />
+                }
+
             </button>
         </div>
     );
-
-
 }
-export default CartsItem
+
+export default CartsItem;

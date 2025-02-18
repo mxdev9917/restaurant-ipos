@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom"
 import Sidebar_Nav from "../../components/sidebar-nav"
-import FoodItem from "./fooditem"
+import FoodItem from "./food-item"
 import { useState, useEffect, useRef } from "react";
 import { alertSuccessV3 } from "../../../utils/alert";
-import { GetallFoodsService } from "../../../services/foods/getall-food";
+import { GetallFoodsService } from "../../../services/foods/get-all-food";
 import LoadingMessage from "../../../utils/loadingMessage";
 import { DeleteFoodService } from "../../../services/foods/delete-food";
 import CreateFoods from "./create-food";

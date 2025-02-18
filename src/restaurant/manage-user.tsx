@@ -4,7 +4,7 @@ import Sidebar_Nav from "./components/sidebar-nav";
 import { DeleteUserService } from "../services/users/delete-user";
 import { ResetPasswordService } from "../services/users/reset-password";
 import { alertconfirm, alertError, alertSuccessV3 } from "../utils/alert";
-import { GetAllUserByIdService } from "../services/users/getall-user-by-id";
+import { GetAllUserByIdService } from "../services/users/get-all-user-by-id";
 import { IGetAllUserById } from '../interfaces/getalluserbyid-interface';
 import { PatchStatusbyIdService } from "../services/users/update-status";
 import LoadingMessage from "../utils/loadingMessage";

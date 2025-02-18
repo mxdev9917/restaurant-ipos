@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom"
 import { useEffect, useRef, useState } from "react";
 import Sidebar_Nav from "../../components/sidebar-nav"
-import { GetallcategoryService } from "../../../services/categories/getall-category";
+import { GetallcategoryService } from "../../../services/categories/get-all-category";
 import { DeleteCategoryService } from "../../../services/categories/delete-category";
 import { alertSuccessV3 } from "../../../utils/alert";
 import Loading from "../../../utils/Loading";

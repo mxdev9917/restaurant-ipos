@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { GetallcategoryByStatusService } from "../../../services/categories/getbystatuse-category";
-import { ICategoriesStatus } from "../../../services/categories/getbystatuse-category";
+import { GetallcategoryByStatusService } from "../../../services/categories/get-by-statuse-category";
+import { ICategoriesStatus } from "../../../services/categories/get-by-statuse-category";
 import { alertSuccessV3 } from "../../../utils/alert";
-import { GetByIdFoodService } from "../../../services/foods/getbyid-food";
+import { GetByIdFoodService } from "../../../services/foods/get-by-id-food";
 import { EditFoodService } from "../../../services/foods/edit-food";
 import { IPOS_BASE_URL } from "../../../utils/connection";
 import { useAuth } from "../../../context/context";
