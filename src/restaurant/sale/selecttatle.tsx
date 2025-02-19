@@ -103,7 +103,7 @@ function selectTatles() {
 
     return (
         <div className="w-screen h-screen flex flex-col   ">
-            <Nav handelMenu={isCheckMenu} />
+            <Nav isMenu={false} handelMenu={isCheckMenu} />
 
             <div className=" w-full flex gap-3 items-center pt-2 ">
 

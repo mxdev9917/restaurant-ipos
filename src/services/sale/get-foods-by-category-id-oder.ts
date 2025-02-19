@@ -9,6 +9,7 @@ export interface IFood {
 }
 
 export interface Data {
+  food_ID:string
   food_name: string
   price: number
   category_ID: number

@@ -17,7 +17,6 @@ import {  useState } from "react";
 
 function Sidebar_Nav() {
     const[translate,setTranslate]=useState(true)
-    // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     function isCheckMenu() { 
         setTranslate(!translate);
     }
@@ -26,7 +25,7 @@ function Sidebar_Nav() {
         <>
 
         {/* -translate-x-full */}
-            <Nav handelMenu={isCheckMenu}/>
+            <Nav isMenu={true} handelMenu={isCheckMenu}/>
             <Sidebar  className={`fixed  mt-2 z-40 w-64 h-screen transition-transform  ${translate ? '-translate-x-full':''} sm:translate-x-0`} aria-label="Sidebar">
                 <Sidebar.Items className="h-full px-3 py-5 overflow-y-auto bg-gray-50 ">
                     <Sidebar.ItemGroup className="space-y-3 font-medium">

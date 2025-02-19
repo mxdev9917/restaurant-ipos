@@ -1,9 +1,7 @@
 import Nav from "../components/nav";
-import CartsItem from "./components/carditem";
 import FoodItemSale from "./components/fooditem";
 import CategoryItem from "./components/categoryitem";
 import { useEffect, useRef, useState } from "react";
-// import TableItemSale from "./components/tableitemsale";
 import { Dropdown } from "flowbite-react";
 import { FiPrinter } from 'react-icons/fi';
 import { GetallcategoryByStatusService } from "../../services/categories/get-by-statuse-category";
@@ -15,10 +13,13 @@ import { cancelOrderService } from "../../services/sale/cancel-order";
 import MenuAddFood from "./components/menuaddfood";
 import { GetAllFoodByCategoryIdService } from "../../services/sale/get-foods-by-category-id-oder";
 import { useNavigate, useParams } from "react-router-dom";
-import { alertconfirm } from "../../utils/alert";
+import { alertconfirm, alertSuccessV3 } from "../../utils/alert";
 import { alertSuccess } from "../../utils/alert";
 import { GetMenuItemService } from "../../services/sale/get-menu-item";
-import LoadingSpinner from "../../utils/LoadingSpinner";
+import { HiOutlineTrash } from "react-icons/hi";
+import { DeleteMenuItemService } from "../../services/sale/delete-menu-item";
+import { UpdateOrderSuccessService } from "../../services/sale/edit-order-success";
+import LoadingMessage from "../../utils/loadingMessage";
 
 function Carts() {
   const [PrinterModel, setPrinterleModel] = useState(false);
@@ -39,14 +40,60 @@ function Carts() {
   const { id } = useParams();
   const tableID = String(id);
   const [food_ID, setFood_ID] = useState("")
-  const [totalPrice, setTotalPrice] = useState("0");
-  const [loading, setLoading] = useState(false);
+  const [Price, setPrice] = useState("0");
+  const [isBTNSuccess, setIsBTNSuccess] = useState(true);
+  const [vat, setVat] = useState("0");
+  const [totalPrice, setTotalPrice] = useState("0")
+  const [loadingMessage, setLoadingMessage] = useState(false);
+  const [loadingMessageText, setLoadingMessageTesxt] = useState("");
 
+  const handleOrderSuccuss = async () => {
+    try {
+      setLoadingMessage(true);
+      setLoadingMessageTesxt("ກຳລັງເຊັກບີນ")
+      const res = await UpdateOrderSuccessService.UpdateOrderSuccess(tableID, totalPrice);
+      if (res.status === "200") {
+        alertSuccess(navigate, '/sale', 'ເຊັກບີນສຳເລັດ', 'success');
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      generalErrors(error)
+    } finally {
+      setLoadingMessage(false);
+      setLoadingMessageTesxt("")
+    }
+  }
+  const handleDelete = async (menu_items_ID: string) => {
+    try {
+      setLoadingMessage(true);
+      setLoadingMessageTesxt("ກຳລັງລົບລາຍການເມນູ")
+      const res = await DeleteMenuItemService.DeleteMenuItem(menu_items_ID)
+      if (res.status === "200") {
+        alertSuccessV3("ລົບລາຍການເມນູສຳເລັດ", "success");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      generalErrors(error)
+    } finally {
+      setLoadingMessage(false);
+      setLoadingMessageTesxt("")
+    }
+  }
   const fetchFoodTableItem = async () => {
     try {
       const res = await GetMenuItemService.MenuItem(tableID);
       setFoodItemsTable(res.data);
-      setTotalPrice(res.totalPrice)
+      setPrice(res.totalPrice);
+      let price = Number(res.totalPrice);
+      let newVat = (price / 100) * 10;
+      let newTotalPrice = newVat + price;
+      setVat(String(newVat));
+      setTotalPrice(String(newTotalPrice));
+      if (res.data.length > 0) {
+        setIsBTNSuccess(false);
+      } else {
+        setIsBTNSuccess(true);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
       generalErrors(error)
@@ -54,7 +101,8 @@ function Carts() {
   }
   const hadleCancelOrder = async () => {
     try {
-      setLoading(true);
+      setLoadingMessage(true);
+      setLoadingMessageTesxt("ກຳລັງຍົກເລີກເມນູ")
       const res = await cancelOrderService.cancelOrder(tableID);
       if (res.status === "200") {
         alertSuccess(navigate, '/sale', 'ຍົກເລີກເມນູສຳເລັດ', 'success');
@@ -63,7 +111,8 @@ function Carts() {
       console.error("Error fetching data:", error);
       generalErrors(error);
     } finally {
-      setLoading(false);
+      setLoadingMessage(false);
+      setLoadingMessageTesxt("")
     }
   }
   function handleTableInclude() {
@@ -197,9 +246,23 @@ function Carts() {
     return () => container.removeEventListener("scroll", handleScroll);
   }, [isLoading, totalItem, items.length]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setIsCheckEvenMenu(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Run on initial render to check screen size
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div className="flex flex-col overflow-y-hidden max-w-[100vw] max-h-[100vh] ">
-      <Nav handelMenu={isCheckMenu} />
+      {loadingMessage && <LoadingMessage text={loadingMessageText} />}
+      <Nav isMenu={true} handelMenu={isCheckMenu} />
       <div className="flex gap-2">
         <div className="flex flex-col w-full xl:max-w-[calc(100%-24rem)] h-screen ">
           <div className="w-full h-20  flex gap-3  items-center border-b-2 mb-2">
@@ -281,52 +344,86 @@ function Carts() {
             <MenuAddFood tableID={tableID} foodID={food_ID} foodName={foodName} handleClickCloseModle={handleClickCloseModle} isCheckModelEvenMenu />
           </div>
         </div>
-        <div className={`${isCheckEvenMenu ? 'flex absolute h-[85vh]' : 'hidden'} bg-white min-w-96 xl:flex h-[100vh] shadow-lg flex-col justify-between  px-3`}>
+        <div className={`${isCheckEvenMenu ? 'flex absolute h-[85vh]' : 'hidden'} bg-white w-[550px] min-w-96 xl:flex h-[100vh] shadow-lg flex-col justify-between  px-3`}>
           <div className="flex  justify-between">
             <div></div>
             <p className="text-3xl py-3 text-orange-500 font-semibold flex justify-center">
-              ລາຍການອາຫານ ໂຕະ1
+              ລາຍການອາຫານ
             </p>
             <Dropdown label={<FiPrinter className="text-2xl" />} inline>
               <Dropdown.Item onClick={() => handlePrinterModel(1)}>ປີ້ນເຕີເຄົາເຕີ</Dropdown.Item>
               <Dropdown.Item onClick={() => handlePrinterModel(2)}>ປີ້ນເຕີຄົວ</Dropdown.Item>
             </Dropdown>
           </div>
-          <div className="flex text-sm  justify-between w-full bg-slate-100 py-3 pl-2">
-            <p className="w-full">ຊື່ເມນູອາຫານ</p>
-            <p className=" w-12 flex justify-center">ຈຳນວນ</p>
-            <p className="w-52 flex justify-center">ລາຄາ</p>
-            <p className=" w-16 flex justify-center">ເມນູ</p>
-          </div>
-          <div className="h-full overflow-y-auto text-sm ">
-            {foodItemsTable.map((item) => (
-              <div key={item.food_ID} className="">
-                <CartsItem menu_items_ID={item.menu_items_ID} food_name={item.food_name} price={item.price} quantity={item.quantity} />
-              </div>
-            ))}
+          <div className="w-full h-full ">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className=" text-gray-700 bg-gray-000 h-12">
+                  <th className="p-2">ຊື່ເມນູອາຫານ</th>
+                  <th className="p-2">ຈຳນວນ</th>
+                  <th className="p-2">ລາຄາ</th>
+                  <th className="p-2">ລວມ</th>
+                  <th className="p-2">ເມນູ</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white text-center text-gray-800">
+                {foodItemsTable.map((item) => (
+                  <tr key={item.food_ID} className="border-y text-sm">
+                    <td className="h-10 p-2  flex justify-end items-center">{item.food_name}</td>
+                    <td className="p-2">{item.quantity}</td>
+                    <td className="p-2">{item.price}</td>
+                    <td className="p-2">{Number(item.quantity) * Number(item.price)}</td>
+                    <td className="p-2 flex justify-center">
+                      <button
+                        onClick={() => (alertconfirm(
+                          () => handleDelete(item.menu_items_ID),
+                          `ຕ້ອງການຍົກເລີກລາຍການນີ້ບໍ່ ?`,
+                          "question"
+                        ))}
+                        className="hover:bg-slate-100 py-1.5 rounded-full w-10 flex items-center justify-center">
+
+                        <HiOutlineTrash className="text-2xl text-red-600" />
+
+
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+
+            </table>
           </div>
           <div className="  flex  flex-col text-sm pb-14">
             <p className="text-xl font-semibold mb-2">ລວມບີນ</p>
             <div className="flex justify-between my-1">
               <p>ລາຄາ</p>
-              <p>{totalPrice} KIP</p>
+              <p>{Price} KIP</p>
             </div>
             <div className="flex justify-between my-1 text-sm">
               <p>Vat 10%</p>
-              <p>$6,5</p>
+              <p>{vat} KIP</p>
             </div>
             <div className="flex justify-between my-1 text-sm border-y-2 py-2">
               <p className="font-semibold">ລາຄາລວມ</p>
-              <p className="text-orange-500">$6,592.00</p>
+              <p className="text-orange-500">{totalPrice} KIP</p>
             </div>
 
             <div className="w-full flex justify-end py-5">
               <button
                 type="button"
-                className="text-white bg-green-700 hover:bg-green-800 focus:ring-2 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none "
+                onClick={() => alertconfirm(
+                  () => handleOrderSuccuss(),
+                  `ຕ້ອງການເຊັກບີນອໍເດີນີ້ບໍ່ ?`,
+                  "question"
+                )}
+                disabled={isBTNSuccess}
+                className={`text-white bg-green-700 hover:bg-green-800 focus:ring-2 focus:ring-green-300 
+                  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none 
+                  ${isBTNSuccess ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 ໄລ່ເງີນ
               </button>
+
               <button
                 onClick={handleTableInclude}
                 type="button"
@@ -344,13 +441,7 @@ function Carts() {
 
                 className="text-white bg-red-700 hover:bg-red-800 focus:ring-2 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none "
               >
-
-
-                {loading ?
-                  <LoadingSpinner text="ຍົກເລິກ" />
-                  :
-                  "ຍົກເລິກ"
-                }
+                ຍົກເລິກ
               </button>
             </div>
           </div>
