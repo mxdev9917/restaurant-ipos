@@ -23,14 +23,15 @@ function selectTatles() {
     const [tableId, setTableId] = useState("");
     const navigate = useNavigate();
     const { data } = useAuth();
+    const [isMessage, setIsMessage] = useState(true);
     function isCheckMenu() { }
 
 
     function handleClick(id: string, status: string) {
-       
+
         if (status != "empty") {
             navigate(`/cart/${id}`);
-        }else{
+        } else {
             setIsCheckModel(!isCheckModel)
             setTableId(id);
         }
@@ -39,6 +40,7 @@ function selectTatles() {
 
     const fetctData = async (currentPage: number) => {
         try {
+            setIsMessage(true);
             let resId = String(data.restaurant_ID);
             const response = await GetAllTableByStatusService.GetAllTable(resId, currentPage, 40)
             if (response.status === "200") {
@@ -61,6 +63,8 @@ function selectTatles() {
             }
         } catch (error: any) {
             generalErrors(error);
+        } finally {
+            setIsMessage(false);
         }
 
     }
@@ -98,7 +102,14 @@ function selectTatles() {
         container.addEventListener("scroll", handleScroll);
         return () => container.removeEventListener("scroll", handleScroll);
     }, [isLoading, totalItem, items.length]);
+    useEffect(() => {
+        if (isMessage) {
+            setTimeout(() => {
+                setIsMessage(false);
+            }, 6000);
+        }
 
+    }, [isMessage])
 
 
     return (
@@ -123,9 +134,6 @@ function selectTatles() {
                 </div>
             </div>
 
-
-
-
             <div
                 ref={containerRef}
                 className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 sm:gap-3 gap-3 overflow-auto p-3 w-full h-fit"
@@ -138,14 +146,16 @@ function selectTatles() {
                     ))
                 ) : (
                     <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
-                        No data available.
+                        {
+                            isMessage ? <Loading text="ກຳລັງໂຫລດ" /> : "No data available."
+                        }
                     </div>
                 )}
                 {isLoading && <p className="text-center w-full mt-2"><Loading text="ໂຫລດຂໍ້ມູນ" /></p>}
             </div>
 
             <div className={`${isCheckModel ? "block" : "hidden"} bg-black/30 w-full h-full absolute flex justify-center items-center`}>
-               <TableMenu tableId={tableId} handleClick={() => handleClick("", "empty")} />
+                <TableMenu tableId={tableId} handleClick={() => handleClick("", "empty")} />
             </div>
         </div>
     )

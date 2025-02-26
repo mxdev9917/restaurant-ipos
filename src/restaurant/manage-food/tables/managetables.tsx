@@ -10,7 +10,7 @@ import { DeleteTableService } from "../../../services/tables/delete-table";
 import { alertSuccessV3 } from "../../../utils/alert";
 import LoadingMessage from "../../../utils/loadingMessage";
 import { useAuth } from "../../../context/context";
- 
+
 
 function ManageTables() {
 
@@ -26,8 +26,9 @@ function ManageTables() {
     const [loadingMessageTitle, setLoadingMessageTitle] = useState("");
     const [tableId, settableId] = useState("");
     const [tableName, settableName] = useState("");
+    const [isMessage, setIsMessage] = useState(true);
 
-  
+
 
     const deleteTable = async (id: string) => {
 
@@ -58,7 +59,7 @@ function ManageTables() {
     function handleEditModel(evens: string, table_Id: string, table_name: string) {
         if (evens == 'edit') {
             settableId(table_Id)
-           settableName(table_name)
+            settableName(table_name)
 
             setisCheckModel(!isCheckModel)
             setisEven(false)
@@ -73,6 +74,7 @@ function ManageTables() {
     // Fetch tables data from the API
     const fetchTableData = async (currentPage: number) => {
         try {
+            setIsMessage(true);
             let resId = String(data.restaurant_ID);
             const response = await GetAllTableService.GetAllTable(resId, currentPage, 40); // Replace with your actual API URL
 
@@ -97,7 +99,7 @@ function ManageTables() {
             }
         } catch (error) {
             console.error("Error fetching data:", error);
-        }
+        }finally{setIsMessage(false);}
     };
 
     // Load more items when reaching the bottom of the container
@@ -132,7 +134,14 @@ function ManageTables() {
         container.addEventListener("scroll", handleScroll);
         return () => container.removeEventListener("scroll", handleScroll);
     }, [isLoading, totalItem, items.length]);
+    useEffect(() => {
+        if (isMessage) {
+            setTimeout(() => {
+                setIsMessage(false);
+            }, 6000);
+        }
 
+    }, [isMessage])
     return (
         <div className="flex flex-col h-screen overflow-hidden">
             {loadingMessage && <LoadingMessage text={loadingMessageTitle} />}
@@ -166,21 +175,29 @@ function ManageTables() {
                         ref={containerRef}
                         className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8  sm:gap-3 gap-6 mt-3 overflow-auto p-3  h-[70vh] sm:h-fit"
                     >
-                        {items.map((item) => (
-                            <div
-                                key={item.table_ID}
-                                className="w-full  h-24 sm:h-32 md:h-40 lg:h-40 sm:mb-0 mb-12"
-                            >
-                                <TableItem
-                                    tableId={item.table_ID} // Pass the actual table ID
-                                    tableName={item.table_name}
-                                    tableStatus={item.table_status}
-                                    onEdit={(id, name) => handleEditModel("edit", id, name)} // Correctly pass the ID and name
-                                    onDelete={() => deleteTable(item.table_ID)} // Ensure correct deletion
-                                />
+                        {items.length > 0 ? (
+                            items.map((item) => (
+                                <div
+                                    key={item.table_ID}
+                                    className="w-full  h-24 sm:h-32 md:h-40 lg:h-40 sm:mb-0 mb-12"
+                                >
+                                    <TableItem
+                                        tableId={item.table_ID} // Pass the actual table ID
+                                        tableName={item.table_name}
+                                        tableStatus={item.table_status}
+                                        onEdit={(id, name) => handleEditModel("edit", id, name)} // Correctly pass the ID and name
+                                        onDelete={() => deleteTable(item.table_ID)} // Ensure correct deletion
+                                    />
 
+                                </div>
+                            ))
+                        ) : (
+                            <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
+                                {
+                                    isMessage ? <Loading text="ກຳລັງໂຫລດ" /> : "No data available."
+                                }
                             </div>
-                        ))}
+                        )}
                         {isLoading && <p className="text-center w-full mt-2"><Loading text="ໂຫລດຂໍ້ມູນ" /></p>}
                     </div>
 
@@ -194,7 +211,7 @@ function ManageTables() {
                     ) :
                         (
 
-                            <EditTable handleModel={()=>(handleEditModel)} tableId={tableId} tableName={tableName} />
+                            <EditTable handleModel={() => (handleEditModel)} tableId={tableId} tableName={tableName} />
                         )
                 }
             </div>

@@ -23,7 +23,8 @@ function ManageFood() {
     const [loadingMessage, setLoadingMessage] = useState(false);
     const [loadingMessageTitle, setLoadingMessageTitle] = useState("");
     const [foodId, setfoodId] = useState("");
-     const { data } = useAuth();
+    const { data } = useAuth();
+    const [isMessage, setIsMessage] = useState(true);
 
 
 
@@ -37,7 +38,7 @@ function ManageFood() {
                 alertSuccessV3("ລົບສຳເລັດ", 'success');
             }
 
-        } catch (error:any) {
+        } catch (error: any) {
             generalErrors(error);
         }
     }
@@ -64,16 +65,17 @@ function ManageFood() {
     const fetchedItemIDs = useRef(new Set<string>());
     const fetchfoodData = async (currentPage: number) => {
         try {
+            setIsMessage(true);
             let resId = String(data.restaurant_ID);
             const response = await GetallFoodsService.GetAllFoods(resId, currentPage, 40);
             if (response.status === "200") {
                 setTotalItem(response.total_item);
                 const newItems = response.data.filter((item: any) => {
                     if (fetchedItemIDs.current.has(item.food_ID)) {
-                        return false; 
+                        return false;
                     } else {
                         fetchedItemIDs.current.add(item.food_ID);
-                        return true; 
+                        return true;
                     }
                 });
                 if (newItems.length > 0) {
@@ -82,28 +84,30 @@ function ManageFood() {
             } else {
                 console.error("Failed to fetch data:", response.message);
             }
-        } catch (error:any) {
+        } catch (error: any) {
             console.error("Error fetching data:", error);
             generalErrors(error)
+        } finally {
+            setIsMessage(false);
         }
     };
 
-   
+
     const loadMoreItems = () => {
         if (totalItem === items.length) {
-            return; 
+            return;
         }
         setIsLoading(true);
         setTimeout(() => {
             setPage((prevPage) => prevPage + 1);
-            fetchfoodData(page); 
+            fetchfoodData(page);
             setIsLoading(false);
         }, 1200);
 
 
     };
     useEffect(() => {
-        fetchfoodData(page); 
+        fetchfoodData(page);
     }, [page]);
     useEffect(() => {
         const container = containerRef.current;
@@ -118,6 +122,14 @@ function ManageFood() {
         container.addEventListener("scroll", handleScroll);
         return () => container.removeEventListener("scroll", handleScroll);
     }, [isLoading, totalItem, items.length]);
+    useEffect(() => {
+        if (isMessage) {
+            setTimeout(() => {
+                setIsMessage(false);
+            }, 6000);
+        }
+
+    }, [isMessage])
 
     return (
         <div className="flex flex-col h-screen overflow-hidden">
@@ -186,10 +198,12 @@ function ManageFood() {
                             ))
                         ) : (
                             <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
-                                No data available.
+                                {
+                                    isMessage ? <Loading text="ກຳລັງໂຫລດ" /> : "No data available."
+                                }
                             </div>
                         )}
-                          {isLoading && <p className="text-center w-full mt-2"><Loading text="ໂຫລດຂໍ້ມູນ" /></p>}
+                        {isLoading && <p className="text-center w-full mt-2"><Loading text="ໂຫລດຂໍ້ມູນ" /></p>}
                     </div>
 
                 </div>

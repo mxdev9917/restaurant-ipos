@@ -57,6 +57,20 @@ export const createTableErrors = (errors: any) => {
     }
 
 };
+export const createIncTableErrors = (errors: any) => {
+    if (axios.isAxiosError(errors)) {
+        const status = errors.response?.status;
+        if (status === 409) {
+            alertError("ມີຂໍ້ມູນບາງສ່ວນຂາດຫາຍ", "error");
+        }
+        if (status === 500) {
+            alertError("ຂໍອະໄພ ລະບົບຫຼັງບ້ານມີບັນຫາ", "error");
+        }
+    } else {
+        alertError("ການເຮັດວຽກຂອງລະບົບຜິດພາດ", "error");
+    }
+
+};
 
 
 

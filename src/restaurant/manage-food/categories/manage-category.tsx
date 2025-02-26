@@ -9,7 +9,7 @@ import Loading from "../../../utils/Loading";
 import CreateCategory from "./create-category";
 import EditCategory from "./edit-category";
 import { generalErrors } from "../../../utils/error";
-import LoadingMessage from "../../../utils/loadingMessage";
+
 
 import { useAuth } from "../../../context/context";
 import CategroyItem from "./item-category";
@@ -19,13 +19,12 @@ function ManageCategory() {
     const [isCheckModel, setisCheckModel] = useState(false);
 
 
-  
+
 
     // const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
     // const [currentPage, setCurrentPage] = useState(1);
     const [isCheckedPage, setIsCheckedPage] = useState(true);
-    const [id, setId] = useState("");
-    const [loadingMessage, setLoadingMessage] = useState(false);
+    const [id, setId] = useState("");;
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [items, setItems] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +32,7 @@ function ManageCategory() {
     const [page, setPage] = useState(1);
     const fetchedItemIDs = useRef(new Set<string>());
     const { data } = useAuth();
-
+    const [isMessage, setIsMessage] = useState(true);
     // function handlItemsPerPage(limit: number) {
     //     setItemsPerPage(limit)
     // }
@@ -57,7 +56,7 @@ function ManageCategory() {
         }
 
     }
-   
+
     const handleDelete = async (category_ID: string) => {
         try {
             const res = await DeleteCategoryService.DeleteCategory(category_ID);
@@ -72,7 +71,7 @@ function ManageCategory() {
 
     const fetchCateroyData = async (currentPage: number) => {
         try {
-            setLoadingMessage(true)
+            setIsMessage(true);
             let resId = String(data.restaurant_ID);
             const response = await GetallcategoryService.GetAllCategory(resId, currentPage, 40); // Replace with your actual API URL
             if (response.status === "200") {
@@ -95,11 +94,11 @@ function ManageCategory() {
             } else {
                 console.error("Failed to fetch data:", response.message);
             }
-        } catch (error:any) {
+        } catch (error: any) {
             console.error("Error fetching data:", error);
             generalErrors(error)
-        }finally{
-            setLoadingMessage(false)
+        } finally {
+            setIsMessage(false);
         }
     };
 
@@ -132,9 +131,16 @@ function ManageCategory() {
         container.addEventListener("scroll", handleScroll);
         return () => container.removeEventListener("scroll", handleScroll);
     }, [isLoading, totalItem, items.length]);
+    useEffect(() => {
+        if (isMessage) {
+            setTimeout(() => {
+                setIsMessage(false);
+            }, 6000);
+        }
+
+    }, [isMessage])
     return (
         <div className="flex flex-col">
-            {loadingMessage && <LoadingMessage text={"ດາວໂຫຼດຂໍ້ມູນ"} />}
             <Sidebar_Nav />
             <div className="pt-8 sm:ml-64">
                 <div className="p-1">
@@ -187,7 +193,9 @@ function ManageCategory() {
                             ))
                         ) : (
                             <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
-                                No data available.
+                                {
+                                    isMessage ? <Loading text="ກຳລັງໂຫລດ" /> : "No data available."
+                                }
                             </div>
                         )}
                         {isLoading && <p className="text-center w-full mt-2"><Loading text="ໂຫລດຂໍ້ມູນ" /></p>}

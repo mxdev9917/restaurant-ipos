@@ -18,14 +18,9 @@ export interface Data {
 }
 
 export class GetAllFoodByCategoryIdService {
-  static async GetAllFoodByCategoryId(id: string, page: number, limit: number): Promise<IFood> {
+  static async GetAllFoodByCategoryId(id: string): Promise<IFood> {
     try {
-      const response = await axios.get(`${IPOS_BASE_URL}/food/all/category/${id}`, {
-        params:{
-          page: page,
-          limit: limit
-      }
-      });
+      const response = await axios.get(`${IPOS_BASE_URL}/food/all/category/${id}`,{});
       return response.data;
     } catch (error: any) {
       console.error("Error during Get request :", error.response ? error.response.data : error.message);
