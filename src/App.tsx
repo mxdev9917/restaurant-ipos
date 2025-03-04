@@ -19,7 +19,7 @@ const SaleReport = lazy(() => import('./restaurant/report/salereport'));
 const SettingBill = lazy(() => import('./restaurant/setting/bill'));
 const UserManual = lazy(() => import('./restaurant/manual'));
 const Printer = lazy(() => import('./restaurant/setting/printer'));
-const Rate = lazy(() => import('./restaurant/setting/rate'));
+const Rate = lazy(() => import('./restaurant/setting/rateSetting/rate'));
 
 const router = createHashRouter(
   [
