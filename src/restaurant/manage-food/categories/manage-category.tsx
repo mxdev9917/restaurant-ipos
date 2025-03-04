@@ -175,20 +175,22 @@ function ManageCategory() {
                     </div>
                     <div
                         ref={containerRef}
-                        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 sm:gap-3 gap-4 overflow-auto p-3 w-full h-[70vh] sm:h-[38vh] z-50"
+                        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8  overflow-auto p-3 w-full h-fit"
                     >
                         {items.length > 0 ? (
                             items.map((item) => (
-                                <div key={item.category_ID} className="w-full h-48 sm:h-32 md:h-40 lg:h-40 sm:mb-0 mb-5">
-                                    <CategroyItem
+                                <div key={item.food_ID} className="p-2 w-full ">
+                                    <div className="w-full h-28 sm:h-32 md:h-52 lg:h-40 ">
+                                        <CategroyItem
 
-                                        categoryId={item.category_ID}
-                                        categoryName={item.category}
-                                        categoryImg={item.category_image}
-                                        categoryStatus={item.category_status}
-                                        onEdit={(id) => handleEditModel("edit", id)}
-                                        onDelete={() => handleDelete(item.category_ID)}
-                                    />
+                                            categoryId={item.category_ID}
+                                            categoryName={item.category}
+                                            categoryImg={item.category_image}
+                                            categoryStatus={item.category_status}
+                                            onEdit={(id) => handleEditModel("edit", id)}
+                                            onDelete={() => handleDelete(item.category_ID)}
+                                        />
+                                    </div>
                                 </div>
                             ))
                         ) : (
@@ -196,10 +198,11 @@ function ManageCategory() {
                                 {
                                     isMessage ? <Loading text="ກຳລັງໂຫລດ" /> : "No data available."
                                 }
+
                             </div>
                         )}
-                        {isLoading && <p className="text-center w-full mt-2"><Loading text="ໂຫລດຂໍ້ມູນ" /></p>}
                     </div>
+                 
                 </div>
             </div>
             <div className={`w-screen ${!isCheckModel ? 'hidden' : 'block'}  h-screen bg-black/10  absolute  flex justify-center items-center`}>

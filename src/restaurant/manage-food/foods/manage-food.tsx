@@ -178,33 +178,39 @@ function ManageFood() {
 
 
                     <div
-                        ref={containerRef}
-                        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 sm:gap-3 gap-4 overflow-auto p-3 w-full h-[70vh] sm:h-[38vh]"
-                    >
-                        {items.length > 0 ? (
-                            items.map((item) => (
-                                <div key={item.food_ID} className="w-full h-48 sm:h-32 md:h-40 lg:h-40 sm:mb-0 mb-5">
-                                    <FoodItem
+  ref={containerRef}
+  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 sm:gap-3 gap-4 overflow-auto p-3 w-full h-[70vh] sm:h-fit box-border"
+>
+  {items.length > 0 ? (
+    items.map((item) => (
+      <div key={item.food_ID} className="w-full h-48 sm:h-32 md:h-40 lg:h-40 sm:mb-8 mb-5">
+        <FoodItem
+          foodId={item.food_ID}
+          foodName={item.food_name}
+          price={item.price}
+          foodImg={item.food_img}
+          foodStatus={item.food_status}
+          onEdit={(id) => handleEditModel("edit", id)}
+          onDelete={() => deletefood(item.food_ID)}
+        />
+      </div>
+    ))
+  ) : (
+    <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
+      {isMessage ? (
+        <Loading text="ກຳລັງໂຫລດ" />
+      ) : (
+        "No data available."
+      )}
+    </div>
+  )}
+  {isLoading && (
+    <p className="text-center w-full mt-2">
+      <Loading text="ໂຫລດຂໍ້ມູນ" />
+    </p>
+  )}
+</div>
 
-                                        foodId={item.food_ID}
-                                        foodName={item.food_name}
-                                        price={item.price}
-                                        foodImg={item.food_img}
-                                        foodStatus={item.food_status}
-                                        onEdit={(id) => handleEditModel("edit", id)}
-                                        onDelete={() => deletefood(item.food_ID)}
-                                    />
-                                </div>
-                            ))
-                        ) : (
-                            <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
-                                {
-                                    isMessage ? <Loading text="ກຳລັງໂຫລດ" /> : "No data available."
-                                }
-                            </div>
-                        )}
-                        {isLoading && <p className="text-center w-full mt-2"><Loading text="ໂຫລດຂໍ້ມູນ" /></p>}
-                    </div>
 
                 </div>
             </div>

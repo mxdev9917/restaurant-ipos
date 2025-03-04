@@ -1,18 +1,58 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar_Nav from "../components/sidebar-nav"
 import { Link } from "react-router-dom"
 import Datepicker from "react-tailwindcss-datepicker";
-
+import { salesAmountReportService, Root } from "../../services/reports/salesAmountReportService";
+import { useAuth } from "../../context/context";
+import Loading from "../../utils/Loading";
+import DataComponent from "../../utils/datacomponent";
+import PpageRange from "../../utils/pagination";
 
 function saleReport() {
+    const [loading, setLoading] = useState(false);
+    const { data } = useAuth();
+    const [getDt, setGetDt] = useState<Root["data"]>([]);
+    const [totalItems, setTotalItems] = useState(0);
+    const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
+    const [currentPage, setCurrentPage] = useState(1);
     const NEXT_MONTH = new Date();
     NEXT_MONTH.setMonth(NEXT_MONTH.getMonth() + 1);
-
     const [value, setValue] = useState({
         startDate: new Date(),
         endDate: NEXT_MONTH,
     });
+
+
+    function handlItemsPerPage(limit: number) {
+        setItemsPerPage(limit)
+    }
+    // Fetch users based on current page
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                let resId = String(data.restaurant_ID);
+                const res = await salesAmountReportService.salesAmountReport(resId, currentPage, itemsPerPage);
+                setGetDt(res.data);
+
+                let itemper = Number(res.total_item)
+                setTotalItems(itemper);
+                if (itemper == itemsPerPage) {
+                    setTotalItems(itemper + 1);
+                } else {
+                    setTotalItems(itemper);
+                }
+                setLoading(false);
+            } catch (error: any) {
+                console.error("API Error:", error);
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, [currentPage, itemsPerPage]);
+
+
 
     return (
         <div className="flex flex-col">
@@ -55,92 +95,68 @@ function saleReport() {
                     </div>
 
 
-                    <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-2">
-                        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" className="px-6 py-3">
-                                        Product name
-                                    </th>
-
-                                    <th scope="col" className="px-6 py-3">
-                                        Category
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">
-                                        Price
-                                    </th>
-
+                    <div className=" relative overflow-auto md:overflow-hidden  md:h-[76vh] ">
+                        <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                            <thead className="text-xs text-gray-700 uppercase bg-gray-100 sticky top-0 z-10">
+                                <tr className="flex items-center justify-between w-full h-14 text-left bg-gray-100 text-gray-800 font-semibold uppercase">
+                                    <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">ເມນູອາຫານ</th>
+                                    <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">ປະເພດເມນູ</th>
+                                    <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">ຈຳນວນ</th>
+                                    <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">ລາຄາ</th>
+                                    <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">ລາຄາລວມ</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        Apple MacBook Pro 17"
-                                    </th>
-
-                                    <td className="px-6 py-4">
-                                        Laptop
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        $2999
-                                    </td>
-
-                                </tr>
-                                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        Microsoft Surface Pro
-                                    </th>
-
-                                    <td className="px-6 py-4">
-                                        Laptop PC
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        $1999
-                                    </td>
-
-                                </tr>
-                                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        Magic Mouse 2
-                                    </th>
-
-                                    <td className="px-6 py-4">
-                                        Accessories
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        $99
-                                    </td>
-
-                                </tr>
-                                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        Google Pixel Phone
-                                    </th>
-
-                                    <td className="px-6 py-4">
-                                        Phone
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        $799
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        Apple Watch 5
-                                    </th>
-
-                                    <td className="px-6 py-4">
-                                        Wearables
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        $999
-                                    </td>
-
-                                </tr>
-                            </tbody>
                         </table>
+                        <div className="md:overflow-y-auto md:max-h-[65vh]">
+                            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                                <tbody>
+                                    {loading ? (
+                                        <tr>
+                                            <td colSpan={6} className="h-40 text-center text-gray-500">
+                                                <Loading text="ດາວໂຫຼດຂໍ້ມູນ" />
+                                            </td>
+                                        </tr>
+                                    ) : getDt.length > 0 ? (
+                                        getDt.map((item) => (
+                                            <tr key={item.food_ID}
+                                                className="flex justify-between text-left border-b hover:bg-gray-50 transition-all ">
+
+                                                <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
+                                                    {item.food_name}</td>
+                                                    <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
+                                                    {item.category}</td>
+
+                                                <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
+                                                    {item.total_quantity}</td>
+                                                    <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
+                                                    {item.food_price}</td>
+
+                                                <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
+                                                    {item.total_price}</td>
+
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan={6} className="h-40 text-center text-gray-500">
+                                                No data available.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+
+          <div className="flex gap-5 w-full justify-end pr-5 items-center">
+            <DataComponent onSelectChange={handlItemsPerPage} />
+            <PpageRange
+              currentPage={currentPage}
+              totalItems={totalItems}
+              itemsPerPage={itemsPerPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
 
 
 

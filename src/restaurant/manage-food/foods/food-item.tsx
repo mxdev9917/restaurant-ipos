@@ -36,7 +36,7 @@ const FoodItem: React.FC<foodItemProps> = ({ onDelete, onEdit, foodName, price, 
 
 
         <div
-            className="flex flex-col justify-between w-full h-full shadow-xl rounded-lg"
+            className="flex flex-col justify-between w-full h-full shadow-xl rounded-lg  "
 
         >
             <div className="w-full h-fit flex justify-end p-2 relative">
@@ -57,7 +57,7 @@ const FoodItem: React.FC<foodItemProps> = ({ onDelete, onEdit, foodName, price, 
                 }
             </div>
 
-            <div className="w-full bg-slate-100 flex justify-end items-center text-black text-sm md:text-base font-semibold">
+            <div className="w-full bg-slate-100 flex justify-end items-center text-black text-sm md:text-base font-semibold rounded-b-lg">
                 <div className="flex w-full flex-col justify-between h-full mt-2 mb-1">
                     <div className="flex justify-between px-2">
                         <p className=" font-semibold text-sm  w-full h-fit text-ellipsis">{foodName}</p>

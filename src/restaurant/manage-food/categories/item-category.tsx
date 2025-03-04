@@ -55,7 +55,7 @@ const CategroyItem: React.FC<categoryItemProps> = ({ onDelete, onEdit, categoryN
                     categoryImg !== null ?
                         <img className="h-28 w-full object-cover rounded-md" src={`${IPOS_BASE_URL}${categoryImg}`} alt="" />
                         :
-                        <img className="h-28 w-full object-contain rounded-md" src="\public\images\ipos.png" alt="" />
+                        <img className="h-28 w-full object-contain rounded-md" src="images/ipos.png" alt="" />
 
                 }
 
