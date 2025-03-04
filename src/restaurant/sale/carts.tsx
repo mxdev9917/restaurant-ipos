@@ -22,6 +22,7 @@ import { UpdateOrderSuccessService } from "../../services/sale/edit-order-succes
 import LoadingMessage from "../../utils/loadingMessage";
 import Tableincluded from "./components/table-included";
 import Loading from "../../utils/Loading";
+import { getByStatusRateService } from "../../services/setting/rates/getByStatusRateService";
 
 function Carts() {
   const [PrinterModel, setPrinterleModel] = useState(false);
@@ -35,6 +36,7 @@ function Carts() {
   const [foodItemsTable, setFoodItemsTable] = useState<any[]>([]);
   const { data } = useAuth();
   const [items, setItems] = useState<any[]>([]);
+  const [rateItems, setrateItems] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [totalItem, setTotalItem] = useState(0);
   const [page, setPage] = useState(1);
@@ -158,7 +160,7 @@ function Carts() {
 
     } catch (error: any) {
       generalErrors(error)
-    }finally{
+    } finally {
       setIsMessage(false)
     }
   }
@@ -188,7 +190,7 @@ function Carts() {
     } catch (error: any) {
       console.error("Error fetching data:", error);
       generalErrors(error)
-    }finally{
+    } finally {
       setIsMessage(false)
     }
   };
@@ -227,9 +229,45 @@ function Carts() {
     }, 1200);
 
   };
+  const fetchRateByStatus = async () => {
+    try {
+      let resId = String(data.restaurant_ID);
+      const res = await getByStatusRateService.RateService(resId);
+
+      if (res.status === "200") {
+        let data = res.data;
+        let updatedRates = [];
+
+        for (const rateItem of data) {
+          let rate = Number(rateItem.rate);
+          let newTotalPrice = Number(totalPrice);
+          let newRate = Math.floor(newTotalPrice / rate);
+
+
+
+          // Collect data without overwriting
+          updatedRates.push({
+            rate_ID: rateItem.rate_ID,
+            currency: rateItem.currency,
+            newRate: newRate,
+          });
+        }
+
+        // Update state once after looping
+        setrateItems(updatedRates);
+      }
+    } catch (error) {
+      console.error("Error fetching rates:", error);
+    }
+  };
+  useEffect(() => {
+
+    fetchRateByStatus();
+  }, [rateItems])
   useEffect(() => {
     fetchData();
     fetchFoodTableItem();
+
   }, [])
   useEffect(() => {
     fetchfoodData(page);
@@ -310,9 +348,9 @@ function Carts() {
             ) : (
               <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
                 {
-                  isMessage? <Loading text="ກຳລັງໂຫລດ" />:"No data available."
+                  isMessage ? <Loading text="ກຳລັງໂຫລດ" /> : "No data available."
                 }
-               
+
               </div>
             )}
           </div>
@@ -388,15 +426,26 @@ function Carts() {
             <div className="flex justify-between my-1">
               <p>ລາຄາ</p>
               <p>{Price} KIP</p>
+
             </div>
             <div className="flex justify-between my-1 text-sm">
               <p>Vat 10%</p>
               <p>{vat} KIP</p>
             </div>
-            <div className="flex justify-between my-1 text-sm border-y-2 py-2">
-              <p className="font-semibold">ລາຄາລວມ</p>
+            <div className="flex justify-between  text-sm border-t-2 pt-2">
+              <p className="font-semibold">ລາຄາລວມ:</p>
               <p className="text-orange-500">{totalPrice} KIP</p>
             </div>
+            {
+              rateItems.map((item) => (
+                <div key={item.rate_ID} className="flex justify-between text-sm  py-1">
+                  <p className="">{item.currency}:</p>
+                  <p className="text-orange-500">{item.newRate} {item.currency}</p>
+                </div>
+              ))
+            }
+
+
 
             <div className="w-full  flex flex-col sm:flex-row sm:justify-end py-5 space-y-2 sm:space-y-0 sm:space-x-2 ">
               <button

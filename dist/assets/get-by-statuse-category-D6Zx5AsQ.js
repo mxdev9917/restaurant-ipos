@@ -1,1 +1,0 @@
-import{a,I as e}from"./alert-Ltn5leRl.js";class c{static async GetAllCategory(t){try{return(await a.get(`${e}/category/status/${t}`,{})).data}catch(r){throw console.error("Error fetching categories:",r),r}}}export{c as G};

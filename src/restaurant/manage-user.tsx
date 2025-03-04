@@ -17,6 +17,8 @@ import { Dropdown } from "flowbite-react";
 import { HiChevronDown } from "react-icons/hi";
 import { generalErrors } from "../utils/error";
 import { useAuth } from "../context/context";
+import { HiPencilAlt, HiOutlineTrash, HiOutlineBan, HiCheck } from "react-icons/hi"; //HiCheck 
+import { MdLockReset } from "react-icons/md";
 
 function ManageUser() {
   const [isCheckModel, setIsCheckModel] = useState(false);
@@ -29,7 +31,7 @@ function ManageUser() {
   const [totalItems, setTotalItems] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
   const [currentPage, setCurrentPage] = useState(1);
- const { data } = useAuth();
+  const { data } = useAuth();
 
   function handlItemsPerPage(limit: number) {
     setItemsPerPage(limit)
@@ -248,7 +250,7 @@ function ManageUser() {
                                   "question"
                                 )
                               }
-                            >ປ່ຽນລະຫັດ</Dropdown.Item>
+                            ><MdLockReset className='text-lg text-gray-400 mr-2' />ປ່ຽນລະຫັດ</Dropdown.Item>
                             <Dropdown.Item
                               onClick={() =>
                                 alertconfirm(
@@ -257,10 +259,14 @@ function ManageUser() {
                                   "question"
                                 )
                               }
-                            >ປິດການໃຊ້ການ</Dropdown.Item>
+                            > {
+                                item.user_status === "Locked" ? (<span className="flex ">
+                                  <HiCheck className='text-lg text-gray-400 mr-2' />ເປີດໃຊ້ງານ</span>) : (<span className="flex ">
+                                    <HiOutlineBan className='text-lg text-gray-400 mr-2' />ປິດໃຊ້ງານ</span>)
+                              }</Dropdown.Item>
                             <Dropdown.Item
                               onClick={() => handleModel("edit", item.user_ID)}
-                            >ແກ້ໄຂຂໍ້ມູນ</Dropdown.Item>
+                            ><HiPencilAlt className='text-lg text-gray-400 mr-2' />ແກ້ໄຂຂໍ້ມູນ</Dropdown.Item>
                             <Dropdown.Item
                               onClick={() =>
                                 alertconfirm(
@@ -269,7 +275,7 @@ function ManageUser() {
                                   "question"
                                 )
                               }
-                            >ລົບຜູ້ໃຊ້</Dropdown.Item>
+                            ><HiOutlineTrash className='text-lg text-gray-400 mr-2' />ລົບຜູ້ໃຊ້</Dropdown.Item>
                           </Dropdown>
 
                         </td>

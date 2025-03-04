@@ -13,6 +13,7 @@ export interface Data {
     food_name: string;
     price: number;
     food_img: string;
+    created_at:string;
 }
 
 export class GetFoodByStatusService {
