@@ -1,7 +1,8 @@
 import Sidebar_Nav from "../components/sidebar-nav"
 import ChartComponent from "../components/charts/chartsales";
-import ChartTopProToDay from "../components/charts/charttoppro";
+// import ChartTopProToDay from "../components/charts/charttoppro";
 import ChartKichen from "../components/charts/chartkichen";
+// import ChartTopPro from "../components/charts/charttoppro";
 
 function Dashboardv2() {
 
@@ -71,7 +72,7 @@ function Dashboardv2() {
                         <ChartComponent />
                     </div>
                     <div className="bg-white 2xl:w-[800px] w-full p-4">
-                        <ChartTopProToDay />
+                        {/* <ChartTopPro /> */}
                     </div>
 
 

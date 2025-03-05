@@ -20,7 +20,6 @@ function Dashboardv() {
   const { data } = useAuth();
   const [topProductItem, setTopProductItem] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const[TotalSalesDay,setTotalSalesDay]=useState("0");
   const[TotalQtyDay,setTotalQtyDay]=useState("0");
   NEXT_MONTH.setMonth(NEXT_MONTH.getMonth() + 1);
@@ -39,11 +38,9 @@ function Dashboardv() {
         let ts=Number(res.totalSale[0].total_price);
         setTotalSalesDay(String(ts));
         setTotalQtyDay(res.totalSale[0].total_quantity);
-      } else {
-        setError("Failed to fetch data");
-      }
+      } 
     } catch (error:any) {
-      setError("Error fetching data: " + error.message);
+     
     } finally {
       setLoading(false);
     }
