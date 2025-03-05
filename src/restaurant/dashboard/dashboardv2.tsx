@@ -1,7 +1,7 @@
-import Sidebar_Nav from "./components/sidebar-nav"
-import ChartComponent from "./components/charts/chartsales";
-import ChartTopProToDay from "./components/charts/charttopprotoday";
-import ChartKichen from "./components/charts/chartkichen";
+import Sidebar_Nav from "../components/sidebar-nav"
+import ChartComponent from "../components/charts/chartsales";
+import ChartTopProToDay from "../components/charts/charttoppro";
+import ChartKichen from "../components/charts/chartkichen";
 
 function Dashboardv2() {
 

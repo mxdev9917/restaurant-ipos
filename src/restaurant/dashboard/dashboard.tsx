@@ -1,10 +1,14 @@
-import Sidebar_Nav from "./components/sidebar-nav";
-import ChartComponent from "./components/charts/chartsales";
-import ChartTopProToDay from "./components/charts/charttopprotoday";
-import ChartKichen from "./components/charts/chartkichen";
+import Sidebar_Nav from "../components/sidebar-nav";
+import ChartComponent from "../components/charts/chartsales";
+import ChartTopPro from "../components/charts/charttoppro";
+import ChartKichen from "../components/charts/chartkichen";
 import Datepicker from "react-tailwindcss-datepicker";
-import { useState } from "react";
-import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../context/context";
+import { dashboardService } from "../../services/dashboard/dashboardService";
+import TopTableProduct from "./components/topTableProduct";
+
+
 
 
 
@@ -13,39 +17,53 @@ import { jwtDecode } from "jwt-decode";
 
 function Dashboardv() {
   const NEXT_MONTH = new Date();
+  const { data } = useAuth();
+  const [topProductItem, setTopProductItem] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const[TotalSalesDay,setTotalSalesDay]=useState("0");
+  const[TotalQtyDay,setTotalQtyDay]=useState("0");
   NEXT_MONTH.setMonth(NEXT_MONTH.getMonth() + 1);
   const [value, setValue] = useState({
     startDate: new Date(),
     endDate: NEXT_MONTH,
   });
-  const urlParams = new URLSearchParams(window.location.search);
-  const token = urlParams.get('token');
 
-  if (token) {
-    console.log("Token received from URL:", token);
-
+  const fetchData = async () => {
+    let resId = String(data.restaurant_ID);
+    const today = new Date().toISOString().split("T")[0];
     try {
-      // Decode the token (if it's a JWT)
-      const decodedToken = jwtDecode(token);
-      console.log("Decoded Token:", decodedToken);
-
-      // Store the token in localStorage for subsequent use
-      localStorage.setItem("authToken", token);
-
-      // Perform any additional processing (e.g., validate or use the token)
+      const res = await dashboardService.getDashboard(resId, today);
+      if (res.status === "200") {
+        setTopProductItem(res.topProduct);
+        let ts=Number(res.totalSale[0].total_price);
+        setTotalSalesDay(String(ts));
+        setTotalQtyDay(res.totalSale[0].total_quantity);
+      } else {
+        setError("Failed to fetch data");
+      }
     } catch (error:any) {
-      console.error("Invalid token:", error.message);
-      // Redirect to login or show an error message
+      setError("Error fetching data: " + error.message);
+    } finally {
+      setLoading(false);
     }
-  } else {
-    console.log("No token found in URL");
-    // Redirect to login page or show an error message
-    // window.location.href = "/login";
-  }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [data.restaurant_ID]);  // Only re-run when restaurant_ID changes
 
+  useEffect(() => {
+  }, [topProductItem]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  
   return (
     <div className="flex flex-col">
+      
       <Sidebar_Nav />
+
       <div className="p-1 sm:ml-64 flex-col">
         <div className=" flex  flex-col 2xl:flex-row">
           <div className=" w-full h-fit  flex p-2 flex-col justify-between mr-2.5">
@@ -86,10 +104,10 @@ function Dashboardv() {
                         d="M13.6 16.733c.234.269.548.456.895.534a1.4 1.4 0 0 0 1.75-.762c.172-.615-.446-1.287-1.242-1.481-.796-.194-1.41-.861-1.241-1.481a1.4 1.4 0 0 1 1.75-.762c.343.077.654.26.888.524m-1.358 4.017v.617m0-5.939v.725M4 15v4m3-6v6M6 8.5 10.5 5 14 7.5 18 4m0 0h-3.5M18 4v3m2 8a5 5 0 1 1-10 0 5 5 0 0 1 10 0Z"
                       />
                     </svg>
-                    <p className="text-sm  md:text-base">Total Sales</p>
+                    <p className="text-sm  md:text-base">ລາຍໄດ້ຕໍ່ມື້</p>
                   </div>
                   <span className="text-[23px] text-gray-600 font-bold">
-                    50.000.000
+                    {TotalSalesDay}
                   </span>
 
                   <p className="text-xs text-green-500">+10% from yesterday</p>
@@ -113,10 +131,10 @@ function Dashboardv() {
                         d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 5h6m-6 4h6M10 3v4h4V3h-4Z"
                       />
                     </svg>
-                    <p className="text-sm md:text-base">Total Order</p>
+                    <p className="text-sm md:text-base">ອໍເດີຕໍ່ມື້</p>
                   </div>
                   <span className="text-[23px] text-gray-600 font-bold">
-                    500{" "}
+                    {TotalQtyDay}
                   </span>
                   <p className="text-xs text-green-500">+10% from yesterday</p>
                 </div>
@@ -185,7 +203,7 @@ function Dashboardv() {
             <ChartComponent />
           </div>
           <div className="bg-white 2xl:w-[800px] w-full p-4">
-            <ChartTopProToDay />
+            <ChartTopPro datalist={topProductItem} />
           </div>
         </div>
         <div className=" flex  flex-col 2xl:flex-row gap-3  m-3">
@@ -196,81 +214,7 @@ function Dashboardv() {
             <ChartKichen />
           </div>
           <div className=" w-full h-[300px]">
-            <div className="relative overflow-x-auto shadow-md ">
-              <table className="w-full h-[340px] text-sm text-left rtl:text-right text-gray-500 ">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
-                  <tr>
-                    <th scope="col" className="px-6 py-3">
-                      Product name
-                    </th>
-
-                    <th scope="col" className="px-6 py-3">
-                      Category
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Price
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="odd:bg-white  even:bg-gray-50 e border-b ">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                    >
-                      Apple MacBook Pro 17"
-                    </th>
-
-                    <td className="px-6 py-4">Laptop</td>
-                    <td className="px-6 py-4">$2999</td>
-                  </tr>
-                  <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      Microsoft Surface Pro
-                    </th>
-
-                    <td className="px-6 py-4">Laptop PC</td>
-                    <td className="px-6 py-4">$1999</td>
-                  </tr>
-                  <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      Magic Mouse 2
-                    </th>
-
-                    <td className="px-6 py-4">Accessories</td>
-                    <td className="px-6 py-4">$99</td>
-                  </tr>
-                  <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      Google Pixel Phone
-                    </th>
-
-                    <td className="px-6 py-4">Phone</td>
-                    <td className="px-6 py-4">$799</td>
-                  </tr>
-                  <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      Google Pixel Phone
-                    </th>
-
-                    <td className="px-6 py-4">Phone</td>
-                    <td className="px-6 py-4">$799</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <TopTableProduct datalist={topProductItem}/>
           </div>
         </div>
       </div>

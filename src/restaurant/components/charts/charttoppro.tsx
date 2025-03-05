@@ -1,9 +1,17 @@
 import ApexCharts from 'react-apexcharts';
 
-function ChartTopProToDay() {
+interface ChartTopProProps {
+  datalist: { food_name: string; total_quantity: number }[]; // Assuming datalist is an array of objects
+}
+
+const ChartTopPro: React.FC<ChartTopProProps> = ({ datalist }) => {
+  // Extract food names and total prices from datalist
+  const foodNames = datalist.map(item => item.food_name);
+  const totalQty = datalist.map(item => item.total_quantity);
+
   const options: ApexCharts.ApexOptions = {
     series: [{
-      data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+      data: totalQty // Use the extracted total prices array
     }],
     chart: {
       type: 'bar' as const, // Ensure this is a valid type
@@ -22,10 +30,7 @@ function ChartTopProToDay() {
       enabled: false
     },
     xaxis: {
-      categories: [
-        'Product A', 'Product B', 'Product C', 'Product D', 'Product E',
-        'Product F', 'Product G', 'Product H', 'Product I', 'Product J'
-      ]
+      categories: foodNames // Use the extracted food names array
     },
     title: {
       text: 'Top 10 Products by Sales',
@@ -49,6 +54,6 @@ function ChartTopProToDay() {
       />
     </div>
   );
-}
+};
 
-export default ChartTopProToDay;
+export default ChartTopPro;
