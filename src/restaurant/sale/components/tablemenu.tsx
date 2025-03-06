@@ -20,9 +20,10 @@ const TableMenu: React.FC<TableMenuProps> = ({ handleClick, tableId }) => {
     const handleUpdate = async (table_status: string, even: boolean) => {
         let userId = String(data.user_ID);
         let tableID = String(tableId);
+        let resId = String(data.restaurant_ID);
         try {
             even ? setOpenLoading(true):setReserveLoading(true) ;
-            const response = await OpenOrderService.OpenOrder(tableID, userId, table_status);
+            const response = await OpenOrderService.OpenOrder(tableID, userId, table_status,resId);
             if (response?.status == "200") {
                 even ? navigate(`/cart/${tableId}`) : alertSuccessV3("ຈອງໂຕະສຳເລັດ", "success");
             }

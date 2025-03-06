@@ -15,8 +15,8 @@ function Authen() {
     const [loading, setLoading] = useState(false);
     const { setAuthData } = useAuth();
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("x2");
+    const [password, setPassword] = useState("1234");
     
     function togglePasswordType() {
         setPasswordType(!passwordType);

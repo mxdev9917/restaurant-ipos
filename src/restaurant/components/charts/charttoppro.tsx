@@ -1,24 +1,24 @@
 import ApexCharts from 'react-apexcharts';
 
 interface ChartTopProProps {
-  datalist: { food_name: string; total_quantity: number }[]; // Assuming datalist is an array of objects
+  datalist: { food_name: string; total_quantity: number }[];
 }
 
 const ChartTopPro: React.FC<ChartTopProProps> = ({ datalist }) => {
-  // Extract food names and total prices from datalist
   const foodNames = datalist.map(item => item.food_name);
   const totalQty = datalist.map(item => item.total_quantity);
 
   const options: ApexCharts.ApexOptions = {
     series: [{
-      data: totalQty // Use the extracted total prices array
+      data: totalQty
     }],
     chart: {
-      type: 'bar' as const, // Ensure this is a valid type
+      type: 'bar',
       height: 350,
       toolbar: {
-        show: true  // Show toolbar for interaction
-      }
+        show: true
+      },
+      fontFamily: 'Noto Sans Lao, sans-serif' // Set the font family here
     },
     plotOptions: {
       bar: {
@@ -30,10 +30,10 @@ const ChartTopPro: React.FC<ChartTopProProps> = ({ datalist }) => {
       enabled: false
     },
     xaxis: {
-      categories: foodNames // Use the extracted food names array
+      categories: foodNames
     },
     title: {
-      text: 'Top 10 Products by Sales',
+      text: '10 ເມນູຂາຍດີ',
       align: 'center',
       style: {
         fontSize: '16px',
@@ -41,11 +41,11 @@ const ChartTopPro: React.FC<ChartTopProProps> = ({ datalist }) => {
         color: '#263238'
       }
     },
-    colors: ['#FFA500']  // Set the color to orange
+    colors: ['#FFA500']
   };
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto' }}>  {/* Center and constrain the chart */}
+    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
       <ApexCharts
         options={options}
         series={options.series}

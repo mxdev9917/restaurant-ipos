@@ -7,9 +7,9 @@ export interface IOpenOrder {
 }
 
 export class OpenOrderService {
-  static async OpenOrder(table_ID:String, user_ID:String,table_status:String): Promise<IOpenOrder> {
+  static async OpenOrder(table_ID:String, user_ID:String,table_status:String,restaurant_ID:string): Promise<IOpenOrder> {
     try {
-      const res = await axios.post(`${IPOS_BASE_URL}/order`, { table_ID, user_ID, table_status }, {
+      const res = await axios.post(`${IPOS_BASE_URL}/order`, { table_ID, user_ID, table_status,restaurant_ID }, {
 
       });
       return res.data;
