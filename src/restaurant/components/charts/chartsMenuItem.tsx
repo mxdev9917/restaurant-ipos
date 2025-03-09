@@ -15,7 +15,7 @@ const ChartsMenuItem: React.FC<ChartsMenuItemProps> = ({ datalist }) => {
     chart: {
       height: 350,
       type: 'area',
-      fontFamily: 'Noto Sans Lao, sans-serif' 
+      fontFamily: 'Noto Sans Lao, sans-serif'
     },
     colors: ['#FF5733'],
     dataLabels: {
@@ -44,6 +44,15 @@ const ChartsMenuItem: React.FC<ChartsMenuItemProps> = ({ datalist }) => {
     tooltip: {
       x: {
         format: 'HH:mm',
+      },
+    },
+    noData: {
+      text: 'ຍັງບໍ່ມີລາຍການ',
+      align: 'center',
+      verticalAlign: 'middle',
+      style: {
+        fontSize: '16px',
+        color: '#888',
       },
     },
   };

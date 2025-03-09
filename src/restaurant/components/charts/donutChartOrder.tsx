@@ -24,7 +24,7 @@ const DonutChartOrder: React.FC<DonutChartOrderProps> = ({ datalist }) => {
                     <Pie
                         data={data}
                         cx="50%" // Center horizontally
-                        cy="50%" // Center vertically
+                        cy="40%" // Center vertically
                         innerRadius={80}
                         outerRadius={130}
                         fill="#8884d8"
@@ -38,7 +38,7 @@ const DonutChartOrder: React.FC<DonutChartOrderProps> = ({ datalist }) => {
                 </PieChart>
             </div>
             {/* Display value (you can customize it further based on your needs) */}
-            <div className="flex w-28 h-28 absolute justify-center items-center text-4xl font-bold text-gray-500 pl-7 ">
+            <div className="flex w-28 h-28 absolute justify-center items-center text-4xl font-bold text-gray-500 pl-9 pb-6 ">
                 {TotalTable} {/* Display reserved count here */}
             </div>
         </>

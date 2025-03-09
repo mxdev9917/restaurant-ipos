@@ -32,6 +32,15 @@ const ChartTopPro: React.FC<ChartTopProProps> = ({ datalist }) => {
     xaxis: {
       categories: foodNames
     },
+    noData: {
+      text: 'ຍັງບໍ່ມີລາຍການ',
+      align: 'center',
+      verticalAlign: 'middle',
+      style: {
+        fontSize: '16px',
+        color: '#888',
+      },
+    },
     title: {
       text: '10 ເມນູຂາຍດີ',
       align: 'center',

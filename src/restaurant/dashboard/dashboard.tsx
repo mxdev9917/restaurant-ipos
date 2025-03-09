@@ -8,7 +8,7 @@ import { useAuth } from "../../context/context";
 import { dashboardService } from "../../services/dashboard/dashboardService";
 import TopTableProduct from "./components/topTableProduct";
 import DonutChartOrder from "../components/charts/donutChartOrder";
-
+import { PiChartLineUp } from "react-icons/pi"; //<PiChartLineDownBold />
 import { HiMenu } from "react-icons/hi";
 
 function Dashboardv() {
@@ -91,7 +91,11 @@ function Dashboardv() {
               <HiMenu className="text-2xl" />
               <span className="font-semibold text-base">ສະຖານະໂຕະ</span>
             </p>
-            <div className="flex items-center"></div>
+            <div className="flex items-center mt-3">
+              <div className="flex justify-center  w-28 border-r-2 border-gray-500">
+                <span className="text-7xl font-bold">30</span>
+              </div>
+            </div>
           </div>
           <div className="w-full h-40 rounded-md shadow-md p-2 bg-slate-50">
             <p className="flex items-center gap-2">
@@ -109,49 +113,71 @@ function Dashboardv() {
               {tableStatus?.length > 0 ? (
                 <DonutChartOrder datalist={tableStatus} />
               ) : (
-                <div>No data available</div>
+                <div>ບໍ່ມີຂໍໍ້ມູນ</div>
               )}
-              <div className="flex flex-col w-full">
+              <div className="flex flex-col w-full pb-5 text-sm">
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-20">
                     <div className="w-3 h-3 bg-yellow-300 rounded-full" />
                     <p className="font-medium">ໂຕະຈອງ:</p>
                   </div>
-                  {tablereserved} ຂອງຕົວ
+                  {tablereserved} ໂຕະ
                 </div>
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-20">
                     <div className="w-3 h-3 bg-red-600 rounded-full" />
                     <p className="font-medium">ໂຕະບໍ່ວ່າງ:</p>
                   </div>
-                  {tablebusy} ຂອງຕົວ
+                  {tablebusy} ໂຕະ
                 </div>
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-20">
                     <div className="w-3 h-3 bg-green-500 rounded-full" />
                     <p className="font-medium">ໂຕະວ່າງ:</p>
                   </div>
-                  {tableEmpty} ຂອງຕົວ
+                  {tableEmpty} ໂຕະ
                 </div>
               </div>
             </div>
           </div>
-          <div className="w-full h-40 rounded-md shadow-xl p-2 bg-slate-50">
+          <div className="flex flex-col w-full h-40 rounded-md shadow-xl p-2 bg-slate-50">
             <p className="flex items-center gap-2">
               <HiMenu className="text-2xl" />
               <span className="font-semibold text-base">ສະຖານະໂຕະ</span>
             </p>
-            <div className="flex items-center"></div>
+            <div className="flex items-center">
+            <DonutChartOrder datalist={tableStatus} />
+              <div className="flex flex-col w-full pb-5 text-sm">
+                <div className="flex justify-around gap-2 w-full font-medium">
+                  <div className="flex items-center justify-start gap-2 w-20">
+                    <div className="w-3 h-3 bg-yellow-300 rounded-full" />
+                    <p className="font-medium">ໂຕະຈອງ:</p>
+                  </div>
+                  {tablereserved} ໂຕະ
+                </div>
+                <div className="flex justify-around gap-2 w-full font-medium">
+                  <div className="flex items-center justify-start gap-2 w-20">
+                    <div className="w-3 h-3 bg-red-600 rounded-full" />
+                    <p className="font-medium">ໂຕະບໍ່ວ່າງ:</p>
+                  </div>
+                  {tablebusy} ໂຕະ
+                </div>
+                <div className="flex justify-around gap-2 w-full font-medium">
+                  <div className="flex items-center justify-start gap-2 w-20">
+                    <div className="w-3 h-3 bg-green-500 rounded-full" />
+                    <p className="font-medium">ໂຕະວ່າງ:</p>
+                  </div>
+                  {tableEmpty} ໂຕະ
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <div className="flex flex-col 2xl:flex-row mx-4 bg-white rounded-xl shadow-md">
           <div className="w-full h-fit min-h-80 flex p-2 flex-col justify-between bg-white">
-            {timeMenuItem?.length > 0 ? (
-              <ChartsMenuItem datalist={timeMenuItem} />
-            ) : (
-              <div>No time menu data available</div>
-            )}
+          <ChartsMenuItem datalist={timeMenuItem} />
+           
           </div>
           <div className="bg-white 2xl:w-[800px] w-full p-4">
             {topProductItem?.length > 0 ? (
