@@ -1,7 +1,7 @@
 import Sidebar_Nav from "../components/sidebar-nav";
 import ChartsMenuItem from "../components/charts/chartsMenuItem";
 import ChartTopPro from "../components/charts/charttoppro";
-import ChartKichen from "../components/charts/chartkichen";
+import ChartKichen from "../components/charts/chartTable";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/context";

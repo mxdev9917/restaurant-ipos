@@ -5,6 +5,7 @@ export interface IFoodService {
     status: string;
     message: string;
     total_item: number; 
+    table_name:string;
     data: Data[];
 }
 

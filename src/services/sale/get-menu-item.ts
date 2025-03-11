@@ -5,6 +5,7 @@ export interface Root {
     status: string
     message: string
     totalPrice: string
+    table_name: string;
     data: Data[]
 }
 

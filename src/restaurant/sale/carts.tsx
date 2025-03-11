@@ -51,6 +51,7 @@ function Carts() {
   const [loadingMessage, setLoadingMessage] = useState(false);
   const [loadingMessageText, setLoadingMessageTesxt] = useState("");
   const [isMessage, setIsMessage] = useState(true);
+  const [tableName,setTableName]=useState("")
 
   const handleOrderSuccuss = async () => {
     try {
@@ -88,6 +89,7 @@ function Carts() {
     try {
       const res = await GetMenuItemService.MenuItem(tableID);
       setFoodItemsTable(res.data);
+      setTableName(res.table_name);
       setPrice(res.totalPrice);
       let price = Number(res.totalPrice);
       let newVat = (price / 100) * 10;
@@ -371,7 +373,7 @@ function Carts() {
           <div className="flex justify-between w-full">
             <div></div>
             <p className="text-xl sm:text-2xl md:text-3xl py-3 text-orange-500 font-semibold flex justify-center">
-              ລາຍການອາຫານ
+              ລາຍການອາຫານ {tableName}
             </p>
             <Dropdown label={<FiPrinter className="text-xl sm:text-2xl" />} inline>
               <Dropdown.Item onClick={() => handlePrinterModel(1)}>ປີ້ນເຕີເຄົາເຕີ</Dropdown.Item>

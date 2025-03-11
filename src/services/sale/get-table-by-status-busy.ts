@@ -9,7 +9,7 @@ export interface Root {
 
 export interface Data {
     table_ID: number
-    table_name: string
+   
 }
 
 export class GetTableByStatusBusyService {

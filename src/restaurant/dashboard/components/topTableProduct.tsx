@@ -17,7 +17,7 @@ const TopTableProduct: React.FC<TopTableProductProps> = ({ datalist }) => {
                     </tr>
                 </thead>
             </table>
-            <div className="md:overflow-y-auto md:max-h-[65vh]">
+            <div className="md:overflow-y-auto h-[283px]">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                     <tbody>
                         {

@@ -9,6 +9,7 @@ export interface Root {
   timeSale: TimeSale[]
   timeMenuItem: TimeMenuItem[]
   tableStatus: TableStatus[]
+  timeTable: TimeTable[]
   orderStatus: OrderStatus[]
   menuItem: MenuItem
 }
@@ -27,8 +28,9 @@ export interface TopProduct {
 }
 
 export interface TimeSale {
-  hour: string
-  total_sales: string
+  hour: number
+  paid_count: string
+  unpaid_count: string
 }
 
 export interface TimeMenuItem {
@@ -41,7 +43,12 @@ export interface TableStatus {
   busy_count: string
   empty_count: string
 }
-
+export interface TimeTable {
+  hour: string
+  reserved_count: string
+  busy_count: string
+  empty_count: string
+}
 export interface OrderStatus {
   paid_count: string
   unpaid_count: string

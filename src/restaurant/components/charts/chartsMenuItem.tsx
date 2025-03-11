@@ -66,7 +66,7 @@ const ChartsMenuItem: React.FC<ChartsMenuItemProps> = ({ datalist }) => {
 
   return (
     <div>
-      <h1 className='text-[16px] font-bold'>ການສັ່ງອາຫານ</h1>
+      <h1 className='text-[16px] font-bold'>ກຣາບສັ່ງອາຫານ</h1>
       <ApexCharts
         options={options}
         series={series}

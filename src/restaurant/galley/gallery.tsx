@@ -95,13 +95,13 @@ const Gallery: React.FC<CreateGalleryProps> = ({ handleGallery,handleSelectPath 
             <div className="w-full h-full mt-3 p-3 overflow-x-auto">
     <div
         ref={containerRef}
-        className="w-full h-full p-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3"
+        className="w-full h-fit p-3 flex flex-wrap"
     >
         {items.length > 0 ? (
             items.map((item) => (
                 <div 
                     key={item.pathImg_ID} 
-                    className="relative group w-full h-48 sm:h-32 md:h-40 lg:h-40 sm:mb-0 mb-5"
+                    className="relative group w-48 h-48 "
                 >
                     {/* Image */}
                     <img 
