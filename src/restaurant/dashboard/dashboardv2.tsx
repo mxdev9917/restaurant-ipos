@@ -1,7 +1,7 @@
 import Sidebar_Nav from "../components/sidebar-nav";
 import ChartsMenuItem from "../components/charts/chartsMenuItem";
 import ChartTopPro from "../components/charts/charttoppro";
-import ChartKichen from "../components/charts/chartTable";
+// import ChartKichen from "../components/charts/chartTable";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/context";
@@ -21,7 +21,7 @@ function Dashboardv() {
   const [topProductItem, setTopProductItem] = useState<any[]>([]);
   const[timeMenuItem,setTimeMenuItem] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const[TotalSalesDay,setTotalSalesDay]=useState("0");
+  // const[TotalSalesDay,setTotalSalesDay]=useState("0");
   const[TotalQtyDay,setTotalQtyDay]=useState("0");
   NEXT_MONTH.setMonth(NEXT_MONTH.getMonth() + 1);
   const [value, setValue] = useState({
@@ -37,8 +37,8 @@ function Dashboardv() {
       if (res.status === "200") {
         setTopProductItem(res.topProduct);
         setTimeMenuItem(res.timeMenuItem);
-        let ts=Number(res.totalSale[0].total_price);
-        setTotalSalesDay(String(ts));
+        // let ts=Number(res.totalSale[0].total_price);
+        // setTotalSalesDay(String(ts));
         setTotalQtyDay(res.totalSale[0].total_quantity);
       
         
@@ -108,7 +108,7 @@ function Dashboardv() {
                     <p className="text-sm  md:text-base">ລາຍໄດ້ຕໍ່ມື້</p>
                   </div>
                   <span className="text-[23px] text-gray-600 font-bold">
-                    {TotalSalesDay}
+                    {/* {TotalSalesDay} */}
                   </span>
 
                   <p className="text-xs text-green-500">+10% from yesterday</p>
@@ -209,10 +209,10 @@ function Dashboardv() {
         </div>
         <div className=" flex  flex-col 2xl:flex-row gap-3  m-3">
           <div className=" w-full h-fit flex flex-col justify-between  bg-white shadow-md">
-            <ChartKichen />
+            {/* <ChartKichen /> */}
           </div>
           <div className="bg-white shadow-md w-full h-fit">
-            <ChartKichen />
+            {/* <ChartKichen /> */}
           </div>
           <div className=" w-full h-[300px]">
           <TopTableProduct datalist={topProductItem}/>
