@@ -7,6 +7,7 @@ import {
     HiCubeTransparent ,
     HiClipboardList 
 } from "react-icons/hi";
+import { FaKitchenSet } from "react-icons/fa6";
 import { TbReportAnalytics } from "react-icons/tb";
 import { FaFire,FaChartBar } from "react-icons/fa";
 import { FaUsersGear } from "react-icons/fa6";
@@ -38,6 +39,9 @@ function Sidebar_Nav() {
                         <Sidebar.Item href="#sale" icon={HiClipboardList}>
                             ຂາຍ
                         </Sidebar.Item>
+                        <Sidebar.Item href="#manage/kitchen" icon={FaKitchenSet }>
+                            ຄົວ
+                        </Sidebar.Item>
                          <Sidebar.Collapse
                             icon={HiOutlineOfficeBuilding}
                             label="ຈັດການຮ້ານ"
@@ -54,7 +58,7 @@ function Sidebar_Nav() {
                             <Sidebar.Item href="#managefood">ເມນູອາຫານ</Sidebar.Item>
                             <Sidebar.Item href="#managecategory">ປະເພດເມນູ</Sidebar.Item>
                             <Sidebar.Item href="#managetable">ໂຕະ</Sidebar.Item>
-                            <Sidebar.Item href="#managezone">ໂຊນຮ້ານ</Sidebar.Item>
+                            {/* <Sidebar.Item href="#managezone">ໂຊນຮ້ານ</Sidebar.Item> */}
                         </Sidebar.Collapse>
                         <Sidebar.Collapse
                             icon={TbReportAnalytics}

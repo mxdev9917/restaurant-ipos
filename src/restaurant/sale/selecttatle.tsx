@@ -1,4 +1,4 @@
-import ZoneItem from "./components/zoneitem"
+// import ZoneItem from "./components/zoneitem"
 import TableItemSale from "./components/tableitemsale";
 import Nav from "../components/nav";
 import { useEffect, useRef, useState } from "react";
@@ -116,7 +116,7 @@ function selectTatles() {
         <div className="w-screen h-screen flex flex-col   ">
             <Nav isMenu={false} handelMenu={isCheckMenu} />
 
-            <div className=" w-full flex gap-3 items-center pt-2 ">
+            {/* <div className=" w-full flex gap-3 items-center pt-2 ">
 
                 <div className="ml-3">
                     <button
@@ -132,7 +132,7 @@ function selectTatles() {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
             <div
                 ref={containerRef}

@@ -27,7 +27,7 @@ function Dashboardv() {
   const [totalOrder, setTotalOrder] = useState("0");
   const [totalOrderPaid, setTotalOrderPaid] = useState("0");
   const [totalOrderUnpaid, setTotalOrderUnpaid] = useState("0");
-  const [totalQtyMunuItem ,setTotalQtyMunuItem]=useState("0")
+  const [totalQtyMunuItem, setTotalQtyMunuItem] = useState("0")
 
   NEXT_MONTH.setMonth(NEXT_MONTH.getMonth() + 1);
   const [value, setValue] = useState({
@@ -44,9 +44,9 @@ function Dashboardv() {
         setTopProductItem(res.topProduct || []);
         setTimeMenuItem(res.timeMenuItem || []);
         setTimeTable(res.timeTable || [])
-        setTimeOrder(res.timeSale||0);
+        setTimeOrder(res.timeSale || 0);
         setTableStatus(res.tableStatus || []);
-        setTotalQtyMunuItem(String(res.menuItem.qty ||0));
+        setTotalQtyMunuItem(String(res.menuItem.qty || 0));
 
         setTotalOrderPaid(String(res.orderStatus[0].paid_count || 0));
         setTotalOrderUnpaid(String(res.orderStatus[0]?.unpaid_count || 0));
@@ -70,7 +70,7 @@ function Dashboardv() {
 
   useEffect(() => {
     fetchData();
-  }, [data.restaurant_ID]);
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -175,14 +175,14 @@ function Dashboardv() {
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-20">
                     <div className="w-3 h-3 bg-red-600 rounded-full" />
-                    <p className="font-medium">ໂຕະບໍ່ວ່າງ:</p>
+                    <p className="font-medium">ໂຕະບໍ່ວາງ:</p>
                   </div>
                   {tablebusy} ໂຕະ
                 </div>
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-20">
                     <div className="w-3 h-3 bg-green-500 rounded-full" />
-                    <p className="font-medium">ໂຕະວ່າງ:</p>
+                    <p className="font-medium">ໂຕະວາງ:</p>
                   </div>
                   {tableEmpty} ໂຕະ
                 </div>
@@ -239,7 +239,7 @@ function Dashboardv() {
         </div>
         <div className="flex flex-col 2xl:flex-row gap-3 m-3">
           <div className="w-full h-fit flex flex-col justify-between bg-white shadow-md">
-            <ChartTable datalist={timeTable}/>
+            <ChartTable datalist={timeTable} />
           </div>
           <div className="bg-white shadow-md w-full h-fit">
             <ChartOrder datalist={timeOder} />

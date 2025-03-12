@@ -9,19 +9,20 @@ const ChartOrder: React.FC<ChartOrderProps> = ({ datalist }) => {
   const options: ApexCharts.ApexOptions = {
     series: [
       {
-        name: "Paid",
-        data: datalist.map((data) => parseInt(data.paid_count,10)), // Convert the paid_count to integers
+        name: "ຊຳລະແລ້ວ",
+        data: datalist.map((data) => parseInt(data.paid_count, 10)), // Convert the paid_count to integers
       },
       {
-        name: "Unpaid",
-        data: datalist.map((data) => parseInt(data.unpaid_count,10)), // Convert the unpaid_count to integers
+        name: "ຍັງບໍ່ທັນຂຳລະ",
+        data: datalist.map((data) => parseInt(data.unpaid_count, 10)), // Convert the unpaid_count to integers
       },
     ],
     chart: {
       height: 285,
       type: "area",
+      fontFamily: 'Noto Sans Lao, sans-serif'
     },
-    colors: ["#247f00","#FF5733" ], 
+    colors: ["#247f00", "#FF5733"],
     dataLabels: {
       enabled: false,
     },

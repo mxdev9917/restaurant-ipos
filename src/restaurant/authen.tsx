@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import blobSceneHaikei from '/images/svg/blob-scene-haikei.svg';
 import { authenService } from "../services/authen-service";
@@ -39,6 +39,11 @@ function Authen() {
         }
      }
 
+     useEffect(()=>{
+        console.log({email,password});
+        
+     })
+
     return (
         <div className="w-screen h-screen flex text-white justify-center relative bg-cover" style={{ backgroundImage: `url(${blobSceneHaikei})` }}>
             <p className=" font-normal text-sm absolute text-white right-3 bottom-3 pb-2 md:pb-0">ສະຫງວນລິຂະສິດ ໂດຍ @ IPOS | Bran IT</p>
@@ -50,7 +55,7 @@ function Authen() {
                     <p className="text-4xl text-orange-500 font-semibold mt-5">Sign in</p>
                     <div className=" h-fit flex flex-col justify-end mt-7">
                         <label className="text-orange-500" htmlFor="">ຢູເຊີ້</label>
-                        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 mb-2   " placeholder="john.doe@company.com" required />
+                        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 mb-2   " placeholder="...." required />
                     </div>
                     <div className="w-full text-orange-500 relative">
                         <label htmlFor="">ລະຫັດຜ່ານ</label>

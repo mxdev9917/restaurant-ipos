@@ -20,6 +20,7 @@ const SettingBill = lazy(() => import('./restaurant/setting/bill'));
 const UserManual = lazy(() => import('./restaurant/manual'));
 const Printer = lazy(() => import('./restaurant/setting/printer'));
 const Rate = lazy(() => import('./restaurant/setting/rateSetting/rate'));
+const ManageKitchen =lazy(()=> import('./restaurant/kitchen/manageKitchen'));
 
 const router = createHashRouter(
   [
@@ -39,6 +40,7 @@ const router = createHashRouter(
     { path: "/setting/printer", element: <Suspense fallback={<div>Loading...</div>}><Printer /></Suspense> },
     { path: "/setting/rate", element: <Suspense fallback={<div>Loading...</div>}><Rate /></Suspense> },
     { path: "/manual", element: <Suspense fallback={<div>Loading...</div>}><UserManual /></Suspense> },
+    { path: "/manage/kitchen", element: <Suspense fallback={<div>Loading...</div>}><ManageKitchen /></Suspense> },
   ],
   {
     future: {

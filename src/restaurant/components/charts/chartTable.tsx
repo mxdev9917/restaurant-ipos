@@ -14,21 +14,22 @@ const ChartTable: React.FC<ChartTableProps> = ({ datalist }) => {
   const options: ApexCharts.ApexOptions = {
     series: [
       {
-        name: "Reserved",
-        data: datalist.map((data) => parseInt(data.reserved_count,10)), // Use reserved_count data
+        name: "ໂຕະຈອງ",
+        data: datalist.map((data) => parseInt(data.reserved_count, 10)), // Use reserved_count data
       },
       {
-        name: "Busy",
-        data: datalist.map((data) => parseInt(data.busy_count,10)), // Use busy_count data
+        name: "ໂຕະບໍ່ວາງ",
+        data: datalist.map((data) => parseInt(data.busy_count, 10)), // Use busy_count data
       },
       {
-        name: "Empty",
-        data: datalist.map((data) => parseInt(data.empty_count,10)), // Use empty_count data
+        name: "ໂຕະວາງ",
+        data: datalist.map((data) => parseInt(data.empty_count, 10)), // Use empty_count data
       },
     ],
     chart: {
       height: 285,
       type: "area",
+      fontFamily: 'Noto Sans Lao, sans-serif'
     },
     colors: ["#faca15", "#e02424", "#0e9f6e"], // Removed extra space in color
     dataLabels: {

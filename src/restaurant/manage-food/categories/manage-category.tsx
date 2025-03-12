@@ -131,6 +131,7 @@ function ManageCategory() {
         container.addEventListener("scroll", handleScroll);
         return () => container.removeEventListener("scroll", handleScroll);
     }, [isLoading, totalItem, items.length]);
+    
     useEffect(() => {
         if (isMessage) {
             setTimeout(() => {
@@ -138,7 +139,7 @@ function ManageCategory() {
             }, 6000);
         }
 
-    }, [isMessage])
+    }, [isMessage]);
     return (
         <div className="flex flex-col">
             <Sidebar_Nav />
