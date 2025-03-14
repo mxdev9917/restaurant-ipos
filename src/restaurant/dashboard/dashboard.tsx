@@ -230,11 +230,7 @@ function Dashboardv() {
 
           </div>
           <div className="bg-white 2xl:w-[800px] w-full p-4">
-            {topProductItem?.length > 0 ? (
-              <ChartTopPro datalist={topProductItem} />
-            ) : (
-              <div>No top product data available</div>
-            )}
+          <ChartTopPro datalist={topProductItem} />
           </div>
         </div>
         <div className="flex flex-col 2xl:flex-row gap-3 m-3">
