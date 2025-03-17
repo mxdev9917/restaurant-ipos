@@ -6,7 +6,7 @@ import MenuItem from "./components/menuItem";
 import { HiMenu } from "react-icons/hi";
 import Loading from "../../utils/Loading";
 import { generalErrors } from "../../utils/error";
-
+import { HiRefresh } from "react-icons/hi";
 
 
 function ManageKitchen() {
@@ -114,6 +114,12 @@ function ManageKitchen() {
 
     }, [isMessage]);
 
+    const handleRefresh=()=>{
+        window.location.reload();
+    }
+
+    
+
 
     return (
         <div className="w-screen h-screen flex flex-col">
@@ -124,9 +130,10 @@ function ManageKitchen() {
                     <HiMenu className="text-4xl" />
                     <p className="hidden sm:block"> ຈັດການຄົວ</p>
                 </p>
-                <select
+               <div className="flex items-center gap-2 ">
+               <select
                     id="category"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-[370px] p-2.5"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-base rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-[320px] p-2.5"
                     value={selectBox}
                     onChange={(e) => setSelectBox(e.target.value)}
                 >
@@ -134,12 +141,15 @@ function ManageKitchen() {
                     <option value="completed">ສຳເລັດ</option>
                     <option value="cancelled">ຍົກເລີກ</option>
                 </select>
+                <button onClick={handleRefresh} className="flex justify-center items-center w-10 h-10 rounded-md bg-gray-300 hover:bg-gray-200"><HiRefresh className="text-xl text-gray-600" />
+                </button>
+               </div>
             </div>
 
 
             <div
                 ref={containerRef}
-                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 overflow-auto p-3 w-full h-full lg:h-fit  box-border"
+                className="grid grid-cols- sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 overflow-auto p-3 w-full h-full lg:h-fit  box-border"
             >
                 {items.length > 0 ? (
                     items.map((item) => (
