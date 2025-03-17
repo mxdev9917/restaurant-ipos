@@ -3,25 +3,27 @@ import { GettAllGalleryService } from "../../services/gallery";
 import { useEffect, useRef, useState } from "react";
 import Loading from "../../utils/Loading";
 import { IPOS_BASE_URL } from "../../utils/connection";
+import { useAuth } from "../../context/context";
 
 interface CreateGalleryProps {
     handleGallery: () => void;
-    handleSelectPath:(path:string)=>void
+    handleSelectPath: (path: string) => void
 }
 
 
-const Gallery: React.FC<CreateGalleryProps> = ({ handleGallery,handleSelectPath }) => {
+const Gallery: React.FC<CreateGalleryProps> = ({ handleGallery, handleSelectPath }) => {
     const [items, setItems] = useState<any[]>([]);
     const [totalItem, setTotalItem] = useState(0);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const fetchedItemIDs = useRef(new Set<string>());
+    const { token } = useAuth();
 
     // Fetch foods data from the API
     const fetchfoodData = async (currentPage: number) => {
         try {
-            const response = await GettAllGalleryService.getAllGallery(currentPage, 40); // Replace with your actual API URL
+            const response = await GettAllGalleryService.getAllGallery(currentPage, 40,token||""); // Replace with your actual API URL
 
             if (response.status === "200") {
                 setTotalItem(response.total_item);
@@ -93,41 +95,41 @@ const Gallery: React.FC<CreateGalleryProps> = ({ handleGallery,handleSelectPath 
             </div>
 
             <div className="w-full h-full mt-3 p-3 overflow-x-auto">
-    <div
-        ref={containerRef}
-        className="w-full h-fit p-3 flex flex-wrap"
-    >
-        {items.length > 0 ? (
-            items.map((item) => (
-                <div 
-                    key={item.pathImg_ID} 
-                    className="relative group w-48 h-48 "
+                <div
+                    ref={containerRef}
+                    className="w-full h-fit p-3 flex flex-wrap"
                 >
-                    {/* Image */}
-                    <img 
-                        className="w-full h-full border-2 object-cover" 
-                        src={`${IPOS_BASE_URL}${item.pathImg_name}`} 
-                        alt="" 
-                    />
+                    {items.length > 0 ? (
+                        items.map((item) => (
+                            <div
+                                key={item.pathImg_ID}
+                                className="relative group w-48 h-48 "
+                            >
+                                {/* Image */}
+                                <img
+                                    className="w-full h-full border-2 object-cover"
+                                    src={`${IPOS_BASE_URL}${item.pathImg_name}`}
+                                    alt=""
+                                />
 
-                    {/* Hover Effect */}
-                    <div onClick={()=>(handleSelectPath(item.pathImg_name))}  className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
-                        <span className="text-white font-semibold">ເລືອກ</span>
-                    </div>
+                                {/* Hover Effect */}
+                                <div onClick={() => (handleSelectPath(item.pathImg_name))} className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
+                                    <span className="text-white font-semibold">ເລືອກ</span>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
+                            No data available.
+                        </div>
+                    )}
+                    {isLoading && (
+                        <p className="text-center w-full mt-2">
+                            <Loading text="ໂຫລດຂໍ້ມູນ" />
+                        </p>
+                    )}
                 </div>
-            ))
-        ) : (
-            <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
-                No data available.
             </div>
-        )}
-        {isLoading && (
-            <p className="text-center w-full mt-2">
-                <Loading text="ໂຫລດຂໍ້ມູນ" />
-            </p>
-        )}
-    </div>
-</div>
 
         </div>
     );

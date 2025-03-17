@@ -6,14 +6,18 @@ export interface Root {
 }
 
 export class createMenuItemService {
-    static async MenuItemService(table_ID:string,food_ID: string,  quantity: string, description: string): Promise<Root> {
+    static async MenuItemService(table_ID: string, food_ID: string, quantity: string, description: string, token?: string): Promise<Root> {
         try {
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
             const response = await axios.post(`${IPOS_BASE_URL}/menu/item`, {
                 table_ID,
                 food_ID,
                 quantity,
                 description
-            });
+            }, { headers });
             return response.data;
 
         } catch (error: any) {

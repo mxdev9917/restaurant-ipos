@@ -4,21 +4,23 @@ import { alertSuccessV3 } from "../../../utils/alert";
 import { generalErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { HiPencilAlt, HiOutlineX } from "react-icons/hi";
+import { useAuth } from "../../../context/context";
 interface editRateProps {
     handleModelEdit: () => void;
-    rate_ID:string;
+    rate_ID: string;
     currencyOld: string;
     rateOld: string;
 }
-const editRate: React.FC<editRateProps> = ({ handleModelEdit,rate_ID, currencyOld, rateOld }) => {
+const editRate: React.FC<editRateProps> = ({ handleModelEdit, rate_ID, currencyOld, rateOld }) => {
     const [currency, setCurrency] = useState("");
     const [rate, setRate] = useState("");
     const [loading, setLoading] = useState(false);
+    const { token } = useAuth();
     const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         try {
             setLoading(true)
-            const res = await patchRateService.RateService(rate_ID, currency, rate)
+            const res = await patchRateService.RateService(rate_ID, currency, rate, token || "")
             if (res.status == "200") {
                 alertSuccessV3("ແກ້ໄຂອັດຕາແລກປ່ຽນ ສຳເລັດ", 'success');
             }

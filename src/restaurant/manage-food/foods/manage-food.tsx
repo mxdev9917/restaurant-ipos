@@ -23,7 +23,7 @@ function ManageFood() {
     const [loadingMessage, setLoadingMessage] = useState(false);
     const [loadingMessageTitle, setLoadingMessageTitle] = useState("");
     const [foodId, setfoodId] = useState("");
-    const { data } = useAuth();
+    const { data,token } = useAuth();
     const [isMessage, setIsMessage] = useState(true);
 
 
@@ -33,7 +33,7 @@ function ManageFood() {
         try {
             setLoadingMessageTitle("ກຳລັງລົບ");
             setLoadingMessage(true);
-            const response = await DeleteFoodService.DeleteFood(id)
+            const response = await DeleteFoodService.DeleteFood(id,token||"")
             if (response.status == 200) {
                 alertSuccessV3("ລົບສຳເລັດ", 'success');
             }
@@ -67,7 +67,7 @@ function ManageFood() {
         try {
             setIsMessage(true);
             let resId = String(data.restaurant_ID);
-            const response = await GetallFoodsService.GetAllFoods(resId, currentPage, 40);
+            const response = await GetallFoodsService.GetAllFoods(resId, currentPage, 40,token||"");
             if (response.status === "200") {
                 setTotalItem(response.total_item);
                 const newItems = response.data.filter((item: any) => {

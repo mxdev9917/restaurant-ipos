@@ -9,13 +9,17 @@ export interface Root {
 
 export interface Data {
     table_ID: number
-   
+
 }
 
 export class GetTableByStatusBusyService {
-    static async GetTableByStatusBusy(): Promise<Root> {
+    static async GetTableByStatusBusy(token?: string): Promise<Root> {
         try {
-            const response = await axios.get(`${IPOS_BASE_URL}/table/all/status/busy`, {});
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
+            const response = await axios.get(`${IPOS_BASE_URL}/table/all/status/busy`, { headers });
             return response.data;
         } catch (error: any) {
             console.error("Error during get request:", error.response ? error.response.data : error.message);

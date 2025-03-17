@@ -8,12 +8,16 @@ interface ITableService {
 }
 
 export class editTableService {
-    static async editTable(id:string, table_name: string,update_at:string): Promise<ITableService> {
+    static async editTable(id: string, table_name: string, update_at: string, token?: string): Promise<ITableService> {
         try {
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
             const res = await axios.patch(`${IPOS_BASE_URL}/table/${id}`, {
                 table_name,
                 update_at
-            });
+            }, { headers });
             return res.data;
         } catch (error: any) {
             return {

@@ -14,7 +14,7 @@ interface TableMenuProps {
 const TableMenu: React.FC<TableMenuProps> = ({ handleClick, tableId }) => {
     const [loadingReserve, setReserveLoading] = useState(false);
     const [loadingOpen, setOpenLoading] = useState(false);
-    const { data } = useAuth();
+    const { data,token } = useAuth();
     const navigate = useNavigate();
 
     const handleUpdate = async (table_status: string, even: boolean) => {
@@ -23,7 +23,7 @@ const TableMenu: React.FC<TableMenuProps> = ({ handleClick, tableId }) => {
         let resId = String(data.restaurant_ID);
         try {
             even ? setOpenLoading(true):setReserveLoading(true) ;
-            const response = await OpenOrderService.OpenOrder(tableID, userId, table_status,resId);
+            const response = await OpenOrderService.OpenOrder(tableID, userId, table_status,resId,token||"");
             if (response?.status == "200") {
                 even ? navigate(`/cart/${tableId}`) : alertSuccessV3("ຈອງໂຕະສຳເລັດ", "success");
             }

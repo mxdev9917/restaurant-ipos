@@ -31,7 +31,7 @@ function ManageCategory() {
     const [totalItem, setTotalItem] = useState(0);
     const [page, setPage] = useState(1);
     const fetchedItemIDs = useRef(new Set<string>());
-    const { data } = useAuth();
+    const { data,token } = useAuth();
     const [isMessage, setIsMessage] = useState(true);
     // function handlItemsPerPage(limit: number) {
     //     setItemsPerPage(limit)
@@ -59,7 +59,7 @@ function ManageCategory() {
 
     const handleDelete = async (category_ID: string) => {
         try {
-            const res = await DeleteCategoryService.DeleteCategory(category_ID);
+            const res = await DeleteCategoryService.DeleteCategory(category_ID,token||"");
             if (res.status == 200) {
                 alertSuccessV3("ລົບປະເພດເມນູສຳເລັດ", 'success');
             }
@@ -73,7 +73,7 @@ function ManageCategory() {
         try {
             setIsMessage(true);
             let resId = String(data.restaurant_ID);
-            const response = await GetallcategoryService.GetAllCategory(resId, currentPage, 40); // Replace with your actual API URL
+            const response = await GetallcategoryService.GetAllCategory(resId, currentPage, 40,token||""); // Replace with your actual API URL
             if (response.status === "200") {
                 setTotalItem(response.total_item);
                 // Create an array of items to append without duplicates

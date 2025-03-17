@@ -16,7 +16,7 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
     const [categoryImg, setCategoryIng] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
     const [previewImg, setPreviewImg] = useState<string | null>(null);
-    const { data } = useAuth();
+    const { data,token } = useAuth();
     const [isGallery, setIsGallery] = useState(false)
     const [gallery_path ,setGallery_path]=useState("")
     const handleGallery = () => {
@@ -35,7 +35,7 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
         try {
             setLoading(true);
             let resId = String(data.restaurant_ID);
-            const res = await CreateCategoryService.CreateCategory(resId, category,gallery_path , categoryImg || undefined)
+            const res = await CreateCategoryService.CreateCategory(resId, category,gallery_path , categoryImg || undefined,token||"")
             if (res.status == "200") {
                 alertSuccessV3("ສ້າງປະເພດເມນູສຳເລັດ", 'success');
             }

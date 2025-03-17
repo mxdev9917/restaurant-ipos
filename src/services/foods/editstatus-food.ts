@@ -8,12 +8,16 @@ interface IFoodService {
 }
 
 export class editStatusFoodService {
-    static async editStatusFood(id:string, food_status: string,updated_at:string): Promise<IFoodService> {
+    static async editStatusFood(id: string, food_status: string, updated_at: string, token?: string): Promise<IFoodService> {
         try {
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
             const res = await axios.patch(`${IPOS_BASE_URL}/food/status/${id}`, {
                 food_status,
                 updated_at
-            });
+            }, { headers });
             return res.data;
         } catch (error: any) {
             return {

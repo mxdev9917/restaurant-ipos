@@ -22,7 +22,7 @@ function selectTatles() {
     const fetchedItemIDs = useRef(new Set<string>());
     const [tableId, setTableId] = useState("");
     const navigate = useNavigate();
-    const { data } = useAuth();
+    const { data,token } = useAuth();
     const [isMessage, setIsMessage] = useState(true);
     function isCheckMenu() { }
 
@@ -42,7 +42,7 @@ function selectTatles() {
         try {
             setIsMessage(true);
             let resId = String(data.restaurant_ID);
-            const response = await GetAllTableByStatusService.GetAllTable(resId, currentPage, 40)
+            const response = await GetAllTableByStatusService.GetAllTable(resId, currentPage, 40,token||"")
             if (response.status === "200") {
                 setTotalItem(response.total_item);
                 const newItems = response.data.filter((item: any) => {

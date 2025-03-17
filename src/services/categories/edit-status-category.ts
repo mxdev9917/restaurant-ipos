@@ -8,12 +8,16 @@ interface ICategoriesService {
 }
 
 export class editStatusCategoryService {
-    static async editStatusCategory(id:string, category_status: string,update_at:string): Promise<ICategoriesService> {
+    static async editStatusCategory(id: string, category_status: string, update_at: string, token?: string): Promise<ICategoriesService> {
         try {
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
             const res = await axios.patch(`${IPOS_BASE_URL}/category/status/${id}`, {
                 category_status,
                 update_at
-            });
+            }, { headers });
             return res.data;
         } catch (error: any) {
             return {

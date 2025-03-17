@@ -14,7 +14,8 @@ export class createFoodService {
         food_name: string,
         price: string,
         gallery_path: string,
-        food_img?: File
+        food_img?: File,
+        token?: string 
     ): Promise<IFoodService> {
         try {
             const formData = new FormData();
@@ -33,6 +34,7 @@ export class createFoodService {
             const res = await axios.post(`${IPOS_BASE_URL}/food`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
+                     "Authorization": `Bearer ${token}`
                 },
             });
 

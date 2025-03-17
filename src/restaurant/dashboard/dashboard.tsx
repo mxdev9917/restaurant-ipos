@@ -6,7 +6,7 @@ import ChartOrder from "../components/charts/chartOrder";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/context";
-import { dashboardService } from "../../services/dashboard/dashboardService";
+import { DashboardService } from "../../services/dashboard/dashboardService";
 import TopTableProduct from "./components/topTableProduct";
 import DonutChartOrder from "../components/charts/donutChartOrder";
 
@@ -14,7 +14,7 @@ import { HiMenu } from "react-icons/hi";
 
 function Dashboardv() {
   const NEXT_MONTH = new Date();
-  const { data } = useAuth();
+  const { data,token } = useAuth();
   const [topProductItem, setTopProductItem] = useState<any[]>([]);
   const [timeMenuItem, setTimeMenuItem] = useState<any[]>([]);
   const [timeOder, setTimeOrder] = useState<any[]>([]);
@@ -27,7 +27,11 @@ function Dashboardv() {
   const [totalOrder, setTotalOrder] = useState("0");
   const [totalOrderPaid, setTotalOrderPaid] = useState("0");
   const [totalOrderUnpaid, setTotalOrderUnpaid] = useState("0");
-  const [totalQtyMunuItem, setTotalQtyMunuItem] = useState("0")
+  const[totalCooking,setTotalCooking]=useState("0");
+  const[totalPending,setTotalPending]=useState("0");
+  const[totalCompleted,setTotalCompleted]=useState("0");
+  const[totalCancelled,setTotalCancelled]=useState("0");
+  const[tatolMenuItem,setTotalMenuItem]=useState("0");
 
   NEXT_MONTH.setMonth(NEXT_MONTH.getMonth() + 1);
   const [value, setValue] = useState({
@@ -39,15 +43,18 @@ function Dashboardv() {
     let resId = String(data.restaurant_ID);
     const today = new Date().toISOString().split("T")[0];
     try {
-      const res = await dashboardService.getDashboard(resId, today);
+      const res = await DashboardService.getDashboard(resId, today, token || ""); 
       if (res.status === "200") {
         setTopProductItem(res.topProduct || []);
         setTimeMenuItem(res.timeMenuItem || []);
         setTimeTable(res.timeTable || [])
         setTimeOrder(res.timeSale || 0);
         setTableStatus(res.tableStatus || []);
-        setTotalQtyMunuItem(String(res.menuItem.qty || 0));
-
+        setTotalMenuItem(String(res.menuItem.qty));
+        setTotalCooking(String(res.menuItem.cooking_qty||0));
+        setTotalPending(String(res.menuItem.pending_qty||0));
+        setTotalCompleted(String(res.menuItem.completed_qty||0));
+        setTotalCancelled(String(res.menuItem.cancelled_qty||0));
         setTotalOrderPaid(String(res.orderStatus[0].paid_count || 0));
         setTotalOrderUnpaid(String(res.orderStatus[0]?.unpaid_count || 0));
         if (res.tableStatus?.length > 0) {
@@ -77,9 +84,9 @@ function Dashboardv() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-screen overflow-visible">
       <Sidebar_Nav />
-      <div className="p-1 sm:ml-64 flex-col">
+      <div className="p-1 sm:ml-64 flex-col overflow-y-auto">
         <div className="flex w-full h-16 justify-between items-center px-3">
           <p className="pt-3">Dashboard</p>
           <div className="w-60 md:w-72 bg-white z-30 text-orange-500">
@@ -104,24 +111,39 @@ function Dashboardv() {
             </p>
             <div className="flex items-center mt-3">
               <div className="flex justify-center  w-28 border-r-2 border-gray-500">
-                <span className="text-7xl text-orange-500 font-bold px-5">{totalQtyMunuItem}</span>
+                <span className="text-7xl text-orange-500 font-bold px-5">{tatolMenuItem}</span>
               </div>
               <div className="flex flex-col w-full ">
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-28">
                     <div className="w-3 h-3 bg-orange-500 rounded-full" />
+                    <p className="font-medium tes">ລໍຖ້າ:</p>
+                  </div>
+                  {totalPending} ເມນູ
+                </div>
+               
+                <div className="flex justify-around gap-2 w-full font-medium">
+                  <div className="flex items-center justify-start gap-2 w-28">
+                    <div className="w-3 h-3 bg-orange-500 rounded-full" />
                     <p className="font-medium tes">ກຳລັງເຮັດ:</p>
                   </div>
-                  {tablebusy} ເມນູ
+                  {totalCooking} ເມນູ
+                </div>
+                <div className="flex justify-around gap-2 w-full font-medium">
+                  <div className="flex items-center justify-start gap-2 w-28">
+                    <div className="w-3 h-3 bg-red-600 rounded-full" />
+                    <p className="font-medium tes">ຍົກເລີກ:</p>
+                  </div>
+                  {totalCancelled} ເມນູ
                 </div>
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-28">
                     <div className="w-3 h-3 bg-green-500 rounded-full" />
                     <p className="font-medium">ເຮັດແລ້ວ:</p>
                   </div>
-                  {tableEmpty} ເມນູ
+                  {totalCompleted} ເມນູ
                 </div>
-                <span className="w-full pt-1 pl-10 text-orange-500"> +10% from yesterday</span>
+               
               </div>
             </div>
           </div>
@@ -149,7 +171,7 @@ function Dashboardv() {
                   </div>
                   {totalOrderPaid} ອໍເດີ
                 </div>
-                <span className="w-full pt-2 pl-10 text-green-500"> +10% from yesterday</span>
+               
               </div>
             </div>
           </div>
@@ -164,7 +186,7 @@ function Dashboardv() {
               ) : (
                 <div>ບໍ່ມີຂໍໍ້ມູນ</div>
               )}
-              <div className="flex flex-col w-full pb-5 text-sm">
+              <div className="flex flex-col w-full pb-5 ">
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-20">
                     <div className="w-3 h-3 bg-yellow-300 rounded-full" />

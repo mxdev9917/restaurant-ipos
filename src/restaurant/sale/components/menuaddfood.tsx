@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createMenuItemService } from "../../../services/sale/create-menu-item";
 import { alertSuccessV3 } from "../../../utils/alert";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
+import { useAuth } from "../../../context/context";
 interface menuProps {
   handleClickCloseModle: () => void;
   isCheckModelEvenMenu: boolean;
@@ -15,6 +16,7 @@ const MenuAddFood: React.FC<menuProps> = ({ isCheckModelEvenMenu, handleClickClo
   const [qty, setQty] = useState(1);
   const [description, setDescription] = useState("");
   const[loading,setLoading]=useState(false);
+   const { token } = useAuth();
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     let newQty = String(qty);
@@ -22,7 +24,7 @@ const MenuAddFood: React.FC<menuProps> = ({ isCheckModelEvenMenu, handleClickClo
     let newTableID = String(tableID)
     try {
       setLoading(true)
-      const res = await createMenuItemService.MenuItemService(newTableID, newFoodID, newQty, description);
+      const res = await createMenuItemService.MenuItemService(newTableID, newFoodID, newQty, description,token||"");
       if (res.status === "200") {
         alertSuccessV3("ສັ່ງເມນູສຳເລັດ", "success");
       }

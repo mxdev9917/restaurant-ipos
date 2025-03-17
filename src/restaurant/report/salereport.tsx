@@ -11,7 +11,7 @@ import PpageRange from "../../utils/pagination";
 
 function saleReport() {
     const [loading, setLoading] = useState(false);
-    const { data } = useAuth();
+    const { data,token } = useAuth();
     const [getDt, setGetDt] = useState<Root["data"]>([]);
     const [totalItems, setTotalItems] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
@@ -33,7 +33,7 @@ function saleReport() {
             try {
                 setLoading(true);
                 let resId = String(data.restaurant_ID);
-                const res = await salesAmountReportService.salesAmountReport(resId, currentPage, itemsPerPage);
+                const res = await salesAmountReportService.salesAmountReport(resId, currentPage, itemsPerPage,token||"");
                 setGetDt(res.data);
 
                 let itemper = Number(res.total_item)

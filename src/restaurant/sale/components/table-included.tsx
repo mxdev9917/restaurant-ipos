@@ -5,6 +5,7 @@ import { TableIncludedService } from "../../../services/sale/table-included";
 import { alertSuccess } from "../../../utils/alert";
 import { useNavigate } from "react-router-dom";
 import LoadingMessage from "../../../utils/loadingMessage";
+import { useAuth } from "../../../context/context";
 
 interface TableincludedProps {
     handleClickCloseModle: () => void;
@@ -17,26 +18,27 @@ const Tableincluded: React.FC<TableincludedProps> = ({ handleClickCloseModle, ta
     const navigate = useNavigate();
     const [loadingMessage, setLoadingMessage] = useState(false);
     const [loadingMessageText, setLoadingMessageTesxt] = useState("");
+    const { token } = useAuth();
     const handleClick = async (tableIncluded: string) => {
         try {
             setLoadingMessage(true)
             setLoadingMessageTesxt("ກຳລັງລວມໂຕະ")
             let newTable_ID = String(table_ID);
             let newTableIncluded = String(tableIncluded)
-            const res = await TableIncludedService.TableIncluded(newTable_ID, newTableIncluded)
+            const res = await TableIncludedService.TableIncluded(newTable_ID, newTableIncluded, token || "")
             if (res.status === "200") {
                 alertSuccess(navigate, '/sale', 'ລວມໂຕະສຳເລັດ', 'success');
             }
         } catch (error) {
             createIncTableErrors(error)
-        }finally{
+        } finally {
             setLoadingMessage(false)
             setLoadingMessageTesxt("")
         }
     }
     const fetchData = async () => {
         try {
-            const res = await GetTableByStatusBusyService.GetTableByStatusBusy();
+            const res = await GetTableByStatusBusyService.GetTableByStatusBusy(token||"");
             if (res.status === "200") {
                 setItems(res.data);
             }
@@ -49,8 +51,8 @@ const Tableincluded: React.FC<TableincludedProps> = ({ handleClickCloseModle, ta
     useEffect(() => { fetchData(); }, []);
     return (
         <div className="flex flex-col justify-center items-center ">
-          {loadingMessage && <LoadingMessage text={loadingMessageText} />}
-            <div className="flex justify-between items-center border-b-2">
+            {loadingMessage && <LoadingMessage text={loadingMessageText} />}
+            <div className="flex justify-between items-center border-b-2 w-full">
                 <p className="text-2xl pb-2 text-orange-500 font-semibold">
                     ເລືອກໂຕະ
                 </p>

@@ -7,12 +7,16 @@ export interface Root {
 }
 
 export class TableIncludedService {
-    static async TableIncluded(table_ID: string, tableIncluded_ID: string): Promise<Root> {
+    static async TableIncluded(table_ID: string, tableIncluded_ID: string, token?: string): Promise<Root> {
         try {
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
             const response = await axios.post(`${IPOS_BASE_URL}/table/included`, {
-                 table_ID,
-                 tableIncluded_ID
-            });
+                table_ID,
+                tableIncluded_ID
+            }, { headers });
             return response.data;
         } catch (error: any) {
             console.error("Error during post request:", error.response ? error.response.data : error.message);

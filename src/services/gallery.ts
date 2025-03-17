@@ -14,13 +14,17 @@ export interface Data {
 }
 
 export class GettAllGalleryService {
-    static async getAllGallery(page: number, limit: number): Promise<IGallery> {
+    static async getAllGallery(page: number, limit: number, token?: string): Promise<IGallery> {
         try {
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
             const res = await axios.get(`${IPOS_BASE_URL}/gallery`, {  // Fixed the 'gallery' endpoint if needed
                 params: {
                     page: page,
                     limit: limit
-                }
+                }, headers: headers,
             });
             return res.data;
         } catch (error: any) {

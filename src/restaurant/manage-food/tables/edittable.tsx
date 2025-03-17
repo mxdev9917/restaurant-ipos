@@ -4,6 +4,7 @@ import { generalErrors } from "../../../utils/error";
 import { alertSuccessV3 } from "../../../utils/alert";
 import { editTableService } from "../../../services/tables/edit-table";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
+import { useAuth } from "../../../context/context";
 interface EditTableProps {
     handleModel: (event: string) => void;
     tableName: string;
@@ -13,16 +14,16 @@ interface EditTableProps {
 const EditTable: React.FC<EditTableProps> = ({ handleModel, tableName, tableId }) => {
     const [loading, setLoading] = useState(false);
     const [table_name, setTable_name] = useState("")
+    const { token } = useAuth();
 
-  
     const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         try {
             setLoading(true);
             const today = new Date().toISOString().split("T")[0];
-            const res = await editTableService.editTable(tableId, table_name, today);
+            const res = await editTableService.editTable(tableId, table_name, today, token || "");
             if (res.status == 200) {
-                alertSuccessV3("ແກ້ໄຂປະເພດເມນູສຳເລັດ", 'success');
+                alertSuccessV3("ແກ້ໄຂໂຕະສຳເລັດ", 'success');
             }
 
         } catch (error: any) {

@@ -1,10 +1,11 @@
 
 import { Dropdown } from "flowbite-react";
-import { HiPencilAlt, HiOutlineTrash, HiOutlineBan, HiDotsVertical, HiCheck  } from "react-icons/hi"; //HiCheck 
+import { HiPencilAlt, HiOutlineTrash, HiOutlineBan, HiDotsVertical, HiCheck } from "react-icons/hi"; //HiCheck 
 import { alertconfirm, alertSuccessV3 } from '../../../utils/alert';
 import { generalErrors } from '../../../utils/error';
 import { editStatusFoodService } from "../../../services/foods/editstatus-food";
 import { IPOS_BASE_URL } from "../../../utils/connection";
+import { useAuth } from "../../../context/context";
 
 interface foodItemProps {
     onEdit: (id: string) => void;
@@ -17,13 +18,13 @@ interface foodItemProps {
 }
 
 const FoodItem: React.FC<foodItemProps> = ({ onDelete, onEdit, foodName, price, foodImg, foodStatus, foodId }) => {
-
+    const { token } = useAuth();
     const handleEditStatus = async () => {
         try {
             const newStatus = foodStatus == "disable" ? "active" : "disable";
             const today = new Date().toISOString().split("T")[0];
 
-            const res = await editStatusFoodService.editStatusFood(foodId, newStatus, today);
+            const res = await editStatusFoodService.editStatusFood(foodId, newStatus, today, token || "");
 
             if (res.status == 200) {
                 alertSuccessV3("ສຳເລັດ", 'success');
@@ -75,7 +76,7 @@ const FoodItem: React.FC<foodItemProps> = ({ onDelete, onEdit, foodName, price, 
                                 }
                             >
                                 {
-                                    foodStatus === "disable" ? (<span className="flex "> <HiCheck  className='text-lg text-gray-400 mr-2' />ເປີດໃຊ້ງານ</span>) : (<span className="flex "> <HiOutlineBan className='text-lg text-gray-400 mr-2' />ປິດໃຊ້ງານ</span>)
+                                    foodStatus === "disable" ? (<span className="flex "> <HiCheck className='text-lg text-gray-400 mr-2' />ເປີດໃຊ້ງານ</span>) : (<span className="flex "> <HiOutlineBan className='text-lg text-gray-400 mr-2' />ປິດໃຊ້ງານ</span>)
                                 }
                             </Dropdown.Item>
                             <Dropdown.Item

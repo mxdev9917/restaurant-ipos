@@ -8,9 +8,13 @@ export interface Root {
 
 
 export class patchRateService {
-    static async RateService(id: string, currency:string,rate: string): Promise<Root> {
+    static async RateService(id: string, currency: string, rate: string, token?: string): Promise<Root> {
         try {
-            const response = await axios.patch(`${IPOS_BASE_URL}/rate/${id}`, {currency,rate });
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
+            const response = await axios.patch(`${IPOS_BASE_URL}/rate/${id}`, { currency, rate }, { headers });
             return response.data;
         } catch (error: any) {
             console.error("Error during patch request:", error.response ? error.response.data : error.message);

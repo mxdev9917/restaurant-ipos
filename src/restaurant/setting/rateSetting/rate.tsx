@@ -23,7 +23,7 @@ function Rate() {
     const [event, setEvent] = useState(true);
     const [getDt, setGetDt] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
-    const { data } = useAuth();
+    const { data,token } = useAuth();
     const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItems, setTotalItems] = useState(0);
@@ -53,7 +53,7 @@ function Rate() {
             try {
                 setLoading(true);
                 let resId = String(data.restaurant_ID);
-                const res = await getAllRateService.AllRateService(resId, currentPage, itemsPerPage);
+                const res = await getAllRateService.AllRateService(resId, currentPage, itemsPerPage,token||"");
                 setGetDt(res.data);
                 let itemper = Number(res.total_item)
                 setTotalItems(itemper);
@@ -78,7 +78,7 @@ function Rate() {
         try {
             setLoadingMessage(true);
             setLoadingMessageTitle("ກຳລັງ ດຳເນີນການ");
-            const res = await patchStatusRateService.RateService(id, newStatus);
+            const res = await patchStatusRateService.RateService(id, newStatus,token||"");
             if (res.status == "200") {
                 alertSuccessV3("ດຳເນີນການ ສຳເລັດ", "success");
             }
@@ -95,7 +95,7 @@ function Rate() {
         try {
             setLoadingMessage(true);
             setLoadingMessageTitle("ກຳລັງລົບອັດຕາແລກປ່ຽນ");
-            const res = await deleteRateService.RateService(id);
+            const res = await deleteRateService.RateService(id,token||"");
             if (res.status == "200") {
                 alertSuccessV3("ລົບອັດຕາແລກປ່ຽນສຳເລັດ", "success");
             }

@@ -1,14 +1,18 @@
 import { IPOS_BASE_URL } from "../../utils/connection";
 import axios from "axios";
 
-interface Root{
-    status:string;
+interface Root {
+    status: string;
     message: string;
 }
-export class editStatusMenuItemService{
-    static async editStatusMenuItem(id:string,menu_item_status:string):Promise<Root>{
+export class editStatusMenuItemService {
+    static async editStatusMenuItem(id: string, menu_item_status: string, token?: string): Promise<Root> {
         try {
-            const response=await axios.patch(`${IPOS_BASE_URL}/kitchen/menu/${id}`,{menu_item_status});
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
+            const response = await axios.patch(`${IPOS_BASE_URL}/kitchen/menu/${id}`, { menu_item_status }, { headers });
             return response.data;
         } catch (error: any) {
             return {

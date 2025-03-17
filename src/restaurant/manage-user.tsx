@@ -31,7 +31,7 @@ function ManageUser() {
   const [totalItems, setTotalItems] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
   const [currentPage, setCurrentPage] = useState(1);
-  const { data } = useAuth();
+  const { data,token } = useAuth();
 
   function handlItemsPerPage(limit: number) {
     setItemsPerPage(limit)
@@ -53,7 +53,7 @@ function ManageUser() {
 
     try {
       setLoadingMessage(true);
-      const res = await PatchStatusbyIdService.patchStatus(userId, newStatus);
+      const res = await PatchStatusbyIdService.patchStatus(userId, newStatus,token||"");
       if (res.status == 200) {
         console.log(res.status);
         alertSuccessV3("ປ່ຽນລະຫັດຜ່ານສຳເລັດ", 'success');
@@ -73,7 +73,7 @@ function ManageUser() {
   const handleResetpassword = async (userId: any) => {
     setLoadingMessageTitle("ກຳລັງປ່ຽນລະຫັດຜ່ານ");
     setLoadingMessage(true);
-    const res = await ResetPasswordService.patchReset(userId);
+    const res = await ResetPasswordService.patchReset(userId,token||"");
     if (res.status == 200) {
       console.log(res.status);
       alertSuccessV3("ປ່ຽນລະຫັດຜ່ານສຳເລັດ", 'success');
@@ -85,7 +85,7 @@ function ManageUser() {
     try {
       setLoadingMessageTitle("ກຳລັງລົບ");
       setLoadingMessage(true);
-      const res = await DeleteUserService.DeleteUser(userId);
+      const res = await DeleteUserService.DeleteUser(userId,token||"");
       if (res.status == 200) {
         alertSuccessV3("ລົບຢູເຊີ້ສຳເລັດ", 'success');
       }
@@ -102,7 +102,7 @@ function ManageUser() {
       try {
         setLoading(true);
         let resId = String(data.restaurant_ID);
-        const res = await GetAllUserByIdService.GetAllUserById(resId, currentPage, itemsPerPage);
+        const res = await GetAllUserByIdService.GetAllUserById(resId, currentPage, itemsPerPage,token||"");
         setGetDt(res.data);
         let itemper = Number(res.total_item)
         setTotalItems(itemper);

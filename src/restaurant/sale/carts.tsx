@@ -34,7 +34,7 @@ function Carts() {
   const [isCheckModelEvenMenu, setIsCheckModelEvenMenu] = useState(false)
   const [itemsCategory, setItemsCategory] = useState<any[]>([]);
   const [foodItemsTable, setFoodItemsTable] = useState<any[]>([]);
-  const { data } = useAuth();
+  const { data,token } = useAuth();
   const [items, setItems] = useState<any[]>([]);
   const [rateItems, setrateItems] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +57,7 @@ function Carts() {
     try {
       setLoadingMessage(true);
       setLoadingMessageTesxt("ກຳລັງເຊັກບີນ")
-      const res = await UpdateOrderSuccessService.UpdateOrderSuccess(tableID, totalPrice);
+      const res = await UpdateOrderSuccessService.UpdateOrderSuccess(tableID, totalPrice,token||"");
       if (res.status === "200") {
         alertSuccess(navigate, '/sale', 'ເຊັກບີນສຳເລັດ', 'success');
       }
@@ -73,7 +73,7 @@ function Carts() {
     try {
       setLoadingMessage(true);
       setLoadingMessageTesxt("ກຳລັງລົບລາຍການເມນູ")
-      const res = await DeleteMenuItemService.DeleteMenuItem(menu_items_ID)
+      const res = await DeleteMenuItemService.DeleteMenuItem(menu_items_ID,token||"")
       if (res.status === "200") {
         alertSuccessV3("ລົບລາຍການເມນູສຳເລັດ", "success");
       }
@@ -87,7 +87,7 @@ function Carts() {
   }
   const fetchFoodTableItem = async () => {
     try {
-      const res = await GetMenuItemService.MenuItem(tableID);
+      const res = await GetMenuItemService.MenuItem(tableID,token||"");
       setFoodItemsTable(res.data);
       setTableName(res.table_name);
       setPrice(res.totalPrice);
@@ -110,7 +110,7 @@ function Carts() {
     try {
       setLoadingMessage(true);
       setLoadingMessageTesxt("ກຳລັງຍົກເລີກເມນູ")
-      const res = await cancelOrderService.cancelOrder(tableID);
+      const res = await cancelOrderService.cancelOrder(tableID,token||"");
       if (res.status === "200") {
         alertSuccess(navigate, '/sale', 'ຍົກເລີກເມນູສຳເລັດ', 'success');
       }
@@ -157,7 +157,7 @@ function Carts() {
 
     try {
       setIsMessage(true)
-      const res = await GetallcategoryByStatusService.GetAllCategory(resId)
+      const res = await GetallcategoryByStatusService.GetAllCategory(resId,token||"")
       setItemsCategory(res.data);
 
     } catch (error: any) {
@@ -172,7 +172,7 @@ function Carts() {
     setIsMessage(true)
     try {
       let resId = String(data.restaurant_ID);
-      const res = await GetFoodByStatusService.GetFoodService(resId, currentPage, 40);
+      const res = await GetFoodByStatusService.GetFoodService(resId, currentPage, 40,token||"");
       if (res.status === "200") {
         setTotalItem(res.total_item);
         const newItems = res.data.filter((item: any) => {
@@ -209,7 +209,7 @@ function Carts() {
   const handleCategory = async (id: string) => {
     try {
 
-      const res = await GetAllFoodByCategoryIdService.GetAllFoodByCategoryId(id);
+      const res = await GetAllFoodByCategoryIdService.GetAllFoodByCategoryId(id,token||"");
       setItems([]);
       setItems(res.data);
       setTotalItem(res.total_item);
@@ -234,7 +234,7 @@ function Carts() {
   const fetchRateByStatus = async () => {
     try {
       let resId = String(data.restaurant_ID);
-      const res = await getByStatusRateService.RateService(resId);
+      const res = await getByStatusRateService.RateService(resId,token||"");
 
       if (res.status === "200") {
         let data = res.data;

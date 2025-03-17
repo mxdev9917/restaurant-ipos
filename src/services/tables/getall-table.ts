@@ -4,13 +4,17 @@ import { ITable } from "../../interfaces/getalltable-interface";
 
 export class GetAllTableService {
 
-    static async GetAllTable(id: string, page: number, limit: number): Promise<ITable> {
+    static async GetAllTable(id: string, page: number, limit: number, token?: string): Promise<ITable> {
         try {
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
             const res = await axios.get(`${IPOS_BASE_URL}/table/all/${id}`, {
                 params: {
                     page: page,
                     limit: limit
-                }
+                }, headers: headers,
             });
             return res.data;
         } catch (error) {

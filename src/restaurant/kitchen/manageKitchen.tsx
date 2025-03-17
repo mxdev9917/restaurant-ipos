@@ -19,9 +19,9 @@ function ManageKitchen() {
     const fetchedItemIDs = useRef(new Set<string>());
     const [selectBox, setSelectBox] = useState("pending");
     const [isMessage, setIsMessage] = useState(true);
-    const[ck,setCk]=useState("cooking");
+    const [ck, setCk] = useState("cooking");
 
-    const { data } = useAuth();
+    const { data, token } = useAuth();
     function isCheckMenu() { }
 
 
@@ -49,7 +49,7 @@ function ManageKitchen() {
             }
 
             let resId = String(data.restaurant_ID);
-            const response = await GetAllMenuItemService.getMenuItems(resId, selectBox,ck, currentPage, "40");
+            const response = await GetAllMenuItemService.getMenuItems(resId, selectBox, ck, currentPage, "40", token || "");
             console.log(response.data);
 
             if (response.status === "200") {
@@ -81,7 +81,7 @@ function ManageKitchen() {
     // Fetch data when 'page' changes
     useEffect(() => {
         setCk("cooking")
-        fetchData(String(page),false);
+        fetchData(String(page), false);
     }, [page]);
 
     // Fetch new data and reset when 'selectBox' changes
@@ -114,11 +114,11 @@ function ManageKitchen() {
 
     }, [isMessage]);
 
-    const handleRefresh=()=>{
+    const handleRefresh = () => {
         window.location.reload();
     }
 
-    
+
 
 
     return (
@@ -130,20 +130,20 @@ function ManageKitchen() {
                     <HiMenu className="text-4xl" />
                     <p className="hidden sm:block"> ຈັດການຄົວ</p>
                 </p>
-               <div className="flex items-center gap-2 ">
-               <select
-                    id="category"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-base rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-[320px] p-2.5"
-                    value={selectBox}
-                    onChange={(e) => setSelectBox(e.target.value)}
-                >
-                    <option value="pending">ລໍຖ້າດຳເນີນການ</option>
-                    <option value="completed">ສຳເລັດ</option>
-                    <option value="cancelled">ຍົກເລີກ</option>
-                </select>
-                <button onClick={handleRefresh} className="flex justify-center items-center w-10 h-10 rounded-md bg-gray-300 hover:bg-gray-200"><HiRefresh className="text-xl text-gray-600" />
-                </button>
-               </div>
+                <div className="flex items-center gap-2 ">
+                    <select
+                        id="category"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-base rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-[320px] p-2.5"
+                        value={selectBox}
+                        onChange={(e) => setSelectBox(e.target.value)}
+                    >
+                        <option value="pending">ລໍຖ້າດຳເນີນການ</option>
+                        <option value="completed">ສຳເລັດ</option>
+                        <option value="cancelled">ຍົກເລີກ</option>
+                    </select>
+                    <button onClick={handleRefresh} className="flex justify-center items-center w-10 h-10 rounded-md bg-gray-300 hover:bg-gray-200"><HiRefresh className="text-xl text-gray-600" />
+                    </button>
+                </div>
             </div>
 
 
@@ -161,7 +161,7 @@ function ManageKitchen() {
                                     qty={item.quantity}
                                     description={item.description}
                                     tableName={item.table_name}
-                                    pathImg={item.food_img}
+
                                     status={item.menu_item_status}
                                 />
                             </div>

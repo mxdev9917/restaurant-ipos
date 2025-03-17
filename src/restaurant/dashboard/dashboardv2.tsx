@@ -5,7 +5,7 @@ import ChartTopPro from "../components/charts/charttoppro";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/context";
-import { dashboardService } from "../../services/dashboard/dashboardService";
+import { DashboardService } from "../../services/dashboard/dashboardService";
 import TopTableProduct from "./components/topTableProduct";
 
 
@@ -33,7 +33,7 @@ function Dashboardv() {
     let resId = String(data.restaurant_ID);
     const today = new Date().toISOString().split("T")[0];
     try {
-      const res = await dashboardService.getDashboard(resId, today);
+      const res = await DashboardService.getDashboard(resId, today);
       if (res.status === "200") {
         setTopProductItem(res.topProduct);
         setTimeMenuItem(res.timeMenuItem);

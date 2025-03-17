@@ -7,13 +7,14 @@ interface ICategoriesService {
     data?: any;
 }
 
-export class editCategoryService  {
+export class editCategoryService {
     static async editCategory(
         category_ID: string,
         category: string,
         update_at: string,
         gallery_path: string,
-        category_img?: File
+        category_img?: File,
+        token?: string
     ): Promise<ICategoriesService> {
         try {
             const formData = new FormData();
@@ -24,12 +25,13 @@ export class editCategoryService  {
             if (category_img) {
                 formData.append("category_img", category_img);
             }
-            if(gallery_path!=""){
+            if (gallery_path != "") {
                 formData.append("gallery_path", gallery_path);
             }
             const res = await axios.patch(`${IPOS_BASE_URL}/category`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${token}`
                 },
             });
 

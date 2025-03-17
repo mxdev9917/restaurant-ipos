@@ -8,9 +8,13 @@ interface ICategoriesService {
 }
 
 export class GetByeCategoryService {
-    static async GetByCategory(id: string,): Promise<ICategoriesService> {
+    static async GetByCategory(id: string, token?: string): Promise<ICategoriesService> {
         try {
-            const res = await axios.get(`${IPOS_BASE_URL}/category/${id}`,);
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
+            const res = await axios.get(`${IPOS_BASE_URL}/category/${id}`, { headers });
             return res.data;
         } catch (error: any) {
             return {

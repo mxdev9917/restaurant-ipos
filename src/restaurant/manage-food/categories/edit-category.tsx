@@ -6,6 +6,7 @@ import { GetByeCategoryService } from "../../../services/categories/getby-catego
 import { editCategoryService } from "../../../services/categories/edit-category";
 import Gallery from "../../galley/gallery";
 import { IPOS_BASE_URL } from "../../../utils/connection";
+import { useAuth } from "../../../context/context";
 interface EditCategoryProps {
     id: string;
     handleModel: (event: string) => void;
@@ -17,7 +18,8 @@ const EditCategory: React.FC<EditCategoryProps> = ({ handleModel, id }) => {
     const [previewImg, setPreviewImg] = useState<string | null>(null);
     const [categoryImg, setCategoryIng] = useState<File | null>(null);
     const [isGallery, setIsGallery] = useState(false)
-    const [gallery_path ,setGallery_path]=useState("")
+    const [gallery_path ,setGallery_path]=useState("");
+    const { token } = useAuth();
 
 
     const handleGallery = () => {
@@ -52,7 +54,9 @@ const EditCategory: React.FC<EditCategoryProps> = ({ handleModel, id }) => {
                 category,
                 today,
                 gallery_path,
-                categoryImg || undefined
+                categoryImg || undefined,
+                token||""
+
             );
 
             if (response.status == 200) {
@@ -68,7 +72,7 @@ const EditCategory: React.FC<EditCategoryProps> = ({ handleModel, id }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await GetByeCategoryService.GetByCategory(id)
+            const res = await GetByeCategoryService.GetByCategory(id,token||"")
             setCategory(res.data[0].category)
         }
         fetchData();

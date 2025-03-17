@@ -3,28 +3,47 @@ import ApexCharts from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 
 interface ChartsMenuItemProps {
-  datalist: { hour: string; qty: string }[];
+  datalist: {
+    hour: string;
+    pending_qty: string;
+    completed_qty: string;
+    cancelled_qty: string;
+    cooking_qty: string;
+  }[];
 }
 
 const ChartsMenuItem: React.FC<ChartsMenuItemProps> = ({ datalist }) => {
-  // Transform datalist into the format ApexCharts expects
   const categories = datalist.map(item => item.hour);
-  const seriesData = datalist.map(item => parseInt(item.qty, 10));
+
+  const series = [
+    {
+      name: 'ລໍຖ້າ', // Pending
+      data: datalist.map(item => parseInt(item.pending_qty, 10)),
+    },
+    {
+      name: 'ສຳເລັດ', // Completed
+      data: datalist.map(item => parseInt(item.completed_qty, 10)),
+    },
+    {
+      name: 'ຍົກເລີກ', // Cancelled
+      data: datalist.map(item => parseInt(item.cancelled_qty, 10)),
+    },
+    {
+      name: 'ກຳລັງເຮັດ', // Cooking
+      data: datalist.map(item => parseInt(item.cooking_qty, 10)),
+    },
+  ];
 
   const options: ApexOptions = {
     chart: {
       height: 350,
       type: 'area',
-      fontFamily: 'Noto Sans Lao, sans-serif'
+      fontFamily: 'Noto Sans Lao, sans-serif',
+      toolbar: { show: false },
     },
-    colors: ['#FF5733'],
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: 'smooth',
-      width: 1.5,
-    },
+    colors: ['#FFA500', '#28A745', '#DC3545', '#FFD700'], // Orange, Green, Red, Yellow
+    dataLabels: { enabled: false },
+    stroke: { curve: 'smooth', width: 2 },
     fill: {
       type: 'gradient',
       gradient: {
@@ -38,41 +57,26 @@ const ChartsMenuItem: React.FC<ChartsMenuItemProps> = ({ datalist }) => {
         stops: [0, 100],
       },
     },
-    xaxis: {
-      categories: categories,
-    },
+   
     tooltip: {
-      x: {
-        format: 'HH:mm',
+      x: { format: 'HH:mm' },
+      y: {
+        formatter: (value) => `${value} ລາຍການ`,
       },
     },
+    legend: { position: 'bottom' },
     noData: {
       text: 'ຍັງບໍ່ມີລາຍການ',
       align: 'center',
       verticalAlign: 'middle',
-      style: {
-        fontSize: '16px',
-        color: '#888',
-      },
+      style: { fontSize: '16px', color: '#888' },
     },
   };
 
-  const series = [
-    {
-      name: 'ຈຳນວນ',
-      data: seriesData,
-    },
-  ];
-
   return (
     <div>
-      <h1 className='text-[16px] font-bold'>ກຣາບສັ່ງອາຫານ</h1>
-      <ApexCharts
-        options={options}
-        series={series}
-        type="area"
-        height={350}
-      />
+      <h1 className="text-[16px] font-bold mb-3">ກຣາບສັ່ງອາຫານ</h1>
+      <ApexCharts options={options} series={series} type="area" height={350} />
     </div>
   );
 };

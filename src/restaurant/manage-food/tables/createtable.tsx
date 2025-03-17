@@ -12,13 +12,13 @@ interface CreateTableProps {
 const CreateTable: React.FC<CreateTableProps> = ({ handleModel }) => {
     const [table, setTable] = useState("");
     const [loading, setLoading] = useState(false);
-     const { data } = useAuth();
+    const { data, token } = useAuth();
     const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         try {
             setLoading(true);
             let resId = String(data.restaurant_ID);
-            const res = await CreateTableService.CreateTable(resId, table) 
+            const res = await CreateTableService.CreateTable(resId, table, token || "");
             if (res.status == 200) {
                 alertSuccessV3("ເພີ່ມໂຕະ ສຳເລັດ", 'success');
             }

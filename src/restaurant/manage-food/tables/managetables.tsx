@@ -14,7 +14,7 @@ import { useAuth } from "../../../context/context";
 
 function ManageTables() {
 
-    const { data } = useAuth();
+    const { data, token } = useAuth();
     const [items, setItems] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [totalItem, setTotalItem] = useState(0);
@@ -35,7 +35,7 @@ function ManageTables() {
         try {
             setLoadingMessageTitle("ກຳລັງລົບ");
             setLoadingMessage(true);
-            const res = await DeleteTableService.DeleteTable(id)
+            const res = await DeleteTableService.DeleteTable(id, token || "")
             if (res.status == 200) {
                 alertSuccessV3("ລົບສຳເລັດ", 'success');
             }
@@ -76,7 +76,7 @@ function ManageTables() {
         try {
             setIsMessage(true);
             let resId = String(data.restaurant_ID);
-            const response = await GetAllTableService.GetAllTable(resId, currentPage, 40); // Replace with your actual API URL
+            const response = await GetAllTableService.GetAllTable(resId, currentPage, 40, token || ""); // Replace with your actual API URL
 
             if (response.status === "200") {
                 setTotalItem(response.total_item);
@@ -99,7 +99,7 @@ function ManageTables() {
             }
         } catch (error) {
             console.error("Error fetching data:", error);
-        }finally{setIsMessage(false);}
+        } finally { setIsMessage(false); }
     };
 
     // Load more items when reaching the bottom of the container

@@ -9,7 +9,7 @@ interface CreateRateProps {
     handleModel: (event: string) => void;
 }
 const createRate: React.FC<CreateRateProps> = ({ handleModel }) => {
-    const { data } = useAuth();
+    const { data,token } = useAuth();
     const [currency, setCurrency] = useState("");
     const [rate, setRate] = useState("");
     const [loading, setLoading] = useState(false);
@@ -18,7 +18,7 @@ const createRate: React.FC<CreateRateProps> = ({ handleModel }) => {
         e.preventDefault();
         try {
             setLoading(true)
-            const res = await postRateService.rateService(resId, currency, rate)
+            const res = await postRateService.rateService(resId, currency, rate,token||"")
             if (res.status == "200") {
                 alertSuccessV3("ເພີ່ມອັດຕາແລກປ່ຽນ ສຳເລັດ", 'success');
             }

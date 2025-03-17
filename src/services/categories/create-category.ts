@@ -12,16 +12,18 @@ interface IFoodService {
 export class CreateCategoryService {
     static async CreateCategory(
         restaurant_ID: string,
-        category:string,
+        category: string,
         gallery_path: string,
-        category_img?: File
+        category_img?: File,
+        token?: string
     ): Promise<IFoodService> {
         try {
+
             const formData = new FormData();
             formData.append("restaurant_ID", restaurant_ID);
-            formData.append("category",category.toString());
- 
-            if(gallery_path!=""){
+            formData.append("category", category.toString());
+
+            if (gallery_path != "") {
                 formData.append("gallery_path", gallery_path);
             }
             if (category_img) {
@@ -31,6 +33,7 @@ export class CreateCategoryService {
             const res = await axios.post(`${IPOS_BASE_URL}/category`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${token}`
                 },
             });
 

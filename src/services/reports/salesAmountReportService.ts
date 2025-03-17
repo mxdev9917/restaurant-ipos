@@ -19,13 +19,17 @@ export interface Data {
 
 
 export class salesAmountReportService {
-    static async salesAmountReport(id: string, page: number, limit: number): Promise<Root> {
+    static async salesAmountReport(id: string, page: number, limit: number, token?: string): Promise<Root> {
         try {
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
             const response = await axios.get(`${IPOS_BASE_URL}/report/food/sale/${id}`, {
                 params: {
                     page: page,
                     limit: limit
-                }
+                }, headers: headers,
             });
             return response.data;
         } catch (error: any) {

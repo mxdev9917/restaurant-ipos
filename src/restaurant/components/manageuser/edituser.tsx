@@ -6,6 +6,7 @@ import Loading from "../../../utils/Loading";
 import { generalErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { alertSuccessV3 } from "../../../utils/alert";
+import { useAuth } from "../../../context/context";
 interface EditUserProps {
     handleModel: (action: string,userId:string) => void;
     user_id: string; 
@@ -20,12 +21,13 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
     const [phone, setPhone] = useState("");
     const [role, setRole] = useState("")
     const [loading, setLoading] = useState(false);
+        const { token } = useAuth();
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true)
             try {
-                const res = await GetUserByIdService.GetUserById(user_id);
+                const res = await GetUserByIdService.GetUserById(user_id,token||"");
                 const userData = res.data[0];
               
                 setName(userData.user_name || ""); // Populate the `name` state
@@ -52,7 +54,8 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                 name,
                 phone,
                 role,
-                path_img
+                path_img,
+                token||""
             );
             if (res.status == "200") {
                 alertSuccessV3("ແກ້ໄຂສຳເລັດ", 'success');

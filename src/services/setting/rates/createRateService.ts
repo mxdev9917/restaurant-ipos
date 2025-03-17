@@ -6,11 +6,15 @@ export interface Root {
     message: string
 }
 export class postRateService {
-    static async rateService(restaurant_ID: string, currency: string, rate: string): Promise<Root> {
+    static async rateService(restaurant_ID: string, currency: string, rate: string, token?: string): Promise<Root> {
         try {
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
             const response = await axios.post(`${IPOS_BASE_URL}/rate`, {
                 restaurant_ID, currency, rate
-            });
+            }, { headers });
             return response.data;
         } catch (error: any) {
             console.error("Error during post request:", error.response ? error.response.data : error.message);

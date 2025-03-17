@@ -27,7 +27,7 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
     const [pckColor, setPckColor] = useState("ring-orange-500");
     const [ischeckPCK, setIscheckPCK] = useState(false)
     const [loading, setLoading] = useState(false);
-     const { data } = useAuth();
+     const { data,token } = useAuth();
     const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setLoading(true)
@@ -41,7 +41,8 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
                 phone,
                 password,
                 role,
-                path_img
+                path_img,
+                token||""
             );
             if (res.status == 200) {
                 console.log(res.status);

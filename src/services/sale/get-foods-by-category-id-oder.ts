@@ -9,7 +9,7 @@ export interface IFood {
 }
 
 export interface Data {
-  food_ID:string
+  food_ID: string
   food_name: string
   price: number
   category_ID: number
@@ -18,9 +18,13 @@ export interface Data {
 }
 
 export class GetAllFoodByCategoryIdService {
-  static async GetAllFoodByCategoryId(id: string): Promise<IFood> {
+  static async GetAllFoodByCategoryId(id: string, token?: string): Promise<IFood> {
     try {
-      const response = await axios.get(`${IPOS_BASE_URL}/food/all/category/${id}`,{});
+      const headers: any = {};
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+      const response = await axios.get(`${IPOS_BASE_URL}/food/all/category/${id}`, { headers });
       return response.data;
     } catch (error: any) {
       console.error("Error during Get request :", error.response ? error.response.data : error.message);

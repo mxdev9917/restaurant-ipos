@@ -20,7 +20,7 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
     const [product_img, setProductImg] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
     const [previewImg, setPreviewImg] = useState<string | null>(null);
-    const { data } = useAuth();
+    const { data,token } = useAuth();
     const [isGallery, setIsGallery] = useState(false)
     const [gallery_path ,setGallery_path]=useState("")
     const handleGallery = () => {
@@ -37,7 +37,7 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
     const fetchData = async () => {
        try {
         let resId = String(data.restaurant_ID);
-        const res = await GetallcategoryByStatusService.GetAllCategory(resId);
+        const res = await GetallcategoryByStatusService.GetAllCategory(resId,token||"");
         setGetData(res.data);
        } catch (error:any) {
         generalErrors(error)
@@ -72,7 +72,8 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
                 foodName,
                 price,
                 gallery_path,
-                product_img || undefined
+                product_img || undefined,
+                token||""
             );
 
             if (response.status === "201") {

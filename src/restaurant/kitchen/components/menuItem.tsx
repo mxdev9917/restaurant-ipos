@@ -4,20 +4,22 @@ import { editStatusMenuItemService } from "../../../services/kitchen/editStatusM
 import { HiDotsVertical, HiOutlineClipboardList, HiOutlineClipboardCheck, HiOutlineTrash } from "react-icons/hi";
 import { alertconfirm, alertSuccessV3 } from "../../../utils/alert";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../../context/context";
 interface MenuItemProps {
     id: string;
     foodName: string;
     qty: string;
     description: string;
     tableName: string
-    pathImg: string;
+ 
     status: string;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ id, foodName, qty, description, tableName, pathImg, status }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ id, foodName, qty, description, tableName,  status }) => {
     const [statusItem, setStatusItem] = useState("")
     const [colorStatusItem, setColorStatusItem] = useState("")
     const [colorBg,setColorBg]=useState("")
+     const { token } = useAuth();
     useEffect(() => {
         if (status === "cooking") {
             setStatusItem("ກຳລັງເຮັດ");
@@ -44,7 +46,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ id, foodName, qty, description, tab
 
     const handleUpdateStatus = async (value: string) => {
         try {
-            const res = await editStatusMenuItemService.editStatusMenuItem(id, value);
+            const res = await editStatusMenuItemService.editStatusMenuItem(id, value,token||"");
             if (res.status === "200") {
                 alertSuccessV3("ສຳເລັດ", "success")
             }

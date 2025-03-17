@@ -1,9 +1,10 @@
 import React from 'react';
 import { alertconfirm, alertSuccessV3 } from '../../../utils/alert';
 import { Dropdown } from "flowbite-react";
-import { HiOutlineExternalLink, HiPencilAlt, HiOutlineTrash, HiOutlineBan,HiCheck } from "react-icons/hi"; //HiCheck 
+import { HiOutlineExternalLink, HiPencilAlt, HiOutlineTrash, HiOutlineBan, HiCheck } from "react-icons/hi"; //HiCheck 
 import { editTableStatusService } from '../../../services/tables/edit-status-table';
 import { generalErrors } from '../../../utils/error';
+import { useAuth } from '../../../context/context';
 
 interface TableItemProps {
   onEdit: (id: string, table_name: string) => void;
@@ -18,6 +19,7 @@ const TableItem: React.FC<TableItemProps> = ({ onEdit, onDelete, tableName, tabl
     onEdit(tableId, tableName);
 
   };
+  const { token } = useAuth();
   const handleEditStatus = async () => {
     try {
       const newStatus = tableStatus == "disable" ? "empty" : "disable";
@@ -26,7 +28,7 @@ const TableItem: React.FC<TableItemProps> = ({ onEdit, onDelete, tableName, tabl
       console.log(newStatus)
       const today = new Date().toISOString().split("T")[0];
 
-      const res = await editTableStatusService.editStatusTable(tableId, newStatus, today);
+      const res = await editTableStatusService.editStatusTable(tableId, newStatus, today,token||"");
 
       if (res.status == 200) {
         alertSuccessV3("ສຳເລັດ", 'success');

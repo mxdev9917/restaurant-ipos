@@ -5,6 +5,7 @@ import { alertconfirm, alertError, alertSuccessV3 } from '../../../utils/alert';
 import { generalErrors } from '../../../utils/error';
 import { IPOS_BASE_URL } from "../../../utils/connection";
 import { editStatusCategoryService } from "../../../services/categories/edit-status-category";
+import { useAuth } from "../../../context/context";
 interface categoryItemProps {
     onEdit: (id: string) => void;
     onDelete: (id: string) => void;
@@ -15,8 +16,10 @@ interface categoryItemProps {
 }
 
 const CategroyItem: React.FC<categoryItemProps> = ({ onDelete, onEdit, categoryName, categoryImg, categoryStatus, categoryId }) => {
+    const { token } = useAuth();
     const handleEditStatus = async () => {
         let newStatus: string;
+
         categoryStatus = categoryStatus.toLowerCase();
         if (categoryStatus === "locked") {
             newStatus = "active"
@@ -30,7 +33,7 @@ const CategroyItem: React.FC<categoryItemProps> = ({ onDelete, onEdit, categoryN
         try {
  
             const today = new Date().toISOString().split("T")[0];
-            const res = await editStatusCategoryService.editStatusCategory(categoryId, newStatus, today);
+            const res = await editStatusCategoryService.editStatusCategory(categoryId, newStatus, today,token||"");
             if (res.status == 200) {
                 console.log(res.status);
                 alertSuccessV3("ສຳເລັດ", 'success');

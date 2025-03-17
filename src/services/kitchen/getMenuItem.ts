@@ -16,26 +16,31 @@ export interface Data {
     quantity: string;
     description: string;
     table_name: string;
-    menu_item_status:string;
+    menu_item_status: string;
 }
 
 export class GetAllMenuItemService {
     static async getMenuItems(
         res_id: string,
         status: string,
-        ck:string,
-        page:string,
-        limit:string,
-        
+        ck: string,
+        page: string,
+        limit: string,
+        token?: string
+
     ): Promise<Root> {
         try {
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
             const response = await axios.post(
                 `${IPOS_BASE_URL}/kitchen/menu/${res_id}`, {
                 status,
                 ck,
                 page,
                 limit
-            });
+            }, { headers });
             return response.data;
         } catch (error: any) {
             return {

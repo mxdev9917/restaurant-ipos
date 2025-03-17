@@ -7,9 +7,13 @@ export interface Root {
 }
 
 export class DeleteMenuItemService {
-    static async DeleteMenuItem(id: string): Promise<Root> {
+    static async DeleteMenuItem(id: string, token?: string): Promise<Root> {
         try {
-            const response = await axios.delete(`${IPOS_BASE_URL}/menu/item/${id}`);
+            const headers: any = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
+            const response = await axios.delete(`${IPOS_BASE_URL}/menu/item/${id}`, { headers });
             return response.data;
         } catch (error: any) {
             console.error("Error during delete request:", error.response ? error.response.data : error.message);
