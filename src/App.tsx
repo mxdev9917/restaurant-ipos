@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react';
+import { lazy } from 'react';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider } from './context/context'; // Import your AuthProvider
 import 'flowbite';
@@ -20,27 +20,27 @@ const SettingBill = lazy(() => import('./restaurant/setting/bill'));
 const UserManual = lazy(() => import('./restaurant/manual'));
 const Printer = lazy(() => import('./restaurant/setting/printer'));
 const Rate = lazy(() => import('./restaurant/setting/rateSetting/rate'));
-const ManageKitchen =lazy(()=> import('./restaurant/kitchen/manageKitchen'));
+const ManageKitchen = lazy(() => import('./restaurant/kitchen/manageKitchen'));
 
 const router = createHashRouter(
   [
-    { path: "/managefood", element: <Suspense fallback={<div>Loading...</div>}><ManageFood /></Suspense> },
-    { path: "/managecategory", element: <Suspense fallback={<div>Loading...</div>}><ManageCategory /></Suspense> },
-    { path: "/managezone", element: <Suspense fallback={<div>Loading...</div>}><ManageZone /></Suspense> },
-    { path: "/managetable", element: <Suspense fallback={<div>Loading...</div>}><ManageTables /></Suspense> },
-    { path: "/", element: <Suspense fallback={<div>Loading...</div>}><Authen /></Suspense> },
-    { path: "/dashboard", element: <Suspense fallback={<div>Loading...</div>}><Dashboard /></Suspense> },
-    { path: "/manageuser", element: <Suspense fallback={<div>Loading...</div>}><ManageUser /></Suspense> },
-    { path: "/sale", element: <Suspense fallback={<div>Loading...</div>}><SelectTatles /></Suspense> },
-    { path: "/cart/:id", element: <Suspense fallback={<div>Loading...</div>}><Carts /></Suspense> },
-    { path: "/help", element: <Suspense fallback={<div>Loading...</div>}><Help /></Suspense> },
-    { path: "/profile", element: <Suspense fallback={<div>Loading...</div>}><Profile /></Suspense> },
-    { path: "/salereport", element: <Suspense fallback={<div>Loading...</div>}><SaleReport /></Suspense> },
-    { path: "/setting/bill", element: <Suspense fallback={<div>Loading...</div>}><SettingBill /></Suspense> },
-    { path: "/setting/printer", element: <Suspense fallback={<div>Loading...</div>}><Printer /></Suspense> },
-    { path: "/setting/rate", element: <Suspense fallback={<div>Loading...</div>}><Rate /></Suspense> },
-    { path: "/manual", element: <Suspense fallback={<div>Loading...</div>}><UserManual /></Suspense> },
-    { path: "/manage/kitchen", element: <Suspense fallback={<div>Loading...</div>}><ManageKitchen /></Suspense> },
+    { path: "/managefood", element: <ManageFood /> },
+    { path: "/managecategory", element: <ManageCategory /> },
+    { path: "/managezone", element: <ManageZone /> },
+    { path: "/managetable", element: <ManageTables /> },
+    { path: "/", element: <Authen /> },
+    { path: "/dashboard", element: <Dashboard /> },
+    { path: "/manageuser", element: <ManageUser /> },
+    { path: "/sale", element: <SelectTatles /> },
+    { path: "/cart/:id", element: <Carts /> },
+    { path: "/help", element: <Help /> },
+    { path: "/profile", element: <Profile /> },
+    { path: "/salereport", element: <SaleReport /> },
+    { path: "/setting/bill", element: <SettingBill /> },
+    { path: "/setting/printer", element: <Printer /> },
+    { path: "/setting/rate", element: <Rate /> },
+    { path: "/manual", element: <UserManual /> },
+    { path: "/manage/kitchen", element: <ManageKitchen /> },
   ],
   {
     future: {
@@ -54,10 +54,12 @@ const router = createHashRouter(
   }
 );
 
+
 function App() {
   return (
     <AuthProvider>
-      <div>
+      {/* Ensure no margin/padding on body and html */}
+      <div className="h-screen w-full flex items-center justify-center overflow-hidden">
         <RouterProvider router={router} />
       </div>
     </AuthProvider>
@@ -65,3 +67,10 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+

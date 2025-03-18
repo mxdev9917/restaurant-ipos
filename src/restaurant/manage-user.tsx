@@ -128,7 +128,7 @@ function ManageUser() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full w-[100.0vw] overflow-visible">
       {/* Loading message */}
       {loadingMessage && <LoadingMessage text={loadingMessageTitle} />}
 

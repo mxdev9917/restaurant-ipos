@@ -84,7 +84,7 @@ function Dashboardv() {
   }
 
   return (
-    <div className="flex flex-col h-screen overflow-visible">
+    <div className="flex flex-col h-full w-[100.0vw] overflow-visible">
       <Sidebar_Nav />
       <div className="p-1 sm:ml-64 flex-col overflow-y-auto">
         <div className="flex w-full h-16 justify-between items-center px-3">
@@ -181,11 +181,7 @@ function Dashboardv() {
               <span className="font-semibold text-base">ສະຖານະໂຕະ</span>
             </p>
             <div className="flex items-center">
-              {tableStatus?.length > 0 ? (
-                <DonutChartOrder datalist={tableStatus} />
-              ) : (
-                <div>ບໍ່ມີຂໍໍ້ມູນ</div>
-              )}
+            <DonutChartOrder datalist={tableStatus} />
               <div className="flex flex-col w-full pb-5 ">
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-20">
@@ -211,39 +207,6 @@ function Dashboardv() {
               </div>
             </div>
           </div>
-          {/* <div className="flex flex-col w-full h-40 rounded-md shadow-xl p-2 bg-slate-50">
-            <p className="flex items-center gap-2">
-              <HiMenu className="text-2xl" />
-              <span className="font-semibold text-base">ສະຖານະໂຕະ</span>
-            </p>
-            <div className="flex items-center">
-              <DonutChartOrder datalist={tableStatus} />
-              <div className="flex flex-col w-full pb-5 text-sm">
-                <div className="flex justify-around gap-2 w-full font-medium">
-                  <div className="flex items-center justify-start gap-2 w-20">
-                    <div className="w-3 h-3 bg-yellow-300 rounded-full" />
-                    <p className="font-medium">ໂຕະຈອງ:</p>
-                  </div>
-                  {tablereserved} ໂຕະ
-                </div>
-                <div className="flex justify-around gap-2 w-full font-medium">
-                  <div className="flex items-center justify-start gap-2 w-20">
-                    <div className="w-3 h-3 bg-red-600 rounded-full" />
-                    <p className="font-medium">ໂຕະບໍ່ວ່າງ:</p>
-                  </div>
-                  {tablebusy} ໂຕະ
-                </div>
-                <div className="flex justify-around gap-2 w-full font-medium">
-                  <div className="flex items-center justify-start gap-2 w-20">
-                    <div className="w-3 h-3 bg-green-500 rounded-full" />
-                    <p className="font-medium">ໂຕະວ່າງ:</p>
-                  </div>
-                  {tableEmpty} ໂຕະ
-                </div>
-
-              </div>
-            </div>
-          </div> */}
         </div>
 
         <div className="flex flex-col 2xl:flex-row mx-4 bg-white rounded-xl shadow-md">

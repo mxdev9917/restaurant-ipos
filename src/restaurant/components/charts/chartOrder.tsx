@@ -13,7 +13,7 @@ const ChartOrder: React.FC<ChartOrderProps> = ({ datalist }) => {
         data: datalist.map((data) => parseInt(data.paid_count, 10)), // Convert the paid_count to integers
       },
       {
-        name: "ຍັງບໍ່ທັນຂຳລະ",
+        name: "ຍັງບໍ່ທັນຊຳລະ",
         data: datalist.map((data) => parseInt(data.unpaid_count, 10)), // Convert the unpaid_count to integers
       },
     ],

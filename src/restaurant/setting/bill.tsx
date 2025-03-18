@@ -12,7 +12,7 @@ function SettingBill() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full w-[100.0vw] overflow-visible">
       <Sidebar_Nav />
       <div className="p-1 sm:ml-64">
         <div className="mt-14 md:flex-row">

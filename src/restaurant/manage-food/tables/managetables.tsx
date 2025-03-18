@@ -10,6 +10,8 @@ import { DeleteTableService } from "../../../services/tables/delete-table";
 import { alertSuccessV3 } from "../../../utils/alert";
 import LoadingMessage from "../../../utils/loadingMessage";
 import { useAuth } from "../../../context/context";
+import { getByNameTableService } from "../../../services/tables/getByname-teble";
+import { HiMenuAlt1 } from "react-icons/hi";
 
 
 function ManageTables() {
@@ -27,8 +29,30 @@ function ManageTables() {
     const [tableId, settableId] = useState("");
     const [tableName, settableName] = useState("");
     const [isMessage, setIsMessage] = useState(true);
+    const [txtSearch, setTxtSearch] = useState("");
 
+    const formSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+        e.preventDefault();
+        try {
+            if (!txtSearch) {
+                window.location.reload()
+            } else {
+                const resId = String(data.restaurant_ID); // Ensure resId is a string
+                setItems([]); // Clear current items before fetching new ones
+                const res = await getByNameTableService.TableService(resId, txtSearch, token || "");
 
+                if (res.status === "200") {
+                    setItems(res.data); // Set fetched data to the items state
+                } else {
+                    console.error("Error fetching data:", res.status);
+                    // Handle unsuccessful response
+                }
+            }
+        } catch (error: any) {
+            console.error("Error occurred while submitting form:", error.message || error);
+            // Optionally show a user-friendly message to the user here
+        }
+    };
 
     const deleteTable = async (id: string) => {
 
@@ -56,17 +80,17 @@ function ManageTables() {
             setisCheckModel(!isCheckModel)
         }
     }
-    function handleEditModel(evens: string, table_Id: string, table_name: string) {
-        if (evens == 'edit') {
-            settableId(table_Id)
-            settableName(table_name)
-
-            setisCheckModel(!isCheckModel)
-            setisEven(false)
+    function handleEditModel(evens?: string, table_Id?: string, table_name?: string) {
+        if (evens === 'edit' && table_Id && table_name) {
+            settableId(table_Id);
+            settableName(table_name);
+            setisCheckModel(true);
+            setisEven(false);
         } else {
-            setisCheckModel(!isCheckModel)
+            setisCheckModel(!isCheckModel);
         }
     }
+    
 
     // Ref to track IDs of already fetched items to avoid duplicates
     const fetchedItemIDs = useRef(new Set<string>());
@@ -143,37 +167,48 @@ function ManageTables() {
 
     }, [isMessage])
     return (
-        <div className="flex flex-col h-screen overflow-hidden">
+        <div className="flex flex-col h-full w-[100.0vw] overflow-visible">
             {loadingMessage && <LoadingMessage text={loadingMessageTitle} />}
             <Sidebar_Nav />
-            <div className="pt-8 sm:ml-64">
+            <div className="sm:ml-64">
                 <div className="p-4">
-                    <div className="flex justify-between items-center border-b-2 pb-2">
-                        <div>
-                            <div className="text-gray-500 flex gap-2 text-xs md:text-sm">
+                    <div className="flex flex-col gap-2 justify-between items-start pb-2">
+
+                        <div className="flex justify-between w-full">
+                            <div className=" text-gray-500 flex gap-2 items-center text-xs md:text-sm">
                                 <Link className="hover:text-orange-500" to={""}>ຈັດການຮ້ານ</Link>
                                 <span>|</span>
-                                <Link className="text-orange-500" to={""}>ຈັດການໂຊນຮ້ານ</Link>
+                                <button onClick={() => (window.location.reload())} className="text-orange-500" >ຈັດການໂຕະ</button>
                             </div>
-                            <div className="flex flex-col md:flex-row gap-2 mt-2">
-                                <select className="w-48 md:w-64 h-9 text-xs md:text-sm rounded-full border-gray-300">
-                                    <option value="">--ເລືອກໂຊນ--</option>
-                                </select>
-                                <div className="relative">
-                                    <input className="w-48 md:w-64 h-9 text-xs md:text-sm rounded-full border-gray-300 pl-3" placeholder="ຄົ້ນຫາ..." />
-                                    <button className="absolute right-3 top-1.5">
-                                        <svg className="w-6 h-6 text-gray-500" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
+                            <button onClick={() => (handleModel("add"))} className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-full text-white text-xs md:text-sm">ເພີ່ມໂຕະ</button>
                         </div>
-                        <button onClick={() => (handleModel("add"))} className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-full text-white text-xs md:text-sm">ເພີ່ມໂຕະ</button>
+                        <div className="flex flex-col sm:flex-row  gap-2 items-center">
+                            {/* <select className="w-[330px] md:w-64 h-9 text-xs md:text-sm rounded-md border-gray-300 focus:outline-transparent focus:ring-0 focus:border-orange-500">
+                                <option disabled value="">--ເລືອສະຖານະ--</option>
+                                <option value="">ພ້ອມໃຊ້ງານ</option>
+                                <option value="">ປິດໃຊ້ງານ</option>
+                            </select> */}
+                            <form onSubmit={formSubmit} className="flex items-center max-w-lg mx-auto relative ">
+                                <input onChange={(e) => setTxtSearch(e.target.value)} value={txtSearch} className="w-[330px] md:w-64 h-9 text-xs md:text-sm rounded-md border-gray-300 focus:outline-transparent focus:ring-0 focus:border-orange-500"
+                                    type="text" placeholder="ຄົ້ນຫາ..." />
+                                <button className="absolute right-3 top-1.5 flex  ">
+
+                                    <svg className="w-6 h-6 text-gray-500 "
+                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" strokeLinecap="round"
+                                            strokeWidth="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                                    </svg>
+
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 w-full">
+                        <HiMenuAlt1 className="text-3xl" /><span>ລາຍການ</span> <div className="w-full border-b-[1px]"></div>
                     </div>
                     <div
                         ref={containerRef}
-                        className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8  sm:gap-3 gap-6 mt-3 overflow-auto p-3  h-[70vh] sm:h-fit"
+                        className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8  sm:gap-3 gap-6  overflow-auto py-3  h-[70vh] sm:h-fit"
                     >
                         {items.length > 0 ? (
                             items.map((item) => (
@@ -203,7 +238,7 @@ function ManageTables() {
 
                 </div>
             </div>
-            <div className={`w-screen ${!isCheckModel ? 'hidden' : 'block'}  h-screen bg-black/10  absolute  flex justify-center items-center`}>
+            <div className={`w-screen ${!isCheckModel ? 'hidden' : 'block'}  h-screen bg-black/10  absolute  flex justify-center items-center z-50`}>
 
                 {
                     isCheckEven ? (
@@ -211,7 +246,7 @@ function ManageTables() {
                     ) :
                         (
 
-                            <EditTable handleModel={() => (handleEditModel)} tableId={tableId} tableName={tableName} />
+                            <EditTable handleModel={handleEditModel} tableId={tableId} tableName={tableName} />
                         )
                 }
             </div>

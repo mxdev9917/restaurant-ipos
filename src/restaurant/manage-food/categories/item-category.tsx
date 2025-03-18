@@ -56,7 +56,7 @@ const CategroyItem: React.FC<categoryItemProps> = ({ onDelete, onEdit, categoryN
             <div className="w-full h-fit flex justify-end p-2 relative">
                 {
                     categoryImg !== null ?
-                        <img className="h-28 w-full object-cover rounded-md" src={`${IPOS_BASE_URL}${categoryImg}`} alt="" />
+                        <img className="h-24 sm:h-28 w-full object-cover rounded-md" src={`${IPOS_BASE_URL}${categoryImg}`} alt="" />
                         :
                         <img className="h-28 w-full object-contain rounded-md" src="images/ipos.png" alt="" />
 

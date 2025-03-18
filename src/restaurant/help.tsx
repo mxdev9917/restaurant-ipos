@@ -2,7 +2,7 @@ import Sidebar_Nav from "./components/sidebar-nav";
 import { Link } from "react-router-dom"
 function help() {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full w-[100.0vw] overflow-visible">
       <Sidebar_Nav />
       <div className="p-1 sm:ml-64">
         <div className=" w-full h-screen flex items-start  lg:items-center  justify-center">

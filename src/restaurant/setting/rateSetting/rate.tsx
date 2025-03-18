@@ -109,7 +109,7 @@ function Rate() {
     }
 
     return (
-        <div className="flex flex-col relative">
+        <div className="flex flex-col h-full w-[100.0vw] overflow-visible">
             {loadingMessage && <LoadingMessage text={loadingMessageTitle} />}
             <Sidebar_Nav />
             <div className="sm:ml-64">

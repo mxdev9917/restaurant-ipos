@@ -302,7 +302,7 @@ function Carts() {
   }, []);
 
   return (
-    <div className="flex flex-col overflow-y-hidden max-w-[100vw] max-h-[100vh] ">
+    <div className="flex flex-col h-full w-[100.0vw] overflow-visible">
       {loadingMessage && <LoadingMessage text={loadingMessageText} />}
       <Nav isMenu={true} handelMenu={isCheckMenu} />
       <div className="flex gap-2 ">

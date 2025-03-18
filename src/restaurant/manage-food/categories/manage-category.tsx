@@ -10,9 +10,10 @@ import CreateCategory from "./create-category";
 import EditCategory from "./edit-category";
 import { generalErrors } from "../../../utils/error";
 import { getByNameCategoryService } from "../../../services/categories/getByName-category";
-
+import { HiMenuAlt1 } from "react-icons/hi";
 import { useAuth } from "../../../context/context";
 import CategroyItem from "./item-category";
+import { getCategoryByStatusService } from "../../../services/categories/getByStatus-category";
 
 
 function ManageCategory() {
@@ -34,14 +35,24 @@ function ManageCategory() {
     const { data, token } = useAuth();
     const [isMessage, setIsMessage] = useState(true);
     const [txtSearch, setTxtSearch] = useState("");
-    // function handlItemsPerPage(limit: number) {
-    //     setItemsPerPage(limit)
-    // }
-    // ປະເພດຕຳ
 
 
+    const fetchingDataByStatus = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+        try {
+            const status = event.target.value;
+            let resId = String(data.restaurant_ID);
+            setItems([]);
+            const res = await getCategoryByStatusService.categoryByStatusService(resId, status, String(page), "40", token || "");
+            if (res.status === "200") {
+                setItems(res.data)
+            }
+        } catch (error) {
 
-    const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+        }
+    };
+
+
+    const formSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         try {
             let resId = String(data.restaurant_ID);
@@ -57,11 +68,6 @@ function ManageCategory() {
 
 
     }
-
-
-
-
-
 
     function handleModel(evens: string) {
         if (evens == 'add') {
@@ -167,45 +173,49 @@ function ManageCategory() {
 
     }, [isMessage]);
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col h-full w-[100.0vw] overflow-visible">
             <Sidebar_Nav />
             <div className="pt-8 sm:ml-64">
                 <div className="p-1">
-                    <div className="flex justify-between w-full h-fit items-end">
-                        <div className="flex flex-col w-fit h-fit pb-2 pl-2">
-                            <div className="flex text-gray-500 ">
-                                <Link className="hover:text-orange-500 text-xs md:text-sm" to={""}>ຈັດການຮ້ານ</Link>
-                                <Link className="text-xs md:text-sm" to={""}>|</Link>
-                                <button onClick={() => { window.location.reload(); }} className="text-orange-500 text-xs md:text-sm">
-                                    ຈັດການປະເພດເມນູ
+                    <div className="flex flex-col gap-2 justify-between items-start pb-2">
+                        <div className="flex justify-between w-full">
+                            <div className=" text-gray-500 flex gap-2 items-center text-xs md:text-sm">
+                                <Link className="hover:text-orange-500" to={""}>ຈັດການຮ້ານ</Link>
+                                <span>|</span>
+                                <button onClick={() => (window.location.reload())} className="text-orange-500" >ຈັດການປະເພດເມນູ</button>
+                            </div>
+                            <button onClick={() => (handleModel("add"))} className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-full text-white text-xs md:text-sm">ເພີ່ມປະເພດເມນູ</button>
+                        </div>
+                        <div className="flex flex-col sm:flex-row  gap-2 items-center">
+                            <select
+                                className="w-[330px] md:w-64 h-9 text-xs md:text-sm rounded-md border-gray-300 focus:outline-transparent focus:ring-0 focus:border-orange-500"
+                                onChange={fetchingDataByStatus} // Attach event correctly inside the select tag
+                            >
+                                <option value="active">ພ້ອມໃຊ້ງານ</option>
+                                <option value="locked">ປິດໃຊ້ງານ</option>
+                            </select>
+                            <form onSubmit={formSubmit} className="flex items-center max-w-lg mx-auto relative ">
+                                <input onChange={(e) => setTxtSearch(e.target.value)} value={txtSearch} required
+                                    className="w-[330px] md:w-64 h-9 text-xs md:text-sm rounded-md border-gray-300 focus:outline-transparent focus:ring-0 focus:border-orange-500"
+                                    type="text" placeholder="ຄົ້ນຫາ..." />
+                                <button className="absolute right-3 top-1.5 flex  ">
+
+                                    <svg className="w-6 h-6 text-gray-500 "
+                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" strokeLinecap="round"
+                                            strokeWidth="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                                    </svg>
+
                                 </button>
-
-
-                            </div>
-                            <div className="flex">
-                                <form onSubmit={formSumit} className="flex items-center max-w-lg mx-auto mt-2 relative">
-                                    <input onChange={(e) => setTxtSearch(e.target.value)} className="w-48 md:w-64 h-8 text-xs md:text-sm rounded-full border-gray-300 focus:outline-transparent focus:ring-0 focus:border-orange-500"
-                                        type="text" placeholder="ຄົ້ນຫາ..." />
-                                    <button className="absolute right-3 top-1.5 flex  ">
-
-                                        <svg className="w-6 h-6 text-gray-500 "
-                                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" strokeLinecap="round"
-                                                strokeWidth="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
-                                        </svg>
-
-                                    </button>
-                                </form>
-                            </div>
+                            </form>
                         </div>
-
-                        <div className=" pr-1 mb-2  md:pr-5 ">
-                            <button onClick={() => handleModel('add')} className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-full text-white text-xs md:text-sm">ເພີ່ມ</button>
-                        </div>
+                    </div>
+                    <div className="flex gap-2 w-full">
+                        <HiMenuAlt1 className="text-3xl" /><span>ລາຍການ</span> <div className="w-full border-b-[1px]"></div>
                     </div>
                     <div
                         ref={containerRef}
-                        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8  overflow-auto p-3 w-full h-fit"
+                        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8  overflow-auto p-3 w-full gap-y-14 sm:gap-y-0 h-fit"
                     >
                         {items.length > 0 ? (
                             items.map((item) => (
@@ -235,7 +245,7 @@ function ManageCategory() {
 
                 </div>
             </div>
-            <div className={`w-screen ${!isCheckModel ? 'hidden' : 'block'}  h-screen bg-black/10  absolute  flex justify-center items-center`}>
+            <div className={`w-screen ${!isCheckModel ? 'hidden' : 'block'}  h-screen bg-black/10  absolute  flex justify-center items-center z-50`}>
 
                 {
                     isCheckedPage ? (

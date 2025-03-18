@@ -20,6 +20,13 @@ const TableItem: React.FC<TableItemProps> = ({ onEdit, onDelete, tableName, tabl
 
   };
   const { token } = useAuth();
+
+
+
+
+
+
+
   const handleEditStatus = async () => {
     try {
       const newStatus = tableStatus == "disable" ? "empty" : "disable";

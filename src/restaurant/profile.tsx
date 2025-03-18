@@ -4,7 +4,7 @@ import Sidebar_Nav from "./components/sidebar-nav"
 
 function profile() {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col h-full w-[100.0vw] overflow-visible">
             <Sidebar_Nav />
             <div className="p-4 sm:ml-64">
                 <div className="flex flex-col ">

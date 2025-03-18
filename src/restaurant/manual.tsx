@@ -6,7 +6,7 @@ const items = Array.from({ length: 15 }, (_, index) => index);
 
 function UserManual() {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col h-full w-[100.0vw] overflow-visible">
             <Sidebar_Nav />
             <div className="p-1 sm:ml-64">
                 <div className="">

@@ -80,7 +80,7 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
                     <div className="grid gap-4 mb-4 grid-cols-2">
                         <div className="col-span-2">
                             <label htmlFor="name" className="block mb-2 text-xs md:text-sm font-medium text-gray-900">
-                                Food Name <span className="text-red-600">*</span>
+                               ຊື່ປະເພດເມນູ <span className="text-red-600">*</span>
                             </label>
                             <input
                                 onChange={(e) => setCategory(e.target.value)}
@@ -88,7 +88,7 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
                                 name="name"
                                 id="name"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                placeholder="name..."
+                                placeholder="ປ້ອນປະເພດເມນູ..."
                             />
                         </div>
                     </div>

@@ -122,7 +122,7 @@ function ManageKitchen() {
 
 
     return (
-        <div className="w-screen h-screen flex flex-col">
+        <div className="flex flex-col h-full w-[100.0vw] overflow-visible">
             <Nav isMenu={false} handelMenu={isCheckMenu} />
 
             <div className="flex justify-between p-3 border-b-[1px]">
