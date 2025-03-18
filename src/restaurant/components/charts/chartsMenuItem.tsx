@@ -13,7 +13,7 @@ interface ChartsMenuItemProps {
 }
 
 const ChartsMenuItem: React.FC<ChartsMenuItemProps> = ({ datalist }) => {
-  const categories = datalist.map(item => item.hour);
+
 
   const series = [
     {

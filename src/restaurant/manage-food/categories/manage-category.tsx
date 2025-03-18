@@ -9,7 +9,7 @@ import Loading from "../../../utils/Loading";
 import CreateCategory from "./create-category";
 import EditCategory from "./edit-category";
 import { generalErrors } from "../../../utils/error";
-
+import { getByNameCategoryService } from "../../../services/categories/getByName-category";
 
 import { useAuth } from "../../../context/context";
 import CategroyItem from "./item-category";
@@ -31,11 +31,37 @@ function ManageCategory() {
     const [totalItem, setTotalItem] = useState(0);
     const [page, setPage] = useState(1);
     const fetchedItemIDs = useRef(new Set<string>());
-    const { data,token } = useAuth();
+    const { data, token } = useAuth();
     const [isMessage, setIsMessage] = useState(true);
+    const [txtSearch, setTxtSearch] = useState("");
     // function handlItemsPerPage(limit: number) {
     //     setItemsPerPage(limit)
     // }
+    // ປະເພດຕຳ
+
+
+
+    const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+        e.preventDefault();
+        try {
+            let resId = String(data.restaurant_ID);
+            setItems([]);
+            const res = await getByNameCategoryService.categoryService(resId, txtSearch, token || "")
+            if (res.status === "200") {
+                setItems(res.data)
+            }
+
+        } catch (error) {
+
+        }
+
+
+    }
+
+
+
+
+
 
     function handleModel(evens: string) {
         if (evens == 'add') {
@@ -59,7 +85,7 @@ function ManageCategory() {
 
     const handleDelete = async (category_ID: string) => {
         try {
-            const res = await DeleteCategoryService.DeleteCategory(category_ID,token||"");
+            const res = await DeleteCategoryService.DeleteCategory(category_ID, token || "");
             if (res.status == 200) {
                 alertSuccessV3("ລົບປະເພດເມນູສຳເລັດ", 'success');
             }
@@ -73,7 +99,7 @@ function ManageCategory() {
         try {
             setIsMessage(true);
             let resId = String(data.restaurant_ID);
-            const response = await GetallcategoryService.GetAllCategory(resId, currentPage, 40,token||""); // Replace with your actual API URL
+            const response = await GetallcategoryService.GetAllCategory(resId, currentPage, 40, token || ""); // Replace with your actual API URL
             if (response.status === "200") {
                 setTotalItem(response.total_item);
                 // Create an array of items to append without duplicates
@@ -131,7 +157,7 @@ function ManageCategory() {
         container.addEventListener("scroll", handleScroll);
         return () => container.removeEventListener("scroll", handleScroll);
     }, [isLoading, totalItem, items.length]);
-    
+
     useEffect(() => {
         if (isMessage) {
             setTimeout(() => {
@@ -150,12 +176,15 @@ function ManageCategory() {
                             <div className="flex text-gray-500 ">
                                 <Link className="hover:text-orange-500 text-xs md:text-sm" to={""}>ຈັດການຮ້ານ</Link>
                                 <Link className="text-xs md:text-sm" to={""}>|</Link>
-                                <Link className="text-orange-500 text-xs md:text-sm" to={""}>ຈັດການໂຊນຮ້ານ</Link>
+                                <button onClick={() => { window.location.reload(); }} className="text-orange-500 text-xs md:text-sm">
+                                    ຈັດການປະເພດເມນູ
+                                </button>
+
 
                             </div>
                             <div className="flex">
-                                <form className="flex items-center max-w-lg mx-auto mt-2 relative">
-                                    <input className="w-48 md:w-64 h-8 text-xs md:text-sm rounded-full border-gray-300 focus:outline-transparent focus:ring-0"
+                                <form onSubmit={formSumit} className="flex items-center max-w-lg mx-auto mt-2 relative">
+                                    <input onChange={(e) => setTxtSearch(e.target.value)} className="w-48 md:w-64 h-8 text-xs md:text-sm rounded-full border-gray-300 focus:outline-transparent focus:ring-0 focus:border-orange-500"
                                         type="text" placeholder="ຄົ້ນຫາ..." />
                                     <button className="absolute right-3 top-1.5 flex  ">
 
@@ -180,7 +209,7 @@ function ManageCategory() {
                     >
                         {items.length > 0 ? (
                             items.map((item) => (
-                                <div key={item.food_ID} className="p-2 w-full ">
+                                <div key={item.category_ID} className="p-2 w-full ">
                                     <div className="w-full h-28 sm:h-32 md:h-52 lg:h-40 ">
                                         <CategroyItem
 
@@ -203,7 +232,7 @@ function ManageCategory() {
                             </div>
                         )}
                     </div>
-                 
+
                 </div>
             </div>
             <div className={`w-screen ${!isCheckModel ? 'hidden' : 'block'}  h-screen bg-black/10  absolute  flex justify-center items-center`}>
