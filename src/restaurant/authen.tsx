@@ -29,7 +29,15 @@ function Authen() {
             const token = res.token;
             const data = res.data;
             setAuthData(token, data);
-             alertSuccess(navigate, "/dashboard", "ເຂົ້າສູ່ລະບົບສຳເລັດ", "success");
+            if(res.data.user_role==="user"){
+                alertSuccess(navigate, "/sale", "ເຂົ້າສູ່ລະບົບສຳເລັດ", "success");
+            }else if(res.data.user_role==="chef"){
+                alertSuccess(navigate, "/manage/kitchen", "ເຂົ້າສູ່ລະບົບສຳເລັດ", "success");
+            }
+            else{
+                alertSuccess(navigate, "/dashboard", "ເຂົ້າສູ່ລະບົບສຳເລັດ", "success");
+            }
+             
         } catch (error: any) {
             console.log(error.message);
             

@@ -1,6 +1,5 @@
 import { IPOS_BASE_URL } from "../../utils/connection";
 import axios from "axios";
-
 export interface Root {
     status: string
     message: string
@@ -16,6 +15,7 @@ export interface Data {
     category: string
     food_price: string
 }
+
 export class getReportByCategoryService {
     static async ReportByCategory(id: string, category_ID: string, page: string, limit: string, token?: string): Promise<Root> {
         try { 

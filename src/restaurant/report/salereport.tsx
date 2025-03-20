@@ -12,7 +12,8 @@ import { HiMenuAlt1 } from "react-icons/hi";
 import { GetallcategoryByStatusService, ICategoriesStatus } from "../../services/categories/get-by-statuse-category";
 import { generalErrors } from "../../utils/error";
 import { getReportByCategoryService } from "../../services/reports/getReportSaleByCategoryService";
-import { getReportByDateService } from "../../services/reports/getReportSaleByDateService";
+import { getReportByDateService, Data } from "../../services/reports/getReportSaleByDateService";
+import { alertconfirm } from "../../utils/alert";
 
 function saleReport() {
     const [loading, setLoading] = useState(false);
@@ -23,6 +24,8 @@ function saleReport() {
     const [currentPage, setCurrentPage] = useState(1);
     const [getData, setGetData] = useState<ICategoriesStatus["data"]>([]);
     const [fetchingStatus, setFetchingStatus] = useState("default");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
     const NEXT_MONTH = new Date();
     NEXT_MONTH.setMonth(NEXT_MONTH.getMonth() + 1);
     const [value, setValue] = useState({
@@ -38,29 +41,50 @@ function saleReport() {
         const endDateFormatted = newValue?.endDate
             ? newValue.endDate.toISOString().split('T')[0].replace(/-/g, '/')
             : new Date().toISOString().split('T')[0].replace(/-/g, '/');
-    
+
+        // Update state values
         setValue({
             startDate: newValue?.startDate ?? new Date(),
             endDate: newValue?.endDate ?? new Date(),
         });
-    
+
+        // Update start and end date directly
+        setStartDate(startDateFormatted);
+        setEndDate(endDateFormatted);
+
+        // Call fetchDataByDate after the dates are updated
+        await fetchDataByDate(startDateFormatted, endDateFormatted); // Pass the formatted dates directly
+    };
+
+    const fetchDataByDate = async (startDate: string, endDate: string) => {
         try {
+            setFetchingStatus("byDate");
+            setGetData([]);  // Reset data before fetching
+
             let resId = String(data.restaurant_ID);
             const res = await getReportByDateService.ReportByDate(
                 resId,
-                startDateFormatted,
-                endDateFormatted,
+                startDate,
+                endDate,
                 String(currentPage),
                 String(itemsPerPage),
                 token || ""
             );
-            console.log(res.data);
-    
+
+            setGetDt(res.data);
+            let itemper = Number(res.total_item);
+            setTotalItems(itemper);
+            if (itemper === itemsPerPage) {
+                setTotalItems(itemper + 1);
+            } else {
+                setTotalItems(itemper);
+            }
+
         } catch (error) {
             console.error("Error fetching report:", error);
         }
     };
-    
+
 
     const fetchDataCategory = async () => {
         try {
@@ -96,15 +120,17 @@ function saleReport() {
         }
     };
     useEffect(() => {
+        fetchDataCategory();
         if (fetchingStatus === "default") {
             fetchData();
         }
         if (fetchingStatus === "byCategory") {
             fetchingCategory
         }
-        console.log(fetchingStatus);
-        fetchDataCategory();
-    }, [currentPage, itemsPerPage, fetchingStatus]);
+        if (fetchingStatus === "byDate") {
+            fetchDataByDate(startDate, endDate);
+        }
+    }, [currentPage, itemsPerPage, fetchingStatus, startDate, endDate]);
 
 
 
@@ -113,7 +139,7 @@ function saleReport() {
             setFetchingStatus("byCategory")
             const category_ID = event.target.value;  // Getting the selected category_ID
             let resId = String(data.restaurant_ID); // Assuming you have `restaurant_ID` from somewhere
-            const res = await getReportByDateService.ReportByDate(
+            const res = await getReportByCategoryService.ReportByCategory(
                 resId,
                 category_ID,
                 String(currentPage),
@@ -121,13 +147,60 @@ function saleReport() {
                 token || ""
             );
             setGetDt(res.data);
-            const itemper = Number(res.total_item);
+            let itemper = Number(res.total_item)
             setTotalItems(itemper);
+            if (itemper == itemsPerPage) {
+                setTotalItems(itemper + 1);
+            } else {
+                setTotalItems(itemper);
+            }
 
         } catch (error) {
             console.error("Error fetching category data:", error);
         }
     };
+
+
+    const exportToCSV = (data: Data[], filename: string) => {
+        // Ensure the data is not empty
+        if (data.length === 0) return;
+
+        // Create CSV headers from the keys of the first item in the data array
+        const headers = Object.keys(data[0]);
+
+        // Create rows from each item's values, converting each value to a string
+        const rows = data
+            .map(item =>
+                Object.values(item)
+                    .map(value => `"${String(value).replace(/"/g, '""')}"`) // Convert to string and escape quotes inside data
+                    .join(",")
+            )
+            .join("\n");
+
+        // Add BOM for UTF-8 encoding and combine with headers and rows
+        const csvContent = `\uFEFF${headers.join(",")}\n${rows}`;
+
+        // Use TextEncoder to ensure UTF-8 encoding
+        const encoder = new TextEncoder();
+        const encodedContent = encoder.encode(csvContent); // Encoding the content as UTF-8
+
+        // Create a Blob object with the encoded content and UTF-8 type
+        const blob = new Blob([encodedContent], { type: "text/csv;charset=utf-8;" });
+
+        // Create a download link for the CSV file
+        const link = document.createElement("a");
+        if (link.download !== undefined) {
+            // Generate an object URL for the Blob
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            link.style.visibility = "hidden";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    };
+
 
 
     return (
@@ -137,13 +210,21 @@ function saleReport() {
                 <div className="flex flex-col gap-3  p-3">
                     <div className="flex justify-between w-full ">
                         <div className=" text-gray-500 flex gap-2 items-center text-xs md:text-sm">
-                            <Link className="hover:text-orange-500" to={""}>ຈັດການລາຍງານ</Link>
+                            <p className="hover:text-orange-500" >ຈັດການລາຍງານ</p>
                             <span>|</span>
                             <button onClick={() => (window.location.reload())} className="text-orange-500" >ລາຍງານຍອດຂາຍ</button>
                         </div>
                         <button
-                            //  onClick={() => (handleModel("add"))} 
-                            className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-md text-white text-xs md:text-sm">  Export CSV</button>
+                            onClick={() => {
+                                alertconfirm(
+                                    () => exportToCSV(getDt, 'sales_report.csv'),
+                                    `ຕ້ອງການ export CSV ?`,
+                                    "question"
+                                );
+                            }}
+                            className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-md text-white text-xs md:text-sm">
+                            Export CSV
+                        </button>
                     </div>
                     <div className="flex flex-col md:flex-row gap-3 w-fit">
                         <div className="col-span-2 sm:col-span-1">

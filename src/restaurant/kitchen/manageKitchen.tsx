@@ -169,7 +169,7 @@ function ManageKitchen() {
                     ))
                 ) : (
                     <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
-                        {isMessage ? <Loading text="ກຳລັງໂຫລດ" /> : "No data available."}
+                        {isMessage ? <Loading text="ກຳລັງໂຫລດ" /> : "ບໍ່ມີອໍເດີ"}
                     </div>
                 )}
             </div>

@@ -258,6 +258,7 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
                                 <option className="" value="0" disabled selected>--ເລືອກ--</option>
                                 <option value="admin">ແອັດມີນ</option>
                                 <option value="user">ເສີບ</option>
+                                <option value="chef">ພໍ່ຄົວ/ແມ່ຄົວ</option>
                             </select>
                         </div>
                         <label className="inline-flex items-center my-3 cursor-pointer">

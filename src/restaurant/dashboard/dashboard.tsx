@@ -89,19 +89,6 @@ function Dashboardv() {
       <div className="p-1 sm:ml-64 flex-col overflow-y-auto">
         <div className="flex w-full h-16 justify-between items-center px-3">
           <p className="pt-3">Dashboard</p>
-          <div className="w-60 md:w-72 bg-white z-30 text-orange-500">
-            <Datepicker
-              primaryColor={"orange"}
-              value={value}
-              onChange={(newValue) =>
-                setValue({
-                  startDate: newValue?.startDate ?? new Date(),
-                  endDate: newValue?.endDate ?? new Date(),
-                })
-              }
-              showShortcuts={true}
-            />
-          </div>
         </div>
         <div className="flex flex-col gap-2 px-3 2xl:flex-row mb-2">
           <div className="w-full h-40 rounded-md shadow-xl p-2 bg-slate-50">
