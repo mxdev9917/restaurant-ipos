@@ -16,9 +16,14 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
     const [categoryImg, setCategoryIng] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
     const [previewImg, setPreviewImg] = useState<string | null>(null);
-    const { data,token } = useAuth();
-    const [isGallery, setIsGallery] = useState(false)
-    const [gallery_path ,setGallery_path]=useState("")
+    const { data, token } = useAuth();
+    const [isGallery, setIsGallery] = useState(false);
+    const [gallery_path, setGallery_path] = useState("");
+    const [checkedKitchen, setCheckedKitchen] = useState(true);
+    const [checkedBar, setCheckedBar] = useState(false);
+
+
+
     const handleGallery = () => {
         setIsGallery(!isGallery);
     }
@@ -35,7 +40,7 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
         try {
             setLoading(true);
             let resId = String(data.restaurant_ID);
-            const res = await CreateCategoryService.CreateCategory(resId, category,gallery_path , categoryImg || undefined,token||"")
+            const res = await CreateCategoryService.CreateCategory(resId, category, gallery_path, categoryImg || undefined, token || "",checkedKitchen,checkedBar)
             if (res.status == "200") {
                 alertSuccessV3("ສ້າງປະເພດເມນູສຳເລັດ", 'success');
             }
@@ -61,6 +66,9 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
     };
 
 
+
+
+
     return <>
         <div className="flex flex-col w-96 h-fit bg-white rounded-lg shadow-xl">
             <div className="flex justify-between items-center px-5 w-full h-16 border-b-2">
@@ -76,11 +84,11 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
                 </button>
             </div>
             <div className="px-3 mt-3">
-                <form onSubmit={formSumit} className="p-4 md:p-5">
-                    <div className="grid gap-4 mb-4 grid-cols-2">
+                <form onSubmit={formSumit} className="flex flex-col gap-4 p-4 md:p-5">
+                    <div className="grid gap-4 grid-cols-2">
                         <div className="col-span-2">
                             <label htmlFor="name" className="block mb-2 text-xs md:text-sm font-medium text-gray-900">
-                               ຊື່ປະເພດເມນູ <span className="text-red-600">*</span>
+                                ຊື່ປະເພດເມນູ <span className="text-red-600">*</span>
                             </label>
                             <input
                                 onChange={(e) => setCategory(e.target.value)}
@@ -90,6 +98,32 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                 placeholder="ປ້ອນປະເພດເມນູ..."
                             />
+                        </div>
+                    </div>
+                    <div className="flex gap-3">
+                        <div className="flex items-center space-x-2">
+                            <input
+                                type="checkbox"
+                                id="checkboxBar"
+                                checked={checkedKitchen}
+                                onChange={() => (setCheckedKitchen(!checkedKitchen))}
+                                className="form-checkbox h-5 w-5 text-orange-500 border-gray-300 rounded focus:ring-orange-500"
+                            />
+                            <label htmlFor="checkboxBar" className="text-gray-700">
+                                ສົ່ງຄົວ
+                            </label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                            <input
+                                type="checkbox"
+                                id="checkboxKitchen"
+                                checked={checkedBar}
+                                onChange={() => (setCheckedBar(!checkedBar))}
+                                className="form-checkbox h-5 w-5 text-orange-500 border-gray-300 rounded focus:ring-orange-500"
+                            />
+                            <label htmlFor="checkboxKitchen" className="text-gray-700">
+                                ສົ່ງເຄົ້າເຕີບາ
+                            </label>
                         </div>
                     </div>
                     {/* File Upload */}

@@ -14,6 +14,7 @@ export interface Data {
     food_name: string;
     price: number;
     food_img: string;
+    category_ID:string;
     created_at: string;
 }
 

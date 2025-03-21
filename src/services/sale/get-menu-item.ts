@@ -10,10 +10,12 @@ export interface Root {
 }
 
 export interface Data {
+    food_ID: string
     menu_items_ID: string
     food_name: string
     price: number
     quantity: number,
+    menu_item_status:string
 
 }
 

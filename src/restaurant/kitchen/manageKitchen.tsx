@@ -20,6 +20,7 @@ function ManageKitchen() {
     const [selectBox, setSelectBox] = useState("pending");
     const [isMessage, setIsMessage] = useState(true);
     const [ck, setCk] = useState("cooking");
+    const [isRelTime, setRelTmie] = useState(true);
 
     const { data, token } = useAuth();
     function isCheckMenu() { }
@@ -37,7 +38,6 @@ function ManageKitchen() {
             setIsLoading(false);
         }, 1200);
 
-
     };
     const fetchData = async (currentPage: string, reset: boolean = false) => {
         try {
@@ -49,9 +49,7 @@ function ManageKitchen() {
             }
 
             let resId = String(data.restaurant_ID);
-            const response = await GetAllMenuItemService.getMenuItems(resId, selectBox, ck, currentPage, "40", token || "");
-            console.log(response.data);
-
+            const response = await GetAllMenuItemService.getMenuItems(resId, selectBox, ck, String(currentPage), "40", token || "");
             if (response.status === "200") {
                 setTotalItem(response.total_item);
 
@@ -81,13 +79,15 @@ function ManageKitchen() {
     // Fetch data when 'page' changes
     useEffect(() => {
         setCk("cooking")
+        setRelTmie(true)
         fetchData(String(page), false);
-    }, [page]);
+    }, [page, isRelTime]);
 
     // Fetch new data and reset when 'selectBox' changes
     useEffect(() => {
         setCk("");
-        fetchData(String(page), true); // Pass 'true' to reset data
+        setRelTmie(false)
+        fetchData(String(page), true);
     }, [selectBox]);
 
 
@@ -114,13 +114,16 @@ function ManageKitchen() {
 
     }, [isMessage]);
 
-    const handleRefresh = () => {
-        window.location.reload();
-    }
-
-
-
-
+    useEffect(() => {
+        if (isRelTime) {
+            const intervalId = setInterval(() => {
+                fetchData(String(page));
+            }, 6000);
+    
+            return () => clearInterval(intervalId);
+        }
+    }, [isRelTime, page]);
+    
     return (
         <div className="flex flex-col h-full w-[100.0vw] overflow-visible">
             <Nav isMenu={false} handelMenu={isCheckMenu} />
@@ -141,7 +144,7 @@ function ManageKitchen() {
                         <option value="completed">ສຳເລັດ</option>
                         <option value="cancelled">ຍົກເລີກ</option>
                     </select>
-                    <button onClick={handleRefresh} className="flex justify-center items-center w-10 h-10 rounded-md bg-gray-300 hover:bg-gray-200"><HiRefresh className="text-xl text-gray-600" />
+                    <button onClick={() => (window.location.reload())} className="flex justify-center items-center w-10 h-10 rounded-md bg-gray-300 hover:bg-gray-200"><HiRefresh className="text-xl text-gray-600" />
                     </button>
                 </div>
             </div>

@@ -29,6 +29,7 @@ export class GetAllMenuItemService {
         token?: string
 
     ): Promise<Root> {
+        
         try {
             const headers: any = {};
             if (token) {

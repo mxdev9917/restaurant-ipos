@@ -3,6 +3,7 @@ import FoodItemSale from "./components/fooditem";
 import CategoryItem from "./components/categoryitem";
 import { useEffect, useRef, useState } from "react";
 import { Dropdown } from "flowbite-react";
+import { HiDotsVertical } from "react-icons/hi";
 import { FiPrinter } from 'react-icons/fi';
 import { GetallcategoryByStatusService } from "../../services/categories/get-by-statuse-category";
 import { useAuth } from "../../context/context";
@@ -23,6 +24,8 @@ import LoadingMessage from "../../utils/loadingMessage";
 import Tableincluded from "./components/table-included";
 import Loading from "../../utils/Loading";
 import { getByStatusRateService } from "../../services/setting/rates/getByStatusRateService";
+import { WaitingReceiveMoneyService } from "../../services/sale/waitingReceiveMoneyService";
+
 
 function Carts() {
   const [PrinterModel, setPrinterleModel] = useState(false);
@@ -34,7 +37,7 @@ function Carts() {
   const [isCheckModelEvenMenu, setIsCheckModelEvenMenu] = useState(false)
   const [itemsCategory, setItemsCategory] = useState<any[]>([]);
   const [foodItemsTable, setFoodItemsTable] = useState<any[]>([]);
-  const { data,token } = useAuth();
+  const { data, token } = useAuth();
   const [items, setItems] = useState<any[]>([]);
   const [rateItems, setrateItems] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +46,8 @@ function Carts() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { id } = useParams();
   const tableID = String(id);
-  const [food_ID, setFood_ID] = useState("")
+  const [food_ID, setFood_ID] = useState("");
+  const [cat_ID, setCat_ID] = useState("");
   const [Price, setPrice] = useState("0");
   const [isBTNSuccess, setIsBTNSuccess] = useState(true);
   const [vat, setVat] = useState("0");
@@ -51,15 +55,35 @@ function Carts() {
   const [loadingMessage, setLoadingMessage] = useState(false);
   const [loadingMessageText, setLoadingMessageTesxt] = useState("");
   const [isMessage, setIsMessage] = useState(true);
-  const [tableName,setTableName]=useState("")
+  const [tableName, setTableName] = useState("")
+  const[isCheckStatusItem,setIsCheckStatusItem]=useState(false);
 
+
+const handelWRM =async()=>{
+try {
+  setLoadingMessage(true);
+  setLoadingMessageTesxt("ກຳລັງເຊັກບີນ")
+  const res= await WaitingReceiveMoneyService.WaitingReceiveMoney(tableID,token||"")
+  if (res.status === "200") {
+    alertSuccessV3('ເຊັກບີນສຳເລັດ', 'success');
+  }
+  
+} catch (error) {
+  console.error("Error check bill:", error);
+  generalErrors(error)
+}finally{
+  setLoadingMessage(false);
+  setLoadingMessageTesxt("")
+}
+
+}
   const handleOrderSuccuss = async () => {
     try {
       setLoadingMessage(true);
-      setLoadingMessageTesxt("ກຳລັງເຊັກບີນ")
-      const res = await UpdateOrderSuccessService.UpdateOrderSuccess(tableID, totalPrice,token||"");
+      setLoadingMessageTesxt("ກຳລັງຮັບເງີນ")
+      const res = await UpdateOrderSuccessService.UpdateOrderSuccess(tableID, totalPrice, token || "");
       if (res.status === "200") {
-        alertSuccess(navigate, '/sale', 'ເຊັກບີນສຳເລັດ', 'success');
+        alertSuccess(navigate, '/sale', 'ຮັບເງີນສຳເລັດ', 'success');
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -69,11 +93,11 @@ function Carts() {
       setLoadingMessageTesxt("")
     }
   }
-  const handleDelete = async (menu_items_ID: string) => {
+  const handleDelete = async (food_ID: string, even: string) => {
     try {
       setLoadingMessage(true);
       setLoadingMessageTesxt("ກຳລັງລົບລາຍການເມນູ")
-      const res = await DeleteMenuItemService.DeleteMenuItem(menu_items_ID,token||"")
+      const res = await DeleteMenuItemService.DeleteMenuItem(tableID, food_ID, even, token || "")
       if (res.status === "200") {
         alertSuccessV3("ລົບລາຍການເມນູສຳເລັດ", "success");
       }
@@ -87,7 +111,15 @@ function Carts() {
   }
   const fetchFoodTableItem = async () => {
     try {
-      const res = await GetMenuItemService.MenuItem(tableID,token||"");
+      const res = await GetMenuItemService.MenuItem(tableID, token || "");
+      let data = res.data;
+      for (const item of data) {
+        let status = item.menu_item_status;
+        if (status !== "completed" && status!=="cancelled") {
+          setIsCheckStatusItem(true);
+          break;
+        }
+      }
       setFoodItemsTable(res.data);
       setTableName(res.table_name);
       setPrice(res.totalPrice);
@@ -106,11 +138,23 @@ function Carts() {
       generalErrors(error)
     }
   }
+  
+  const handleCheckStatusFood = () => {
+    if (isCheckStatusItem) {
+      alertconfirm(
+        () => handelWRM(),
+        `ມີບາງເມນູຍັງແຕ່ງບໍ່ທັນແລ້ວ`,
+        "question"
+      )
+    } else {
+      handelWRM()
+    }
+  }
   const hadleCancelOrder = async () => {
     try {
       setLoadingMessage(true);
       setLoadingMessageTesxt("ກຳລັງຍົກເລີກເມນູ")
-      const res = await cancelOrderService.cancelOrder(tableID,token||"");
+      const res = await cancelOrderService.cancelOrder(tableID, token || "");
       if (res.status === "200") {
         alertSuccess(navigate, '/sale', 'ຍົກເລີກເມນູສຳເລັດ', 'success');
       }
@@ -141,9 +185,10 @@ function Carts() {
       setPrinterleModel(!PrinterModel)
     }
   }
-  function handleClick(id: string, name: string) {
+  function handleClick(id: string, name: string, cat_ID: string) {
     setHandleModel(!handleModel);;
     setFoodName(name);
+    setCat_ID(cat_ID)
     setFood_ID(id)
 
 
@@ -157,7 +202,7 @@ function Carts() {
 
     try {
       setIsMessage(true)
-      const res = await GetallcategoryByStatusService.GetAllCategory(resId,token||"")
+      const res = await GetallcategoryByStatusService.GetAllCategory(resId, token || "")
       setItemsCategory(res.data);
 
     } catch (error: any) {
@@ -172,7 +217,9 @@ function Carts() {
     setIsMessage(true)
     try {
       let resId = String(data.restaurant_ID);
-      const res = await GetFoodByStatusService.GetFoodService(resId, currentPage, 40,token||"");
+      const res = await GetFoodByStatusService.GetFoodService(resId, currentPage, 40, token || "");
+
+
       if (res.status === "200") {
         setTotalItem(res.total_item);
         const newItems = res.data.filter((item: any) => {
@@ -209,7 +256,7 @@ function Carts() {
   const handleCategory = async (id: string) => {
     try {
 
-      const res = await GetAllFoodByCategoryIdService.GetAllFoodByCategoryId(id,token||"");
+      const res = await GetAllFoodByCategoryIdService.GetAllFoodByCategoryId(id, token || "");
       setItems([]);
       setItems(res.data);
       setTotalItem(res.total_item);
@@ -234,7 +281,7 @@ function Carts() {
   const fetchRateByStatus = async () => {
     try {
       let resId = String(data.restaurant_ID);
-      const res = await getByStatusRateService.RateService(resId,token||"");
+      const res = await getByStatusRateService.RateService(resId, token || "");
 
       if (res.status === "200") {
         let data = res.data;
@@ -342,7 +389,7 @@ function Carts() {
                       foodId={item.food_ID}
                       foodName={item.food_name}
                       foodImg={item.food_img}
-                      onClick={() => handleClick(item.food_ID, item.food_name)}
+                      onClick={() => handleClick(item.food_ID, item.food_name, item.category_ID)}
                     />
                   </div>
                 </div>
@@ -350,7 +397,7 @@ function Carts() {
             ) : (
               <div className="col-span-full flex justify-center items-center h-40 text-gray-500">
                 {
-                  isMessage ? <Loading text="ກຳລັງໂຫລດ" /> : "No data available."
+                  isMessage ? <Loading text="ກຳລັງໂຫລດ" /> : "ບໍ່ມີຂໍ້ມູນ"
                 }
 
               </div>
@@ -364,7 +411,7 @@ function Carts() {
             <Tableincluded table_ID={tableID} handleClickCloseModle={handleClickCloseModle} />
           </div>
           <div className={`${isCheckModelEvenMenu == true ? "block" : "hidden"} flex flex-col w-80 h-fit  rounded-lg shadow-lg `}>
-            <MenuAddFood tableID={tableID} foodID={food_ID} foodName={foodName} handleClickCloseModle={handleClickCloseModle} isCheckModelEvenMenu />
+            <MenuAddFood tableID={tableID} foodID={food_ID} foodName={foodName} category_ID={cat_ID} handleClickCloseModle={handleClickCloseModle} isCheckModelEvenMenu />
           </div>
         </div>
         <div className={`${isCheckEvenMenu ? 'flex absolute' : 'hidden'}  bg-white w-[375px] h-[91vh] sm:h-[93vh]  max-w-[550px] min-w-[375px] xl:flex  shadow-lg flex-col justify-between px-3`}>
@@ -402,19 +449,36 @@ function Carts() {
                       <td className="p-2">{item.quantity}</td>
                       <td className="p-2">{item.price}</td>
                       <td className="p-2">{Number(item.quantity) * Number(item.price)}</td>
-                      <td className="p-2 md:p-2 flex md:table-cell justify-center">
-                        <button
+                      <td className="p-2">
+                        <Dropdown
+                          label=""
+                          dismissOnClick={false}
+                          renderTrigger={() =>
+                            <div className="flex items-center justify-center hover:bg-slate-200 w-7 h-7 rounded-full cursor-pointer"><HiDotsVertical className="text-sm" /></div>}>
+                          <Dropdown.Item
                           onClick={() =>
                             alertconfirm(
-                              () => handleDelete(item.menu_items_ID),
-                              `ຕ້ອງການຍົກເລີກລາຍການນີ້ບໍ່ ?`,
+                              () => handleDelete(item.food_ID, ""),
+                              `ຕ້ອງການລົບ 1 ຈຳນວນບໍ່ ?`,
                               "question"
                             )
                           }
-                          className="hover:bg-slate-100 py-1.5 rounded-full w-8 sm:w-10 flex items-center justify-center"
-                        >
-                          <HiOutlineTrash className="text-lg sm:text-xl md:text-2xl text-red-600" />
-                        </button>
+                            className="flex items-center gap-1">
+                            <HiOutlineTrash className="text-xl" />ລົບຈຳນວນ
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() =>
+                              alertconfirm(
+                                () => handleDelete(item.food_ID, "deleteMenuItem"),
+                                `ຕ້ອງການຍົກເລີກລາຍການນີ້ບໍ່ ?`,
+                                "question"
+                              )
+                            }
+                            className="flex items-center gap-1">
+                            <HiOutlineTrash className="text-xl" /> ລົບເມນູນີ້
+                          </Dropdown.Item>
+                        </Dropdown>
+
                       </td>
                     </tr>
                   ))}
@@ -454,6 +518,18 @@ function Carts() {
                 type="button"
                 onClick={() => alertconfirm(
                   () => handleOrderSuccuss(),
+                  `ຮັບເງີນແລ້ວບໍ່ ?`,
+                  "question"
+                )}
+                disabled={isBTNSuccess}
+                className={`text-white bg-green-700 hover:bg-green-800 focus:ring-2 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none ${isBTNSuccess ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                ຮັບເງີນ
+              </button>
+              <button
+                type="button"
+                onClick={() => alertconfirm(
+                  () => handleCheckStatusFood(),
                   `ຕ້ອງການເຊັກບີນອໍເດີນີ້ບໍ່ ?`,
                   "question"
                 )}

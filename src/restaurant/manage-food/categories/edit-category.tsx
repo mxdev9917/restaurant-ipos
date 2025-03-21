@@ -18,8 +18,10 @@ const EditCategory: React.FC<EditCategoryProps> = ({ handleModel, id }) => {
     const [previewImg, setPreviewImg] = useState<string | null>(null);
     const [categoryImg, setCategoryIng] = useState<File | null>(null);
     const [isGallery, setIsGallery] = useState(false)
-    const [gallery_path ,setGallery_path]=useState("");
+    const [gallery_path, setGallery_path] = useState("");
     const { token } = useAuth();
+    const [checkedKitchen, setCheckedKitchen] = useState(true);
+    const [checkedBar, setCheckedBar] = useState(false);
 
 
     const handleGallery = () => {
@@ -55,8 +57,9 @@ const EditCategory: React.FC<EditCategoryProps> = ({ handleModel, id }) => {
                 today,
                 gallery_path,
                 categoryImg || undefined,
-                token||""
-
+                token || "",
+                checkedKitchen,
+                checkedBar
             );
 
             if (response.status == 200) {
@@ -72,7 +75,7 @@ const EditCategory: React.FC<EditCategoryProps> = ({ handleModel, id }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await GetByeCategoryService.GetByCategory(id,token||"")
+            const res = await GetByeCategoryService.GetByCategory(id, token || "")
             setCategory(res.data[0].category)
         }
         fetchData();
@@ -96,7 +99,7 @@ const EditCategory: React.FC<EditCategoryProps> = ({ handleModel, id }) => {
                     <div className="grid gap-4 mb-4 grid-cols-2">
                         <div className="col-span-2">
                             <label htmlFor="name" className="block mb-2 text-xs md:text-sm font-medium text-gray-900">
-                            ຊື່ປະເພດເມນູ <span className="text-red-600">*</span>
+                                ຊື່ປະເພດເມນູ <span className="text-red-600">*</span>
                             </label>
                             <input
                                 onChange={(e) => setCategory(e.target.value)}
@@ -107,6 +110,32 @@ const EditCategory: React.FC<EditCategoryProps> = ({ handleModel, id }) => {
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                 placeholder="ປ້ອນປະເພດເມນູ."
                             />
+                        </div>
+                        <div className="flex gap-3 w-80">
+                            <div className="flex items-center space-x-2">
+                                <input
+                                    type="checkbox"
+                                    id="checkboxBar"
+                                    checked={checkedKitchen}
+                                    onChange={() => (setCheckedKitchen(!checkedKitchen))}
+                                    className="form-checkbox h-5 w-5 text-orange-500 border-gray-300 rounded focus:ring-orange-500"
+                                />
+                                <label htmlFor="checkboxBar" className="text-gray-700">
+                                    ສົ່ງຄົວ
+                                </label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <input
+                                    type="checkbox"
+                                    id="checkboxKitchen"
+                                    checked={checkedBar}
+                                    onChange={() => (setCheckedBar(!checkedBar))}
+                                    className="form-checkbox h-5 w-5 text-orange-500 border-gray-300 rounded focus:ring-orange-500"
+                                />
+                                <label htmlFor="checkboxKitchen" className="text-gray-700">
+                                    ສົ່ງເຄົ້າເຕີບາ
+                                </label>
+                            </div>
                         </div>
                         <div className="col-span-2">
                             <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 text-xs md:text-sm">
