@@ -4,6 +4,7 @@ import Language from "./language";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/context";
+import { useTranslation } from "react-i18next";
 
 interface NavProps {
   handelMenu: () => void;
@@ -14,7 +15,7 @@ const Nav: React.FC<NavProps> = ({ handelMenu, isMenu }) => {
   const navigate = useNavigate();
   const { data, token, logout } = useAuth();
   const userTypeRef = useRef<string>('');
-
+  const { t } = useTranslation();
   const handleClick = () => {
     handelMenu();
   };
@@ -76,15 +77,15 @@ const Nav: React.FC<NavProps> = ({ handelMenu, isMenu }) => {
           }
         >
           <Dropdown.Header>
-            <span className="block text-sm">ຊື່: {dataName}</span>
-            <span className="block truncate text-sm font-medium">ສິດ: {dataRole}</span>
+            <span className="block text-sm">{t("name")}: {dataName}</span>
+            <span className="block truncate text-sm font-medium">{t("role")}: {dataRole}</span>
           </Dropdown.Header>
           {/* Use buttons instead of <a> tags to avoid nesting */}
           {/* <Dropdown.Item as="button" onClick={() => navigate('/dashboard')}>Dashboard</Dropdown.Item>
           <Dropdown.Item as="button" onClick={() => navigate('/profile')}>Profile</Dropdown.Item>
           <Dropdown.Item as="button">Earnings</Dropdown.Item> */}
           <Dropdown.Divider />
-          <Dropdown.Item as="button" onClick={logout}>Sign out</Dropdown.Item>
+          <Dropdown.Item as="button" onClick={logout}>{t("signOut")}</Dropdown.Item>
         </Dropdown>
       </div>
     </Navbar>

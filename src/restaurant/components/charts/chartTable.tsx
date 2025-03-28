@@ -1,5 +1,6 @@
 import React from "react";
 import ApexCharts from "react-apexcharts";
+import { useTranslation } from "react-i18next";
 
 interface ChartTableProps {
   datalist: {
@@ -11,18 +12,19 @@ interface ChartTableProps {
 }
 
 const ChartTable: React.FC<ChartTableProps> = ({ datalist }) => {
+  const { t } = useTranslation();
   const options: ApexCharts.ApexOptions = {
     series: [
       {
-        name: "ໂຕະຈອງ",
+        name:t("reserved"),
         data: datalist.map((data) => parseInt(data.reserved_count, 10)), // Use reserved_count data
       },
       {
-        name: "ໂຕະບໍ່ວາງ",
+        name: t("busy"),
         data: datalist.map((data) => parseInt(data.busy_count, 10)), // Use busy_count data
       },
       {
-        name: "ໂຕະວາງ",
+        name: t("none"),
         data: datalist.map((data) => parseInt(data.empty_count, 10)), // Use empty_count data
       },
     ],
@@ -65,7 +67,7 @@ const ChartTable: React.FC<ChartTableProps> = ({ datalist }) => {
       },
     },
     noData: {
-      text: 'ຍັງບໍ່ມີລາຍການ',
+      text: t("noIem"),
       align: 'center',
       verticalAlign: 'middle',
       style: {
@@ -77,7 +79,7 @@ const ChartTable: React.FC<ChartTableProps> = ({ datalist }) => {
 
   return (
     <div>
-      <h1 className='text-[16px] font-bold pl-5'>ກຣາບໂຕະ</h1>
+      <h1 className='text-[16px] font-bold pl-5'>{t("tableGrab")}</h1>
       <ApexCharts
         options={options}
         series={options.series} // Use the updated series from options

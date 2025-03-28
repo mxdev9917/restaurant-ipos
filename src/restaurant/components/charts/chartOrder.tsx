@@ -1,19 +1,21 @@
 import React from "react";
 import ApexCharts from "react-apexcharts";
+import { useTranslation } from "react-i18next";
 
 interface ChartOrderProps {
   datalist: { hour: string; paid_count: string; unpaid_count: string }[];
 }
 
 const ChartOrder: React.FC<ChartOrderProps> = ({ datalist }) => {
+   const { t } = useTranslation();
   const options: ApexCharts.ApexOptions = {
     series: [
       {
-        name: "ຊຳລະແລ້ວ",
+        name: t("paid"),
         data: datalist.map((data) => parseInt(data.paid_count, 10)), // Convert the paid_count to integers
       },
       {
-        name: "ຍັງບໍ່ທັນຊຳລະ",
+        name: t("unpaid"),
         data: datalist.map((data) => parseInt(data.unpaid_count, 10)), // Convert the unpaid_count to integers
       },
     ],
@@ -53,7 +55,7 @@ const ChartOrder: React.FC<ChartOrderProps> = ({ datalist }) => {
       },
     },
     noData: {
-      text: 'ຍັງບໍ່ມີລາຍການ',
+      text: t("noItem"),
       align: 'center',
       verticalAlign: 'middle',
       style: {
@@ -65,7 +67,7 @@ const ChartOrder: React.FC<ChartOrderProps> = ({ datalist }) => {
 
   return (
     <div>
-      <h1 className='text-[16px] font-bold pl-5'>ກຣາບອໍເດີ</h1>
+      <h1 className='text-[16px] font-bold pl-5'>{t("orderGrab")}</h1>
       <ApexCharts
         options={options}
         series={options.series} // Use the updated series from options

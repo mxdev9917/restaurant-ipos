@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { createMenuItemService } from "../../../services/sale/create-menu-item";
 import { alertSuccessV3 } from "../../../utils/alert";
 import LoadingSpinner from "../../../utils/LoadingSpinner";

@@ -2,15 +2,16 @@ import { Sidebar } from "flowbite-react";
 import { HiOutlineMinusSm, HiOutlinePlusSm, HiOutlineOfficeBuilding, HiCog, HiCubeTransparent, HiClipboardList } from "react-icons/hi"; //HiOutlineBookOpen
 import { FaKitchenSet } from "react-icons/fa6";
 import { TbReportAnalytics } from "react-icons/tb";
-import {  FaChartBar } from "react-icons/fa"; //FaFire
+import { FaChartBar } from "react-icons/fa"; //FaFire
 import { FaUsersGear } from "react-icons/fa6";
 import { twMerge } from "tailwind-merge";
 import Nav from "./nav";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function Sidebar_Nav() {
   const [translate, setTranslate] = useState(true);
-  
+  const { t } = useTranslation();
   function isCheckMenu() {
     setTranslate(!translate);
   }
@@ -25,29 +26,29 @@ function Sidebar_Nav() {
               Dashboard
             </Sidebar.Item>
             <Sidebar.Item href="#manageuser" icon={FaUsersGear}>
-              ພະນັກງານ
+              {t("staff")}
             </Sidebar.Item>
             <Sidebar.Item href="#sale" icon={HiClipboardList}>
-              ຂາຍ
+              {t("sale")}
             </Sidebar.Item>
             <Sidebar.Item href="#manage/kitchen" icon={FaKitchenSet}>
-              ຄົວ
+              {t("kichen")}
             </Sidebar.Item>
             <Sidebar.Collapse
               icon={HiOutlineOfficeBuilding}
-              label="ຮ້ານ"
+              label={t("restaurant")}
               renderChevronIcon={(theme, open) => {
                 const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm;
                 return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? "on" : "off"])} />;
               }}
             >
-              <Sidebar.Item href="#managefood">ເມນູອາຫານ</Sidebar.Item>
-              <Sidebar.Item href="#managecategory">ປະເພດເມນູ</Sidebar.Item>
-              <Sidebar.Item href="#managetable">ໂຕະ</Sidebar.Item>
+              <Sidebar.Item href="#managefood">{t("menu")}</Sidebar.Item>
+              <Sidebar.Item href="#managecategory">{t("category")}</Sidebar.Item>
+              <Sidebar.Item href="#managetable"> {t("table")}</Sidebar.Item>
             </Sidebar.Collapse>
             <Sidebar.Collapse
               icon={TbReportAnalytics}
-              label="ລາຍງານ"
+              label={t("report")}
               renderChevronIcon={(theme, open) => {
                 const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm;
                 return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? "on" : "off"])} />;
@@ -57,15 +58,15 @@ function Sidebar_Nav() {
             </Sidebar.Collapse>
             <Sidebar.Collapse
               icon={HiCog}
-              label="ຕັ້ງຄ່າ"
+              label={t("setting")}
               renderChevronIcon={(theme, open) => {
                 const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm;
                 return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? "on" : "off"])} />;
               }}
             >
-              <Sidebar.Item href="#setting/bill">ຕັ້ງຄ່າບີນ</Sidebar.Item>
-              <Sidebar.Item href="#setting/printer">ຕັ້ງຄ່າປີ້ນເຕີ</Sidebar.Item>
-              <Sidebar.Item href="#/setting/rate">ຕັ້ງຄ່າອັດຕາແລກປ່ຽນ</Sidebar.Item>
+              <Sidebar.Item href="#setting/bill">{t("bilSetting")}</Sidebar.Item>
+              <Sidebar.Item href="#setting/printer">{t("printerSetting")}</Sidebar.Item>
+              <Sidebar.Item href="#/setting/rate">{t("rateSetting")}</Sidebar.Item>
             </Sidebar.Collapse>
           </Sidebar.ItemGroup>
           <Sidebar.ItemGroup className="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 ">
@@ -76,7 +77,7 @@ function Sidebar_Nav() {
               ຄູ່ມືການໃຊ້ງານ
             </Sidebar.Item> */}
             <Sidebar.Item href="#help" icon={HiCubeTransparent}>
-              Help
+              {t("help")}
             </Sidebar.Item>
           </Sidebar.ItemGroup>
         </Sidebar.Items>

@@ -1,18 +1,20 @@
+import { useTranslation } from "react-i18next";
 
 interface TopTableProductProps {
     datalist: { food_ID: string, food_name: string, category: string, total_quantity: string, total_price: string }[]; // Assuming datalist is an array of objects
 }
 
 const TopTableProduct: React.FC<TopTableProductProps> = ({ datalist }) => {
+    const { t } = useTranslation();
     return <>
         <div className=" relative overflow-auto md:overflow-hidden   md:h-[76vh] ">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-100 sticky top-0 z-10">
                     <tr className="flex items-center justify-between w-full h-14 text-left bg-gray-100 text-gray-800 font-semibold uppercase">
-                        <th className="px-6 py-3 flex justify-start min-w-[10rem] w-20">ເມນູອາຫານ</th>
-                        <th className="px-6 py-3 flex justify-start min-w-[7rem] w-20">ປະເພດອາຫານ</th>
-                        <th className="px-6 py-3 flex justify-start min-w-[2rem] w-10">ຈຳນວນ</th>
-                        <th className="px-6 py-3 flex justify-start min-w-[7rem] w-20">ລາຄາລວມ</th>
+                        <th className="px-6 py-3 flex justify-start min-w-[10rem] w-20">{t("foodList")}</th>
+                        <th className="px-6 py-3 flex justify-start min-w-[7rem] w-20">{t("category")}</th>
+                        <th className="px-6 py-3 flex justify-start min-w-[2rem] w-10">{t("qty")}</th>
+                        <th className="px-6 py-3 flex justify-start min-w-[7rem] w-20">{t("status")}</th>
                         
                     </tr>
                 </thead>

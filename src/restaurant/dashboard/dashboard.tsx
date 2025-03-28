@@ -3,7 +3,6 @@ import ChartsMenuItem from "../components/charts/chartsMenuItem";
 import ChartTopPro from "../components/charts/charttoppro";
 import ChartTable from "../components/charts/chartTable";
 import ChartOrder from "../components/charts/chartOrder";
-import Datepicker from "react-tailwindcss-datepicker";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/context";
 import { DashboardService } from "../../services/dashboard/dashboardService";
@@ -11,10 +10,12 @@ import TopTableProduct from "./components/topTableProduct";
 import DonutChartOrder from "../components/charts/donutChartOrder";
 
 import { HiMenu } from "react-icons/hi";
+import { useTranslation } from "react-i18next";
 
 function Dashboardv() {
+  const { t } = useTranslation();
   const NEXT_MONTH = new Date();
-  const { data,token } = useAuth();
+  const { data, token } = useAuth();
   const [topProductItem, setTopProductItem] = useState<any[]>([]);
   const [timeMenuItem, setTimeMenuItem] = useState<any[]>([]);
   const [timeOder, setTimeOrder] = useState<any[]>([]);
@@ -27,23 +28,20 @@ function Dashboardv() {
   const [totalOrder, setTotalOrder] = useState("0");
   const [totalOrderPaid, setTotalOrderPaid] = useState("0");
   const [totalOrderUnpaid, setTotalOrderUnpaid] = useState("0");
-  const[totalCooking,setTotalCooking]=useState("0");
-  const[totalPending,setTotalPending]=useState("0");
-  const[totalCompleted,setTotalCompleted]=useState("0");
-  const[totalCancelled,setTotalCancelled]=useState("0");
-  const[tatolMenuItem,setTotalMenuItem]=useState("0");
+  const [totalCooking, setTotalCooking] = useState("0");
+  const [totalPending, setTotalPending] = useState("0");
+  const [totalCompleted, setTotalCompleted] = useState("0");
+  const [totalCancelled, setTotalCancelled] = useState("0");
+  const [tatolMenuItem, setTotalMenuItem] = useState("0");
 
   NEXT_MONTH.setMonth(NEXT_MONTH.getMonth() + 1);
-  const [value, setValue] = useState({
-    startDate: new Date(),
-    endDate: NEXT_MONTH,
-  });
+
 
   const fetchData = async () => {
     let resId = String(data.restaurant_ID);
     const today = new Date().toISOString().split("T")[0];
     try {
-      const res = await DashboardService.getDashboard(resId, today, token || ""); 
+      const res = await DashboardService.getDashboard(resId, today, token || "");
       if (res.status === "200") {
         setTopProductItem(res.topProduct || []);
         setTimeMenuItem(res.timeMenuItem || []);
@@ -51,10 +49,10 @@ function Dashboardv() {
         setTimeOrder(res.timeSale || 0);
         setTableStatus(res.tableStatus || []);
         setTotalMenuItem(String(res.menuItem.qty));
-        setTotalCooking(String(res.menuItem.cooking_qty||0));
-        setTotalPending(String(res.menuItem.pending_qty||0));
-        setTotalCompleted(String(res.menuItem.completed_qty||0));
-        setTotalCancelled(String(res.menuItem.cancelled_qty||0));
+        setTotalCooking(String(res.menuItem.cooking_qty || 0));
+        setTotalPending(String(res.menuItem.pending_qty || 0));
+        setTotalCompleted(String(res.menuItem.completed_qty || 0));
+        setTotalCancelled(String(res.menuItem.cancelled_qty || 0));
         setTotalOrderPaid(String(res.orderStatus[0].paid_count || 0));
         setTotalOrderUnpaid(String(res.orderStatus[0]?.unpaid_count || 0));
         if (res.tableStatus?.length > 0) {
@@ -94,7 +92,7 @@ function Dashboardv() {
           <div className="w-full h-40 rounded-md shadow-xl p-2 bg-slate-50">
             <p className="flex items-center gap-2">
               <HiMenu className="text-2xl" />
-              <span className="font-semibold text-base">ລາຍການອາຫານ</span>
+              <span className="font-semibold text-base">{t("foodList")}</span>
             </p>
             <div className="flex items-center mt-3">
               <div className="flex justify-center  w-28 border-r-2 border-gray-500">
@@ -104,40 +102,40 @@ function Dashboardv() {
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-28">
                     <div className="w-3 h-3 bg-orange-500 rounded-full" />
-                    <p className="font-medium tes">ລໍຖ້າ:</p>
+                    <p className="font-medium tes">{t("pending")}:</p>
                   </div>
-                  {totalPending} ເມນູ
+                  {totalPending}
                 </div>
-               
+
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-28">
                     <div className="w-3 h-3 bg-orange-500 rounded-full" />
-                    <p className="font-medium tes">ກຳລັງເຮັດ:</p>
+                    <p className="font-medium tes">{t("cooking")}:</p>
                   </div>
-                  {totalCooking} ເມນູ
+                  {totalCooking}
                 </div>
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-28">
                     <div className="w-3 h-3 bg-red-600 rounded-full" />
-                    <p className="font-medium tes">ຍົກເລີກ:</p>
+                    <p className="font-medium tes">{t("cancelled")}:</p>
                   </div>
-                  {totalCancelled} ເມນູ
+                  {totalCancelled}
                 </div>
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-28">
                     <div className="w-3 h-3 bg-green-500 rounded-full" />
-                    <p className="font-medium">ເຮັດແລ້ວ:</p>
+                    <p className="font-medium">{t("completed")}:</p>
                   </div>
-                  {totalCompleted} ເມນູ
+                  {totalCompleted} 
                 </div>
-               
+
               </div>
             </div>
           </div>
           <div className="w-full h-40 rounded-md shadow-xl p-2 bg-slate-50">
             <p className="flex items-center gap-2">
               <HiMenu className="text-2xl" />
-              <span className="font-semibold text-base">ລາຍການອໍເດີ</span>
+              <span className="font-semibold text-base">{t("orderList")}</span>
             </p>
             <div className="flex items-center mt-3">
               <div className="flex justify-center  w-28 border-r-2 border-gray-500">
@@ -147,49 +145,49 @@ function Dashboardv() {
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-28">
                     <div className="w-3 h-3 bg-orange-500 rounded-full" />
-                    <p className="font-medium">ຍັງບໍ່ຊຳລະເງີນ:</p>
+                    <p className="font-medium">{t("unpaid")}:</p>
                   </div>
-                  {totalOrderUnpaid} ອໍເດີ
+                  {totalOrderUnpaid} 
                 </div>
                 <div className="flex justify-around gap-2 w-full font-medium">
                   <div className="flex items-center justify-start gap-2 w-28">
                     <div className="w-3 h-3 bg-green-500 rounded-full" />
-                    <p className="font-medium">ຊຳລະເງີນແລ້ວ:</p>
+                    <p className="font-medium">{t("paid")}:</p>
                   </div>
-                  {totalOrderPaid} ອໍເດີ
+                  {totalOrderPaid} 
                 </div>
-               
+
               </div>
             </div>
           </div>
           <div className="flex flex-col w-full h-40 rounded-md shadow-xl p-2 bg-slate-50">
             <p className="flex items-center gap-2">
               <HiMenu className="text-2xl" />
-              <span className="font-semibold text-base">ສະຖານະໂຕະ</span>
+              <span className="font-semibold text-base">{t("tableStatus")}</span>
             </p>
             <div className="flex items-center">
-            <DonutChartOrder datalist={tableStatus} />
+              <DonutChartOrder datalist={tableStatus} />
               <div className="flex flex-col w-full pb-5 ">
                 <div className="flex justify-around gap-2 w-full font-medium">
-                  <div className="flex items-center justify-start gap-2 w-20">
+                  <div className="flex items-center justify-start gap-2 w-24">
                     <div className="w-3 h-3 bg-yellow-300 rounded-full" />
-                    <p className="font-medium">ໂຕະຈອງ:</p>
+                    <p className="font-medium">{t("reserved")}:</p>
                   </div>
-                  {tablereserved} ໂຕະ
+                  {tablereserved} 
                 </div>
                 <div className="flex justify-around gap-2 w-full font-medium">
-                  <div className="flex items-center justify-start gap-2 w-20">
+                  <div className="flex items-center justify-start gap-2 w-24">
                     <div className="w-3 h-3 bg-red-600 rounded-full" />
-                    <p className="font-medium">ໂຕະບໍ່ວາງ:</p>
+                    <p className="font-medium">{t("busy")}:</p>
                   </div>
-                  {tablebusy} ໂຕະ
+                  {tablebusy}
                 </div>
                 <div className="flex justify-around gap-2 w-full font-medium">
-                  <div className="flex items-center justify-start gap-2 w-20">
+                  <div className="flex items-center justify-start gap-2 w-24">
                     <div className="w-3 h-3 bg-green-500 rounded-full" />
-                    <p className="font-medium">ໂຕະວາງ:</p>
+                    <p className="font-medium">{t("none")}:</p>
                   </div>
-                  {tableEmpty} ໂຕະ
+                  {tableEmpty} 
                 </div>
               </div>
             </div>
@@ -202,7 +200,7 @@ function Dashboardv() {
 
           </div>
           <div className="bg-white 2xl:w-[800px] w-full p-4">
-          <ChartTopPro datalist={topProductItem} />
+            <ChartTopPro datalist={topProductItem} />
           </div>
         </div>
         <div className="flex flex-col 2xl:flex-row gap-3 m-3">

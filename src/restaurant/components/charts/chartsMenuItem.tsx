@@ -1,6 +1,7 @@
 import React from 'react';
 import ApexCharts from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
+import { useTranslation } from 'react-i18next';
 
 interface ChartsMenuItemProps {
   datalist: {
@@ -14,22 +15,23 @@ interface ChartsMenuItemProps {
 
 const ChartsMenuItem: React.FC<ChartsMenuItemProps> = ({ datalist }) => {
 
+  const { t } = useTranslation();
 
   const series = [
     {
-      name: 'ລໍຖ້າ', // Pending
+      name: t("pending"), // Pending
       data: datalist.map(item => parseInt(item.pending_qty, 10)),
     },
     {
-      name: 'ສຳເລັດ', // Completed
+      name: t("completed"), // Completed
       data: datalist.map(item => parseInt(item.completed_qty, 10)),
     },
     {
-      name: 'ຍົກເລີກ', // Cancelled
+      name: t("cancelled"), // Cancelled
       data: datalist.map(item => parseInt(item.cancelled_qty, 10)),
     },
     {
-      name: 'ກຳລັງເຮັດ', // Cooking
+      name: t("cooking"), // Cooking
       data: datalist.map(item => parseInt(item.cooking_qty, 10)),
     },
   ];
@@ -61,12 +63,12 @@ const ChartsMenuItem: React.FC<ChartsMenuItemProps> = ({ datalist }) => {
     tooltip: {
       x: { format: 'HH:mm' },
       y: {
-        formatter: (value) => `${value} ລາຍການ`,
+        formatter: (value) => `${value} ${t("list")}`,
       },
     },
     legend: { position: 'bottom' },
     noData: {
-      text: 'ຍັງບໍ່ມີລາຍການ',
+      text: t("noItem"),
       align: 'center',
       verticalAlign: 'middle',
       style: { fontSize: '16px', color: '#888' },
@@ -75,7 +77,7 @@ const ChartsMenuItem: React.FC<ChartsMenuItemProps> = ({ datalist }) => {
 
   return (
     <div>
-      <h1 className="text-[16px] font-bold mb-3">ກຣາບສັ່ງອາຫານ</h1>
+      <h1 className="text-[16px] font-bold mb-3">{t("foodGrab")}</h1>
       <ApexCharts options={options} series={series} type="area" height={350} />
     </div>
   );
