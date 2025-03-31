@@ -19,7 +19,7 @@ import { generalErrors } from "../utils/error";
 import { useAuth } from "../context/context";
 import { HiPencilAlt, HiOutlineTrash, HiOutlineBan, HiCheck } from "react-icons/hi"; //HiCheck 
 import { MdLockReset } from "react-icons/md";
-
+import { useTranslation } from "react-i18next";
 function ManageUser() {
   const [isCheckModel, setIsCheckModel] = useState(false);
   const [isCheckEven, setIsEven] = useState(true);
@@ -32,7 +32,7 @@ function ManageUser() {
   const [itemsPerPage, setItemsPerPage] = useState(10); // Items per page
   const [currentPage, setCurrentPage] = useState(1);
   const { data,token } = useAuth();
-
+  const { t } = useTranslation();
   function handlItemsPerPage(limit: number) {
     setItemsPerPage(limit)
     console.log(limit);
@@ -47,7 +47,7 @@ function ManageUser() {
     } else if (status === "active") {
       newStatus = "locked"
     } else {
-      alertError("ເກີດຂໍ້ຜິດພາດ ກະລຸນາລອງໄໝ່ອີກຄັ້ງ", "error");
+      alertError((t("errorOccurred")), "error");
       return
     }
 
@@ -56,7 +56,7 @@ function ManageUser() {
       const res = await PatchStatusbyIdService.patchStatus(userId, newStatus,token||"");
       if (res.status == 200) {
         console.log(res.status);
-        alertSuccessV3("ປ່ຽນລະຫັດຜ່ານສຳເລັດ", 'success');
+        alertSuccessV3(t("updateStatusSuccess"), 'success');
       }
     } catch (error: any) {
       console.error(error);
@@ -64,30 +64,26 @@ function ManageUser() {
     } finally {
       setLoadingMessage(false);
     }
-
-
-
-
   }
   // Reset password logic
   const handleResetpassword = async (userId: any) => {
-    setLoadingMessageTitle("ກຳລັງປ່ຽນລະຫັດຜ່ານ");
+    setLoadingMessageTitle(t("ChangePasswording"));
     setLoadingMessage(true);
     const res = await ResetPasswordService.patchReset(userId,token||"");
     if (res.status == 200) {
       console.log(res.status);
-      alertSuccessV3("ປ່ຽນລະຫັດຜ່ານສຳເລັດ", 'success');
+      alertSuccessV3((t("ChangePasswordSuccess")), 'success');
     }
     setLoadingMessage(false);
   };
 
   const handleDeleteUser = async (userId: any) => {
     try {
-      setLoadingMessageTitle("ກຳລັງລົບ");
+      setLoadingMessageTitle(t("deleting"));
       setLoadingMessage(true);
       const res = await DeleteUserService.DeleteUser(userId,token||"");
       if (res.status == 200) {
-        alertSuccessV3("ລົບຢູເຊີ້ສຳເລັດ", 'success');
+        alertSuccessV3((t("deleteSucces")), 'success');
       }
     } catch (error: any) {
       console.error(error);
@@ -140,7 +136,7 @@ function ManageUser() {
             <div className="flex flex-col w-fit h-fit pb-2 pl-2">
               <div className="flex text-gray-500">
                 <Link className="text-orange-500 text-xs md:text-sm" to={""}>
-                  ຈັດການຢູເຊີ້
+                  {t("manageStaff")}
                 </Link>
               </div>
               <div className="flex">
@@ -148,7 +144,7 @@ function ManageUser() {
                   <input
                     className="w-48 md:w-64 h-8 text-xs md:text-sm rounded-full border-gray-300 focus:outline-transparent focus:ring-0"
                     type="text"
-                    placeholder="ຄົ້ນຫາ..."
+                    placeholder={`${t("search")}...`}
                   />
                   <button className="absolute right-3 top-1.5 flex">
                     <svg
@@ -177,7 +173,7 @@ function ManageUser() {
                 onClick={() => handleModel("add", "0")}
                 className="bg-green-500 hover:bg-green-600 py-2 px-4 rounded-full text-white text-xs md:text-sm"
               >
-                ເພີ່ມ
+                {t("add")}
               </button>
             </div>
           </div>
@@ -185,12 +181,12 @@ function ManageUser() {
             <table className="w-full text-sm text-left rtl:text-right text-gray-500">
               <thead className="text-xs text-gray-700 uppercase bg-gray-100 sticky top-0 z-10">
                 <tr className="flex items-center justify-between w-full h-14 text-left bg-gray-100 text-gray-800 font-semibold uppercase">
-                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">Name</th>
-                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">User name</th>
-                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">Position</th>
-                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">Status</th>
-                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">Date</th>
-                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">Action</th>
+                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">{t("name")}</th>
+                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">{t("user")}</th>
+                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">{t("role")}</th>
+                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">{t("status")}</th>
+                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">{t("date")}</th>
+                  <th className="px-6 py-3 flex justify-start min-w-[10rem] w-40">{t("menus")}</th>
                 </tr>
               </thead>
             </table>
@@ -200,7 +196,7 @@ function ManageUser() {
                   {loading ? (
                     <tr>
                       <td colSpan={6} className="h-40 text-center text-gray-500">
-                        <Loading text="ດາວໂຫຼດຂໍ້ມູນ" />
+                        <Loading text={t("download")} />
                       </td>
                     </tr>
                   ) : getDt.length > 0 ? (
@@ -241,41 +237,41 @@ function ManageUser() {
                         <td className="px-6 py-3 flex justify-start items-end min-w-[10rem] w-40">
                           {item.created_at}</td>
                         <td className=" py-3 flex justify-center items-center min-w-[10rem] w-40">
-                          <Dropdown label="" dismissOnClick={false} renderTrigger={() => <span className="flex items-center">ເມນູ <HiChevronDown /></span>}>
+                          <Dropdown label="" dismissOnClick={false} renderTrigger={() => <span className="flex items-center">{t("menus")} <HiChevronDown /></span>}>
                             <Dropdown.Item
                               onClick={() =>
                                 alertconfirm(
                                   () => handleResetpassword(item.user_ID),
-                                  `ຕ້ອງການປ່ຽນລະຫັດຜ່ານຢູເຊີ ${item.user} ?`,
+                                  `${t("changePassThis")} ${item.user} ?`,
                                   "question"
                                 )
                               }
-                            ><MdLockReset className='text-lg text-gray-400 mr-2' />ປ່ຽນລະຫັດ</Dropdown.Item>
+                            ><MdLockReset className='text-lg text-gray-400 mr-2' />{t("ChangePassword")}</Dropdown.Item>
                             <Dropdown.Item
                               onClick={() =>
                                 alertconfirm(
                                   () => handleUpdateStatus(item.user_ID, item.user_status),
-                                  `ຕ້ອງການປ່ຽນລະຫັດຜ່ານຢູເຊີ ${item.user} ?`,
+                                  `${t("updateStatusThis")} ${item.user} ?`,
                                   "question"
                                 )
                               }
                             > {
                                 item.user_status === "Locked" ? (<span className="flex ">
-                                  <HiCheck className='text-lg text-gray-400 mr-2' />ເປີດໃຊ້ງານ</span>) : (<span className="flex ">
-                                    <HiOutlineBan className='text-lg text-gray-400 mr-2' />ປິດໃຊ້ງານ</span>)
+                                  <HiCheck className='text-lg text-gray-400 mr-2' />{t("enable")}</span>) : (<span className="flex ">
+                                    <HiOutlineBan className='text-lg text-gray-400 mr-2' />{t("disable")}</span>)
                               }</Dropdown.Item>
                             <Dropdown.Item
                               onClick={() => handleModel("edit", item.user_ID)}
-                            ><HiPencilAlt className='text-lg text-gray-400 mr-2' />ແກ້ໄຂຂໍ້ມູນ</Dropdown.Item>
+                            ><HiPencilAlt className='text-lg text-gray-400 mr-2' />{t("edit")}</Dropdown.Item>
                             <Dropdown.Item
                               onClick={() =>
                                 alertconfirm(
                                   () => handleDeleteUser(item.user_ID),
-                                  `ຕ້ອງການລົບ ${item.user} ?`,
+                                  `${t("delete")} ${item.user} ?`,
                                   "question"
                                 )
                               }
-                            ><HiOutlineTrash className='text-lg text-gray-400 mr-2' />ລົບຜູ້ໃຊ້</Dropdown.Item>
+                            ><HiOutlineTrash className='text-lg text-gray-400 mr-2' />{t("delete")}</Dropdown.Item>
                           </Dropdown>
 
                         </td>
@@ -284,7 +280,7 @@ function ManageUser() {
                   ) : (
                     <tr>
                       <td colSpan={6} className="h-40 text-center text-gray-500">
-                        No data available.
+                       {t("noData")}
                       </td>
                     </tr>
                   )}

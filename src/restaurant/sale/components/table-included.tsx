@@ -6,6 +6,7 @@ import { alertSuccess } from "../../../utils/alert";
 import { useNavigate } from "react-router-dom";
 import LoadingMessage from "../../../utils/loadingMessage";
 import { useAuth } from "../../../context/context";
+import { useTranslation } from "react-i18next";
 
 interface TableincludedProps {
     handleClickCloseModle: () => void;
@@ -15,6 +16,7 @@ interface TableincludedProps {
 
 const Tableincluded: React.FC<TableincludedProps> = ({ handleClickCloseModle, table_ID }) => {
     const [items, setItems] = useState<any[]>([]);
+     const { t } = useTranslation();
     const navigate = useNavigate();
     const [loadingMessage, setLoadingMessage] = useState(false);
     const [loadingMessageText, setLoadingMessageTesxt] = useState("");
@@ -27,7 +29,7 @@ const Tableincluded: React.FC<TableincludedProps> = ({ handleClickCloseModle, ta
             let newTableIncluded = String(tableIncluded)
             const res = await TableIncludedService.TableIncluded(newTable_ID, newTableIncluded, token || "")
             if (res.status === "200") {
-                alertSuccess(navigate, '/sale', 'ລວມໂຕະສຳເລັດ', 'success');
+                alertSuccess(navigate, '/sale', (t("included")), 'success');
             }
         } catch (error) {
             createIncTableErrors(error)
@@ -54,13 +56,13 @@ const Tableincluded: React.FC<TableincludedProps> = ({ handleClickCloseModle, ta
             {loadingMessage && <LoadingMessage text={loadingMessageText} />}
             <div className="flex justify-between items-center border-b-2 w-full">
                 <p className="text-2xl pb-2 text-orange-500 font-semibold">
-                    ເລືອກໂຕະ
+                   {t("Select")} {t("Table")}
                 </p>
                 <button
                     onClick={handleClickCloseModle}
                     className=" text-red-500"
                 >
-                    ຍົກເລິກ
+                    {t("cancel")}
                 </button>
             </div>
             <div className="h-96 ">
@@ -79,7 +81,7 @@ const Tableincluded: React.FC<TableincludedProps> = ({ handleClickCloseModle, ta
                         ))
                     ) : (
                         <span className="flex justify-center items-center w-full h-full col-span-4">
-                            No data available.
+                           {t("noData")}
                         </span>
                     )}
                 </div>

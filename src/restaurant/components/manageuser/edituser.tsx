@@ -7,29 +7,30 @@ import { generalErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { alertSuccessV3 } from "../../../utils/alert";
 import { useAuth } from "../../../context/context";
+import { useTranslation } from "react-i18next";
 interface EditUserProps {
-    handleModel: (action: string,userId:string) => void;
-    user_id: string; 
+    handleModel: (action: string, userId: string) => void;
+    user_id: string;
 
 }
 const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
     const handleClick = (action: string) => {
-        handleModel(action,user_id); // Call the parent function
+        handleModel(action, user_id); // Call the parent function
     };
-
+    const { t } = useTranslation();
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [role, setRole] = useState("")
     const [loading, setLoading] = useState(false);
-        const { token } = useAuth();
+    const { token } = useAuth();
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true)
             try {
-                const res = await GetUserByIdService.GetUserById(user_id,token||"");
+                const res = await GetUserByIdService.GetUserById(user_id, token || "");
                 const userData = res.data[0];
-              
+
                 setName(userData.user_name || ""); // Populate the `name` state
                 setPhone(userData.user_phone || ""); // Populate the `phone` state
                 setRole(userData.user_role || ""); // Populate the `role` state
@@ -43,7 +44,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
         fetchData();
     }, [user_id]);
 
-  
+
     const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setLoading(true)
@@ -55,10 +56,10 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                 phone,
                 role,
                 path_img,
-                token||""
+                token || ""
             );
             if (res.status == "200") {
-                alertSuccessV3("ແກ້ໄຂສຳເລັດ", 'success');
+                alertSuccessV3((t("updateUserSuccess")), 'success');
             }
         } catch (error) {
             generalErrors(error);
@@ -67,7 +68,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
         }
     }
 
-   
+
     if (loading) {
         return <div className="flex flex-col  w-96 h-[70%] rounded-sm bg-white p-3">
             <button
@@ -102,7 +103,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
         <div className="flex flex-col w-96 h-fit bg-white rounded-lg shadow-xl">
             <div className="flex justify-between items-center px-5 w-full h-16 border-b-2">
                 <p className="text-xl font-semibold text-orange-500">
-                    ແກ້ໄຂພະນັກງານ
+                    {t("editUser")}
                 </p>
                 <button
                     onClick={() => handleClick("close")}
@@ -135,7 +136,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                             className="block mb-2  font-medium text-gray-900 text-xs md:text-sm"
                         >
                             {" "}
-                            Name <span className="text-red-600"> *</span>
+                            {t("name")} <span className="text-red-600"> *</span>
                         </label>
                         <input
                             type="text"
@@ -152,7 +153,7 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                             htmlFor="phone"
                             className="block mb-2 text-xs md:text-sm font-medium text-gray-900 "
                         >
-                            Phone<span className="text-red-600"> *</span>
+                            {t("phone")}<span className="text-red-600"> *</span>
                         </label>
                         <input
                             type="tel"
@@ -170,19 +171,21 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                                 htmlFor="category"
                                 className="block mb-2 text-xs md:text-sm font-medium text-gray-900 "
                             >
-                                Role<span className="text-red-600"> *</span>
+                                {t("role")}<span className="text-red-600"> *</span>
                             </label>
                             <select
                                 id="category"
                                 onChange={(e) => setRole(e.target.value)}
                                 value={role}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-orange-500 focus:border-0 block w-full p-2.5"
-                            > 
-                                <option value="admin">ແອັດມີນ</option>
-                                <option value="user">ເສີບ</option>
+                            >
+                                <option className="" value="0" disabled selected>--{t("select")}--</option>
+                                <option value="admin">{t("admin")}</option>
+                                <option value="user">{t("staff")}</option>
+                                <option value="chef">{t("chef")}</option>
                             </select>
                         </div>
-                       
+
                         <div className="col-span-2 ">
                             <label
                                 htmlFor="dropzone-file"
@@ -205,8 +208,8 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                                         />
                                     </svg>
                                     <p className="mb-2  text-gray-500 text-xs md:text-sm">
-                                        <span className="font-semibold">Click to upload</span>
-                                        or drag and drop
+                                        <span className="font-semibold">{t("clickUpload")} </span>
+                                        {t("dragDrop")}
                                     </p>
                                     <p className="text-xs text-gray-500 ">
                                         SVG, JPG (MAX. 204x240px)
@@ -222,11 +225,12 @@ const EditUser: React.FC<EditUserProps> = ({ handleModel, user_id }) => {
                         className="text-white inline-flex items-end  justify-center gap-2 bg-green-700 hover:bg-green-800 focus:ring-1 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs md:text-sm px-5 py-2.5 mb-2 text-center "
                     >
                         <FaEdit className="text-white text-xl" />
-                        {loading ?
-                            <LoadingSpinner text="ແກ້ໄຂພະນັກງານ" />
-                            :
-                            "ແກ້ໄຂພະນັກງານ"
-                        }
+                        {loading ? (
+                            <LoadingSpinner text={t("editUser")} />
+                        ) : (
+                            t("editUser")
+                        )}
+
                     </button>
                 </form>
             </div>

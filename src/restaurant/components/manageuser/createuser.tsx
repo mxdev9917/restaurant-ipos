@@ -1,11 +1,12 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PostCHUserService } from "../../../services/users/check-user";
 import { PostUserService } from "../../../services/users/create-user";
 import { createUserErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { alertSuccessV3 } from "../../../utils/alert";
 import { useAuth } from "../../../context/context";
+import { useTranslation } from "react-i18next";
 interface CreateUserProps {
     handleModel: (action: string, userId: string) => void;
 }
@@ -18,7 +19,7 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
 
     const [passwordType, setPasswordType] = useState(false);
     const [isChecked, setIsChecked] = useState(true);
-    const [isCheckedTitle, setIsCheckedTitle] = useState("ປີດໃຊ້ງານ");
+    const [isCheckedTitle, setIsCheckedTitle] = useState("");
     const [name, setName] = useState("");
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
@@ -27,7 +28,8 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
     const [pckColor, setPckColor] = useState("ring-orange-500");
     const [ischeckPCK, setIscheckPCK] = useState(false)
     const [loading, setLoading] = useState(false);
-     const { data,token } = useAuth();
+    const { data, token } = useAuth();
+    const { t } = useTranslation();
     const formSumit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setLoading(true)
@@ -42,12 +44,12 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
                 password,
                 role,
                 path_img,
-                token||""
+                token || ""
             );
             if (res.status == 200) {
                 console.log(res.status);
 
-                alertSuccessV3("ສ້າງຢູເຊີ້ສຳເລັດ", 'success');
+                alertSuccessV3((t("createUserSuccess")), 'success');
             }
         } catch (error) {
 
@@ -97,17 +99,19 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
     const handleChange = () => {
         setIsChecked(!isChecked); // Toggle checkbox state
         if (isChecked != true) {
-            setIsCheckedTitle("ປິດໃຊ້ງານ");
+            setIsCheckedTitle(t("disable"));
         } else {
-            setIsCheckedTitle("ເປີດໃຊ້ງານ");
+            setIsCheckedTitle(t("enable"));
         }
     };
-
+    useEffect(() => {
+        setIsCheckedTitle(t("disable"))
+    }, [])
     return (
         <div className="flex flex-col w-96 h-fit bg-white rounded-lg shadow-xl">
             <div className="flex justify-between items-center px-5 w-full h-16 border-b-2">
                 <p className="text-xl font-semibold text-orange-500">
-                    ເພີ່ມພະນັກງານ
+                    {t("addStaff")}
                 </p>
                 <button
                     onClick={() => handleClick("close")}
@@ -140,7 +144,7 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
                             className="block mb-2  font-medium text-gray-900 text-xs md:text-sm"
                         >
                             {" "}
-                            Name <span className="text-red-600"> *</span>
+                            {t("name")} <span className="text-red-600"> *</span>
                         </label>
                         <input
                             type="text"
@@ -156,7 +160,7 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
                             htmlFor="user"
                             className="block mb-2 text-xs md:text-sm font-medium text-gray-900 "
                         >
-                            ຢູເຊີ້<span className="text-red-600"> *</span>
+                            {t("user")}<span className="text-red-600"> *</span>
                         </label>
                         <input
                             type="text"
@@ -177,7 +181,7 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
                             htmlFor="category"
                             className="block mb-2 text-xs md:text-sm font-medium text-gray-900 "
                         >
-                            ລະຫັດຜ່ານ<span className="text-red-600"> *</span>
+                            {t("Password")}<span className="text-red-600"> *</span>
                         </label>
                         <input
                             type={passwordType ? "text" : "password"}
@@ -231,7 +235,7 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
                             htmlFor="phone"
                             className="block mb-2 text-xs md:text-sm font-medium text-gray-900 "
                         >
-                            Phone<span className="text-red-600"> *</span>
+                           {t("phone")}<span className="text-red-600"> *</span>
                         </label>
                         <input
                             type="tel"
@@ -248,17 +252,17 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
                                 htmlFor="category"
                                 className="block mb-2 text-xs md:text-sm font-medium text-gray-900 "
                             >
-                                Role<span className="text-red-600"> *</span>
+                                {t("role")}<span className="text-red-600"> *</span>
                             </label>
                             <select
                                 id="category"
                                 onChange={(e) => setRole(e.target.value)}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-orange-500 focus:border-0 block w-full p-2.5  "
                             >
-                                <option className="" value="0" disabled selected>--ເລືອກ--</option>
-                                <option value="admin">ແອັດມີນ</option>
-                                <option value="user">ເສີບ</option>
-                                <option value="chef">ພໍ່ຄົວ/ແມ່ຄົວ</option>
+                                <option className="" value="0" disabled selected>--{t("select")}--</option>
+                                <option value="admin">{t("admin")}</option>
+                                <option value="user">{t("staff")}</option>
+                                <option value="chef">{t("chef")}</option>
                             </select>
                         </div>
                         <label className="inline-flex items-center my-3 cursor-pointer">
@@ -296,8 +300,8 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
                                         />
                                     </svg>
                                     <p className="mb-2  text-gray-500 text-xs md:text-sm">
-                                        <span className="font-semibold">Click to upload</span>
-                                        or drag and drop
+                                        <span className="font-semibold">{t("clickUpload")}</span>
+                                        {t("dragDrop")}
                                     </p>
                                     <p className="text-xs text-gray-500 ">
                                         SVG, JPG (MAX. 204x240px)
@@ -324,11 +328,12 @@ const CreateUser: React.FC<CreateUserProps> = ({ handleModel }) => {
                                 clipRule="evenodd"
                             ></path>
                         </svg>
-                        {loading ?
-                            <LoadingSpinner text="ເພີ່ມພະນັກງານ" />
-                            :
-                            "ເພີ່ມພະນັກງານ"
-                        }
+                        {loading ? (
+                            <LoadingSpinner text={t("addStaff")} />
+                        ) : (
+                            t("addStaff")
+                        )}
+
                     </button>
                 </form>
             </div>
