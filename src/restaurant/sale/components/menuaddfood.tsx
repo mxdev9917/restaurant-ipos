@@ -23,6 +23,9 @@ const MenuAddFood: React.FC<menuProps> = ({ isCheckModelEvenMenu, handleClickClo
     let newQty = String(qty);
     let newFoodID = String(foodID);
     let newTableID = String(tableID)
+
+    console.log({token,newQty,newFoodID,newTableID});
+    
     try {
       setLoading(true)
       const res = await createMenuItemService.MenuItemService(newTableID, newFoodID, newQty, description, String(category_ID), token || "");

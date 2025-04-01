@@ -5,26 +5,26 @@ import { useEffect, useRef, useState } from "react";
 import { Dropdown } from "flowbite-react";
 import { HiDotsVertical } from "react-icons/hi";
 import { FiPrinter } from 'react-icons/fi';
-import { GetallcategoryByStatusService } from "../../services/categories/get-by-statuse-category";
 import { useAuth } from "../../context/context";
 import { HiArrowsExpand } from "react-icons/hi";
 import { generalErrors } from "../../utils/error";
 import { GetFoodByStatusService } from "../../services/foods/get-by-status-food";
 import { cancelOrderService } from "../../services/sale/cancel-order";
 import MenuAddFood from "./components/menuaddfood";
-import { GetAllFoodByCategoryIdService } from "../../services/sale/get-foods-by-category-id-oder";
 import { useNavigate, useParams } from "react-router-dom";
 import { alertconfirm, alertSuccessV3 } from "../../utils/alert";
 import { alertSuccess } from "../../utils/alert";
-import { GetMenuItemService } from "../../services/sale/get-menu-item";
 import { HiOutlineTrash } from "react-icons/hi";
 import { DeleteMenuItemService } from "../../services/sale/delete-menu-item";
 import { UpdateOrderSuccessService } from "../../services/sale/edit-order-success";
 import LoadingMessage from "../../utils/loadingMessage";
 import Tableincluded from "./components/table-included";
 import Loading from "../../utils/Loading";
-import { getByStatusRateService } from "../../services/setting/rates/getByStatusRateService";
 import { WaitingReceiveMoneyService } from "../../services/sale/waitingReceiveMoneyService";
+import { GetOrderService } from "../../services/sale/getOder";
+import { GetAllFoodByCategoryIdService } from "../../services/sale/get-foods-by-category-id-oder";
+import { BsQrCode } from "react-icons/bs";
+import ShowQr from "./components/showQr";
 
 
 function Carts() {
@@ -56,27 +56,29 @@ function Carts() {
   const [loadingMessageText, setLoadingMessageTesxt] = useState("");
   const [isMessage, setIsMessage] = useState(true);
   const [tableName, setTableName] = useState("")
-  const[isCheckStatusItem,setIsCheckStatusItem]=useState(false);
+  const [isCheckStatusItem, setIsCheckStatusItem] = useState(false);
+  const [clickQr, setClickQr] = useState(false);
+  const [txtToken, setTxtToken] = useState("")
 
 
-const handelWRM =async()=>{
-try {
-  setLoadingMessage(true);
-  setLoadingMessageTesxt("ກຳລັງເຊັກບີນ")
-  const res= await WaitingReceiveMoneyService.WaitingReceiveMoney(tableID,token||"")
-  if (res.status === "200") {
-    alertSuccessV3('ເຊັກບີນສຳເລັດ', 'success');
+  const handelWRM = async () => {
+    try {
+      setLoadingMessage(true);
+      setLoadingMessageTesxt("ກຳລັງເຊັກບີນ")
+      const res = await WaitingReceiveMoneyService.WaitingReceiveMoney(tableID, token || "")
+      if (res.status === "200") {
+        alertSuccessV3('ເຊັກບີນສຳເລັດ', 'success');
+      }
+
+    } catch (error) {
+      console.error("Error check bill:", error);
+      generalErrors(error)
+    } finally {
+      setLoadingMessage(false);
+      setLoadingMessageTesxt("")
+    }
+
   }
-  
-} catch (error) {
-  console.error("Error check bill:", error);
-  generalErrors(error)
-}finally{
-  setLoadingMessage(false);
-  setLoadingMessageTesxt("")
-}
-
-}
   const handleOrderSuccuss = async () => {
     try {
       setLoadingMessage(true);
@@ -109,36 +111,7 @@ try {
       setLoadingMessageTesxt("")
     }
   }
-  const fetchFoodTableItem = async () => {
-    try {
-      const res = await GetMenuItemService.MenuItem(tableID, token || "");
-      let data = res.data;
-      for (const item of data) {
-        let status = item.menu_item_status;
-        if (status !== "completed" && status!=="cancelled") {
-          setIsCheckStatusItem(true);
-          break;
-        }
-      }
-      setFoodItemsTable(res.data);
-      setTableName(res.table_name);
-      setPrice(res.totalPrice);
-      let price = Number(res.totalPrice);
-      let newVat = (price / 100) * 10;
-      let newTotalPrice = newVat + price;
-      setVat(String(newVat));
-      setTotalPrice(String(newTotalPrice));
-      if (res.data.length > 0) {
-        setIsBTNSuccess(false);
-      } else {
-        setIsBTNSuccess(true);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      generalErrors(error)
-    }
-  }
-  
+
   const handleCheckStatusFood = () => {
     if (isCheckStatusItem) {
       alertconfirm(
@@ -170,6 +143,10 @@ try {
     setIsCheckModelEvenMenu(false)
     setHandleModel(!handleModel);
   }
+  function handleClickQr() {
+    setClickQr(!clickQr);
+
+  }
   function isCheckMenu() {
     setIsCheckEvenMenu(!isCheckEvenMenu)
 
@@ -196,20 +173,6 @@ try {
   }
   function handleClickCloseModle() {
     setHandleModel(!handleModel);
-  }
-  const fetchData = async () => {
-    let resId = String(data.restaurant_ID);
-
-    try {
-      setIsMessage(true)
-      const res = await GetallcategoryByStatusService.GetAllCategory(resId, token || "")
-      setItemsCategory(res.data);
-
-    } catch (error: any) {
-      generalErrors(error)
-    } finally {
-      setIsMessage(false)
-    }
   }
 
   const fetchedItemIDs = useRef(new Set<string>());
@@ -278,46 +241,8 @@ try {
     }, 1200);
 
   };
-  const fetchRateByStatus = async () => {
-    try {
-      let resId = String(data.restaurant_ID);
-      const res = await getByStatusRateService.RateService(resId, token || "");
-
-      if (res.status === "200") {
-        let data = res.data;
-        let updatedRates = [];
-
-        for (const rateItem of data) {
-          let rate = Number(rateItem.rate);
-          let newTotalPrice = Number(totalPrice);
-          let newRate = Math.floor(newTotalPrice / rate);
 
 
-
-          // Collect data without overwriting
-          updatedRates.push({
-            rate_ID: rateItem.rate_ID,
-            currency: rateItem.currency,
-            newRate: newRate,
-          });
-        }
-
-        // Update state once after looping
-        setrateItems(updatedRates);
-      }
-    } catch (error) {
-      console.error("Error fetching rates:", error);
-    }
-  };
-  useEffect(() => {
-
-    fetchRateByStatus();
-  }, [rateItems])
-  useEffect(() => {
-    fetchData();
-    fetchFoodTableItem();
-
-  }, [])
   useEffect(() => {
     fetchfoodData(page);
   }, [page]);
@@ -348,6 +273,54 @@ try {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+
+  useEffect(() => {
+    fetchingDate()
+  }, [])
+  const fetchingDate = async () => {
+    let table = String(id);
+    try {
+      const res = await GetOrderService.OrderService(table, token || "");
+      setItemsCategory(res.category);
+      setTableName(res.table.table_name);
+      setPrice(String(res.menuItem.totalPrice));
+  
+      const price = Number(res.menuItem.totalPrice);
+      const newVat = (price / 100) * 10;
+      const newTotalPrice = newVat + price;
+      setVat(String(newVat));
+      setTotalPrice(String(newTotalPrice));
+      setFoodItemsTable(res.menuItem.menuItems);
+  
+      const data = Array.isArray(res.rate) ? res.rate : [];
+      const updatedRates = data.map(rateItem => {
+        const rate = Number(rateItem.rate);
+        const newRate = Math.floor(newTotalPrice / rate);
+        return {
+          rate_ID: rateItem.rate_ID,
+          currency: rateItem.currency,
+          newRate,
+        };
+      });
+      setrateItems(updatedRates);
+      setTxtToken(res.table.table_token);
+  
+      const itemCount = res.menuItem.menuItems?.length ?? 0;
+      if (itemCount > 0) {
+        setIsBTNSuccess(false);
+      }
+      const statusItem = res.menuItem.menuItems;
+      if (statusItem.some(item => item.menu_item_status !== "completed")) {
+        setIsCheckStatusItem(true);
+      }
+  
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  
+
+
   return (
     <div className="flex flex-col h-full w-[100.0vw] overflow-visible">
       {loadingMessage && <LoadingMessage text={loadingMessageText} />}
@@ -363,7 +336,7 @@ try {
                 <p className="sm:block hidden"> ເມເນູທັ້ງໝົດ</p>
               </button>
             </div>
-            <div className="w-full flex gap-3 overflow-x-auto snap-x">
+            <div className="w-full flex gap-3 overflow-x-auto snap-x" style={{ scrollbarWidth: 'none' }}>
               {itemsCategory.map((item) => (
                 <div key={item.category_ID} className="py-1 mt-2">
                   <CategoryItem
@@ -406,6 +379,9 @@ try {
 
         </div>
 
+        <div className={`${clickQr ? "block" : "hidden"} bg-black/30 w-full h-[93vh] absolute flex justify-center items-center `}>
+          <ShowQr handleClickQrCloseModle={handleClickQr} txtToken={txtToken} />
+        </div>
         <div className={`${!handleModel ? "block" : "hidden"} bg-black/30 w-full h-[93vh] absolute flex justify-center items-center `}>
           <div className={`${isCheckModelEvenMenu == false ? "block" : "hidden"} flex flex-col w-[290px] sm:w-[380px] h-fit bg-white rounded-lg shadow-lg p-3`}>
             <Tableincluded table_ID={tableID} handleClickCloseModle={handleClickCloseModle} />
@@ -422,6 +398,7 @@ try {
             <p className="text-xl sm:text-2xl md:text-3xl py-3 text-orange-500 font-semibold flex justify-center">
               ລາຍການອາຫານ {tableName}
             </p>
+            <button onClick={handleClickQr} className="text-xl cursor-pointer hover:text-orange-500"><BsQrCode /></button>
             <Dropdown label={<FiPrinter className="text-xl sm:text-2xl" />} inline>
               <Dropdown.Item onClick={() => handlePrinterModel(1)}>ປີ້ນເຕີເຄົາເຕີ</Dropdown.Item>
               <Dropdown.Item onClick={() => handlePrinterModel(2)}>ປີ້ນເຕີຄົວ</Dropdown.Item>
@@ -456,13 +433,13 @@ try {
                           renderTrigger={() =>
                             <div className="flex items-center justify-center hover:bg-slate-200 w-7 h-7 rounded-full cursor-pointer"><HiDotsVertical className="text-sm" /></div>}>
                           <Dropdown.Item
-                          onClick={() =>
-                            alertconfirm(
-                              () => handleDelete(item.food_ID, ""),
-                              `ຕ້ອງການລົບ 1 ຈຳນວນບໍ່ ?`,
-                              "question"
-                            )
-                          }
+                            onClick={() =>
+                              alertconfirm(
+                                () => handleDelete(item.food_ID, ""),
+                                `ຕ້ອງການລົບ 1 ຈຳນວນບໍ່ ?`,
+                                "question"
+                              )
+                            }
                             className="flex items-center gap-1">
                             <HiOutlineTrash className="text-xl" />ລົບຈຳນວນ
                           </Dropdown.Item>
