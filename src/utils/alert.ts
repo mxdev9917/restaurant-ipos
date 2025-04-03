@@ -82,6 +82,24 @@ export const alertError = (title: string, icon: SweetAlertIcon) => {
         }
     });
 };
+export const alertErrorV3 = (navigate: ReturnType<typeof useNavigate>, path: string, title: string, icon: SweetAlertIcon) => {
+    Swal.fire({
+        title: title,
+        icon: icon,
+        confirmButtonText: "ຕົກລົງ",
+        customClass: {
+            confirmButton: 'custom-confirm-btn',
+            denyButton: 'custom-deny-btn',
+            closeButton: 'custom-close-btn',
+            title: 'custom-title',
+            popup: 'popup-width',
+            icon: 'swal-icon'
+        }
+    }).then(() => {
+
+        navigate(path, { replace: true });
+    });
+};
 
 export const alertErrorV2 = (title: string, icon: SweetAlertIcon) => {
     Swal.fire({
@@ -138,20 +156,20 @@ export const alertconfirm = (func: () => void, title: string, icon: SweetAlertIc
 
 export const loadingMessage = () => {
     Swal.fire({
-      didOpen: () => {
-        Swal.showLoading(); // This shows the default SweetAlert2 loading spinner
-      },
-    text: "You won't be able to revert this!",
-      customClass: {
-        popup: 'popup-width2', // Customize the popup width
-        confirmButton: 'custom-confirm-btn',
-        title: 'custom-title',
-        // Additional classes...
-      },
-      showConfirmButton: false, // Prevent Confirm, Auto!
+        didOpen: () => {
+            Swal.showLoading(); // This shows the default SweetAlert2 loading spinner
+        },
+        text: "You won't be able to revert this!",
+        customClass: {
+            popup: 'popup-width2', // Customize the popup width
+            confirmButton: 'custom-confirm-btn',
+            title: 'custom-title',
+            // Additional classes...
+        },
+        showConfirmButton: false, // Prevent Confirm, Auto!
     });
-  };
-  
+};
+
 
 
 

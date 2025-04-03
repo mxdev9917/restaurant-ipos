@@ -40,19 +40,14 @@ function saleReport() {
         const endDateFormatted = newValue?.endDate
             ? newValue.endDate.toISOString().split('T')[0].replace(/-/g, '/')
             : new Date().toISOString().split('T')[0].replace(/-/g, '/');
-
-        // Update state values
         setValue({
             startDate: newValue?.startDate ?? new Date(),
             endDate: newValue?.endDate ?? new Date(),
         });
 
-        // Update start and end date directly
         setStartDate(startDateFormatted);
         setEndDate(endDateFormatted);
-
-        // Call fetchDataByDate after the dates are updated
-        await fetchDataByDate(startDateFormatted, endDateFormatted); // Pass the formatted dates directly
+        await fetchDataByDate(startDateFormatted, endDateFormatted);
     };
 
     const fetchDataByDate = async (startDate: string, endDate: string) => {
@@ -80,7 +75,7 @@ function saleReport() {
             }
 
         } catch (error) {
-            console.error("Error fetching report:", error);
+            generalErrors(error);
         }
     };
 
@@ -115,6 +110,9 @@ function saleReport() {
             setLoading(false);
         } catch (error: any) {
             console.error("API Error:", error);
+            generalErrors(error);
+         
+        }finally{
             setLoading(false);
         }
     };

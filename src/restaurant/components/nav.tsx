@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/context";
 import { useTranslation } from "react-i18next";
+import { generalErrors } from "../../utils/error";
 
 interface NavProps {
   handelMenu: () => void;
@@ -38,7 +39,7 @@ const Nav: React.FC<NavProps> = ({ handelMenu, isMenu }) => {
 
       return false;
     } catch (error) {
-      console.error('Error decoding token:', error);
+         generalErrors(error);
       return true;
     }
   };

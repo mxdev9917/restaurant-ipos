@@ -9,6 +9,7 @@ import LoadingSpinner from "../utils/LoadingSpinner";
 import { IoMdLock, IoMdUnlock } from "react-icons/io";
 import { useAuth } from "../context/context";
 import { useTranslation } from "react-i18next";
+import { authenError } from "../utils/error";
 
 
 function Authen() {
@@ -41,18 +42,13 @@ function Authen() {
             
              
         } catch (error: any) {
-            console.log(error.message);
+            authenError(error)
             
 
         } finally {
             setLoading(false);
         }
      }
-
-     useEffect(()=>{
-        console.log({email,password});
-        
-     })
 
     return (
         <div className="w-screen h-screen flex text-white justify-center relative bg-cover" style={{ backgroundImage: `url(${blobSceneHaikei})` }}>

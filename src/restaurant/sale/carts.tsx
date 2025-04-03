@@ -319,8 +319,6 @@ function Carts() {
     }
   };
   
-
-
   return (
     <div className="flex flex-col h-full w-[100.0vw] overflow-visible">
       {loadingMessage && <LoadingMessage text={loadingMessageText} />}

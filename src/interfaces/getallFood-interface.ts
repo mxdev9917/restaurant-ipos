@@ -11,6 +11,7 @@ export interface IFoods {
     category: string
     food_status: string
     price: number
+    suggested:string
     food_img: string
     created_at: string
   }

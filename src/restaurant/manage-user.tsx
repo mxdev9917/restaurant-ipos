@@ -86,7 +86,7 @@ function ManageUser() {
         alertSuccessV3((t("deleteSucces")), 'success');
       }
     } catch (error: any) {
-      console.error(error);
+      generalErrors(error);
     } finally {
       setLoadingMessage(false);
     }
@@ -109,7 +109,7 @@ function ManageUser() {
         // }
         setLoading(false);
       } catch (error: any) {
-        console.error("API Error:", error);
+       generalErrors(error,)
         setLoading(false);
       }
     };

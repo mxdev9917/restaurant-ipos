@@ -47,7 +47,7 @@ function ManageCategory() {
                 setItems(res.data)
             }
         } catch (error) {
-
+            generalErrors(error);
         }
     };
 
@@ -63,7 +63,7 @@ function ManageCategory() {
             }
 
         } catch (error) {
-
+            generalErrors(error);
         }
 
 

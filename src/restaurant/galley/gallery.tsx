@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Loading from "../../utils/Loading";
 import { IPOS_BASE_URL } from "../../utils/connection";
 import { useAuth } from "../../context/context";
+import { generalErrors } from "../../utils/error";
 
 interface CreateGalleryProps {
     handleGallery: () => void;
@@ -41,11 +42,9 @@ const Gallery: React.FC<CreateGalleryProps> = ({ handleGallery, handleSelectPath
                 if (newItems.length > 0) {
                     setItems((prevItems) => [...prevItems, ...newItems]);
                 }
-            } else {
-                console.error("Failed to fetch data:", response.message);
-            }
+            } 
         } catch (error) {
-            console.error("Error fetching data:", error);
+            generalErrors(error);
         }
     };
 

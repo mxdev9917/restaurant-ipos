@@ -6,6 +6,8 @@ import { generalErrors } from '../../../utils/error';
 import { editStatusFoodService } from "../../../services/foods/editstatus-food";
 import { IPOS_BASE_URL } from "../../../utils/connection";
 import { useAuth } from "../../../context/context";
+import { HiBadgeCheck, HiBan } from "react-icons/hi";
+import { editSuggestedService } from "../../../services/foods/suggested";
 
 interface foodItemProps {
     onEdit: (id: string) => void;
@@ -13,11 +15,12 @@ interface foodItemProps {
     foodId: string;
     foodName: string;
     foodStatus: string;
-    foodImg: string
-    price: string
+    foodImg: string;
+    price: string;
+    suggested: string
 }
 
-const FoodItem: React.FC<foodItemProps> = ({ onDelete, onEdit, foodName, price, foodImg, foodStatus, foodId }) => {
+const FoodItem: React.FC<foodItemProps> = ({ onDelete, onEdit, foodName, price, foodImg, foodStatus, foodId, suggested }) => {
     const { token } = useAuth();
     const handleEditStatus = async () => {
         try {
@@ -33,9 +36,30 @@ const FoodItem: React.FC<foodItemProps> = ({ onDelete, onEdit, foodName, price, 
             generalErrors(error);
         }
     };
+    const handleSuggested = async (value: string) => {
+        try {
+            let suggested;
+            if (value === "true") {
+                suggested = "false"
+            } else {
+                suggested = "true"
+            }
+
+            console.log({suggested,foodId});
+            
+            const res = await editSuggestedService.suggestedService(String(foodId), String(suggested), token || "");
+           
+            if(res.status==="200"){
+                alertSuccessV3("ສຳເລັດ", 'success');
+            }
+
+
+        } catch (error) {
+            console.log(error);
+            generalErrors(error);
+        }
+    }
     return (
-
-
         <div
             className="flex flex-col justify-between w-full h-full shadow-xl rounded-lg  "
 
@@ -69,6 +93,21 @@ const FoodItem: React.FC<foodItemProps> = ({ onDelete, onEdit, foodName, price, 
                             <Dropdown.Item
                                 onClick={() =>
                                     alertconfirm(
+                                        () => handleSuggested(suggested),
+                                        `ຕ້ອງການປິດໃຊ້ງານ${suggested === "false" ? "ເລືອກເມນູແນະນຳ" : "ຍົກເລີກເມນູແນະນຳ"}  ?`,
+                                        "question"
+                                    )
+                                }
+                            >
+                                {
+                                    suggested === "false" ? (<span className="flex ">
+                                        <HiBadgeCheck className='text-lg text-gray-400 mr-2' />ເລືອກເມນູແນະນຳ</span>) : (<span className="flex ">
+                                            <HiBan className='text-lg text-gray-400 mr-2' />ຍົກເລີກເມນູແນະນຳ</span>)
+                                }
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                                onClick={() =>
+                                    alertconfirm(
                                         () => handleEditStatus(),
                                         `ຕ້ອງການປິດໃຊ້ງານ ${foodName} ?`,
                                         "question"
@@ -76,9 +115,12 @@ const FoodItem: React.FC<foodItemProps> = ({ onDelete, onEdit, foodName, price, 
                                 }
                             >
                                 {
-                                    foodStatus === "disable" ? (<span className="flex "> <HiCheck className='text-lg text-gray-400 mr-2' />ເປີດໃຊ້ງານ</span>) : (<span className="flex "> <HiOutlineBan className='text-lg text-gray-400 mr-2' />ປິດໃຊ້ງານ</span>)
+                                    foodStatus === "disable" ? (<span className="flex ">
+                                        <HiCheck className='text-lg text-gray-400 mr-2' />ເປີດໃຊ້ງານ</span>) : (<span className="flex ">
+                                            <HiOutlineBan className='text-lg text-gray-400 mr-2' />ປິດໃຊ້ງານ</span>)
                                 }
                             </Dropdown.Item>
+
                             <Dropdown.Item
                                 onClick={() => onEdit(foodId)}
                             ><HiPencilAlt className='text-lg text-gray-400 mr-2' />ແກ້ໄຂເມນູ</Dropdown.Item>

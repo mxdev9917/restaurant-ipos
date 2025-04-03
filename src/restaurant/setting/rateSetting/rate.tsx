@@ -18,6 +18,7 @@ import { patchStatusRateService } from "../../../services/setting/rates/editStat
 import { HiMenuAlt1 } from "react-icons/hi";
 import { getRateStatusService } from "../../../services/setting/rates/getByStatus-rate";
 import { getByNameRateService } from "../../../services/setting/rates/getByName-rate";
+import { generalErrors } from "../../../utils/error";
 
 function Rate() {
     const [loadingMessage, setLoadingMessage] = useState(false);
@@ -47,7 +48,7 @@ function Rate() {
                 setTotalItems(Number(res.total_item));
             }
         } catch (error) {
-            console.error(error);
+             generalErrors(error);
         }
     };
 

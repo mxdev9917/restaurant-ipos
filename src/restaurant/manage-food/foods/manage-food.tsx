@@ -42,7 +42,7 @@ function ManageFood() {
                 setItems(res.data)
             }
         } catch (error) {
-
+            generalErrors(error);
         }
     };
 
@@ -57,7 +57,7 @@ function ManageFood() {
             }
 
         } catch (error) {
-
+            generalErrors(error);
         }
     }
     const deletefood = async (id: string) => {
@@ -215,6 +215,7 @@ function ManageFood() {
                             items.map((item) => (
                                 <div key={item.food_ID} className="w-full h-48 sm:h-32 md:h-40 lg:h-40 sm:mb-8 mb-5">
                                     <FoodItem
+                                        suggested={item.suggested}
                                         foodId={item.food_ID}
                                         foodName={item.food_name}
                                         price={item.price}

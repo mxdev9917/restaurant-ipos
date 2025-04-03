@@ -80,7 +80,7 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
                 alertSuccessV3("ເພີ່ມເມນູສຳເລັດ", 'success');
             }
         } catch (error) {
-            console.error("Error:", error);
+            generalErrors(error);
         } finally {
             setLoading(false);
         }

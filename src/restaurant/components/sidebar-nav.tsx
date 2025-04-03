@@ -1,5 +1,5 @@
 import { Sidebar } from "flowbite-react";
-import { HiOutlineMinusSm, HiOutlinePlusSm, HiOutlineOfficeBuilding, HiCog, HiCubeTransparent, HiClipboardList } from "react-icons/hi"; //HiOutlineBookOpen
+import { HiOutlineMinusSm, HiOutlinePlusSm, HiOutlineOfficeBuilding, HiCog, HiCubeTransparent, HiClipboardList,HiOutlinePhotograph  } from "react-icons/hi"; //HiOutlineBookOpen
 import { FaKitchenSet } from "react-icons/fa6";
 import { TbReportAnalytics } from "react-icons/tb";
 import { FaChartBar } from "react-icons/fa"; //FaFire
@@ -33,6 +33,9 @@ function Sidebar_Nav() {
             </Sidebar.Item>
             <Sidebar.Item href="#manage/kitchen" icon={FaKitchenSet}>
               {t("kichen")}
+            </Sidebar.Item>
+            <Sidebar.Item href="#slideshow" icon={HiOutlinePhotograph }>
+            {t("slideshow")}
             </Sidebar.Item>
             <Sidebar.Collapse
               icon={HiOutlineOfficeBuilding}

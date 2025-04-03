@@ -5,27 +5,28 @@ import { HiDotsVertical, HiOutlineClipboardList, HiOutlineClipboardCheck, HiOutl
 import { alertconfirm, alertSuccessV3 } from "../../../utils/alert";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../context/context";
+import { generalErrors } from "../../../utils/error";
 interface MenuItemProps {
     id: string;
     foodName: string;
     qty: string;
     description: string;
     tableName: string
- 
+
     status: string;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ id, foodName, qty, description, tableName,  status }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ id, foodName, qty, description, tableName, status }) => {
     const [statusItem, setStatusItem] = useState("")
     const [colorStatusItem, setColorStatusItem] = useState("")
-    const [colorBg,setColorBg]=useState("")
-     const { token } = useAuth();
+    const [colorBg, setColorBg] = useState("")
+    const { token } = useAuth();
     useEffect(() => {
         if (status === "cooking") {
             setStatusItem("ກຳລັງເຮັດ");
             setColorStatusItem("text-yellow-400");
             setColorBg("bg-yellow-400");
-            
+
         } else if (status === "completed") {
             setStatusItem("ສຳເລັດແລ້ວ");
             setColorStatusItem(" text-green-500");
@@ -46,12 +47,12 @@ const MenuItem: React.FC<MenuItemProps> = ({ id, foodName, qty, description, tab
 
     const handleUpdateStatus = async (value: string) => {
         try {
-            const res = await editStatusMenuItemService.editStatusMenuItem(id, value,token||"");
+            const res = await editStatusMenuItemService.editStatusMenuItem(id, value, token || "");
             if (res.status === "200") {
                 alertSuccessV3("ສຳເລັດ", "success")
             }
         } catch (error) {
-
+            generalErrors(error);
         }
     }
 

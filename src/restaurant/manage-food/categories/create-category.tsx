@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CreateCategoryService } from "../../../services/categories/create-category";
 import { alertSuccessV3 } from "../../../utils/alert";
-import { createCategoryErrors } from "../../../utils/error";
+import { createCategoryErrors, generalErrors } from "../../../utils/error";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import { useAuth } from "../../../context/context";
 import Gallery from "../../galley/gallery";
@@ -46,7 +46,7 @@ const CreateCategory: React.FC<CreateCategoryProps> = ({ handleModel }) => {
             }
 
         } catch (error: any) {
-            console.error("Category creation failed", error); // Log the error for debugging
+             generalErrors(error);
             createCategoryErrors(error);
         }
         finally {

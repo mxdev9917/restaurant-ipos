@@ -11,6 +11,7 @@ import DonutChartOrder from "../components/charts/donutChartOrder";
 
 import { HiMenu } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
+import { generalErrors } from "../../utils/error";
 
 function Dashboardv() {
   const { t } = useTranslation();
@@ -67,7 +68,7 @@ function Dashboardv() {
         setTotalOrder(String(totalOrder));
       }
     } catch (error: any) {
-      console.error("Error fetching data", error);
+        generalErrors(error);
     } finally {
       setLoading(false);
     }
