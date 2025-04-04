@@ -21,7 +21,7 @@ const UserManual = lazy(() => import('./restaurant/manual'));
 const Printer = lazy(() => import('./restaurant/setting/printer'));
 const Rate = lazy(() => import('./restaurant/setting/rateSetting/rate'));
 const ManageKitchen = lazy(() => import('./restaurant/kitchen/manageKitchen'));
-const Slideshow = lazy(() => import('./restaurant/slideshow'));
+const Slideshow = lazy(() => import('./restaurant/slider/slideshow'));
 
 const router = createHashRouter(
   [

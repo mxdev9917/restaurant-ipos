@@ -154,24 +154,6 @@ export const alertconfirm = (func: () => void, title: string, icon: SweetAlertIc
 };
 
 
-export const loadingMessage = () => {
-    Swal.fire({
-        didOpen: () => {
-            Swal.showLoading(); // This shows the default SweetAlert2 loading spinner
-        },
-        text: "You won't be able to revert this!",
-        customClass: {
-            popup: 'popup-width2', // Customize the popup width
-            confirmButton: 'custom-confirm-btn',
-            title: 'custom-title',
-            // Additional classes...
-        },
-        showConfirmButton: false, // Prevent Confirm, Auto!
-    });
-};
-
-
-
 
 
 

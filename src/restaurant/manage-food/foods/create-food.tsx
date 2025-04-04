@@ -17,36 +17,44 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
     const [foodName, setFoodName] = useState("");
     const [price, setPrice] = useState("");
     const [foodCategory, setFoodCategory] = useState("");
-    const [product_img, setProductImg] = useState<File | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [previewImg, setPreviewImg] = useState<string | null>(null);
-    const { data,token } = useAuth();
     const [isGallery, setIsGallery] = useState(false)
-    const [gallery_path ,setGallery_path]=useState("")
+    const [loading, setLoading] = useState(false);
+    const [gallery_path, setGallery_path] = useState("")
+    const { data, token } = useAuth();
+
+    const [product_img, setProductImg] = useState<File | null>(null);
+    const [previewImg, setPreviewImg] = useState<string | null>(null);
+
+
     const handleGallery = () => {
         setIsGallery(!isGallery);
     }
+
+
+
+    const fetchData = async () => {
+        try {
+            let resId = String(data.restaurant_ID);
+            const res = await GetallcategoryByStatusService.GetAllCategory(resId, token || "");
+            if (res.status === "201") {
+
+            }
+        } catch (error: any) {
+            generalErrors(error)
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+
     const handleSelectPath = (path: string) => {
         setPreviewImg(`${IPOS_BASE_URL}${path}`)
         setIsGallery(false);
         setGallery_path(path);
 
     }
-
-
-    const fetchData = async () => {
-       try {
-        let resId = String(data.restaurant_ID);
-        const res = await GetallcategoryByStatusService.GetAllCategory(resId,token||"");
-        setGetData(res.data);
-       } catch (error:any) {
-        generalErrors(error)
-       }
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -59,7 +67,7 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
         }
     };
 
-  
+
     const formSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setLoading(true);
@@ -73,7 +81,7 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
                 price,
                 gallery_path,
                 product_img || undefined,
-                token||""
+                token || ""
             );
 
             if (response.status === "201") {
@@ -182,10 +190,10 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
                 </form>
             </div>
         </div>
-         <div className={`w-full ${isGallery == false ? 'hidden' : 'absolute'} h-full  bg-white z-50`}>
-         <Gallery handleSelectPath={handleSelectPath} handleGallery={handleGallery} />
-     </div>
-     </>
+        <div className={`w-full ${isGallery == false ? 'hidden' : 'absolute'} h-full  bg-white z-50`}>
+            <Gallery handleSelectPath={handleSelectPath} handleGallery={handleGallery} />
+        </div>
+    </>
 };
 
 export default CreateFoods;
