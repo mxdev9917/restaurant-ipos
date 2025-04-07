@@ -33,7 +33,7 @@ const editSlide: React.FC<EditSlideProps> = ({ handleModel,slider_ID }) => {
 
         try {
             setLoading(true)
-            const res = await slideService.postSlideService(slider_ID, productImg, token || "");
+            const res = await slideService.patchSlideService(slider_ID, productImg, token || "");
             if (res.status === "201") {
                 alertSuccessV3("ແກ້ໄຂພາບສະໄລສຳເລັດ", 'success');
             }

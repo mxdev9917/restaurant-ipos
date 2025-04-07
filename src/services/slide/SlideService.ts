@@ -93,13 +93,13 @@ export class slideService {
             throw error; // Rethrow the error for better debugging
         }
     }
-    static async postSlideService(slider_ID: string, imageFile: File, token?: string): Promise<Root> {
+    static async patchSlideService(slider_ID: string, imageFile: File, token?: string): Promise<Root> {
         try {
             const formData = new FormData();
             formData.append("slider_ID", slider_ID);
             formData.append("slider_url", imageFile); // Send File, not string
 
-            const response = await axios.post(`${IPOS_BASE_URL}/slide`, formData, {
+            const response = await axios.patch(`${IPOS_BASE_URL}/slide`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Authorization": `Bearer ${token}`,
