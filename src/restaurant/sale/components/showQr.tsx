@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { QRCodeCanvas } from "qrcode.react"; // Correct import
 import { HiOutlineX } from "react-icons/hi";
-
+import { CLIENT_BASE_URL } from "../../../utils/connection";
 interface ShowQRProps {
     handleClickQrCloseModle: () => void;
     txtToken: string;
@@ -11,7 +11,9 @@ const ShowQr: React.FC<ShowQRProps> = ({ handleClickQrCloseModle, txtToken }) =>
     const [urlQR, setUrlQR] = useState("");
 
     useEffect(() => {
-        const generatedURL = `http://client.slklaos.la?token=${txtToken}`;
+        const generatedURL = `${CLIENT_BASE_URL}${txtToken}`;
+        console.log(`${CLIENT_BASE_URL}${txtToken}`);
+        
         setUrlQR(generatedURL);
         console.log("Generated QR URL:", generatedURL);
     }, [txtToken]);
