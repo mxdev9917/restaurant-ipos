@@ -4,8 +4,10 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
+    
     chunkSizeWarningLimit: 1000, // เพิ่มขีดจำกัดคำเตือน (1000KB)
     rollupOptions: {
+      external: ['dayjs'],
       output: {
         manualChunks(id) {
           // แยก node_modules (vendor code) ไปเป็น chunk แยก

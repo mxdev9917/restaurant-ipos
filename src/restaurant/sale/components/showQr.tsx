@@ -12,7 +12,7 @@ const ShowQr: React.FC<ShowQRProps> = ({ handleClickQrCloseModle, txtToken }) =>
 
     useEffect(() => {
         const generatedURL = `${CLIENT_BASE_URL}${txtToken}`;
-        console.log(`${CLIENT_BASE_URL}${txtToken}`);
+        console.log(`${CLIENT_BASE_URL}"/?token="${txtToken}`);
         
         setUrlQR(generatedURL);
         console.log("Generated QR URL:", generatedURL);
