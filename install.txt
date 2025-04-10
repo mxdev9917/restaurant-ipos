@@ -1,6 +1,6 @@
 docker build -t restaurant-ipos .
-docker tag restaurant-ipos mx9917/restaurant-ipos:v1.1.1
-docker push mx9917/restaurant-ipos:change tsr
+docker tag restaurant-ipos mx9917/restaurant-ipos:v1.1.4
+docker push mx9917/restaurant-ipos:v1.1.4
 
 
 
@@ -8,3 +8,9 @@ docker push mx9917/restaurant-ipos:change tsr
 
 
 docker run -d --name restaurant-ipos --restart unless-stopped -p 80:80 restaurant-ipos:latest
+
+
+
+
+docker tag client-ipos mx9917/client-ipos:v1.1.1
+docker push mx9917/client-ipos:v1.1.1
