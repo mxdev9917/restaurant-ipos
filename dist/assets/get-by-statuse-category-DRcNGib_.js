@@ -1,0 +1,1 @@
+import{I as e}from"./connection-ChSeG9_x.js";import{a as o}from"./error-DpiTMEs-.js";class l{static async GetAllCategory(a,t){try{const r={};return t&&(r.Authorization=`Bearer ${t}`),(await o.get(`${e}/category/status/${a}`,{headers:r})).data}catch(r){throw console.error("Error fetching categories:",r),r}}}export{l as G};

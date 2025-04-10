@@ -1,1 +1,0 @@
-import{a as e,I as s}from"./axios-B1aW67qN.js";class g{static async GetAllCategory(a,t){try{const r={};return t&&(r.Authorization=`Bearer ${t}`),(await e.get(`${s}/category/status/${a}`,{headers:r})).data}catch(r){throw console.error("Error fetching categories:",r),r}}}export{g as G};

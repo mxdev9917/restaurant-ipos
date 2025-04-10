@@ -37,7 +37,7 @@ const CreateFoods: React.FC<CreateProductProps> = ({ handleModel }) => {
             let resId = String(data.restaurant_ID);
             const res = await GetallcategoryByStatusService.GetAllCategory(resId, token || "");
             if (res.status === "201") {
-
+                setGetData(res.data)
             }
         } catch (error: any) {
             generalErrors(error)

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import blobSceneHaikei from '/images/svg/blob-scene-haikei.svg';
 import { authenService } from "../services/authen-service";
