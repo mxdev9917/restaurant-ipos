@@ -8,9 +8,9 @@ i18n
   .use(LanguageDetector) // Detects user language
   .use(initReactI18next) // Initializes React-i18next
   .init({
-    fallbackLng: "en",
+    fallbackLng: "lo",
     backend: {
-      loadPath: "/locales/{{lng}}.json", // Load translation files from public/locales/
+      loadPath: "public/locales/{{lng}}.json", // Load translation files from public/locales/
     },
     interpolation: {
       escapeValue: false, // React already escapes data
@@ -18,3 +18,7 @@ i18n
   });
 
 export default i18n;
+
+
+// public\locales\lo.json
+// public\locales/{{lng}}.json
