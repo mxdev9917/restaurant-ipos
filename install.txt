@@ -11,6 +11,6 @@ docker run -d --name restaurant-ipos --restart unless-stopped -p 80:80 restauran
 
 
 
-
-docker tag client-ipos mx9917/client-ipos:v1.1.1
-docker push mx9917/client-ipos:v1.1.1
+docker build -t client-ipos .
+docker tag client-ipos mx9917/client-ipos:v1.1.2
+docker push mx9917/client-ipos:v1.1.2
