@@ -1,5 +1,5 @@
 import { Sidebar } from "flowbite-react";
-import { HiOutlineMinusSm, HiOutlinePlusSm, HiOutlineOfficeBuilding, HiCog, HiCubeTransparent, HiClipboardList,HiOutlinePhotograph  } from "react-icons/hi"; //HiOutlineBookOpen
+import { HiOutlineMinusSm, HiOutlinePlusSm,HiChatAlt2 , HiOutlineOfficeBuilding, HiCog, HiCubeTransparent, HiClipboardList,HiOutlinePhotograph  } from "react-icons/hi"; //HiOutlineBookOpen
 import { FaKitchenSet } from "react-icons/fa6";
 import { TbReportAnalytics } from "react-icons/tb";
 import { FaChartBar } from "react-icons/fa"; //FaFire
@@ -24,6 +24,9 @@ function Sidebar_Nav() {
           <Sidebar.ItemGroup className="space-y-3 font-medium">
             <Sidebar.Item href="#dashboard" icon={FaChartBar}>
               Dashboard
+            </Sidebar.Item>
+            <Sidebar.Item href="#message" icon={HiChatAlt2}>
+            {t("message")}
             </Sidebar.Item>
             <Sidebar.Item href="#manageuser" icon={FaUsersGear}>
               {t("staff")}

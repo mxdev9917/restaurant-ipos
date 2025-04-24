@@ -377,7 +377,7 @@ function Carts() {
 
         </div>
 
-        <div className={`${clickQr ? "block" : "hidden"} bg-black/30 w-full h-[93vh] absolute flex justify-center items-center `}>
+        <div className={`${clickQr ? "block" : "hidden"} bg-black/30 w-full h-[93vh] absolute flex justify-center items-center z-50 `}>
           <ShowQr handleClickQrCloseModle={handleClickQr} txtToken={txtToken} />
         </div>
         <div className={`${!handleModel ? "block" : "hidden"} bg-black/30 w-full h-[93vh] absolute flex justify-center items-center `}>

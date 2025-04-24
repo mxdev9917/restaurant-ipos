@@ -19,7 +19,7 @@ function Logo() {
     }, [data]);
 
     return (
-        <Link to={pathURL} className="flex ms-2 gap-1">
+        <Link to={pathURL} className=" ms-2 gap-1 sm:flex hidden">
             <img src="/images/ipos.png" className="h-8 sm:h-11" alt="Logo" />
             <span className="self-center text-xl pt-2 font-extrabold text-orange-500 sm:text-4xl whitespace-nowrap">
                 IPOS.LA

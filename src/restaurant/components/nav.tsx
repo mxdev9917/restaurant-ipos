@@ -2,12 +2,13 @@ import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import Logo from "./logo";
 import Language from "./language";
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/context";
 import { useTranslation } from "react-i18next";
 import { generalErrors } from "../../utils/error";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import Notification from "./notification";
+import { HiChatAlt2 } from "react-icons/hi";
 
 interface NavProps {
   handelMenu: () => void;
@@ -84,6 +85,12 @@ const Nav: React.FC<NavProps> = ({ handelMenu, isMenu }) => {
           <Logo />
         </Navbar.Brand>
         <div className="flex md:order-2">
+          <div onClick={handleCheckedNotification} className="flex items-end relative h-10 w-10 text-white hover:text-orange-500 transition duration-200 ease-in-out">
+            <HiChatAlt2 className="text-3xl" />
+            <div className="absolute top-1 right-1 bg-orange-500 p-[2px] rounded-full font-semibold text-white text-[12px] cursor-pointer">
+              {notification > 0 ? notification : "0"}
+            </div>
+          </div>
           <div onClick={handleCheckedNotification} className="flex items-end relative h-10 w-10 text-white hover:text-orange-500 transition duration-200 ease-in-out">
             <IoMdNotificationsOutline className="text-3xl" />
             <div className="absolute top-1 right-1 bg-orange-500 p-[2px] rounded-full font-semibold text-white text-[12px] cursor-pointer">

@@ -19,7 +19,7 @@ const ShowQr: React.FC<ShowQRProps> = ({ handleClickQrCloseModle, txtToken }) =>
     }, [txtToken]);
 
     return (
-        <div className="w-96 h-96 bg-white flex flex-col items-center justify-start p-4 shadow-lg rounded-md">
+        <div className="w-80 sm:w-96 h-80 sm:h-96 bg-white flex flex-col items-center justify-start p-4 shadow-lg rounded-md">
             <div className="flex justify-end w-full ">
                 <button className="p-2 hover:bg-gray-200 rounded-full" onClick={handleClickQrCloseModle}><HiOutlineX className="text-2xl text-orange-500" /></button>
             </div>
