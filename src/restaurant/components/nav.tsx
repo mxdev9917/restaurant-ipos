@@ -69,7 +69,6 @@ const Nav: React.FC<NavProps> = ({ handelMenu, isMenu }) => {
 
   useEffect(() => {
     setNotification(localStorage.getItem("notification") ? parseInt(localStorage.getItem("notification") || "0") : 0);
-    console.log(notification);
 
   }, [notification])
 

@@ -123,6 +123,16 @@ $noto-sans-lao-weight: 400; // Define the default weight; adjust as needed
   border-left-color: transparent; /* To maintain the spinning effect */
 }
 
+/* Add this to your global CSS */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+
 
 
 

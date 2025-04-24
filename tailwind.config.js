@@ -6,23 +6,21 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
     "node_modules/flowbite-react/lib/esm/**/*.js",
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}",
-
   ],
   theme: {
     extend: {},
     animation: {
       'slow-spin': 'spin 1s linear infinite',
       'slow2-spin': 'spin 3s linear infinite',
-   
     },
   },
   plugins: [
+    require('tailwind-scrollbar-hide'), // Add comma here
     require('flowbite/plugin')({
       charts: true,
     }),
   ],
   safelist: [
-    /^datatable-.*$/
+    /^datatable-.*$/,
   ],
 }
-

@@ -1,24 +1,29 @@
-type MessageItemProps = {
-    text: string;
-    time: string;
-    isSender: boolean;
-  };
-  
-  export default function MessageItem({ text, time, isSender }: MessageItemProps) {
-    return (
-      <div className={`flex ${isSender ? "justify-end" : "justify-start"} mb-2`}>
-        <div
-          className={`
-            relative max-w-[75%] px-4 py-2 rounded-lg 
-            ${isSender ? "bg-lime-200 text-right rounded-br-none" : "bg-slate-100 text-left rounded-bl-none"}
-          `}
-        >
-          <p className="text-sm">{text}</p>
-          <span className="text-xs text-gray-500 mt-1 block">
-            {time}
-          </span>
+interface MessageItemProps {
+  text: string;
+  time: string;
+  isSender: boolean;
+  isSeen?: boolean;
+}
+
+function MessageItem({ text, time, isSender, isSeen = false }: MessageItemProps) {
+  return (
+    <div className={`flex ${isSender ? "justify-end" : "justify-start"} mb-2`}>
+      <div className={`max-w-xs sm:max-w-sm px-3 py-2 rounded-xl ${isSender ? "bg-orange-100 text-right" : "bg-gray-200"} relative`}>
+        <p className="text-sm break-words whitespace-pre-wrap">{text}</p>
+
+        {/* Always show time */}
+        <div className="flex items-center gap-1 justify-end mt-1 text-xs text-gray-500">
+          <span>{time}</span>
+          {/* Only show check marks for sender */}
+          {isSender && (
+            <>
+              {isSeen ? '✔✔' : '✔'}
+            </>
+          )}
         </div>
       </div>
-    );
-  }
-  
+    </div>
+  );
+}
+
+export default MessageItem;
