@@ -3,27 +3,32 @@ import Nav from "../components/nav";
 import { FaUserCircle } from "react-icons/fa";
 import { Dropdown, DropdownItem } from "flowbite-react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { IoIosSend } from "react-icons/io";
-import { RiEmojiStickerLine } from "react-icons/ri";
-import EmojiPicker from "emoji-picker-react";
 import { IoSearch } from "react-icons/io5";
-import MessageItem from "./components/MessageItem";
 import { generalErrors } from "../../utils/error";
 import { MessageService } from "../../services/messages/message";
+import ChatArea from "./components/chatArea";
+import { useAuth } from "../../context/context";
 
 function Message() {
+    const { data, token } = useAuth();
     const [translate, setTranslate] = useState(false);
     const [messageText, setMessageText] = useState("");
     const [showPicker, setShowPicker] = useState(false);
     const [messages, setMessages] = useState([
         { text: "Ut aliquip ex ea commodo consequat...", time: "10:42", isSender: false },
         { text: "In voluptate velit esse", time: "10:44", isSender: true },
-        { text: "Cillum dolore eu fugiat nulla pariatur...saassa sfasvf asfeefXv efsedfwe", time: "10:45", isSender: true },
+        { text: "Cillum dolore eu fugiat nulla pariatur...", time: "10:45", isSender: true },
         { text: "Excepteur sint occaecat cupidatat...", time: "11:08", isSender: false },
     ]);
     const [itemMessage, setItemMessage] = useState<any[]>([]);
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const endOfMessagesRef = useRef<HTMLDivElement>(null);
+
+    const handelMessage = (id: string) => {
+        let resId = String(data.restaurant_ID);
+        const chat_type = "admin"
+        console.log({id, resId, chat_type});
+    };
 
     const onEmojiClick = (emojiData: any) => {
         const emoji = emojiData.emoji;
@@ -56,29 +61,22 @@ function Message() {
         endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
-
     const fetchingItemMessages = async () => {
         try {
-          // Or however you store it
-          const res = await MessageService.getMessages("65");
-          if(res.status === "200") {
-            setItemMessage(res.data);
-          }
+            const res = await MessageService.getMessages("65");
+            if (res.status === "200") {
+                setItemMessage(res.data);
+            }
         } catch (error) {
-          console.error("Error fetching messages:", error);
-          generalErrors(error);
+            console.error("Error fetching messages:", error);
+            generalErrors(error);
         }
-      };
-      
-      useEffect(() => {
+    };
+
+    useEffect(() => {
         fetchingItemMessages();
-        console.log(itemMessage);
-        
-      }, []);
-      useEffect(() => {
-        console.log(itemMessage);
-        
-      }, [itemMessage]);
+    }, []);
+
     return (
         <div className="flex flex-col h-screen w-screen overflow-hidden">
             <Nav isMenu={true} handelMenu={() => setTranslate(!translate)} />
@@ -119,7 +117,11 @@ function Message() {
                         </form>
                     </div>
                     {itemMessage.map((item) => (
-                        <div key={item.chat_id} className="flex items-center w-full h-20 p-2 border-b border-slate-200 cursor-pointer hover:bg-slate-100">
+                        <div
+                            key={item.chat_id}
+                            onClick={() => handelMessage(item.chat_id)}
+                            className="flex items-center w-full h-20 p-2 border-b border-slate-200 cursor-pointer hover:bg-slate-100"
+                        >
                             <FaUserCircle className="text-5xl text-slate-400" />
                             <div className="flex flex-col ml-5">
                                 <p className="font-semibold text-xl">{item.table_name}</p>
@@ -130,60 +132,19 @@ function Message() {
                 </div>
 
                 {/* Chat Area */}
-                <div className={`flex flex-col h-full w-full bg-white ${translate ? "sm:pl-[405px]" : ""}`}>
-                    <div className="flex items-center h-16 bg-slate-50 px-2">
-                        <FaUserCircle className="text-5xl text-slate-400" />
-                        <div className="flex flex-col ml-4">
-                            <p className="font-semibold text-2xl">ໂຕະ 011</p>
-                        </div>
-                    </div>
-
-                    {/* Chat Messages */}
-                    <div className="flex-grow px-5 py-4 overflow-y-auto scrollbar-hide">
-                        {messages.map((msg, index) => (
-                            <MessageItem key={index} text={msg.text} time={msg.time} isSender={msg.isSender} />
-                        ))}
-                        <div ref={endOfMessagesRef} />
-                    </div>
-
-                    {/* Chat Input */}
-                    <div className="relative flex items-end gap-1.5 min-h-[3rem] bg-slate-50 px-5 py-1">
-                        <button
-                            onClick={() => setShowPicker(!showPicker)}
-                            className="flex justify-center items-center h-10 w-10 bg-white rounded-md"
-                        >
-                            <RiEmojiStickerLine className="text-2xl text-slate-600" />
-                        </button>
-
-                        {showPicker && (
-                            <div className="absolute bottom-20 left-5 z-50">
-                                <EmojiPicker onEmojiClick={onEmojiClick} />
-                            </div>
-                        )}
-
-                        <textarea
-                            ref={inputRef}
-                            value={messageText}
-                            onChange={(e) => setMessageText(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                            className="h-10 w-full resize-none px-3 bg-white outline-none border-0 rounded-md focus:ring-1 focus:ring-orange-500 overflow-y-auto"
-                            placeholder="ຂໍ້ຄວາມ ..."
-                        />
-
-                        <button
-                            onClick={() => {
-                                if (messageText.trim()) {
-                                    const time = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-                                    setMessages([...messages, { text: messageText.trim(), time, isSender: true }]);
-                                    setMessageText("");
-                                }
-                            }}
-                            className="flex justify-center items-center h-10 w-12 bg-white rounded-md"
-                        >
-                            <IoIosSend className="text-2xl text-slate-600" />
-                        </button>
-                    </div>
-                </div>
+                <ChatArea
+                    messages={messages}
+                    setMessages={setMessages}
+                    messageText={messageText}
+                    setMessageText={setMessageText}
+                    showPicker={showPicker}
+                    setShowPicker={setShowPicker}
+                    inputRef={inputRef}
+                    endOfMessagesRef={endOfMessagesRef}
+                    onEmojiClick={onEmojiClick}
+                    handleKeyDown={handleKeyDown}
+                    translate={translate}
+                />
             </div>
         </div>
     );
