@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IPOS_BASE_URL } from "../../utils/connection";
+import { CLIENT_BASE_URL, IPOS_BASE_URL } from "../../utils/connection";
 
 // Interfaces for response types
 export interface Root {
@@ -10,6 +10,7 @@ export interface Root {
 
 export interface Daum {
     chat_id: number;
+    table_ID:string;
     table_name: string;
     messages: string;
 }
@@ -18,6 +19,21 @@ export interface MessageRoot {
     status: string;
     message: string;
 }
+
+export interface RootAllMessage {
+  status: string
+  message: string
+  data: Daum[]
+}
+
+export interface Daum {
+  chat_id: number
+  chat_type: string
+  messages: string
+  is_read: number
+  sent_at: string
+}
+
 
 // MessageService class for handling API calls
 export class MessageService {
@@ -47,6 +63,20 @@ export class MessageService {
                 table_ID,
                 messages,
                 chat_type
+            });
+            return response.data;
+        } catch (error) {
+            console.error(`Error posting message to restaurant ${restaurant_ID}, table ${table_ID}:`, error);
+            throw error;
+        }
+    }
+    static async postMessagesItem(
+        restaurant_ID: string,
+        table_ID: string,
+    ): Promise<RootAllMessage> {
+        try {
+            const response = await axios.post<RootAllMessage>(`${IPOS_BASE_URL}/admin/messages`, {
+                restaurant_ID, table_ID
             });
             return response.data;
         } catch (error) {

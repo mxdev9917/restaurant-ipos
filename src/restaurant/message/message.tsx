@@ -19,15 +19,21 @@ function Message() {
         { text: "In voluptate velit esse", time: "10:44", isSender: true },
         { text: "Cillum dolore eu fugiat nulla pariatur...", time: "10:45", isSender: true },
         { text: "Excepteur sint occaecat cupidatat...", time: "11:08", isSender: false },
+           { text: "Excepteur sint occaecat cupidatat...", time: "11:08", isSender: false }, 
+             { text: "Excepteur sint occaecat cupidatat...jjj", time: "11:08", isSender: true },
     ]);
     const [itemMessage, setItemMessage] = useState<any[]>([]);
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const endOfMessagesRef = useRef<HTMLDivElement>(null);
 
-    const handelMessage = (id: string) => {
+    const handelMessage = async (id: string) => {
         let resId = String(data.restaurant_ID);
-        const chat_type = "admin"
-        console.log({id, resId, chat_type});
+        console.log({resId,id});
+        
+       const res =await MessageService.postMessagesItem(String(resId),String(id))
+       console.log(res.data);
+       
+        
     };
 
     const onEmojiClick = (emojiData: any) => {
@@ -64,6 +70,8 @@ function Message() {
     const fetchingItemMessages = async () => {
         try {
             const res = await MessageService.getMessages("65");
+            console.log(res);
+            
             if (res.status === "200") {
                 setItemMessage(res.data);
             }
@@ -72,6 +80,8 @@ function Message() {
             generalErrors(error);
         }
     };
+
+
 
     useEffect(() => {
         fetchingItemMessages();
@@ -119,7 +129,7 @@ function Message() {
                     {itemMessage.map((item) => (
                         <div
                             key={item.chat_id}
-                            onClick={() => handelMessage(item.chat_id)}
+                            onClick={() => handelMessage(item.table_ID)}
                             className="flex items-center w-full h-20 p-2 border-b border-slate-200 cursor-pointer hover:bg-slate-100"
                         >
                             <FaUserCircle className="text-5xl text-slate-400" />
