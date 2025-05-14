@@ -10,7 +10,7 @@ export interface Root {
 
 export interface Daum {
     chat_id: number;
-    table_ID:string;
+    table_ID: string;
     table_name: string;
     messages: string;
 }
@@ -21,17 +21,18 @@ export interface MessageRoot {
 }
 
 export interface RootAllMessage {
-  status: string
-  message: string
-  data: Daum[]
+    status: string
+    message: string
+    data: Daum[]
 }
 
 export interface Daum {
-  chat_id: number
-  chat_type: string
-  messages: string
-  is_read: number
-  sent_at: string
+    chat_id: number
+    chat_type: string
+    messages: string
+    is_read: number
+    sent_at: string
+    table_name: string
 }
 
 

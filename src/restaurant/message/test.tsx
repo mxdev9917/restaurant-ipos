@@ -33,7 +33,7 @@ function Message() {
     const getMessages = async (id: string) => {
         try {
             const resId = String(data.restaurant_ID);
-            const res = await MessageService.postMessagesItem(String(resId),String(id));
+            const res = await MessageService.postMessagesItem(resId, id);
             const datas = res.data;
 
             // Set table name if available
@@ -107,20 +107,23 @@ function Message() {
             generalErrors(error);
         }
     };
+
+
+
     useEffect(() => {
         fetchingItemMessages();
     }, []);
 
-    useEffect(() => {
-        if (!isCheckBTNItemMessage) return;
+    // useEffect(() => {
+    //     if (!isCheckBTNItemMessage) return;
 
-        const interval = setInterval(() => {
-          if (!isCheckBTNItemMessage && tableID!="") return;
-             getMessages(tableID);            
-        }, 3000);
+    //     const interval = setInterval(() => {
+    //       if (!isCheckBTNItemMessage && tableID!="") return;
+    //          getMessages("34");
+    //     }, 3000);
 
-        return () => clearInterval(interval);
-    }, [isCheckBTNItemMessage, tableID]);
+    //     return () => clearInterval(interval);
+    // }, [isCheckBTNItemMessage, tableID]);
 
     return (
         <div className="flex flex-col h-screen w-screen overflow-hidden">
