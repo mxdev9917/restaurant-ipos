@@ -10,6 +10,7 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import Notification from "./notification";
 import { HiChatAlt2 } from "react-icons/hi";
 
+
 interface NavProps {
   handelMenu: () => void;
   isMenu: boolean;
@@ -17,6 +18,7 @@ interface NavProps {
 
 const Nav: React.FC<NavProps> = ({ handelMenu, isMenu }) => {
   const [notification, setNotification] = useState<number>(0);
+  const [message, setIsMessages] = useState<number>(0);
   const [isCheckedNotification, setIsCheckedNotification] = useState<boolean>(false);
   const navigate = useNavigate();
   const { data, token, logout } = useAuth();
@@ -69,6 +71,7 @@ const Nav: React.FC<NavProps> = ({ handelMenu, isMenu }) => {
 
   useEffect(() => {
     setNotification(localStorage.getItem("notification") ? parseInt(localStorage.getItem("notification") || "0") : 0);
+    setIsMessages(localStorage.getItem("message") ? parseInt(localStorage.getItem("message") || "0") : 0);
 
   }, [notification])
 
@@ -87,7 +90,7 @@ const Nav: React.FC<NavProps> = ({ handelMenu, isMenu }) => {
           <div onClick={handleCheckedNotification} className="flex items-end relative h-10 w-10 text-white hover:text-orange-500 transition duration-200 ease-in-out">
             <HiChatAlt2 className="text-3xl" />
             <div className="absolute top-1 right-1 bg-orange-500 p-[2px] rounded-full font-semibold text-white text-[12px] cursor-pointer">
-              {notification > 0 ? notification : "0"}
+              {message > 0 ? message : "0"}
             </div>
           </div>
           <div onClick={handleCheckedNotification} className="flex items-end relative h-10 w-10 text-white hover:text-orange-500 transition duration-200 ease-in-out">

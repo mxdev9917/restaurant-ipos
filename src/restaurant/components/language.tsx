@@ -28,7 +28,7 @@ function Language() {
     }, [t("change_language")])
 
     return (
-        <div className="w-20 mr-3 flex justify-center">
+        <div className="w-20 mr-3 flex justify-center z-50">
             <button onClick={toggleCheckLang} className="flex items-end">
                 <img className="w-7" src={mainImgPath} alt="" />
                 <span className="ml-2 font-medium text-white">{t("change_language")}</span>

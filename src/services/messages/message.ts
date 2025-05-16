@@ -33,8 +33,25 @@ export interface Daum {
     is_read: number
     sent_at: string
     table_name: string
-    table_ID:string
+    table_ID: string
 }
+
+
+export interface countMessageRoot {
+    status: string
+    message: string
+    data: Data[]
+}
+
+export interface Data {
+    chat_id: string
+    table_ID: string
+    table_name: string
+    messages: string
+    is_read: string
+    sent_at:string
+}
+
 
 
 // MessageService class for handling API calls
@@ -86,15 +103,28 @@ export class MessageService {
             throw error;
         }
     }
-    static async filterMessage(restaurant_ID: string,table_name:string):Promise<Root>{
+    static async filterMessage(restaurant_ID: string, table_name: string): Promise<Root> {
         try {
-             const response = await axios.post<RootAllMessage>(`${IPOS_BASE_URL}/messages/filter`, {
+            const response = await axios.post<RootAllMessage>(`${IPOS_BASE_URL}/messages/filter`, {
                 restaurant_ID, table_name
             });
             return response.data;
         } catch (error) {
-              console.error(`Error posting filter message to restaurant ${restaurant_ID}, table ${table_name}:`, error);
+            console.error(`Error posting filter message to restaurant ${restaurant_ID}, table ${table_name}:`, error);
             throw error;
         }
     }
+    static async countMessage(restaurant_ID: string): Promise<countMessageRoot> {
+        try {
+            const response = await axios.get<countMessageRoot>(
+                `${IPOS_BASE_URL}/admin/messages/count/${restaurant_ID}`,
+                {} // explicitly sending empty body (if required)
+            );
+            return response.data;
+        } catch (error) {
+            console.error(`Error counting messages for restaurant ${restaurant_ID}:`, error);
+            throw error;
+        }
+    }
+
 }
