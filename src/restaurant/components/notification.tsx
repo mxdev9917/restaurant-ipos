@@ -68,7 +68,8 @@ const Notification = () => {
                     </div>
                 ))
             ) : (
-                <p className="text-gray-500 text-center mt-4">{t("no_notifications")}</p>
+               <p className="text-gray-500 text-center mt-4">{t("no_notifications")}</p>
+
             )}
         </div>
     );

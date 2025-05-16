@@ -33,6 +33,7 @@ export interface Daum {
     is_read: number
     sent_at: string
     table_name: string
+    table_ID:string
 }
 
 
@@ -82,6 +83,17 @@ export class MessageService {
             return response.data;
         } catch (error) {
             console.error(`Error posting message to restaurant ${restaurant_ID}, table ${table_ID}:`, error);
+            throw error;
+        }
+    }
+    static async filterMessage(restaurant_ID: string,table_name:string):Promise<Root>{
+        try {
+             const response = await axios.post<RootAllMessage>(`${IPOS_BASE_URL}/messages/filter`, {
+                restaurant_ID, table_name
+            });
+            return response.data;
+        } catch (error) {
+              console.error(`Error posting filter message to restaurant ${restaurant_ID}, table ${table_name}:`, error);
             throw error;
         }
     }

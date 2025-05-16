@@ -6,7 +6,7 @@ import MessageItem from "./MessageItem";
 import { generalErrors } from "../../../utils/error";
 import { MessageService } from "../../../services/messages/message";
 import { useAuth } from "../../../context/context";
-
+import { t } from "i18next";
 interface MessageItemProps {
   text: string;
   time: string;
@@ -15,6 +15,7 @@ interface MessageItemProps {
 }
 
 interface ChatAreaProps {
+  
   messages: MessageItemProps[];
   setMessages: React.Dispatch<React.SetStateAction<MessageItemProps[]>>;
   messageText: string;
@@ -27,6 +28,7 @@ interface ChatAreaProps {
   handleKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   translate: boolean;
   tableName: string;
+  tableID: String;
 }
 
 const ChatArea: React.FC<ChatAreaProps> = ({
@@ -41,9 +43,11 @@ const ChatArea: React.FC<ChatAreaProps> = ({
   onEmojiClick,
   handleKeyDown,
   translate,
-  tableName
+  tableName,
+  tableID
 }) => {
   const { data, token } = useAuth();
+  
   return (
     <div className={`flex flex-col h-full w-full bg-white ${translate ? "sm:pl-[405px]" : ""}`}>
       <div className="flex items-center h-16 bg-slate-50 px-2">
@@ -56,10 +60,9 @@ const ChatArea: React.FC<ChatAreaProps> = ({
       {/* Chat Messages */}
       <div className="flex-grow px-5 py-4 overflow-y-auto scrollbar-hide">
         {messages.map((msg, index) => (
-
-          <MessageItem key={index} text={msg.text} time={msg.time} isSender={msg.isSender} isSeen={msg.isRead} />
-
-
+          <div key={index} >
+            <MessageItem text={msg.text} time={msg.time} isSender={msg.isSender} isSeen={msg.isRead} />
+          </div>
         ))}
         <div ref={endOfMessagesRef} />
       </div>
@@ -85,7 +88,7 @@ const ChatArea: React.FC<ChatAreaProps> = ({
           onChange={(e) => setMessageText(e.target.value)}
           onKeyDown={handleKeyDown}
           className="h-10 w-full resize-none px-3 bg-white outline-none border-0 rounded-md focus:ring-1 focus:ring-orange-500 overflow-y-auto"
-          placeholder="ຂໍ້ຄວາມ ..."
+         placeholder={`${t("message")} ...`}
         />
 
         <button
@@ -96,14 +99,13 @@ const ChatArea: React.FC<ChatAreaProps> = ({
 
               try {
                 const resId = String(data.restaurant_ID);
-                const res = await MessageService.postMessages(String(resId), "34", "admin", messageText)
+                const res = await MessageService.postMessages(String(resId), String(tableID), "admin", messageText)
                 console.log("is working now")
                 console.log(res);
                 setMessageText("");
 
               } catch (error) {
                 generalErrors(error)
-
               }
 
             }
